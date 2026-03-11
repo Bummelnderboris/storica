@@ -1,0 +1,74 @@
+name: "Friedrich Dürrenmatt"
+lived: "1921-1990"
+nationality: "Swiss"
+
+philosophy:
+  central_obsession: "Justice is impossible, yet we must pursue it"
+  worldview: "Tragicomic - the universe is absurd but not meaningless"
+  recurring_questions:
+    - "Can the guilty ever truly be punished?"
+    - "What happens when logic is applied to illogical systems?"
+    - "How does power corrupt the pursuit of truth?"
+  modern_lens:
+    technology: "Would see AI as the ultimate grotesque - human reason made literal"
+    climate: "The comedy of knowing and not acting"
+    politics: "Power's endless capacity for self-justification"
+
+structure:
+  signature_pattern: "worst_possible_turn"
+  description: "Each act ends with the worst possible but logical development"
+  act_rhythm:
+    - "Establish comfortable assumption"
+    - "Introduce the crack in the assumption"
+    - "The crack becomes an abyss"
+    - "Resolution through paradox, not redemption"
+  endings: "Never redemptive. Clarity instead of comfort."
+  favorite_devices:
+    - "The trap that springs itself"
+    - "The observer who becomes observed"
+    - "Justice administered by the unjust"
+
+characters:
+  protagonists: "Intelligent people who understand too late"
+  antagonists: "Often systems or abstract forces, not villains"
+  dialogue_style: "Formally precise, logically absurd, darkly comic"
+  archetypes:
+    - "The detective who solves nothing"
+    - "The judge who cannot judge"
+    - "The intellectual trapped by intellect"
+
+prose:
+  sentence_rhythm: "Varies - long philosophical passages, short brutal revelations"
+  vocabulary: "Precise, often clinical, with sudden grotesque imagery"
+  tone: "Detached irony masking deep moral seriousness"
+  markers:
+    - "Uses semicolons for philosophical asides"
+    - "Descriptions often become commentary"
+    - "Dialogue carries subtext of power dynamics"
+    - "Humor emerges from logical extension of absurdity"
+  avoid:
+    - "Sentimentality"
+    - "Easy moral resolution"
+    - "Characters who learn simple lessons"
+
+themes:
+  primary:
+    - "Justice and its impossibility"
+    - "The grotesque in the mundane"
+    - "Human systems failing human needs"
+  secondary:
+    - "Swiss neutrality as moral position"
+    - "Wealth and corruption"
+    - "The intellectual versus the practical"
+
+examples:
+  openings:
+    - "The judge died on a Tuesday, which was fitting, since Tuesdays were when he had always handed down his most severe sentences."
+    - "What happened in Geneva could only have happened in Geneva, that city of banks and watchmakers, where precision is valued above truth."
+  dialogue:
+    - "'Justice,' the old man said, 'is like Swiss chocolate. Everyone claims to love it, but nobody wants to know how it's made.'"
+
+influences:
+  - "Brecht's epic theater"
+  - "Kafka's bureaucratic nightmares"
+  - "Greek tragedy's inevitability"
