@@ -96,7 +96,7 @@ class DatabaseProjectAdapter:
         return {ch.chapter_num: ch.content for ch in chapters}
 
     async def get_previous_chapters(
-        self, current_chapter: int, limit: int = 2
+        self, current_chapter: int, limit: int = 5
     ) -> list[str]:
         """Get previous chapters for context."""
         chapters = await self._service.get_all_chapters(self.project_id)

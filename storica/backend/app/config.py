@@ -42,6 +42,22 @@ class Settings(BaseSettings):
     gemini_api_key: Optional[str] = None
     default_model: str = "gemini-2.0-flash"
 
+    # Stage-based model routing
+    # Use gemini-2.0-flash everywhere with iteration for quality
+    model_essence: str = "gemini-2.0-flash"       # Philosophical foundation
+    model_architecture: str = "gemini-2.0-flash"  # Narrative structure
+    model_blueprint: str = "gemini-2.0-flash"     # Chapter outlines
+    model_chapter: str = "gemini-2.0-flash"       # Prose draft generation
+    model_story_bible: str = "gemini-2.0-flash"   # Continuity tracking
+    model_prevalidation: str = "gemini-2.0-flash" # Blueprint validation
+    model_critique: str = "gemini-2.0-flash"      # Self-review of draft
+    model_polish: str = "gemini-2.0-flash"        # Revision based on critique
+
+    # Context window settings
+    context_previous_chapters: int = 5            # Number of previous chapters to include
+    context_characters_limit: int = 15            # Max characters to show in prompts
+    context_previous_ending_chars: int = 1500     # Chars from previous chapter ending
+
     # The Houses (author profiles directory)
     authors_dir: Path = Path(__file__).parent.parent.parent.parent / "authors"
 
