@@ -59,7 +59,7 @@ class Settings(BaseSettings):
     context_previous_ending_chars: int = 1500     # Chars from previous chapter ending
 
     # The Houses (author profiles directory)
-    authors_dir: Path = Path(__file__).parent.parent.parent.parent / "authors"
+    authors_dir: Path = Path(__file__).parent.parent.parent / "authors"
 
     # CORS
     cors_origins: list[str] = ["http://localhost:3000", "http://localhost:5173"]
