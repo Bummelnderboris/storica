@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { QuizState } from '../store/quiz'
 
 const api = axios.create({
   baseURL: '/api',
@@ -65,12 +66,82 @@ export const authApi = {
   me: () => api.get('/auth/me'),
 }
 
+// Helper to convert quiz state to backend story DNA format
+function quizStateToStoryDNA(quiz: QuizState) {
+  return {
+    spark: {
+      spark_type: quiz.spark.sparkType || 'idea',
+      description: quiz.spark.description,
+      emotional_core: null,
+    },
+    genre: {
+      primary_genre: quiz.genre.primaryGenre,
+      subgenres: quiz.genre.subGenres,
+      tone_dark_light: quiz.genre.toneDark,
+      tone_serious_playful: quiz.genre.toneSerious,
+      tone_slow_fast: 50, // Default, not in frontend
+    },
+    world: {
+      time_period: quiz.world.timeframe,
+      location: quiz.world.location,
+      world_type: 'realistic', // Default
+      atmosphere_words: quiz.world.atmosphere,
+      special_rules: quiz.world.worldRules.length > 0 ? quiz.world.worldRules.join('; ') : null,
+    },
+    characters: {
+      protagonist: {
+        archetype: quiz.characters.protagonist.archetype,
+        flaw: quiz.characters.protagonist.flaw,
+        want: quiz.characters.protagonist.want,
+        need: quiz.characters.protagonist.need,
+        name_suggestion: null,
+      },
+      antagonist: quiz.characters.antagonist.type
+        ? {
+            type: quiz.characters.antagonist.type,
+            description: quiz.characters.antagonist.description,
+            motivation: null,
+          }
+        : null,
+      ensemble_size: quiz.characters.ensemble.length > 3 ? 'large' : quiz.characters.ensemble.length > 1 ? 'medium' : 'small',
+      ensemble_notes: quiz.characters.ensemble.length > 0 ? quiz.characters.ensemble.join(', ') : null,
+    },
+    conflict: {
+      central_question: quiz.conflict.centralQuestion,
+      stakes_personal: quiz.conflict.personalStakes,
+      stakes_external: quiz.conflict.externalStakes || null,
+      stakes_philosophical: quiz.conflict.internalStakes || null,
+    },
+    structure: {
+      structure_type: quiz.structure.structureType.replace('-', '_'),
+      target_words: quiz.structure.targetWords,
+      chapter_count: quiz.structure.chapterCount,
+      pacing: quiz.structure.pacingStyle.replace('-', '_'),
+    },
+    voice: {
+      emulate_author: quiz.voice.mode === 'emulate' ? quiz.voice.authorId : null,
+      custom_style: quiz.voice.mode === 'custom' ? JSON.stringify(quiz.voice.customStyle) : null,
+      pov: 'third_limited', // Default
+      tense: 'past', // Default
+    },
+  }
+}
+
 // Projects API
 export const projectsApi = {
   list: () => api.get('/projects'),
 
   create: (data: { name: string; author_id: string; target_words?: number; seed?: string }) =>
     api.post('/projects', data),
+
+  createWithDNA: (data: { name: string; author_id: string; quiz: QuizState }) =>
+    api.post('/projects', {
+      name: data.name,
+      author_id: data.author_id,
+      target_words: data.quiz.structure.targetWords,
+      total_chapters: data.quiz.structure.chapterCount,
+      story_dna: quizStateToStoryDNA(data.quiz),
+    }),
 
   get: (id: number) => api.get(`/projects/${id}`),
 
@@ -119,4 +190,56 @@ export const generationApi = {
 export const authorsApi = {
   list: () => api.get('/authors'),
   get: (id: string) => api.get(`/authors/${id}`),
+  getPhilosophy: (id: string) => api.get(`/authors/${id}/philosophy`),
+  getStyleGuide: (id: string) => api.get(`/authors/${id}/style-guide`),
+  getCritiqueRubric: (id: string) => api.get(`/authors/${id}/critique-rubric`),
+}
+
+// Pipeline API
+export const pipelineApi = {
+  // Start pipeline
+  start: (projectId: number, authorId: string, autoApprove: boolean = false) =>
+    api.post(`/pipeline/projects/${projectId}/start`, {
+      author_id: authorId,
+      auto_approve: autoApprove,
+    }),
+
+  // Pause pipeline
+  pause: (projectId: number) =>
+    api.post(`/pipeline/projects/${projectId}/pause`),
+
+  // Resume pipeline
+  resume: (projectId: number) =>
+    api.post(`/pipeline/projects/${projectId}/resume`),
+
+  // Get status
+  getStatus: (projectId: number) =>
+    api.get(`/pipeline/projects/${projectId}/status`),
+
+  // Get phase preview
+  getPhasePreview: (projectId: number, phase: string) =>
+    api.get(`/pipeline/projects/${projectId}/phases/${phase}/preview`),
+
+  // Approve phase
+  approvePhase: (projectId: number, phase: string) =>
+    api.post(`/pipeline/projects/${projectId}/phases/${phase}/approve`, {
+      approved: true,
+    }),
+
+  // Reject phase
+  rejectPhase: (projectId: number, phase: string, reason: string) =>
+    api.post(`/pipeline/projects/${projectId}/phases/${phase}/approve`, {
+      approved: false,
+      rejection_reason: reason,
+    }),
+
+  // Get artifact
+  getArtifact: (projectId: number, artifactType: string, chapter?: number) =>
+    api.get(`/pipeline/projects/${projectId}/artifacts/${artifactType}`, {
+      params: chapter ? { chapter } : {},
+    }),
+
+  // Get pending approvals
+  getPendingApprovals: (projectId: number) =>
+    api.get(`/pipeline/projects/${projectId}/pending-approvals`),
 }

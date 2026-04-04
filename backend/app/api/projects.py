@@ -1,243 +1,189 @@
-"""Project endpoints."""
+"""Projects API endpoints."""
 
-from fastapi import APIRouter, HTTPException, status
+import json
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+from typing import List, Optional
 
-from app.api.deps import CurrentUser, DbSession
-from app.models.project import ContentType
-from app.schemas.content import (
-    BlueprintListResponse,
-    BlueprintResponse,
-    ChapterListResponse,
-    ChapterResponse,
-    ContentResponse,
-)
-from app.schemas.project import (
-    ProjectCreate,
-    ProjectDetailResponse,
-    ProjectListResponse,
-    ProjectResponse,
-    ProjectUpdate,
-)
-from app.services.author import AuthorService
-from app.services.project import ProjectService
+from ..database import get_db
+from ..models import Project, Chapter, User
+from .deps import get_current_active_user
 
-router = APIRouter()
+router = APIRouter(prefix="/projects", tags=["projects"])
 
 
-@router.get("", response_model=ProjectListResponse)
+class StoryDNAInput(BaseModel):
+    spark: dict
+    genre: dict
+    world: dict
+    characters: dict
+    conflict: dict
+    structure: dict
+    voice: dict
+
+
+class ProjectCreate(BaseModel):
+    name: str
+    author_id: str
+    story_dna: StoryDNAInput
+
+
+class ProjectResponse(BaseModel):
+    id: int
+    name: str
+    author_id: Optional[str]
+    status: str
+    total_words: int
+    chapter_count: int
+    estimated_cost: int
+
+    class Config:
+        from_attributes = True
+
+
+class ChapterResponse(BaseModel):
+    id: int
+    chapter_number: int
+    title: Optional[str]
+    status: str
+    word_count: int
+    is_approved: bool
+
+    class Config:
+        from_attributes = True
+
+
+@router.get("/", response_model=List[ProjectResponse])
 async def list_projects(
-    db: DbSession,
-    current_user: CurrentUser,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
 ):
-    """List all projects for the current user."""
-    service = ProjectService(db)
-    projects = await service.list_projects(current_user.id)
-    return ProjectListResponse(
-        projects=[ProjectResponse.model_validate(p) for p in projects],
-        total=len(projects),
-    )
+    """List user's projects."""
+    projects = db.query(Project).filter(Project.user_id == current_user.id).all()
+    return projects
 
 
-@router.post("", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=ProjectResponse)
 async def create_project(
-    data: ProjectCreate,
-    db: DbSession,
-    current_user: CurrentUser,
+    project_data: ProjectCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
 ):
-    """Create a new project."""
-    # Validate author exists
-    author_service = AuthorService()
-    author = author_service.get_author(data.author_id)
-    if not author:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Author not found: {data.author_id}",
-        )
-
-    service = ProjectService(db)
-    project = await service.create_project(current_user.id, data)
+    """Create a new project with Story DNA."""
+    project = Project(
+        name=project_data.name,
+        user_id=current_user.id,
+        author_id=project_data.author_id,
+        story_dna_json=json.dumps(project_data.story_dna.model_dump()),
+        chapter_count=project_data.story_dna.structure.get("chapter_count", 12)
+    )
+    db.add(project)
+    db.commit()
+    db.refresh(project)
     return project
 
 
-@router.get("/{project_id}", response_model=ProjectDetailResponse)
+@router.get("/{project_id}", response_model=ProjectResponse)
 async def get_project(
     project_id: int,
-    db: DbSession,
-    current_user: CurrentUser,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
 ):
-    """Get project details."""
-    service = ProjectService(db)
-    project = await service.get_project_with_details(project_id, current_user.id)
+    """Get a project by ID."""
+    project = db.query(Project).filter(
+        Project.id == project_id,
+        Project.user_id == current_user.id
+    ).first()
+
     if not project:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Project not found",
-        )
+        raise HTTPException(status_code=404, detail="Project not found")
+
     return project
 
 
-@router.patch("/{project_id}", response_model=ProjectResponse)
-async def update_project(
-    project_id: int,
-    data: ProjectUpdate,
-    db: DbSession,
-    current_user: CurrentUser,
-):
-    """Update a project."""
-    service = ProjectService(db)
-    project = await service.update_project(project_id, current_user.id, data)
-    if not project:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Project not found",
-        )
-    return project
-
-
-@router.delete("/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{project_id}")
 async def delete_project(
     project_id: int,
-    db: DbSession,
-    current_user: CurrentUser,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
 ):
     """Delete a project."""
-    service = ProjectService(db)
-    deleted = await service.delete_project(project_id, current_user.id)
-    if not deleted:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Project not found",
-        )
+    project = db.query(Project).filter(
+        Project.id == project_id,
+        Project.user_id == current_user.id
+    ).first()
 
-
-# Content endpoints
-@router.get("/{project_id}/essence", response_model=ContentResponse)
-async def get_essence(
-    project_id: int,
-    db: DbSession,
-    current_user: CurrentUser,
-):
-    """Get project essence."""
-    service = ProjectService(db)
-    project = await service.get_project(project_id, current_user.id)
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
 
-    content = await service.get_content(project_id, ContentType.ESSENCE)
-    if not content:
-        raise HTTPException(status_code=404, detail="Essence not found")
-    return content
+    db.delete(project)
+    db.commit()
+    return {"message": "Project deleted"}
 
 
-@router.get("/{project_id}/architecture", response_model=ContentResponse)
-async def get_architecture(
+@router.get("/{project_id}/story-dna")
+async def get_story_dna(
     project_id: int,
-    db: DbSession,
-    current_user: CurrentUser,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
 ):
-    """Get project architecture."""
-    service = ProjectService(db)
-    project = await service.get_project(project_id, current_user.id)
+    """Get project's Story DNA."""
+    project = db.query(Project).filter(
+        Project.id == project_id,
+        Project.user_id == current_user.id
+    ).first()
+
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
 
-    content = await service.get_content(project_id, ContentType.ARCHITECTURE)
-    if not content:
-        raise HTTPException(status_code=404, detail="Architecture not found")
-    return content
+    if project.story_dna_json:
+        return json.loads(project.story_dna_json)
+    return {}
 
 
-@router.get("/{project_id}/story-bible", response_model=ContentResponse)
-async def get_story_bible(
+@router.get("/{project_id}/chapters", response_model=List[ChapterResponse])
+async def get_chapters(
     project_id: int,
-    db: DbSession,
-    current_user: CurrentUser,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
 ):
-    """Get project story bible."""
-    service = ProjectService(db)
-    project = await service.get_project(project_id, current_user.id)
+    """Get project chapters."""
+    project = db.query(Project).filter(
+        Project.id == project_id,
+        Project.user_id == current_user.id
+    ).first()
+
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
 
-    content = await service.get_content(project_id, ContentType.STORY_BIBLE)
-    if not content:
-        raise HTTPException(status_code=404, detail="Story bible not found")
-    return content
+    return project.chapters
 
 
-# Blueprint endpoints
-@router.get("/{project_id}/blueprints", response_model=BlueprintListResponse)
-async def list_blueprints(
-    project_id: int,
-    db: DbSession,
-    current_user: CurrentUser,
-):
-    """List all blueprints for a project."""
-    service = ProjectService(db)
-    project = await service.get_project(project_id, current_user.id)
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
-
-    blueprints = await service.get_all_blueprints(project_id)
-    return BlueprintListResponse(
-        blueprints=[BlueprintResponse.model_validate(b) for b in blueprints]
-    )
-
-
-@router.get("/{project_id}/blueprints/{chapter_num}", response_model=BlueprintResponse)
-async def get_blueprint(
-    project_id: int,
-    chapter_num: int,
-    db: DbSession,
-    current_user: CurrentUser,
-):
-    """Get a specific blueprint."""
-    service = ProjectService(db)
-    project = await service.get_project(project_id, current_user.id)
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
-
-    blueprint = await service.get_blueprint(project_id, chapter_num)
-    if not blueprint:
-        raise HTTPException(status_code=404, detail="Blueprint not found")
-    return blueprint
-
-
-# Chapter endpoints
-@router.get("/{project_id}/chapters", response_model=ChapterListResponse)
-async def list_chapters(
-    project_id: int,
-    db: DbSession,
-    current_user: CurrentUser,
-):
-    """List all chapters for a project."""
-    service = ProjectService(db)
-    project = await service.get_project(project_id, current_user.id)
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
-
-    chapters = await service.get_all_chapters(project_id)
-    total_words = sum(c.word_count for c in chapters)
-    return ChapterListResponse(
-        chapters=[ChapterResponse.model_validate(c) for c in chapters],
-        total_word_count=total_words,
-    )
-
-
-@router.get("/{project_id}/chapters/{chapter_num}", response_model=ChapterResponse)
+@router.get("/{project_id}/chapters/{chapter_number}")
 async def get_chapter(
     project_id: int,
-    chapter_num: int,
-    db: DbSession,
-    current_user: CurrentUser,
+    chapter_number: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
 ):
     """Get a specific chapter."""
-    service = ProjectService(db)
-    project = await service.get_project(project_id, current_user.id)
-    if not project:
-        raise HTTPException(status_code=404, detail="Project not found")
+    chapter = db.query(Chapter).join(Project).filter(
+        Project.id == project_id,
+        Project.user_id == current_user.id,
+        Chapter.chapter_number == chapter_number
+    ).first()
 
-    chapter = await service.get_chapter(project_id, chapter_num)
     if not chapter:
         raise HTTPException(status_code=404, detail="Chapter not found")
-    return chapter
+
+    return {
+        "id": chapter.id,
+        "chapter_number": chapter.chapter_number,
+        "title": chapter.title,
+        "content": chapter.content,
+        "status": chapter.status,
+        "word_count": chapter.word_count,
+        "is_approved": chapter.is_approved,
+        "final_score": chapter.final_score / 10 if chapter.final_score else None
+    }

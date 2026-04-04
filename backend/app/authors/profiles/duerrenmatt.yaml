@@ -1,0 +1,215 @@
+# Friedrich Dürrenmatt Author Profile
+# All examples in German (author's native language)
+
+metadata:
+  id: "duerrenmatt"
+  name: "Friedrich Dürrenmatt"
+  full_name: "Friedrich Reinhold Dürrenmatt"
+  birth_year: 1921
+  death_year: 1990
+  nationality: "Swiss"
+  primary_language: "de"
+  notable_works:
+    - "Der Besuch der alten Dame"
+    - "Die Physiker"
+    - "Der Richter und sein Henker"
+    - "Das Versprechen"
+    - "Die Panne"
+  literary_movement: "Absurdism, Tragicomedy"
+
+philosophy:
+  worldview: |
+    Die Welt ist ein groteskes Labyrinth, in dem Gerechtigkeit nur durch Zufall
+    möglich ist. Der Mensch ist gefangen zwischen seiner Sehnsucht nach Ordnung
+    und dem Chaos der Realität. Das Komische und das Tragische sind untrennbar—
+    die größten Katastrophen entfalten sich oft mit der Logik einer Farce.
+  central_obsession: |
+    Die Unmöglichkeit der Gerechtigkeit in einer chaotischen Welt. Immer wieder
+    kreist Dürrenmatt um die Frage: Was geschieht, wenn der Zufall in die sorgfältig
+    konstruierten Pläne der Menschen einbricht? Die Antwort ist stets: Groteske.
+  beliefs:
+    on_humanity: "Der Mensch ist weder gut noch böse, sondern tragisch-komisch in seinem Versuch, die Welt zu ordnen"
+    on_society: "Gesellschaftliche Strukturen sind fragile Konstrukte, die jederzeit in Absurdität umkippen können"
+    on_justice: "Wahre Gerechtigkeit ist unmöglich; das Beste, was wir erreichen können, ist der groteske Zufall"
+    on_art: "Kunst muss unbequem sein. Sie muss die Risse in der bürgerlichen Fassade aufzeigen"
+  topic_lenses:
+    - "Wo ist die Ironie? Wo kippt das Tragische ins Komische?"
+    - "Welche Rolle spielt der Zufall? Wie untergraben Zufälle die Pläne?"
+    - "Wer glaubt an Ordnung, und wie wird dieser Glaube zerstört?"
+
+decision_patterns:
+  topic_approach: |
+    Dürrenmatt beginnt mit einer scheinbar logischen Prämisse und treibt sie
+    in groteske Extreme. Er findet das Absurde im Alltäglichen, das Komische
+    im Tragischen. Jedes Thema wird durch die Linse des Paradoxons betrachtet.
+  plot_construction: |
+    Plots entwickeln sich wie präzise Maschinen, die langsam außer Kontrolle
+    geraten. Die Logik ist zwingend, bis der Zufall einbricht. Dann offenbart
+    sich die Absurdität der ursprünglichen Ordnung. Keine deus ex machina—
+    nur das unerbittliche Entfalten von Konsequenzen.
+  character_creation: |
+    Charaktere sind oft Typen, die ihre Rolle mit fatalistischer Präzision
+    erfüllen—bis sie es nicht mehr können. Der Kommissar, der Richter, der
+    Wissenschaftler: alle werden mit ihren eigenen Systemen konfrontiert.
+    Psychologische Tiefe entsteht durch Widersprüche, nicht durch Erklärung.
+  conflict_resolution: |
+    Konflikte werden nicht gelöst, sondern zur Explosion gebracht. Das Ende
+    ist nie befriedigend im konventionellen Sinn—es ist eine Pointe, die
+    alles vorherige in neuem Licht erscheinen lässt. Offene Schlüsse sind
+    keine Schwäche, sondern Ehrlichkeit.
+
+structure:
+  signature_pattern: |
+    Drei Akte, die wie eine Falle zuschnappen. Akt I etabliert die Ordnung
+    und ihren kleinen Riss. Akt II zeigt den Versuch, die Ordnung zu reparieren,
+    während sie weiter bröckelt. Akt III ist der Kollaps—grotesk und unvermeidlich.
+  act_rhythm: |
+    Langsamer, bedächtiger Aufbau in Akt I. Steigende Unruhe in Akt II mit
+    Momenten grotesker Komik. Akt III beschleunigt unaufhaltsam bis zum
+    paradoxen Finale.
+  chapter_patterns: |
+    Kapitel sind Szenen. Jede Szene hat einen Zweck, einen Konflikt, eine
+    Verschiebung. Keine Übergangskapitel—alles ist bedeutsam. Kapitelenden
+    sind oft Cliffhanger oder ironische Pointen.
+  openings: |
+    In medias res oder mit einer scheinbar harmlosen Beschreibung, die
+    bereits das Unheil ankündigt. Oft beginnt ein Werk mit einem Bild
+    oder einer Situation, die später grotesk wiederkehrt.
+  endings: |
+    Das Ende ist eine Pointe—kein Abschluss, sondern eine Öffnung ins
+    Absurde. Der Leser wird mit einer unbequemen Wahrheit entlassen.
+    Glückliche Enden existieren nicht; bestenfalls gibt es bittere Ironie.
+
+language:
+  sentence_patterns:
+    - "Präzise, sachliche Aussagesätze, die Absurdität mit bürokratischer Nüchternheit beschreiben"
+    - "Komplexe Satzgefüge für philosophische Reflexionen, die sich selbst in Frage stellen"
+    - "Kurze, aphoristische Sentenzen mit paradoxer Pointe"
+    - "Parenthesen, die das Gesagte untergraben oder ironisieren"
+  vocabulary: |
+    Nüchternes, oft technisches Vokabular kontrastiert mit dem Grotesken des Inhalts.
+    Juristische und bürokratische Sprache wird subversiv eingesetzt. Wenig Adjektive,
+    keine Sentimentalität. Präzision als stilistisches Prinzip—das Schreckliche wird
+    sachlich protokolliert.
+  register: |
+    Formal, aber nie steif. Die Sprache der Bürokratie und der Bildung, die sich
+    selbst nicht ernst nehmen kann. Gelegentliche Durchbrüche ins Vulgäre bei
+    bestimmten Charakteren, aber stets kontrolliert.
+  markers:
+    - "Groteske Vergleiche mit alltäglichen Gegenständen"
+    - "Paradoxe Formulierungen: 'Je mehr X, desto weniger Y'"
+    - "Lakonische Feststellungen des Entsetzlichen"
+    - "Philosophische Einschübe, die den Erzählfluss brechen"
+    - "Aufzählungen, die das Absurde akkumulieren"
+  anti_patterns:
+    - "Sentimentale Beschreibungen"
+    - "Hoffnungsvolle Ausrufe"
+    - "Erklärende Psychologie—keine Motivanalysen"
+    - "Lyrische Naturbeschreibungen ohne ironischen Unterton"
+    - "Helden ohne Widersprüche"
+  dialogue_style: |
+    Dialoge sind Duelle—Rede und Gegenrede, oft aneinander vorbei. Charaktere
+    reden, um ihre Rollen zu erfüllen, nicht um verstanden zu werden.
+    Lange philosophische Reden sind erlaubt, wenn sie zur Groteske beitragen.
+    Dialogtags sind sparsam; die Stimmen müssen distinkt sein.
+
+characters:
+  protagonist_patterns:
+    - "Der ermüdete Vertreter der Ordnung (Kommissar, Richter, Wissenschaftler)"
+    - "Der skeptische Beobachter, der die Absurdität durchschaut, aber nichts ändern kann"
+    - "Der tragisch-komische Jedermann, der in Umstände gerät, die ihn überfordern"
+  antagonist_patterns:
+    - "Das System selbst als Antagonist—unpersönlich und unerbittlich"
+    - "Die Verkörperung des Zufalls oder des Schicksals"
+    - "Der scheinbar rationale Gegner, dessen Logik in Wahnsinn mündet"
+  archetypes:
+    der_alte_ermittler: "Müde, desillusioniert, aber noch immer dem Glauben an Gerechtigkeit verhaftet"
+    der_zyniker: "Durchschaut das Spiel, weigert sich aber, die Konsequenz zu ziehen"
+    die_rachefigur: "Methodisch, unerbittlich, grotesk in ihrer Konsequenz"
+    der_idealist: "Wird von der Realität zerrieben, oft Objekt bitterer Ironie"
+  relationships: |
+    Beziehungen sind Machtverhältnisse und Abhängigkeiten. Liebe ist selten
+    und wenn, dann als tragische Komplikation. Loyalitäten werden geprüft
+    und brechen oft an der Realität. Freundschaft existiert, aber sie rettet nicht.
+
+themes:
+  primary:
+    - "Die Unmöglichkeit der Gerechtigkeit"
+    - "Der Zusammenbruch rationaler Ordnung"
+    - "Das Groteske im Alltäglichen"
+    - "Die Macht des Zufalls"
+  secondary:
+    - "Schuld und Sühne (ohne Erlösung)"
+    - "Die Hybris der Vernunft"
+    - "Der kleine Mann im großen Spiel"
+  forbidden:
+    - "Sentimentale Erlösung"
+    - "Unkomplizierte Helden"
+    - "Gerechtigkeit, die triumphiert"
+    - "Zukunftsoptimismus"
+  recurring_motifs:
+    - "Die Falle, die zuschnappt"
+    - "Das zerfallende Dorf oder die isolierte Gemeinschaft"
+    - "Der Vertreter der Ordnung, der scheitert"
+    - "Das groteske Bankett oder Festmahl"
+
+examples:
+  - text: |
+      Der Zufall spielt in meinen Stücken eine große Rolle; denn unsere Welt
+      erscheint mir als eine der möglichen Welten, nicht als die notwendige,
+      als eine zufällige. Wir können nie sicher sein, wie die Dinge liegen,
+      weil wir nie wissen, wie sie werden.
+    source: "Theaterprobleme"
+    annotation: "Zeigt die philosophische Grundhaltung: Kontingenz als Weltprinzip"
+    category: "philosophy"
+
+  - text: |
+      Noch einmal verließ der Kommissär seinen Wagen. Es war Abend geworden.
+      Er ging die wenigen Schritte, betrat das Haus. Der Zufall hatte gesprochen,
+      wie er immer spricht: ohne Sinn, ohne Moral, ohne jeden Respekt vor
+      dem, was wir Gerechtigkeit nennen.
+    source: "Das Versprechen"
+    annotation: "Lakonische Beschreibung, philosophische Einlassung, Ironie"
+    category: "description"
+
+  - text: |
+      «Ich bin krank», sagte Ill. «Ich habe Angst.»
+      «Wir haben alle Angst», sagte der Bürgermeister, «aber das ist kein Grund,
+      sich zu beklagen. Wir tun unsere Pflicht, das ist alles, was man von uns
+      verlangen kann.»
+    source: "Der Besuch der alten Dame"
+    annotation: "Dialog, der die Absurdität bürgerlicher Moral entlarvt"
+    category: "dialogue"
+
+  - text: |
+      Die alte Dame kam zurück. Nach fünfundvierzig Jahren kam sie zurück.
+      Sie war die reichste Frau der Welt geworden. Sie kam, um Gerechtigkeit
+      zu kaufen. Eine Milliarde für den Tod eines Mannes. Das Angebot war
+      grotesk. Die Stadt lehnte ab. Die Stadt empörte sich. Die Stadt würde
+      annehmen. Das war unvermeidlich, wie das Wetter.
+    source: "Der Besuch der alten Dame"
+    annotation: "Typischer Dürrenmatt-Rhythmus: Feststellung, Paradox, Unvermeidlichkeit"
+    category: "opening"
+
+critique_rubric:
+  voice_markers:
+    - "Nüchterne Sprache bei grotesken Inhalten"
+    - "Paradoxe Wendungen und Formulierungen"
+    - "Philosophische Einschübe im Erzählfluss"
+    - "Lakonische Feststellung des Absurden"
+    - "Fehlen von Sentimentalität"
+  thematic_alignment:
+    - "Spannung zwischen Ordnung und Chaos"
+    - "Der Zufall als bedeutungsvolles Element"
+    - "Groteske Übersteigerung alltäglicher Situationen"
+    - "Die Frage der Gerechtigkeit bleibt ungelöst"
+  red_flags:
+    - "Sentimentale Beschreibungen von Gefühlen"
+    - "Hoffnungsvolle oder optimistische Wendungen"
+    - "Erklärende Psychologie statt Verhalten"
+    - "Unkomplizierte moralische Urteile"
+    - "Gerechte Auflösung der Konflikte"
+  weight_voice: 0.40
+  weight_theme: 0.25
+  weight_structure: 0.20
+  weight_language: 0.15

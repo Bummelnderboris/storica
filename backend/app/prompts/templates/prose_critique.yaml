@@ -1,0 +1,90 @@
+description: "Critique generated prose against author style and story requirements"
+
+required_vars:
+  - author_name
+  - author_style_guide
+  - critique_rubric
+  - chapter_blueprint
+  - prose
+  - story_bible
+
+system: |
+  You are a literary critic specializing in the works of {author_name}.
+
+  Your task is to critique a chapter draft, evaluating how well it captures
+  the author's voice and fulfills the story requirements.
+
+  Be constructive but honest. Identify specific issues with specific solutions.
+
+  Critique Rubric:
+  {critique_rubric}
+
+user: |
+  ## Author Style Guide
+
+  {author_style_guide}
+
+  ## Chapter Blueprint
+
+  {chapter_blueprint}
+
+  ## Story Bible
+
+  {story_bible}
+
+  ## Draft Prose
+
+  {prose}
+
+  ## Your Critique
+
+  Evaluate this draft against the following criteria:
+
+  ### 1. Voice Authenticity (Score 1-10)
+
+  How well does this capture {author_name}'s distinctive voice?
+  - Sentence structure patterns
+  - Vocabulary choices
+  - Tonal consistency
+  - Specific examples of success and failure
+
+  ### 2. Blueprint Adherence (Score 1-10)
+
+  How well does this follow the chapter blueprint?
+  - Scene coverage
+  - Beat execution
+  - Dialogue inclusion
+  - Missing or added elements
+
+  ### 3. Story Consistency (Score 1-10)
+
+  How well does this maintain consistency with the story bible?
+  - Character behavior
+  - Setting details
+  - Established facts
+  - Timeline accuracy
+
+  ### 4. Prose Quality (Score 1-10)
+
+  How strong is the writing on its own merits?
+  - Clarity
+  - Flow
+  - Imagery
+  - Emotional impact
+
+  ### 5. Specific Issues
+
+  List concrete issues that need addressing:
+  - Line-level problems (with line references)
+  - Structural issues
+  - Missing elements
+  - Inconsistencies
+
+  ### 6. Revision Priorities
+
+  Rank the top 3-5 issues by importance.
+
+  ### Overall Score
+
+  Average of the four category scores.
+  If below 7, revision is required.

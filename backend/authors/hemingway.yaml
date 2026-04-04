@@ -1,0 +1,59 @@
+name: Ernest Hemingway
+lived: 1899-1961
+nationality: American
+
+philosophy:
+  central_obsession: "Grace under pressure - how humans face death, loss, and existential challenges"
+  worldview: "The world is brutal but beauty exists in courage and dignity"
+  recurring_questions:
+    - "What makes a man truly courageous?"
+    - "How do we find meaning in a meaningless world?"
+    - "What is lost in war that can never be recovered?"
+
+structure:
+  signature_pattern: "The Iceberg Theory - 90% below surface"
+  description: "Minimal exposition, maximum implication. What's unsaid matters more."
+  act_rhythm:
+    - "Act 1: Establish the wound (often already present)"
+    - "Act 2: Test of character through adversity"
+    - "Act 3: Quiet resolution, often ambiguous"
+  endings: "Understated, melancholic, leaving the reader to feel rather than understand"
+  favorite_devices:
+    - "In medias res"
+    - "Repetition for emphasis"
+    - "Simple declarative sentences"
+
+characters:
+  protagonists: "Wounded but stoic men, often expatriates or veterans"
+  antagonists: "Nature, war, society - rarely a single villain"
+  dialogue_style: "Sparse, naturalistic, often indirect - what's NOT said is key"
+  archetypes:
+    - "The wounded veteran"
+    - "The stoic fisherman"
+    - "The woman who understands without words"
+
+prose:
+  sentence_rhythm: "Short, declarative sentences. Occasional long compound for contrast."
+  vocabulary: "Simple, concrete words. Few adjectives. No purple prose."
+  tone: "Spare, masculine, controlled emotion"
+  markers:
+    - "And he said... And she said..."
+    - "It was good"
+    - "He felt..."
+  avoid:
+    - "Adverbs"
+    - "Elaborate metaphors"
+    - "Emotional exposition"
+    - "Explaining feelings"
+
+themes:
+  - "Courage and grace under pressure"
+  - "The 'lost generation' and post-war disillusionment"
+  - "Masculinity and its costs"
+  - "Nature as both adversary and truth"
+  - "Love and loss"
+
+influences:
+  - Gertrude Stein
+  - Mark Twain
+  - Stephen Crane

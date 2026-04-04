@@ -1,0 +1,6 @@
+# Additional dependencies for Storica Redesign
+# Add these to your requirements.txt if not already present
+
+pydantic-settings>=2.0.0
+google-generativeai>=0.3.0
+aioredis>=2.0.0

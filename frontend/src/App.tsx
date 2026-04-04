@@ -6,6 +6,9 @@ import RegisterPage from './pages/RegisterPage'
 import ProjectsPage from './pages/ProjectsPage'
 import ProjectDetailPage from './pages/ProjectDetailPage'
 import NewProjectPage from './pages/NewProjectPage'
+import StoryBiblePage from './pages/StoryBiblePage'
+import WorkspacePage from './pages/WorkspacePage'
+import PipelinePage from './pages/PipelinePage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
@@ -34,6 +37,10 @@ function App() {
         <Route path="projects" element={<ProjectsPage />} />
         <Route path="projects/new" element={<NewProjectPage />} />
         <Route path="projects/:id" element={<ProjectDetailPage />} />
+        <Route path="projects/:id/bible" element={<StoryBiblePage />} />
+        <Route path="projects/:id/workspace" element={<WorkspacePage />} />
+        <Route path="projects/:id/workspace/:chapterNum" element={<WorkspacePage />} />
+        <Route path="projects/:id/pipeline" element={<PipelinePage />} />
       </Route>
     </Routes>
   )

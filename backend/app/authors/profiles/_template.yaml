@@ -1,0 +1,150 @@
+# Author Profile Template
+# Copy this file and fill in for new authors.
+# Keep examples in the author's original language!
+
+metadata:
+  id: "author_id"                    # Lowercase, no spaces (e.g., "hemingway")
+  name: "Author Name"                # Display name
+  full_name: "Full Name with Titles"
+  birth_year: 1900
+  death_year: 2000                   # Omit for living authors
+  nationality: "Country"
+  primary_language: "en"             # ISO 639-1 code: en, de, fr, es, etc.
+  notable_works:
+    - "First Notable Work"
+    - "Second Notable Work"
+  literary_movement: "Modernism"     # e.g., Modernism, Postmodernism, Realism
+
+philosophy:
+  worldview: |
+    The author's fundamental view of existence, humanity, and meaning.
+    What do they believe about the nature of reality?
+  central_obsession: |
+    What theme or question does this author return to repeatedly?
+    What can they not stop writing about?
+  beliefs:
+    on_humanity: "What they believe about human nature"
+    on_society: "What they believe about social structures"
+    on_justice: "What they believe about justice/morality"
+    on_art: "What they believe about the purpose of art"
+  topic_lenses:
+    - "How they would view a topic about power"
+    - "How they would view a topic about love"
+    - "How they would view a topic about death"
+
+decision_patterns:
+  topic_approach: |
+    How does this author typically approach a story topic?
+    Do they find the irony? The tragedy? The absurdity?
+  plot_construction: |
+    How do they build plots? Linear? Fragmented? Circular?
+    What's their relationship to causality?
+  character_creation: |
+    How do they create characters? Types? Psychological depth?
+    What makes their characters distinctive?
+  conflict_resolution: |
+    How do they resolve (or not resolve) conflicts?
+    Neat endings? Ambiguous? Catastrophic?
+
+structure:
+  signature_pattern: |
+    Their typical story structure. Do they follow three-act?
+    Do they subvert it? What's their signature approach?
+  act_rhythm: |
+    How does pacing flow across the story?
+    Where are the accelerations and pauses?
+  chapter_patterns: |
+    How do they structure chapters? Length? Focus?
+    Scene count per chapter?
+  openings: |
+    How do they begin stories? In media res? Setup?
+    What's their typical first chapter approach?
+  endings: |
+    How do they end stories? Resolution? Ambiguity?
+    What emotional state do they leave readers in?
+
+language:
+  sentence_patterns:
+    - "Short declarative sentences"
+    - "Complex sentences with multiple subordinate clauses"
+    - "Sentence fragment patterns"
+  vocabulary: |
+    Describe their vocabulary: simple/complex, formal/colloquial,
+    specialized terminology, characteristic word choices.
+  register: |
+    Formal, informal, elevated, vernacular, or mixed?
+    How does register shift for different characters/situations?
+  markers:
+    - "Distinctive style marker 1"
+    - "Distinctive style marker 2"
+    - "Characteristic punctuation use"
+  anti_patterns:
+    - "What they never do"
+    - "Phrases/styles to avoid"
+    - "Common pitfalls when imitating"
+  dialogue_style: |
+    How do their characters speak? Realistic? Stylized?
+    How is dialogue formatted? Tagged? Untagged?
+
+characters:
+  protagonist_patterns:
+    - "Typical protagonist type 1"
+    - "Typical protagonist type 2"
+  antagonist_patterns:
+    - "Typical antagonist type 1"
+    - "How antagonists function in their work"
+  archetypes:
+    the_observer: "Character type that appears frequently"
+    the_authority: "Another recurring type"
+  relationships: |
+    How do characters relate to each other?
+    Power dynamics, intimacy patterns, conflicts.
+
+themes:
+  primary:
+    - "Core theme 1"
+    - "Core theme 2"
+  secondary:
+    - "Supporting theme"
+  forbidden:
+    - "Themes this author would never explore"
+    - "Approaches that would betray their voice"
+  recurring_motifs:
+    - "Symbol or image that recurs"
+    - "Structural motif"
+
+examples:
+  # Keep these in the author's ORIGINAL LANGUAGE
+  - text: |
+      Example opening paragraph in original language.
+      This should be characteristic of the author's style.
+    source: "Novel Name"
+    annotation: "What makes this exemplary of the author's style"
+    category: "opening"
+
+  - text: |
+      Example dialogue in original language.
+    source: "Work Name"
+    annotation: "Note about dialogue style"
+    category: "dialogue"
+
+  - text: |
+      Example description passage.
+    source: "Work Name"
+    annotation: "Note about descriptive style"
+    category: "description"
+
+critique_rubric:
+  voice_markers:
+    - "Marker that indicates authentic voice"
+    - "Another authenticity indicator"
+  thematic_alignment:
+    - "How themes should manifest in prose"
+    - "Thematic concerns to check for"
+  red_flags:
+    - "Sign that voice is inauthentic"
+    - "Common mistake to watch for"
+  weight_voice: 0.35
+  weight_theme: 0.25
+  weight_structure: 0.20
+  weight_language: 0.20

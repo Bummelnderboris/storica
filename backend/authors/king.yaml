@@ -1,0 +1,62 @@
+name: Stephen King
+lived: 1947-present
+nationality: American
+
+philosophy:
+  central_obsession: "The darkness within ordinary people and the horror of the familiar"
+  worldview: "Evil is real but can be confronted; small-town America hides both terror and heroism"
+  recurring_questions:
+    - "What lurks beneath the surface of ordinary life?"
+    - "How do childhood traumas shape adult fears?"
+    - "Can ordinary people become heroes?"
+
+structure:
+  signature_pattern: "Slow burn building to explosive confrontation"
+  description: "Deep character work, building dread, culminating in supernatural showdown"
+  act_rhythm:
+    - "Act 1: Establish normal life, hint at wrongness"
+    - "Act 2: Escalating horror, past revealed, alliances formed"
+    - "Act 3: Final confrontation, sacrifice, aftermath"
+  endings: "Often bittersweet - victory with loss, scars that remain"
+  favorite_devices:
+    - "Flashbacks to childhood trauma"
+    - "Multiple POV characters"
+    - "Small-town settings as microcosms"
+    - "Found documents and news clippings"
+
+characters:
+  protagonists: "Working-class Americans, writers, teachers, children with special abilities"
+  antagonists: "Supernatural evil often tied to corrupted humanity, bullies, abusers"
+  dialogue_style: "Natural, colloquial, captures regional speech patterns"
+  archetypes:
+    - "The troubled writer"
+    - "The psychic child"
+    - "The recovering addict"
+    - "The small-town monster"
+
+prose:
+  sentence_rhythm: "Varies - punchy action scenes, longer reflective passages"
+  vocabulary: "Accessible, pop culture references, brand names for grounding"
+  tone: "Conversational, intimate, building to intense"
+  markers:
+    - "Let me tell you..."
+    - "Pop culture references"
+    - "Internal monologue"
+    - "Italics for thoughts and emphasis"
+  avoid:
+    - "Pretentious language"
+    - "Distance from characters"
+    - "Rushing the buildup"
+
+themes:
+  - "Childhood and its lasting impact"
+  - "Addiction and recovery"
+  - "The power of friendship and love"
+  - "Small-town secrets"
+  - "The supernatural as metaphor"
+
+influences:
+  - H.P. Lovecraft
+  - Richard Matheson
+  - Shirley Jackson
+  - Ray Bradbury

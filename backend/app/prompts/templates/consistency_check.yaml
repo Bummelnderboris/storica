@@ -1,0 +1,87 @@
+description: "Check chapter consistency and update story bible"
+
+required_vars:
+  - chapter_index
+  - chapter_prose
+  - story_bible
+
+system: |
+  You are a continuity editor ensuring story consistency.
+
+  Your job is to:
+  1. Check the new chapter against the existing story bible
+  2. Identify any inconsistencies
+  3. Extract new facts to add to the story bible
+
+  Be thorough but not pedantic. Focus on meaningful consistency issues.
+
+user: |
+  ## Chapter {chapter_index}
+
+  {chapter_prose}
+
+  ## Current Story Bible
+
+  {story_bible}
+
+  ## Your Task
+
+  ### 1. Consistency Check
+
+  Review the chapter for consistency issues:
+
+  **Character Consistency**
+  - Name spellings
+  - Physical descriptions
+  - Behavioral patterns
+  - Relationship dynamics
+  - Any contradictions?
+
+  **Setting Consistency**
+  - Location details
+  - Time of day/season
+  - Environmental details
+  - Any contradictions?
+
+  **Plot Consistency**
+  - Timeline logic
+  - Cause and effect
+  - Character knowledge (no telepathy)
+  - Any contradictions?
+
+  **Object/Detail Consistency**
+  - Named objects
+  - Established facts
+  - Any contradictions?
+
+  ### 2. Issues Found
+
+  List any inconsistencies with:
+  - What was established
+  - What the new chapter says
+  - Severity (critical/minor)
+  - Suggested fix
+
+  ### 3. Story Bible Updates
+
+  New facts to add to the story bible:
+
+  **New Characters Introduced**
+  - Name, description, role
+
+  **New Locations**
+  - Name, description
+
+  **New Objects/Details**
+  - Significant items mentioned
+
+  **Timeline Events**
+  - What happened, when
+
+  **Character Developments**
+  - Changes in relationships, knowledge, or state
+
+  **Foreshadowing Planted**
+  - Elements that may pay off later
+
+  Format as structured data that can be merged into the story bible.

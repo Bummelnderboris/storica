@@ -1,39 +1,25 @@
-"""User model."""
+"""User database model."""
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, func
+from sqlalchemy.orm import relationship
 
-from sqlalchemy import Boolean, DateTime, String, func
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.database import Base
-
-if TYPE_CHECKING:
-    from app.models.project import Project
-    from app.models.cost import CostRecord
+from ..database import Base
 
 
 class User(Base):
-    """User account model."""
+    """Application user."""
 
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
-    password_hash: Mapped[str] = mapped_column(String(255))
-    full_name: Mapped[str] = mapped_column(String(255))
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), unique=True, index=True, nullable=False)
+    hashed_password = Column(String(255), nullable=False)
+    full_name = Column(String(255), nullable=True)
+    is_active = Column(Boolean, default=True)
+    is_superuser = Column(Boolean, default=False)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
 
     # Relationships
-    projects: Mapped[list["Project"]] = relationship(
-        "Project", back_populates="user", cascade="all, delete-orphan"
-    )
-    cost_records: Mapped[list["CostRecord"]] = relationship(
-        "CostRecord", back_populates="user", cascade="all, delete-orphan"
-    )
+    projects = relationship("Project", back_populates="user", cascade="all, delete-orphan")

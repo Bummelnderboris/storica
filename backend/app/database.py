@@ -1,39 +1,62 @@
-"""Database connection and session management."""
+"""Database configuration and session management."""
 
-from collections.abc import AsyncGenerator
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase
+from .config import settings
 
-from app.config import get_settings
-
-settings = get_settings()
-
-engine = create_async_engine(
-    settings.database_url,
-    echo=settings.database_echo,
-    pool_pre_ping=True,
+# Sync engine (for migrations and legacy code)
+engine = create_engine(
+    settings.DATABASE_URL,
+    connect_args={"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {}
 )
 
-async_session_maker = async_sessionmaker(
-    engine,
+# Create sync session factory
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Base class for models
+Base = declarative_base()
+
+
+def get_db():
+    """Dependency for getting sync database sessions."""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+# Async support
+def _get_async_url(url: str) -> str:
+    """Convert sync URL to async URL."""
+    if url.startswith("sqlite:///"):
+        return url.replace("sqlite:///", "sqlite+aiosqlite:///")
+    elif url.startswith("postgresql://"):
+        return url.replace("postgresql://", "postgresql+asyncpg://")
+    return url
+
+
+# Async engine
+async_engine = create_async_engine(
+    _get_async_url(settings.DATABASE_URL),
+    connect_args={"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {}
+)
+
+# Async session factory
+AsyncSessionLocal = async_sessionmaker(
+    async_engine,
     class_=AsyncSession,
     expire_on_commit=False,
 )
 
 
-class Base(DeclarativeBase):
-    """Base class for all SQLAlchemy models."""
-
-    pass
-
-
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
-    """Dependency that provides a database session."""
-    async with async_session_maker() as session:
+async def get_async_db():
+    """Dependency for getting async database sessions."""
+    async with AsyncSessionLocal() as session:
         try:
             yield session
-            await session.commit()
-        except Exception:
-            await session.rollback()
-            raise
+        finally:
+            await session.close()

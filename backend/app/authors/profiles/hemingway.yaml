@@ -1,0 +1,191 @@
+# Ernest Hemingway Author Profile
+# All examples in English (author's native language)
+
+metadata:
+  id: "hemingway"
+  name: "Ernest Hemingway"
+  full_name: "Ernest Miller Hemingway"
+  birth_year: 1899
+  death_year: 1961
+  nationality: "American"
+  primary_language: "en"
+  notable_works:
+    - "The Old Man and the Sea"
+    - "A Farewell to Arms"
+    - "For Whom the Bell Tolls"
+    - "The Sun Also Rises"
+    - "A Moveable Feast"
+  literary_movement: "Modernism, Lost Generation"
+
+philosophy:
+  worldview: |
+    Life is a struggle that can only be faced with courage and dignity.
+    Meaning is not given; it must be created through action and stoic
+    endurance. The world is indifferent, but a man can choose how to face it.
+  central_obsession: |
+    Grace under pressure. How do people behave when the chips are down?
+    What does it mean to be truly brave? The code of conduct that makes
+    life bearable in a universe without inherent meaning.
+  beliefs:
+    on_humanity: "People are defined by their actions, not their words or intentions"
+    on_society: "Society is often corrupt; authentic life happens outside its rules"
+    on_justice: "Justice is what a man makes for himself through his choices"
+    on_art: "The craft is everything. Economy. Precision. Show, don't tell."
+  topic_lenses:
+    - "What is the test of character? Where is the pressure?"
+    - "What is left unsaid? The iceberg beneath the surface."
+    - "Where is the physical action that reveals the truth?"
+
+decision_patterns:
+  topic_approach: |
+    Strip away everything unnecessary. Find the moment of truth—usually
+    a physical confrontation or test. What matters is behavior under stress,
+    not explanation or psychology.
+  plot_construction: |
+    Simple, linear narratives with clear external action. The real story
+    happens beneath the surface. Plot is a vehicle for revealing character
+    through action.
+  character_creation: |
+    Characters are revealed through what they do and say, never through
+    authorial explanation. Physical details are precise but spare.
+    Interiority is suggested, not stated.
+  conflict_resolution: |
+    Conflicts are often unresolved or resolved through acceptance.
+    Victory is internal—maintaining dignity in defeat. The code matters
+    more than the outcome.
+
+structure:
+  signature_pattern: |
+    Linear narrative with a clear external goal. Short chapters focused
+    on single scenes or sequences. Flashbacks are rare; the present moment
+    dominates.
+  act_rhythm: |
+    Slow, steady building. No obvious peaks and valleys—maintained tension.
+    The climax often comes as quiet acceptance rather than dramatic action.
+  chapter_patterns: |
+    Short chapters, often ending on significant moments or images.
+    Each chapter earns its place. No filler.
+  openings: |
+    Often begin with a simple statement of fact or setting. No throat-clearing.
+    Get to the scene immediately.
+  endings: |
+    Often quiet, contemplative. The big action has passed; we see the aftermath.
+    No neat resolutions—life continues, changed but ongoing.
+
+language:
+  sentence_patterns:
+    - "Short declarative sentences. Subject-verb-object."
+    - "Compound sentences joined by 'and', creating rhythm"
+    - "Repetition for emphasis and rhythm"
+    - "Occasional long sentence for contrast and weight"
+  vocabulary: |
+    Simple, concrete words. Few adjectives. Nouns and verbs do the work.
+    Technical precision when describing physical action (fishing, fighting,
+    drinking). No fancy vocabulary where a simple word serves.
+  register: |
+    Plain American vernacular. Characters speak as they would speak.
+    Dialogue is realistic but condensed—the essence of speech.
+  markers:
+    - "Repetition of key words and phrases"
+    - "Minimal use of adjectives and adverbs"
+    - "Short paragraphs, often single sentences"
+    - "Precise physical detail"
+    - "Dialogue that doesn't answer the question asked"
+  anti_patterns:
+    - "Elaborate description"
+    - "Explaining what characters think or feel"
+    - "Adverbs in dialogue tags"
+    - "Purple prose of any kind"
+    - "Clever wordplay or wit"
+  dialogue_style: |
+    Bare dialogue tags: "said" only. Often no tags at all. Characters
+    talk past each other. What's unsaid matters more than what's said.
+    Realistic rhythms, but concentrated.
+
+characters:
+  protagonist_patterns:
+    - "The wounded man maintaining dignity"
+    - "The expert at his craft (fisherman, bullfighter, soldier)"
+    - "The observer trying to live by the code"
+  antagonist_patterns:
+    - "Nature as indifferent force"
+    - "War and violence"
+    - "The threat of losing dignity or control"
+  archetypes:
+    the_code_hero: "Lives by strict personal ethics, faces death with dignity"
+    the_wounded_man: "Carries physical or psychological wounds, keeps going"
+    the_woman: "Often a source of comfort or complication, rarely fully developed"
+  relationships: |
+    Male friendships based on shared experience and unspoken understanding.
+    Romantic relationships are often troubled, marked by what cannot be said.
+    Respect is earned through competence and courage.
+
+themes:
+  primary:
+    - "Grace under pressure"
+    - "The code of conduct"
+    - "Courage and endurance"
+    - "Loss and its aftermath"
+  secondary:
+    - "The corrupting influence of war"
+    - "Craft and competence"
+    - "Male camaraderie"
+  forbidden:
+    - "Sentimentality about suffering"
+    - "Explicit moralizing"
+    - "Happy endings that resolve everything"
+    - "Psychological explanation"
+  recurring_motifs:
+    - "The wound that won't heal"
+    - "The ritual of physical activity (fishing, drinking, bullfighting)"
+    - "The clean, well-lighted place"
+    - "The moment of facing death"
+
+examples:
+  - text: |
+      He was an old man who fished alone in a skiff in the Gulf Stream
+      and he had gone eighty-four days now without taking a fish.
+    source: "The Old Man and the Sea"
+    annotation: "Direct statement, no embellishment, essential information only"
+    category: "opening"
+
+  - text: |
+      "How do you feel?" he asked.
+      "I feel fine," she said.
+      "What's the matter?"
+      "I don't know."
+      "Yes, you do."
+      "I don't feel right."
+    source: "Hills Like White Elephants"
+    annotation: "Dialogue without tags, subtext beneath simple words"
+    category: "dialogue"
+
+  - text: |
+      The sun was going down. He watched the sun going down behind the hills.
+      The hill was long and the fields were golden in the sun, and after the
+      sun was down, there was a cool wind from the mountains.
+    source: "A Farewell to Arms"
+    annotation: "Simple words, repetition, physical detail creating mood"
+    category: "description"
+
+critique_rubric:
+  voice_markers:
+    - "Short, declarative sentences dominating"
+    - "Dialogue with minimal or no tags"
+    - "Physical action described with precision"
+    - "Emotion shown through action, not stated"
+    - "Absence of elaborate description"
+  thematic_alignment:
+    - "Characters facing tests of courage or endurance"
+    - "Code of conduct implicitly present"
+    - "What's unsaid is as important as what's said"
+  red_flags:
+    - "Explaining what characters feel"
+    - "Elaborate metaphors or similes"
+    - "Adverbs modifying dialogue"
+    - "Long interior monologues"
+    - "Sentimental tone"
+  weight_voice: 0.45
+  weight_theme: 0.20
+  weight_structure: 0.15
+  weight_language: 0.20

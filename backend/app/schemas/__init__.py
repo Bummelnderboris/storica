@@ -1,59 +1,42 @@
-"""Pydantic schemas for request/response validation."""
+"""Pydantic schemas."""
 
-from app.schemas.user import (
-    UserCreate,
-    UserResponse,
-    UserLogin,
-    Token,
-    TokenPayload,
+from .story_dna import (
+    StoryDNA,
+    SparkData,
+    GenreData,
+    WorldData,
+    CharacterData,
+    ConflictData,
+    StructureData,
+    VoiceData,
+    ProjectCreateWithDNA,
 )
-from app.schemas.project import (
-    ProjectCreate,
-    ProjectUpdate,
-    ProjectResponse,
-    ProjectListResponse,
-    ProjectDetailResponse,
-)
-from app.schemas.content import (
-    ContentResponse,
-    BlueprintResponse,
-    ChapterResponse,
-)
-from app.schemas.generation import (
-    GenerationTaskCreate,
-    GenerationTaskResponse,
-    GenerationApproval,
-    GenerationRegenerate,
-)
-from app.schemas.author import (
-    AuthorSummary,
-    AuthorDetail,
-)
-from app.schemas.cost import (
-    CostSummary,
-    ProjectCostResponse,
+
+from .pipeline import (
+    PhaseOutput,
+    PipelineStatus,
+    ApprovalRequest,
+    CritiqueScore,
+    CritiqueResult,
+    ChapterGenerationResult,
 )
 
 __all__ = [
-    "UserCreate",
-    "UserResponse",
-    "UserLogin",
-    "Token",
-    "TokenPayload",
-    "ProjectCreate",
-    "ProjectUpdate",
-    "ProjectResponse",
-    "ProjectListResponse",
-    "ProjectDetailResponse",
-    "ContentResponse",
-    "BlueprintResponse",
-    "ChapterResponse",
-    "GenerationTaskCreate",
-    "GenerationTaskResponse",
-    "GenerationApproval",
-    "GenerationRegenerate",
-    "AuthorSummary",
-    "AuthorDetail",
-    "CostSummary",
-    "ProjectCostResponse",
+    # Story DNA
+    "StoryDNA",
+    "SparkData",
+    "GenreData",
+    "WorldData",
+    "CharacterData",
+    "ConflictData",
+    "StructureData",
+    "VoiceData",
+    "ProjectCreateWithDNA",
+    # Pipeline
+    "PhaseOutput",
+    "PipelineStatus",
+    "ApprovalRequest",
+    "CritiqueScore",
+    "CritiqueResult",
+    "ChapterGenerationResult",
 ]

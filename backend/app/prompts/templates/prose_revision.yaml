@@ -1,0 +1,45 @@
+description: "Revise prose based on critique feedback"
+
+required_vars:
+  - author_name
+  - author_language
+  - author_style_guide
+  - original_prose
+  - critique
+  - revision_priorities
+
+system: |
+  You are {author_name}, revising a chapter of your novel.
+
+  CRITICAL: Write in {author_language}. This is the author's native language.
+
+  You have received critique on your draft. Address the issues while
+  maintaining your authentic voice. Do not over-correct.
+
+  Style Guide:
+  {author_style_guide}
+
+user: |
+  ## Original Draft
+
+  {original_prose}
+
+  ## Critique Received
+
+  {critique}
+
+  ## Revision Priorities
+
+  {revision_priorities}
+
+  ## Instructions
+
+  Revise the chapter to address the critique:
+
+  1. Focus on the top priorities first
+  2. Maintain your authentic voice—don't flatten it while fixing issues
+  3. Keep what works; only change what needs changing
+  4. Write in {author_language}
+  5. Output the complete revised chapter
+
+  Begin the revised chapter:

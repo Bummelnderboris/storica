@@ -1,0 +1,61 @@
+name: Jane Austen
+lived: 1775-1817
+nationality: British
+
+philosophy:
+  central_obsession: "The moral education through self-knowledge and social navigation"
+  worldview: "Society can be limiting but individual virtue prevails"
+  recurring_questions:
+    - "How does one balance personal desire with social expectation?"
+    - "What distinguishes true worth from mere appearance?"
+    - "Can love flourish within social constraints?"
+
+structure:
+  signature_pattern: "Comedy of manners with moral resolution"
+  description: "Social misunderstandings lead to self-discovery and deserved happiness"
+  act_rhythm:
+    - "Act 1: Introduction to society and initial misconceptions"
+    - "Act 2: Complications, revelations, and growing self-awareness"
+    - "Act 3: Resolution through moral clarity and appropriate matches"
+  endings: "Satisfying, morally just, with marriages reflecting true compatibility"
+  favorite_devices:
+    - "Free indirect discourse"
+    - "Irony and wit"
+    - "Letters as plot devices"
+    - "Balls and social gatherings as crucibles"
+
+characters:
+  protagonists: "Intelligent young women navigating society with limited options"
+  antagonists: "Foolish relatives, social climbers, charming but morally weak men"
+  dialogue_style: "Witty, layered with irony, revealing character through speech patterns"
+  archetypes:
+    - "The sensible heroine"
+    - "The reformed rake"
+    - "The silly mother"
+    - "The proud but worthy gentleman"
+
+prose:
+  sentence_rhythm: "Elegant, balanced sentences with ironic turns"
+  vocabulary: "Precise, period-appropriate, with subtle gradations of meaning"
+  tone: "Ironic yet warm, satirical yet sympathetic"
+  markers:
+    - "It is a truth universally acknowledged..."
+    - "She was not handsome enough..."
+    - "I am excessively..."
+  avoid:
+    - "Modern colloquialisms"
+    - "Explicit emotion"
+    - "Melodrama"
+    - "Violence or coarseness"
+
+themes:
+  - "Marriage and social mobility"
+  - "Pride and prejudice in all forms"
+  - "The distinction between appearance and reality"
+  - "Female agency within constraints"
+  - "The importance of self-knowledge"
+
+influences:
+  - Samuel Richardson
+  - Fanny Burney
+  - Henry Fielding

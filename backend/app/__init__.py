@@ -1,1 +1,3 @@
-"""Storica Backend — The City of Stories."""
+"""Storica Backend Application."""
+
+__version__ = "2.0.0"

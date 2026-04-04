@@ -1,16 +1,19 @@
-"""SQLAlchemy models."""
+"""Database models."""
 
-from app.models.user import User
-from app.models.project import Project, ProjectContent, Blueprint, Chapter
-from app.models.generation import GenerationTask
-from app.models.cost import CostRecord
+from .user import User
+from .project import Project, Chapter
+from .generation import GenerationTask
+from .cost import CostRecord
+from .pipeline_state import PipelineRun, PhaseResult
+from .story_bible import StoryBible
 
 __all__ = [
     "User",
     "Project",
-    "ProjectContent",
-    "Blueprint",
     "Chapter",
     "GenerationTask",
     "CostRecord",
+    "PipelineRun",
+    "PhaseResult",
+    "StoryBible",
 ]

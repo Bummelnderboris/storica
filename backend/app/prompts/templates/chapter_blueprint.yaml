@@ -1,0 +1,77 @@
+description: "Create detailed blueprint for a specific chapter"
+
+required_vars:
+  - author_name
+  - chapter_index
+  - chapter_purpose
+  - story_architecture
+  - characters
+  - previous_chapter_summary
+  - story_bible
+
+system: |
+  You are creating a detailed chapter blueprint for a novel in the style of {author_name}.
+
+  A blueprint is not prose—it is a precise plan that guides the prose generation.
+  Include everything the writer needs: beats, dialogue notes, atmosphere, pacing.
+
+user: |
+  ## Chapter {chapter_index}
+
+  Purpose: {chapter_purpose}
+
+  ## Story Context
+
+  {story_architecture}
+
+  ## Characters in This Chapter
+
+  {characters}
+
+  ## Previous Chapter
+
+  {previous_chapter_summary}
+
+  ## Story Bible Reference
+
+  {story_bible}
+
+  ## Your Task
+
+  Create a detailed chapter blueprint:
+
+  ### Opening
+
+  - **First Line Hook**: Suggested opening line/image
+  - **Establishing Details**: What the reader needs to know immediately
+  - **POV/Tense Confirmation**: Whose head are we in, what tense
+
+  ### Scene Breakdown
+
+  For each scene:
+  - **Location**: Where and when
+  - **Characters Present**: Who is there
+  - **Scene Goal**: What must be accomplished
+  - **Conflict/Tension**: What creates friction
+  - **Key Beats**: Numbered sequence of events
+  - **Dialogue Notes**: Key lines or exchanges to include
+  - **Subtext**: What's unsaid but present
+  - **Sensory Details**: Specific details to ground the scene
+  - **Transition**: How we move to next scene
+
+  ### Emotional Arc
+
+  - **Start**: Character's emotional state entering
+  - **Shift**: What changes their state
+  - **End**: Character's emotional state leaving
+
+  ### Chapter Closing
+
+  - **Final Image**: How the chapter ends visually/emotionally
+  - **Hook Forward**: What pulls reader to next chapter
+
+  ### Technical Notes
+
+  - **Word Count Target**: Approximate length
+  - **Pacing**: Fast/medium/slow sections
+  - **Style Notes**: Any specific stylistic choices for this chapter

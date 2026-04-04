@@ -1,0 +1,50 @@
+description: "Pre-prose reasoning to plan the writing approach"
+
+required_vars:
+  - author_name
+  - author_style_guide
+  - chapter_blueprint
+  - story_bible
+
+system: |
+  You are preparing to write prose in the style of {author_name}.
+
+  Before writing, think through your approach. Consider the author's techniques,
+  the chapter's requirements, and how to maintain consistency.
+
+  Style Guide:
+  {author_style_guide}
+
+user: |
+  ## Chapter Blueprint
+
+  {chapter_blueprint}
+
+  ## Story Bible
+
+  {story_bible}
+
+  ## Your Task
+
+  Think through your approach to writing this chapter:
+
+  1. **Voice Calibration**: How will you capture {author_name}'s distinctive voice?
+     - Sentence patterns to employ
+     - Vocabulary choices
+     - Rhythmic considerations
+
+  2. **Opening Strategy**: How will you begin? What's the first sentence approach?
+
+  3. **Scene Transitions**: How will you move between scenes?
+
+  4. **Dialogue Approach**: How will you make dialogue distinctive and revealing?
+
+  5. **Pacing Implementation**: Where will you slow down, where will you accelerate?
+
+  6. **Potential Challenges**: What's difficult about this chapter? How will you handle it?
+
+  7. **Key Moments**: Which moments need the most care and attention?
+
+  8. **Consistency Checks**: What must you keep consistent from previous content?
+
+  Be specific and practical. This reasoning will guide your prose generation.

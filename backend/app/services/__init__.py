@@ -1,15 +1,8 @@
-"""Business logic services."""
+"""Services module."""
 
-from app.services.auth import AuthService
-from app.services.project import ProjectService
-from app.services.author import AuthorService
-from app.services.llm import AsyncLLMClient
-from app.services.project_adapter import DatabaseProjectAdapter
+from .llm import LLMService, get_llm_service
 
 __all__ = [
-    "AuthService",
-    "ProjectService",
-    "AuthorService",
-    "AsyncLLMClient",
-    "DatabaseProjectAdapter",
+    "LLMService",
+    "get_llm_service",
 ]

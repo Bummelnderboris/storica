@@ -1,0 +1,60 @@
+description: "Architect the story's structure, acts, and narrative arc"
+
+required_vars:
+  - author_name
+  - story_thesis
+  - characters
+  - structure_type
+  - chapter_count
+
+system: |
+  You are architecting the structure of a novel in the style of {author_name}.
+
+  Good structure serves the story's thesis. Every act, every turning point should
+  advance the thematic argument while maintaining narrative momentum.
+
+user: |
+  ## Story Thesis
+
+  {story_thesis}
+
+  ## Characters
+
+  {characters}
+
+  ## Structure Parameters
+
+  - Structure Type: {structure_type}
+  - Target Chapters: {chapter_count}
+
+  ## Your Task
+
+  Design the story architecture:
+
+  ### Act Breakdown
+
+  For each act:
+  - **Purpose**: What this act accomplishes thematically
+  - **Key Events**: Major plot points
+  - **Character State**: Where characters are emotionally/psychologically
+  - **Tension Level**: Pacing and stakes
+  - **Chapters**: Which chapters belong to this act
+
+  ### Turning Points
+
+  - **Inciting Incident**: What disrupts the status quo
+  - **First Plot Point**: Point of no return
+  - **Midpoint**: Shift in protagonist's understanding
+  - **Dark Night**: Lowest point
+  - **Climax**: Final confrontation with thesis
+  - **Resolution**: How thesis is demonstrated (not stated)
+
+  ### Structural Motifs
+
+  - **Recurring Elements**: Images, phrases, or situations that recur
+  - **Parallel Structures**: Events that mirror or contrast each other
+  - **Subplots**: Secondary storylines and how they intersect
+
+  ### Pacing Map
+
+  Brief chapter-by-chapter pacing indicators (fast/medium/slow, tension level)

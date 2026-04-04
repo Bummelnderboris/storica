@@ -1,139 +1,80 @@
-"""Project and content models."""
+"""Project and Chapter database models."""
 
-import enum
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean, func
+from sqlalchemy.orm import relationship
 
-from sqlalchemy import (
-    DateTime,
-    Enum,
-    ForeignKey,
-    Integer,
-    String,
-    Text,
-    func,
-)
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from app.database import Base
-
-if TYPE_CHECKING:
-    from app.models.user import User
-    from app.models.generation import GenerationTask
-    from app.models.cost import CostRecord
-
-
-class ProjectStage(str, enum.Enum):
-    """Project workflow stages."""
-
-    ESSENCE = "essence"
-    ARCHITECTURE = "architecture"
-    BLUEPRINT = "blueprint"
-    PROSE = "prose"
-    POLISH = "polish"
-    COMPLETE = "complete"
-
-
-class ContentType(str, enum.Enum):
-    """Types of project content."""
-
-    ESSENCE = "essence"
-    ARCHITECTURE = "architecture"
-    STORY_BIBLE = "story_bible"
+from ..database import Base
 
 
 class Project(Base):
-    """Project model representing a novel generation project."""
+    """A novel project."""
 
     __tablename__ = "projects"
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
-    name: Mapped[str] = mapped_column(String(255))
-    author_id: Mapped[str] = mapped_column(String(100))
-    target_words: Mapped[int] = mapped_column(Integer, default=45000)
-    current_stage: Mapped[ProjectStage] = mapped_column(
-        Enum(ProjectStage), default=ProjectStage.ESSENCE
-    )
-    current_chapter: Mapped[int] = mapped_column(Integer, default=0)
-    total_chapters: Mapped[int] = mapped_column(Integer, default=0)
-    seed: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(255), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    author_id = Column(String(100), nullable=True)
+    status = Column(String(50), default="draft")
+
+    # Story DNA and pipeline outputs (JSON columns)
+    story_dna_json = Column(Text, nullable=True)
+    topic_analysis_json = Column(Text, nullable=True)
+    story_thesis_json = Column(Text, nullable=True)
+    character_system_json = Column(Text, nullable=True)
+    story_architecture_json = Column(Text, nullable=True)
+
+    # Statistics
+    total_words = Column(Integer, default=0)
+    chapter_count = Column(Integer, default=0)
+
+    # Cost tracking
+    total_input_tokens = Column(Integer, default=0)
+    total_output_tokens = Column(Integer, default=0)
+    estimated_cost = Column(Integer, default=0)  # In cents
+
+    # Timestamps
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
 
     # Relationships
-    user: Mapped["User"] = relationship("User", back_populates="projects")
-    contents: Mapped[list["ProjectContent"]] = relationship(
-        "ProjectContent", back_populates="project", cascade="all, delete-orphan"
-    )
-    blueprints: Mapped[list["Blueprint"]] = relationship(
-        "Blueprint", back_populates="project", cascade="all, delete-orphan"
-    )
-    chapters: Mapped[list["Chapter"]] = relationship(
-        "Chapter", back_populates="project", cascade="all, delete-orphan"
-    )
-    generation_tasks: Mapped[list["GenerationTask"]] = relationship(
-        "GenerationTask", back_populates="project", cascade="all, delete-orphan"
-    )
-    cost_records: Mapped[list["CostRecord"]] = relationship(
-        "CostRecord", back_populates="project", cascade="all, delete-orphan"
-    )
-
-
-class ProjectContent(Base):
-    """Versioned content for project (essence, architecture, story_bible)."""
-
-    __tablename__ = "project_content"
-
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"), index=True)
-    content_type: Mapped[ContentType] = mapped_column(Enum(ContentType))
-    content: Mapped[str] = mapped_column(Text)
-    version: Mapped[int] = mapped_column(Integer, default=1)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
-
-    # Relationships
-    project: Mapped["Project"] = relationship("Project", back_populates="contents")
-
-
-class Blueprint(Base):
-    """Chapter blueprint model."""
-
-    __tablename__ = "blueprints"
-
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"), index=True)
-    chapter_num: Mapped[int] = mapped_column(Integer)
-    content: Mapped[str] = mapped_column(Text)
-    version: Mapped[int] = mapped_column(Integer, default=1)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
-
-    # Relationships
-    project: Mapped["Project"] = relationship("Project", back_populates="blueprints")
+    user = relationship("User", back_populates="projects")
+    chapters = relationship("Chapter", back_populates="project", cascade="all, delete-orphan", order_by="Chapter.chapter_number")
+    pipeline_runs = relationship("PipelineRun", back_populates="project", cascade="all, delete-orphan")
+    story_bible = relationship("StoryBible", back_populates="project", uselist=False, cascade="all, delete-orphan")
 
 
 class Chapter(Base):
-    """Generated chapter model."""
+    """A chapter within a project."""
 
     __tablename__ = "chapters"
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"), index=True)
-    chapter_num: Mapped[int] = mapped_column(Integer)
-    content: Mapped[str] = mapped_column(Text)
-    word_count: Mapped[int] = mapped_column(Integer, default=0)
-    version: Mapped[int] = mapped_column(Integer, default=1)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    id = Column(Integer, primary_key=True, index=True)
+    project_id = Column(Integer, ForeignKey("projects.id", ondelete="CASCADE"), nullable=False)
+    chapter_number = Column(Integer, nullable=False)
+    title = Column(String(255), nullable=True)
+    content = Column(Text, nullable=True)
+    blueprint_json = Column(Text, nullable=True)
+
+    # Status
+    status = Column(String(50), default="pending")
+    is_approved = Column(Boolean, default=False)
+
+    # Statistics
+    word_count = Column(Integer, default=0)
+
+    # Critique data
+    final_score = Column(Integer, nullable=True)  # Score * 10 for precision
+    critique_iterations = Column(Integer, default=0)
+
+    # Cost tracking
+    input_tokens = Column(Integer, default=0)
+    output_tokens = Column(Integer, default=0)
+
+    # Timestamps
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
 
     # Relationships
-    project: Mapped["Project"] = relationship("Project", back_populates="chapters")
+    project = relationship("Project", back_populates="chapters")
