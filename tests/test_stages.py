@@ -88,12 +88,13 @@ def _character(cid: str, name: str, role: CharacterRole, aliases=None) -> Charac
     )
 
 
-def _draft(characters, relationships=None, timeline=None) -> WorldCastDraft:
+def _draft(characters, relationships=None, timeline=None, knowledge=None) -> WorldCastDraft:
     return WorldCastDraft(
         characters=characters,
         relationships=relationships or [],
         world_facts=[FactPair(key="setting", value="Lauenegg")],
         timeline=timeline or [],
+        knowledge=knowledge or [],
         constraints=ConstraintsDraft(language="de", forbidden=["justice triumphs"], chapter_count=5),
     )
 

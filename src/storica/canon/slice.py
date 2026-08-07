@@ -97,6 +97,37 @@ def canon_slice(
                 for ev in sorted(events, key=lambda e: (e.order is None, e.order or 0))
             )
 
+    # Knowledge state. Rendered per character rather than per fact, because that is the form the
+    # writer needs at the sentence: not "who knows about the forgery" but "what may this person say".
+    # Every character in the slice is listed against every relevant fact, including the ones they do
+    # not know — an omission would read as "unspecified", and unspecified is what gets leaked.
+    relevant = [
+        k for k in model.knowledge
+        if not in_slice
+        or set(k.concerns) & in_slice
+        or any(h.character_id in in_slice for h in k.holders)
+    ]
+    if relevant:
+        parts.append(
+            "\n## Knowledge state (WHO KNOWS WHAT)\n"
+            "A character may only act on, allude to, or react to what this table gives them. Writing "
+            "someone as aware of a fact they do not hold is a contradiction exactly like renaming "
+            "them. 'suspects' is not 'knows': it may show as unease or a question, never as certainty."
+        )
+        for k in relevant:
+            parts.append(f"\n### [{k.id}] {k.fact}")
+            for cid in known:
+                h = next((x for x in k.holders if x.character_id == cid), None)
+                if h is None:
+                    parts.append(f"  - {cid}: unaware")
+                    continue
+                since = f" (since {h.since})" if h.since else ""
+                instead = f" — holds instead: {h.instead}" if h.instead else ""
+                parts.append(f"  - {cid}: {h.awareness.value}{since}{instead}")
+            offstage = [h.character_id for h in k.holders if h.character_id not in in_slice]
+            if offstage:
+                parts.append(f"  - (not in this unit: {', '.join(offstage)})")
+
     motifs = model.motifs if motif_ids is None else [m for m in model.motifs if m.id in set(motif_ids)]
     if motifs:
         parts.append("\n## Motifs (ledger)")

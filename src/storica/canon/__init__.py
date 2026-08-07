@@ -7,6 +7,9 @@ from .model import (
     CharacterRole,
     Relationship,
     TimelineEvent,
+    Awareness,
+    Knowing,
+    KnowledgeItem,
     Motif,
     MotifStatus,
     Promise,
@@ -20,7 +23,7 @@ from .slice import canon_slice
 
 __all__ = [
     "StoryModel", "Character", "CharacterArc", "CharacterRole", "Relationship",
-    "TimelineEvent", "Motif", "MotifStatus", "Promise", "PromiseStatus", "Premise",
+    "TimelineEvent", "Awareness", "Knowing", "KnowledgeItem", "Motif", "MotifStatus", "Promise", "PromiseStatus", "Premise",
     "Constraints", "validate", "blocking", "is_valid", "Issue", "Severity",
     "load_canon", "save_canon", "commit_canon", "canon_slice",
 ]

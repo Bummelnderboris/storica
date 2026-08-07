@@ -84,6 +84,18 @@ CONSISTENCY_RUBRIC = """Check the prose against the canon slice on these six axe
 6. **Canonical state.** The prose must open in the entry state and close in the exit state it was
    given. A chapter that ends with somebody knowing something the exit state says they do not know
    is a contradiction the next chapter will inherit.
+7. **Identity count — has anyone split or merged?** Every canon id is exactly one person. Count them
+   in the prose. A single canon character written as *two* people (one carrying half their facts,
+   one the other half, often with one left unnamed) is a split; two canon characters written as one
+   is a merge. Both are BLOCKING, and both are easy to miss because every individual sentence reads
+   correctly — the error is only visible when you ask "how many people is this text describing?"
+   Check this explicitly for any character whose canon facts cover two roles at once: that is where
+   a split hides, because each half looks plausible on its own.
+8. **Knowledge state.** If a knowledge table is given, it is binding. A character may only act on,
+   allude to or react to what it grants them. Someone written as certain of a fact they merely
+   `suspect`, or as aware of one they are `unaware` of, is BLOCKING — and it is the failure the
+   prose is most likely to commit, because a writer who knows a secret finds it hard to keep a
+   character ignorant of it. Cite the knowledge id in `canon_ref`.
 
 How to report:
 - `unit`: a quoted span of at most twelve words from the prose. Never the whole unit.

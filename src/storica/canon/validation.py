@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List
 
-from .model import CharacterRole, MotifStatus, PromiseStatus, StoryModel
+from .model import Awareness, CharacterRole, MotifStatus, PromiseStatus, StoryModel
 
 
 class Severity(str, Enum):
@@ -96,6 +96,52 @@ def validate(model: StoryModel) -> List[Issue]:
                 "timeline.order", Severity.WARNING,
                 f"timeline '{cur.id}' (order {cur.order}) appears after '{prev.id}' "
                 f"(order {prev.order}) but sorts earlier", cur.id))
+
+    # 3b) Knowledge state --------------------------------------------------------------------
+    # The distribution of who-knows-what is plot machinery, so a dangling reference here is not
+    # bookkeeping: it means a scene can be written where somebody acts on a fact that belongs to
+    # nobody, and no reader downstream can tell that it was wrong.
+    seen_k: set[str] = set()
+    world_keys = set(model.world_facts)
+    timeline_ids = {ev.id for ev in model.timeline}
+    for item in model.knowledge:
+        if item.id in seen_k:
+            issues.append(Issue("knowledge.dup_id", Severity.BLOCKING,
+                                 f"duplicate knowledge id '{item.id}'", item.id))
+        seen_k.add(item.id)
+        if not item.fact.strip():
+            issues.append(Issue("knowledge.empty", Severity.BLOCKING,
+                                 f"knowledge '{item.id}' states no fact", item.id))
+        for ref in item.concerns:
+            if ref not in ids and ref not in world_keys and ref not in timeline_ids:
+                issues.append(Issue(
+                    "ref.knowledge_concerns", Severity.WARNING,
+                    f"knowledge '{item.id}' concerns '{ref}', which is not a character id, "
+                    f"world_fact key or timeline id", item.id))
+        seen_holders: set[str] = set()
+        for h in item.holders:
+            if h.character_id not in ids:
+                issues.append(Issue(
+                    "ref.knowledge_holder", Severity.BLOCKING,
+                    f"knowledge '{item.id}' is held by unknown character id '{h.character_id}'",
+                    item.id))
+            if h.character_id in seen_holders:
+                issues.append(Issue(
+                    "knowledge.dup_holder", Severity.BLOCKING,
+                    f"knowledge '{item.id}' records '{h.character_id}' twice — a character cannot "
+                    f"hold two states of the same fact", item.id))
+            seen_holders.add(h.character_id)
+            if h.awareness == Awareness.BELIEVES_FALSE and not h.instead.strip():
+                issues.append(Issue(
+                    "knowledge.false_belief_unspecified", Severity.BLOCKING,
+                    f"knowledge '{item.id}': '{h.character_id}' believes something false but "
+                    f"`instead` does not say what — the writer cannot render an unnamed belief",
+                    item.id))
+            if h.since and h.since not in timeline_ids and not h.since.startswith("ch"):
+                issues.append(Issue(
+                    "knowledge.since", Severity.WARNING,
+                    f"knowledge '{item.id}': '{h.character_id}' since '{h.since}' is neither a "
+                    f"timeline id nor a chapter token like 'ch2'", item.id))
 
     # 4) Motif ledger ------------------------------------------------------------------------
     seen_m: set[str] = set()

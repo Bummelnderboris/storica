@@ -85,12 +85,26 @@ Each one reads canon, writes canon or plan, and is gated by the checker layer.
 | 2 | **World & cast** | premise, brief | characters, relationships, world facts, timeline, constraints | Sonnet |
 | 3 | **Macro arc** | full canon | `macro_arc.json` — acts, turning points, arc beats, the motif/promise schedule | Sonnet |
 | 4 | **Chapter spec** | canon + arc | `chNN.spec.json` — beats to advance, setups to plant, payoffs to deliver, entry/exit state | Sonnet |
-| 5 | **Prose** | spec + **full canon slice** | `03_drafts/chNN.md` | Opus |
+| 5 | **Prose** | spec + **full canon slice** | *k* drafts per scene → select the most alive → `03_drafts/chNN.md` | Opus |
 | 6 | **Reconcile** | draft + canon | extracts facts from the draft, validates them, promotes or flags; updates the ledger | Sonnet |
 
 Stage 4 runs **just in time**, one chapter at a time, immediately before that chapter is written —
 so it sees everything the previous chapters established. A frozen mega-outline written up front is
 itself novel-length and drifts; this avoids that.
+
+Stage 5 **selects rather than repairs**. It draws several independent drafts of each scene from the
+identical prompt and one cheap call picks the most alive; only the winner enters the checker loop.
+Repair is a regression-to-the-mean engine — every iteration moves a draft toward the rubric and away
+from whatever was surprising in it — so the variance is better spent choosing than sanding. Cost is
+*k* generate calls plus **one** judgement, not *k* gates. Use `--prose-candidates 1` to turn it off.
+
+### Knowledge state
+
+Canon records not just what is true but **who knows it** — per character, `knows` / `suspects` /
+`unaware` / `believes_false`, and since when. In a story built on a concealed secret that
+distribution *is* the plot. Anyone unlisted is unaware, and the slice states each character's
+ignorance explicitly, because an omission reads as "unspecified" and unspecified is what leaks into
+the prose.
 
 ### The checkers
 
@@ -104,6 +118,7 @@ return `PASS`, `REVISE` (with located issues) or `ESCALATE`.
 | **Intent** | Does this advance the beats it was *assigned*? Does it keep its promises? | plans and prose |
 | **Micro-sense** | Paragraph by paragraph: are details grounded, does the situation cohere, is the language load-bearing? | prose |
 | **Author-voice** | Is this the author, and inside the forbidden list? | prose |
+| **Vitality** | Is this *alive*? Does it explain its own gestures, announce its emotions, restate the outline? | prose |
 | **Final auditor** | One fresh reader on the whole assembled book | once, at the end |
 
 There is deliberately **no single averaged score**. v1 gated on a weighted mean of 7.0, which a
@@ -111,6 +126,13 @@ competent draft clears every time — so the gate could never fire on the thing 
 Here any checker raising a blocking issue triggers repair, and checkers run on the smallest
 meaningful unit so a problem is localised rather than averaged away. Cheap structural checks run
 before expensive LLM ones.
+
+**Vitality is the odd one out, on purpose.** The other four are conformance checks, so a chapter that
+matches canon, hits its beats and sounds like the author passes the whole gate no matter how inert it
+is — and since repair pushes prose toward the rubric, that is the chapter this pipeline naturally
+produces. Vitality can only fail a unit for being *safe*, and its fixes are always cuts: the sentence
+that explains the gesture, the adjective that tells you how to feel. It never asks for more material,
+because "add tension" just produces longer dead prose.
 
 ### When something can't be repaired locally
 
@@ -150,7 +172,7 @@ storica/
 │   ├── canon/             story_model.json: schema, validation, slicing, versioned store
 │   ├── plan/              macro arc + chapter specs: schema, validation, store
 │   ├── stages/            conception, world_cast, macro_arc, chapter_spec, prose, reconcile
-│   ├── checkers/          canon_consistency, intent, micro_sense, voice, auditor
+│   ├── checkers/          canon_consistency, intent, micro_sense, voice, vitality, auditor
 │   ├── adjudicator.py     binding rulings against frozen ground truth
 │   ├── reports.py         decision log, quarantine log, run report
 │   ├── assembly.py        chapters → novel.md, excluding quarantined units
@@ -167,6 +189,8 @@ storica/
 │   ├── _template/             empty skeleton to copy
 │   └── der-chrachen/          the v1 capture kept as reference evidence
 │
+├── tools/                 calibrate_checkers.py — known-answer test for the checker layer
+├── calibration/           its results and FINDINGS.md
 ├── docs/archive/          point-in-time v1 documents, not maintained
 └── legacy/                the archived v1 web app — see legacy/README.md
 ```
@@ -272,11 +296,28 @@ It is set up and ready to run:
   the result against the v1 findings.
 
 Run it with `/write-novel novels/der-chrachen-v2`. Expect roughly 40–60 model calls for three
-chapters.
+chapters at `--prose-candidates 1`, more with selection on.
 
-Known open questions, all flagged in `DESIGN.md` §10: the convergence caps need empirical tuning
-(too tight quarantines good chapters, too loose burns tokens); cost per book versus v1 is unmeasured;
-and autonomy cannot guarantee *taste* — a book the auditor calls coherent may still be dull.
+### What the calibration found first
+
+Before P6, the checkers were pointed at the v1 chapters with correct canon in hand — a known-answer
+test costing about ten calls instead of a whole book. Full write-up in
+[`calibration/FINDINGS.md`](calibration/FINDINGS.md); reproduce with
+`.venv/bin/python tools/calibrate_checkers.py`.
+
+- **The checker works, and is not overfit.** It caught 4 of 5 planted errors, and scored *identically*
+  with every mention of this book's failures stripped out of its rubric — so it detects contradiction
+  rather than recognising der Chrachen. Zero false positives on the clean control chapter.
+- **The reference canon was the broken part.** `novels/der-chrachen/01_canon/` had absorbed the exact
+  F11 bridging fact ("priest *and* private creditor") that the findings condemn, because it was
+  written by reading the corrupted v1 output. `DESIGN.md` §4's own example had it too. Both fixed;
+  the design now says canon is authored from the brief and **never reconstructed from prose** — a
+  rule that binds humans, not just agents.
+- **The gate is not deterministic.** The same call answered twice returned `revise` with a blocking
+  issue and then `pass`. Unresolved, and it needs deciding before P6 or P6's result is unreadable.
+
+Known open questions, in `DESIGN.md` §10: the sampling policy above; convergence caps need empirical
+tuning; cost per book versus v1 is unmeasured.
 
 ---
 

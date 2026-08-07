@@ -106,6 +106,7 @@ def cmd_run(args: argparse.Namespace) -> int:
             audit=not args.no_audit,
             check_intent=not args.no_checkers,
             max_repairs=args.max_repairs,
+            n_candidates=args.prose_candidates,
         ))
     except ResponseNeeded as pause:
         # Not a failure: the replay driver has run out of recorded answers.
@@ -176,6 +177,11 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--driver", default="replay", choices=["replay", "anthropic"])
     run.add_argument("--authors", default=str(DEFAULT_AUTHORS))
     run.add_argument("--max-repairs", type=int, default=2, dest="max_repairs")
+    run.add_argument(
+        "--prose-candidates", type=int, default=3, dest="prose_candidates",
+        help="drafts to generate per scene before selecting the most alive one (1 = no selection). "
+             "Costs N generate calls plus one cheap selection call per scene; set 1 for a cheap run.",
+    )
     run.add_argument("--no-audit", action="store_true", help="skip the whole-book final audit")
     run.add_argument("--no-checkers", action="store_true", help="skip LLM checkers (structure only)")
     run.set_defaults(func=cmd_run)

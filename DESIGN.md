@@ -31,7 +31,9 @@ prose is genuinely good sentence-by-sentence. What fails is the **macro↔micro 
 
 1. **Canon is the substrate; prose is only an output.** A single structured, versioned
    `story_model.json` is the source of truth. Every stage reads from it and writes to it. Prose is
-   never re-parsed as truth — facts are extracted from prose and *validated into* canon.
+   never re-parsed as truth — facts are extracted from prose and *validated into* canon. **This binds
+   humans too:** canon is authored from the brief and from validated upstream canon, never
+   reconstructed by reading prose after the fact (§4.1).
 2. **Top-down, but progressively elaborated — not a frozen mega-outline.** Never write level N
    without a *validated* level N−1. But elaborate level N **just-in-time** from the canon, not all
    levels up front. (A paragraph-level outline of a whole novel is itself novel-length and drifts.)
@@ -64,8 +66,18 @@ prose is genuinely good sentence-by-sentence. What fails is the **macro↔micro 
 | **Coherence** | Facts silently change; details get mixed; the priest becomes a creditor | Structured canon + a Canon-Consistency checker at every seam; conflicts resolve to ground truth |
 | **Meaning** | Coherent but hollow; a chapter/paragraph advances nothing; motifs never pay off | Intent encoded as arc-beats + setup→payoff ledger; an Intent checker asks "does this advance a named beat / keep a promise?" |
 | **Micro-truth** | Locally fluent but nonsensical; a situation doesn't make sense; words don't mean anything | A Micro-Sense checker reads each prose unit against its canon slice: are details grounded, does the situation cohere, is the language load-bearing? |
+| **Vitality** | Correct, coherent, on-plan — and dead. Executes the outline; explains its own gestures; could have been written without imagining the scene | Generate-and-select on prose (§5) plus a Vitality checker whose polarity is inverted: it fails a unit for being *safe*, and its fixes are cuts |
 
-Naming them apart matters: one "make it more top-down" lever cannot move all three.
+Naming them apart matters: one "make it more top-down" lever cannot move any of them.
+
+**On the fourth.** It was originally filed under residual risks (§10) rather than as a failure class,
+and that was a mistake worth stating plainly. Every other checker here is a **conformance** check, so
+a chapter that matches canon, hits its beats and sounds like the author passes the entire gate no
+matter how inert it is. Worse, the machinery *manufactures* that chapter: every repair iteration
+moves prose toward the rubric and away from whatever was surprising in it, so the system's natural
+product is competent, correct and lifeless. Meanwhile v1's real output was already good
+sentence-by-sentence — fluency was never what it lacked — and the stated goal is a book that
+surprises its creator, which nothing else in the pipeline optimises for and several things suppress.
 
 ---
 
@@ -114,12 +126,23 @@ Structured, ID-referenced, machine-checkable. **Nothing here is prose-of-record.
       "facts": { "profession": "Amtsarzt", "age": 58, "secret": "forged Klara Vogel's death certificate 20y ago" },
       "arc": { "want": "...", "need": "...", "flaw": "...", "trajectory": "does not change; hardens" }
     },
+    // NOTE: this entry once read "old friend + private creditor" — which is exactly the F11
+    // bridging fact, the invention that let a contradiction survive as elaborated false canon.
+    // It got here because this example was written by reading the v1 *output*. See §4.1.
     "rutz": { "canonical_name": "Pfarrer Johannes Rutz", "role": "confessor",
-              "facts": { "office": "village priest", "relation_to_protagonist": "old friend + private creditor" } }
+              "facts": { "office": "village priest", "relation_to_protagonist": "old friend" } }
   },
   "relationships": [ { "a": "berta", "b": "melchior", "type": "widow_of" } ],
   "world_facts": { "setting": "Lauenegg, Graubünden", "era": "1950s", "location:chrachen": "gorge south of village" },
   "timeline": [ { "id": "t1", "when": "20y prior", "event": "Klara Vogel dies; Stettler forges certificate" } ],
+  "knowledge": [
+    { "id": "k_forgery", "fact": "Stettler forged Klara Vogel's death certificate.",
+      "concerns": ["stettler", "t1"],
+      "holders": [ { "character_id": "stettler", "awareness": "knows", "since": "t1" },
+                   { "character_id": "berta", "awareness": "suspects", "since": "ch2" },
+                   { "character_id": "marolf", "awareness": "believes_false",
+                     "instead": "that Klara Vogel died of heart failure" } ] }
+  ],
   "motifs": [
     { "id": "formula_echo", "setup_ch": 1, "payoff_ch": 3, "status": "planned",
       "desc": "the phrase 'Herzversagen, vermutlich beim Sturz' recurs identically" }
@@ -131,7 +154,30 @@ Structured, ID-referenced, machine-checkable. **Nothing here is prose-of-record.
 ```
 
 Key properties: **stable IDs + alias lists** (kills name fragmentation, F7); **motifs/promises with
-`status`** (the meaning ledger); **`history/`** so every canon change is auditable and reversible.
+`status`** (the meaning ledger); **`knowledge`** (below); **`history/`** so every canon change is
+auditable and reversible.
+
+### 4.1 Knowledge state — who knows what, when
+
+`facts` say what is true. `knowledge` says **who has access to it**, and in a story built on a
+concealed secret that distribution *is* the plot: the tension in a scene is the gap between what the
+reader knows, what the POV character knows, and what the person across the table knows.
+
+Each item carries a fact and a list of holders, each `knows` / `suspects` / `unaware` /
+`believes_false` (with what they hold instead), and since when. **Anyone not listed is unaware** —
+silence is never permission. The canon slice renders this per character *including their ignorance*,
+because an omission reads as "unspecified", and unspecified is what gets leaked into the prose.
+
+Without this, nothing stops a writer having a character allude to something they cannot know, and no
+checker can catch it — the classic failure of machine-written fiction, and one v1 had no vocabulary
+for. `StateFact` gestured at it (`"stettler:knows"` as free text) but nothing validated or enforced it.
+
+**Ground-truth rule (added after the calibration run).** Canon may be authored **only** from the
+brief and from validated upstream canon — never from prose, and never reconstructed after the fact.
+Principle 1 says prose is never re-parsed as truth, but said nothing about *humans* doing it, and the
+gap bit: the reference canon in `novels/der-chrachen/01_canon/` was written by reading the corrupted
+v1 output and silently absorbed the F11 bridging fact, as did the example above. Ground truth derived
+from corrupted prose inherits the corruption. See `calibration/FINDINGS.md` C1.
 
 ---
 
@@ -146,12 +192,32 @@ Each stage **reads canon, writes canon (or plan), and is gated by the verificati
 | 2 | **World & cast → canon** | premise, input, author | `canon.characters/relationships/world_facts/timeline/constraints` — **structured, validated** | Sonnet |
 | 3 | **Macro-arc** | full canon | `02_plan/macro_arc.json` — acts, turning points, per-character arc beats, **motif/promise schedule**, tension curve (all by ID) | Sonnet |
 | 4 | **Chapter spec (JIT)** | full canon + macro_arc | `chapters/chNN.spec.json` — purpose, arc-beats-to-advance (IDs), setups/payoffs (IDs), entry/exit state, POV | Sonnet |
-| 5 | **Prose** | chapter spec + **full canon slice** | `03_drafts/chNN.md` | Opus |
+| 5 | **Prose** | chapter spec + **full canon slice** | `03_drafts/chNN.md` — *k* drafts per scene, then select (§5.1) | Opus |
 | 6 | **Reconcile** | draft + canon | extract new facts → validate → **promote or flag**; update motif/promise status | Sonnet |
 
 Conception (1) and world/cast (2) **replace** the v1 prose-based topic/thesis/character phases: same
 thinking, but the *output is canon*, not prose to be re-parsed. This is the single change that
 removes the F6/F10 cascade at the root.
+
+### 5.1 Selection, not just repair
+
+Stage 5 draws **k independent drafts of each scene from the identical prompt**, then one cheap call
+picks the most alive; only the winner enters the checker/repair loop.
+
+The reasoning: repair is a regression-to-the-mean engine. Each iteration moves a draft toward the
+rubric, and the rubric is all it can move toward, so variance is spent sanding one draft down.
+Selection spends the same variance *choosing* instead, which preserves the spread rather than
+collapsing it. Conception already worked this way (`n_candidates=3` → `ConceptionChoice`); prose,
+which carries the actual book, did not.
+
+Cost shape matters or this gets switched off: k drafts cost **k generate calls plus one selection
+call**, never k full checker passes. Deterministic stub-filtering runs before the selector, so no
+judgement is ever spent comparing against an empty draft. The prompts are identical across drafts on
+purpose — steering each toward "a darker version" would make it a choice between instructions rather
+than between imaginations.
+
+Repair is kept for what it is genuinely good at: factual contradiction, where conformance *is* the
+goal. `--prose-candidates 1` disables selection for a cheap run.
 
 ---
 
@@ -169,6 +235,15 @@ if needed, trigger repair.
 | **Intent / Meaning** | Does this unit advance the arc-beats / keep the promises it was *assigned*? Does it earn its place? | plan units (3,4) and prose (5) |
 | **Micro-Sense** | Read paragraph-by-paragraph: are details grounded in canon, does the situation cohere, is the language load-bearing (not filler/hallucination)? | prose only (5) |
 | **Author-Voice** | Is this the author's voice + within `constraints.forbidden`? | prose only (5) |
+| **Vitality** | Is this *alive*? Does it explain its own gestures, announce its interiority, restate the outline? Would anyone be surprised by it? | prose only (5) |
+
+**Vitality is deliberately handed a thin slice** — premise and constraints, no character facts, no
+timeline. Given the full canon it will drift into checking consistency, because that is the more
+concrete and more answerable job, and then nobody is doing the one it exists for. Its fix hints are
+required to be **subtractive** ("cut the sentence beginning…"), which is what makes it safe to pair
+with the repair loop's minimal-edit contract: deleting the sentence that explains the gesture is a
+small, local, non-inventing edit, and it is usually the whole fix. It never escalates — there is no
+upstream conflict that makes prose dull.
 
 ### Triggers — designed to avoid the F8 failure
 
@@ -178,6 +253,16 @@ if needed, trigger repair.
   for Intent, the whole diff for Canon-Consistency) so a problem is localized, not averaged away.
 - Cheap checkers first (Canon-Consistency is largely structural/deterministic), expensive LLM
   checkers only on what passes — reclaims the F3 cost.
+
+**Sampling (open, and it matters).** The calibration run answered one identical consistency call
+twice and got `revise` with a blocking issue on one draw and `pass` on the other
+(`calibration/FINDINGS.md` C4). Same prompt, same model, opposite gate outcome. That is survivable in
+a human editor and corrosive in an automatic gate: a chapter's fate depends on which sample it drew,
+and a passing run says much less than it appears to. The likely fix is to stop resting *blocking*
+decisions on a single draw — run the consistency checker k times and block on any blocking issue any
+run finds, or require agreement before **passing** rather than before failing. Not yet implemented:
+the flip rate needs measuring on a real book before choosing k, and the choice should be made before
+P6 or P6's result is unreadable.
 
 ### Instructions — what each checker is handed
 
@@ -294,9 +379,13 @@ Each phase is independently testable and leaves the system runnable.
 **Remaining risks:**
 1. **Autonomy amplifies a wrong ruling** — the core danger. Contained by: immutable ground truth,
    binding/logged rulings (no oscillation), convergence caps with quarantine, and the Final Auditor.
-   Residual risk: a *plausible-but-flat* story the auditor rates "coherent" but the creator finds dull —
-   autonomy can't fully guarantee *taste*. Mitigation: the brief's question-lines + author obsessions
-   are treated as immutable intent the Intent-checker enforces.
+   *(The "plausible-but-flat story" that used to sit here has been promoted out of the risk list: it
+   is failure class four in §2, with selection and the Vitality checker against it.)*
+1b. **The gate is non-deterministic** (`calibration/FINDINGS.md` C4). One draw blocks a chapter,
+   another passes it. Unresolved; sampling policy must be chosen before P6 — see §6.
+1c. **Ground truth can be corrupted by a human.** Already happened once, in the reference canon and
+   in this document's own §4 example. The rule in §4.1 is the mitigation; nothing enforces it
+   mechanically yet.
 2. **Cost:** more checker calls = more tokens. Offset by deleting the F3 double-call, running cheap
    structural checks before LLM checks, and parallelizing checkers over small units. Net vs v1 = TBD;
    measure against the per-book economics question.

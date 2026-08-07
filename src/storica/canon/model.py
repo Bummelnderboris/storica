@@ -93,6 +93,57 @@ class Promise(BaseModel):
     status: PromiseStatus = PromiseStatus.OPEN
 
 
+class Awareness(str, Enum):
+    """What one character holds about one fact."""
+
+    KNOWS = "knows"
+    SUSPECTS = "suspects"
+    UNAWARE = "unaware"
+    BELIEVES_FALSE = "believes_false"  # holds a specific wrong version — see Knowing.instead
+
+
+class Knowing(BaseModel):
+    """One character's relation to one fact, and since when."""
+
+    model_config = ConfigDict(extra="forbid")
+    character_id: str
+    awareness: Awareness = Awareness.UNAWARE
+    since: str = ""    # timeline id ('t1') or chapter token ('ch2'); empty means "from the start"
+    instead: str = ""  # required for believes_false: the wrong thing they hold to be true
+
+
+class KnowledgeItem(BaseModel):
+    """
+    One fact, plus the distribution of who holds it.
+
+    Facts live in `Character.facts` and `world_facts`; this records *who has access to them*. In a
+    story built on a concealed secret the plot IS this distribution — the tension in a scene is the
+    gap between what the reader knows, what the POV character knows, and what the person across the
+    table knows. v1 had no representation for it, so a writer had no way to know that a character
+    must not yet allude to something, and no checker could catch it when they did.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+    id: str
+    fact: str = Field(description="What is known, stated flatly and in one sentence.")
+    concerns: List[str] = Field(
+        default_factory=list,
+        description="Canon ids this fact is about — character ids, timeline ids, world_fact keys.",
+    )
+    holders: List[Knowing] = Field(
+        default_factory=list,
+        description="Every character whose relation to this fact is established. Anyone absent is "
+        "treated as unaware.",
+    )
+
+    def awareness_of(self, character_id: str) -> Awareness:
+        """What `character_id` holds about this fact. Absence means unaware — silence is not knowledge."""
+        for h in self.holders:
+            if h.character_id == character_id:
+                return h.awareness
+        return Awareness.UNAWARE
+
+
 class Premise(BaseModel):
     model_config = ConfigDict(extra="forbid")
     spark: str = ""
@@ -123,6 +174,7 @@ class StoryModel(BaseModel):
     relationships: List[Relationship] = Field(default_factory=list)
     world_facts: Dict[str, str] = Field(default_factory=dict)
     timeline: List[TimelineEvent] = Field(default_factory=list)
+    knowledge: List[KnowledgeItem] = Field(default_factory=list)
     motifs: List[Motif] = Field(default_factory=list)
     promises: List[Promise] = Field(default_factory=list)
     constraints: Constraints = Field(default_factory=Constraints)
@@ -130,6 +182,15 @@ class StoryModel(BaseModel):
 
     def character_ids(self) -> set[str]:
         return set(self.characters.keys())
+
+    def knowledge_for(self, character_id: str) -> List[tuple["KnowledgeItem", Awareness]]:
+        """Every knowledge item paired with what `character_id` holds about it."""
+        return [(k, k.awareness_of(character_id)) for k in self.knowledge]
+
+    def knows(self, character_id: str, knowledge_id: str) -> bool:
+        """True only for full knowledge. Suspicion is not knowledge and must not be written as it."""
+        item = next((k for k in self.knowledge if k.id == knowledge_id), None)
+        return item is not None and item.awareness_of(character_id) == Awareness.KNOWS
 
     def resolve_name(self, name: str) -> Optional[str]:
         """Return the character id that owns `name` (canonical or alias), case-insensitively."""

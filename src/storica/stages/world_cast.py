@@ -26,11 +26,14 @@ from pydantic import BaseModel, ConfigDict, Field
 from ..authors import AuthorModel
 from ..brief import Brief
 from ..canon import (
+    Awareness,
     Character,
     CharacterArc,
     CharacterRole,
     Constraints,
     Issue,
+    KnowledgeItem,
+    Knowing,
     Premise,
     Relationship,
     StoryModel,
@@ -110,6 +113,35 @@ class ConstraintsDraft(BaseModel):
     chapter_count: int = Field(description="Planned chapter count. Use 0 if the brief leaves it open.")
 
 
+class KnowingDraft(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    character_id: str = Field(description="Character id. Ids, never names.")
+    awareness: Awareness = Field(description="What this character holds about the fact.")
+    since: str = Field(
+        description="Timeline id ('t1') or chapter token ('ch2') from when they hold it. "
+        "Empty if they have held it from before the book opens."
+    )
+    instead: str = Field(
+        description="Required when awareness is 'believes_false': the wrong thing they hold to be "
+        "true. Empty otherwise."
+    )
+
+
+class KnowledgeDraft(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(description="Stable snake_case id, e.g. 'k_forgery'.")
+    fact: str = Field(description="What is known, one flat sentence.")
+    concerns: List[str] = Field(
+        description="Canon ids the fact is about — character ids, timeline ids, world_fact keys."
+    )
+    holders: List[KnowingDraft] = Field(
+        description="EVERY character whose relation to this fact matters to the story, including "
+        "those who are unaware. Anyone omitted is treated as unaware."
+    )
+
+
 class WorldCastDraft(BaseModel):
     """The full stage-2 output. One call — no second extraction pass (kills F3)."""
 
@@ -121,6 +153,12 @@ class WorldCastDraft(BaseModel):
         description="Setting, era, places, institutions — keys like 'setting', 'era', 'location:chrachen'."
     )
     timeline: List[TimelineDraft] = Field(description="Includes events before the novel opens.")
+    knowledge: List[KnowledgeDraft] = Field(
+        description="Who knows what. One entry per fact whose CONCEALMENT OR DISCOVERY drives the "
+        "story — a secret, a lie, a thing one character has worked out and another has not. Not "
+        "every fact in the book: only the ones whose distribution creates pressure. For each, record "
+        "every character who matters, including the ones kept in the dark."
+    )
     constraints: ConstraintsDraft
 
 
@@ -209,6 +247,24 @@ def draft_to_canon(
         for ev in draft.timeline
     ]
 
+    knowledge = [
+        KnowledgeItem(
+            id=_slug(k.id),
+            fact=k.fact,
+            concerns=[_ref(c) for c in k.concerns],
+            holders=[
+                Knowing(
+                    character_id=_ref(h.character_id),
+                    awareness=h.awareness,
+                    since=h.since,
+                    instead=h.instead,
+                )
+                for h in k.holders
+            ],
+        )
+        for k in draft.knowledge
+    ]
+
     language = draft.constraints.language or (brief.language if brief else "en")
     forbidden = list(dict.fromkeys([*(brief.forbidden if brief else []), *draft.constraints.forbidden]))
     chapter_count = draft.constraints.chapter_count or (brief.chapter_count if brief else None)
@@ -220,6 +276,7 @@ def draft_to_canon(
         relationships=relationships,
         world_facts=_pairs_to_dict(draft.world_facts),
         timeline=timeline,
+        knowledge=knowledge,
         constraints=Constraints(
             language=language,
             forbidden=forbidden,

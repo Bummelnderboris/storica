@@ -26,6 +26,7 @@ from .checkers import (
     IntentChecker,
     MicroSenseChecker,
     ProseChecker,
+    VitalityChecker,
 )
 from .drafts import load_chapter_draft, load_chapter_draft_if_present, save_chapter_draft
 from .llm import StructuredLLM
@@ -197,11 +198,17 @@ def default_prose_checkers(llm: StructuredLLM, tracer: Optional[Tracer] = None) 
     Canon-consistency runs before micro-sense and voice because a contradiction makes the other two
     judgements moot: there is no point polishing the texture of a paragraph that says the wrong man
     signed the certificate.
+
+    Vitality runs last, and it is the odd one out: the first three ask whether the prose conforms,
+    and it asks whether the prose is alive. Without it a chapter that matches canon, hits its beats
+    and sounds like the author passes the whole gate no matter how inert it is — and since repair
+    moves prose toward the rubric, that is the chapter this pipeline naturally produces.
     """
     return [
         CanonConsistencyChecker(llm, tracer=tracer),
         MicroSenseChecker(llm, tracer=tracer),
         AuthorVoiceChecker(llm, tracer=tracer),
+        VitalityChecker(llm, tracer=tracer),
     ]
 
 
@@ -245,6 +252,7 @@ async def draft_chapter(
     max_escalations: int = 2,
     model: str = "opus",
     trace: bool = True,
+    n_candidates: int = 1,
 ) -> ChapterOutcome:
     """
     Write one chapter (stage 5) and survive what goes wrong with it.
@@ -289,6 +297,7 @@ async def draft_chapter(
                 model=model,
                 max_repairs=max_repairs,
                 guidance=guidance,
+                n_candidates=n_candidates,
             )
         except Escalation as esc:
             if attempt == max_escalations:

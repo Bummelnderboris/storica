@@ -1,0 +1,28 @@
+{
+  "decision": "revise",
+  "summary": "Chapter 1 stages the discovery, examination, and provisional certification of Melchior's death mostly true to canon's facts, identities, and relationships, but it wrongly performs Stettler's ch3 act of filing the record and locking the cabinet through Feuz in ch1, so it does not yet earn its place as written.",
+  "issues": [
+    {
+      "unit": "Dann stand er auf und trug die Akte zum Schrank",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "t9",
+      "fix_hint": "Cut the beat of Feuz carrying the file to the Eichenschrank and locking it; canon assigns filing the Aebischer record beside the Vogel file and locking the cabinet to Stettler alone, in ch3 evening, after the case is closed as accident (t8) — not to Feuz in ch1 before the case is even closed."
+    },
+    {
+      "unit": "mit vier Schubladen, die Griffe aus Messing",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "loc:eichenschrank",
+      "fix_hint": "Canon states only that the Eichenschrank is an oak filing cabinet where case files are archived; the drawer count and brass handles are unspecified in canon, note for later reconciliation."
+    },
+    {
+      "unit": "Der Untersuchungsrichter kam später, zu Fuss",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "feuz",
+      "fix_hint": "Canon does not give Feuz an official title; 'Untersuchungsrichter' is an unconfirmed addition, note for later reconciliation."
+    }
+  ],
+  "conflict": ""
+}

@@ -6,6 +6,7 @@ from .canon_consistency import CanonConsistencyChecker
 from .intent import IntentChecker
 from .micro_sense import MicroSenseChecker
 from .prose_base import ProseChecker
+from .vitality import VitalityChecker
 from .voice import AuthorVoiceChecker
 
 __all__ = [
@@ -17,6 +18,7 @@ __all__ = [
     "CanonConsistencyChecker",   # coherence
     "MicroSenseChecker",         # micro-truth
     "AuthorVoiceChecker",        # voice + the brief's forbidden list
+    "VitalityChecker",           # inertness — the only reader that fails prose for being safe
     # the whole book, once, at the end
     "FinalAuditor", "audit_ledger",
 ]
