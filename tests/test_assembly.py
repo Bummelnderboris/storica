@@ -2,7 +2,7 @@
 Tests for P6: assembly and the Final Auditor.
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 Offline: the auditor is driven by `FakeStructuredLLM` with a pre-built `Verdict`, so what is under
 test is our contract — what ships into the book, what is refused, and what the last reader is
@@ -15,8 +15,8 @@ import asyncio
 
 import pytest
 
-from app.v2.assembly import CHAPTER_SEPARATOR, assemble_novel, save_novel
-from app.v2.canon import (
+from storica.assembly import CHAPTER_SEPARATOR, assemble_novel, save_novel
+from storica.canon import (
     Character,
     CharacterRole,
     Constraints,
@@ -28,13 +28,13 @@ from app.v2.canon import (
     Severity,
     StoryModel,
 )
-from app.v2.checkers.auditor import FinalAuditor, audit_ledger
-from app.v2.checkers.base import CheckerIssue, Decision, Verdict
-from app.v2.drafts import save_chapter_draft
-from app.v2.llm import FakeStructuredLLM
-from app.v2.plan import Act, MacroArc, TensionPoint, TurningPoint
-from app.v2.reports import QuarantineLog
-from app.v2.trace import Tracer
+from storica.checkers.auditor import FinalAuditor, audit_ledger
+from storica.checkers.base import CheckerIssue, Decision, Verdict
+from storica.drafts import save_chapter_draft
+from storica.llm import FakeStructuredLLM
+from storica.plan import Act, MacroArc, TensionPoint, TurningPoint
+from storica.reports import QuarantineLog
+from storica.trace import Tracer
 
 
 # --------------------------------------------------------------------------------------------

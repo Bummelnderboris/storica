@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `backend/app/v2/` | **Current.** 218 tests passing. Never yet run end-to-end against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 218 tests passing. Never yet run end-to-end against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -32,17 +32,17 @@ No API key needed. The replay driver runs the *real* prompts and stops whenever 
 you haven't recorded yet:
 
 ```bash
-cd backend
-python -m venv venv && venv/bin/pip install -r requirements.txt
+python -m venv .venv && .venv/bin/python -m pip install -e ".[dev]"
+source .venv/bin/activate
 
-venv/bin/python -m app.v2.cli new ../novels/my-novel --author duerrenmatt \
+storica new novels/my-novel --author duerrenmatt \
   --spark "A retired judge secretly re-tries a case from his own past." \
   --language de --chapters 6
 
-# edit ../novels/my-novel/00_input/brief.yaml — this is the only thing you write
+# edit novels/my-novel/00_input/brief.yaml — this is the only thing you write
 
-venv/bin/python -m app.v2.cli run ../novels/my-novel
-venv/bin/python -m app.v2.cli status ../novels/my-novel
+storica run novels/my-novel
+storica status novels/my-novel
 ```
 
 To run it for real, put `ANTHROPIC_API_KEY` in `.env` (see `.env.example`) and add `--driver anthropic`.
@@ -139,25 +139,25 @@ storica/
 ├── DESIGN.md              the v2 architecture spec and its reasoning — the document to read
 ├── .env.example           ANTHROPIC_API_KEY, needed only for --driver anthropic
 │
-├── backend/               the Python package root (name is historical, from the web-app era)
-│   ├── requirements.txt
-│   └── app/v2/            ← THE PIPELINE
-│       ├── cli.py             new / run / status
-│       ├── runner.py          the run loop; resumable by construction
-│       ├── pipeline.py        stage wiring: load from disk, run stage, write back
-│       ├── brief.py           the front-door brief — immutable ground truth
-│       ├── authors.py         loads the author library
-│       ├── canon/             story_model.json: schema, validation, slicing, versioned store
-│       ├── plan/              macro arc + chapter specs: schema, validation, store
-│       ├── stages/            conception, world_cast, macro_arc, chapter_spec, prose, reconcile
-│       ├── checkers/          canon_consistency, intent, micro_sense, voice, auditor
-│       ├── adjudicator.py     binding rulings against frozen ground truth
-│       ├── reports.py         decision log, quarantine log, run report
-│       ├── assembly.py        chapters → novel.md, excluding quarantined units
-│       ├── trace.py           every filled prompt and artifact, to 04_trace/
-│       ├── llm.py             the only place the Anthropic SDK is touched; model aliases
-│       ├── drivers/replay.py  run the real prompts with no API key
-│       └── tests/             218 tests
+├── pyproject.toml         deps and the `storica` console script
+│
+├── src/storica/           ← THE PIPELINE
+│   ├── cli.py             new / run / status
+│   ├── runner.py          the run loop; resumable by construction
+│   ├── pipeline.py        stage wiring: load from disk, run stage, write back
+│   ├── brief.py           the front-door brief — immutable ground truth
+│   ├── authors.py         loads the author library
+│   ├── canon/             story_model.json: schema, validation, slicing, versioned store
+│   ├── plan/              macro arc + chapter specs: schema, validation, store
+│   ├── stages/            conception, world_cast, macro_arc, chapter_spec, prose, reconcile
+│   ├── checkers/          canon_consistency, intent, micro_sense, voice, auditor
+│   ├── adjudicator.py     binding rulings against frozen ground truth
+│   ├── reports.py         decision log, quarantine log, run report
+│   ├── assembly.py        chapters → novel.md, excluding quarantined units
+│   ├── trace.py           every filled prompt and artifact, to 04_trace/
+│   ├── llm.py             the only place the Anthropic SDK is touched; model aliases
+│   └── drivers/replay.py  run the real prompts with no API key
+├── tests/                 218 tests
 │
 ├── authors/               author library, shared across novels — see authors/README.md
 │   ├── duerrenmatt/
@@ -209,16 +209,15 @@ The author is a **generative driver, not a paint job**: their question-lines fee
 ## Development
 
 ```bash
-cd backend
-venv/bin/python -m pytest app/v2/tests -q      # 218 tests, ~1s, no API key, no network
+.venv/bin/python -m pytest -q      # 218 tests, ~1s, no API key, no network
 ```
 
 Model aliases (`opus`, `sonnet`, `haiku`) resolve to current model IDs in exactly one place —
-`MODELS` in `app/v2/llm.py`.
+`MODELS` in `src/storica/llm.py`.
 
 Two constraints the stage schemas must obey, both from Anthropic's structured-output support:
 every model is `extra="forbid"`, and **no `Dict[...]` fields** — stages emit lists with explicit
-ids, and the mapping into canon's dicts happens in Python. `app/v2/llm.py` documents this.
+ids, and the mapping into canon's dicts happens in Python. `src/storica/llm.py` documents this.
 
 The source is written to be read: most modules open with a docstring explaining *why* they exist,
 not just what they do. Start with `runner.py`, then `pipeline.py`.

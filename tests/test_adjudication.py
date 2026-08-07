@@ -2,7 +2,7 @@
 Tests for P5's escalation machinery: the decision log, quarantine, and the adjudicator.
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 The properties under test are the ones that make unattended operation safe (DESIGN §6.5):
 rulings resolve toward immutable ground truth, they are binding and never re-litigated, canon may
@@ -18,9 +18,9 @@ from pathlib import Path
 
 import pytest
 
-from app.v2.adjudicator import AdjudicationFailed, Adjudicator, GroundTruth, permissible
-from app.v2.brief import Brief, save_brief
-from app.v2.canon import (
+from storica.adjudicator import AdjudicationFailed, Adjudicator, GroundTruth, permissible
+from storica.brief import Brief, save_brief
+from storica.canon import (
     Character,
     CharacterRole,
     Constraints,
@@ -28,8 +28,8 @@ from app.v2.canon import (
     StoryModel,
     save_canon,
 )
-from app.v2.llm import FakeStructuredLLM
-from app.v2.reports import (
+from storica.llm import FakeStructuredLLM
+from storica.reports import (
     DecisionLog,
     QuarantineLog,
     Ruling,
@@ -38,7 +38,7 @@ from app.v2.reports import (
     write_run_report,
 )
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 # --------------------------------------------------------------------------------------------

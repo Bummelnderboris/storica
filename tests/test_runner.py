@@ -2,7 +2,7 @@
 End-to-end tests for the run loop and the CLI.
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 The property that matters most here is **resumability**: every stage asks the filesystem whether
 its artifact exists and skips it if so, because a replay-driven run stops on every unanswered call
@@ -17,8 +17,8 @@ from pathlib import Path
 
 import pytest
 
-from app.v2.brief import Brief, save_brief
-from app.v2.canon import (
+from storica.brief import Brief, save_brief
+from storica.canon import (
     Character,
     CharacterArc,
     CharacterRole,
@@ -31,11 +31,11 @@ from app.v2.canon import (
     StoryModel,
     save_canon,
 )
-from app.v2.checkers import Decision, Verdict
-from app.v2.cli import main
-from app.v2.drivers import ReplayLLM, ResponseNeeded
-from app.v2.llm import FakeStructuredLLM
-from app.v2.plan import (
+from storica.checkers import Decision, Verdict
+from storica.cli import main
+from storica.drivers import ReplayLLM, ResponseNeeded
+from storica.llm import FakeStructuredLLM
+from storica.plan import (
     Act,
     ArcBeat,
     ChapterSpec,
@@ -47,11 +47,11 @@ from app.v2.plan import (
     save_chapter_spec,
     save_macro_arc,
 )
-from app.v2.reports import QuarantineLog
-from app.v2.runner import RunState, run_novel
-from app.v2.stages.reconcile import ChapterExtraction, LedgerKind, LedgerObservation
+from storica.reports import QuarantineLog
+from storica.runner import RunState, run_novel
+from storica.stages.reconcile import ChapterExtraction, LedgerKind, LedgerObservation
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 AUTHORS_ROOT = REPO_ROOT / "authors"
 
 PROSE = (
@@ -163,7 +163,7 @@ def test_reconcile_advances_the_ledger_through_the_run(planned):
     llm = FakeStructuredLLM(responses=[_extraction(), _verdict()], texts=[PROSE])
     asyncio.run(run_novel(novel_dir=planned, authors_root=AUTHORS_ROOT, llm=llm, checkers=[]))
 
-    from app.v2.canon import load_canon
+    from storica.canon import load_canon
     canon = load_canon(planned / "01_canon")
     assert canon.motifs[0].status == MotifStatus.PAID_OFF
     assert canon.promises[0].status == PromiseStatus.KEPT
@@ -192,7 +192,7 @@ def test_a_quarantined_chapter_is_excluded_from_the_book(planned):
                            conflict="canon cannot support this chapter")
 
     # adjudication is attempted twice, then the chapter is quarantined
-    from app.v2.reports import Ruling, RulingKind
+    from storica.reports import Ruling, RulingKind
     ruling = Ruling(kind=RulingKind.CORRECT_UNIT, reasoning="r", instruction="fix it",
                     canon_amendment="", ground_truth_violation="", binding_summary="settled",
                     specialist_task="")

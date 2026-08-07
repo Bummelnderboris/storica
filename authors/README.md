@@ -19,5 +19,5 @@ A novel references an author by id; nothing here is novel-specific.
 - `examples/` ground both generation and checking with concrete, annotated exemplars.
 
 > This library is the single source for author assets. The v2 pipeline reads it directly
-> (`--authors` defaults here); the v1 copies under `legacy/backend/app/authors/profiles/` are archived
+> (`--authors` defaults here); the v1 copies under `legacy/backend/authors/profiles/` are archived
 > and no longer read by anything.

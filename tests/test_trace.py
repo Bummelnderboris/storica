@@ -2,7 +2,7 @@
 Tests for the run trace.
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 The trace is the evidence that an unattended run can be reconstructed afterwards, so the thing
 worth testing is that it stays *truthful* across resumes: a resumable pipeline re-executes every
@@ -17,7 +17,7 @@ import json
 
 from pydantic import BaseModel
 
-from app.v2.trace import Tracer
+from storica.trace import Tracer
 
 
 class Artifact(BaseModel):
@@ -76,7 +76,7 @@ def test_a_tracer_without_a_directory_is_a_no_op():
 
 def test_enum_carrying_artifacts_serialise(tmp_path):
     """Verdicts and rulings carry enums; a trace that cannot serialise them records nothing."""
-    from app.v2.checkers import Decision, Verdict
+    from storica.checkers import Decision, Verdict
 
     Tracer(tmp_path).record(
         "check", prompt="p", model="sonnet",

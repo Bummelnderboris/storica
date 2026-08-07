@@ -2,7 +2,7 @@
 Tests for the replay driver — running the pipeline with no API key.
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 The behaviour that matters: a call with no recorded answer pauses the run with a readable request
 instead of blocking or failing, and a call that has been answered replays instantly. That is what
@@ -17,7 +17,7 @@ import json
 import pytest
 from pydantic import BaseModel, ConfigDict
 
-from app.v2.drivers import MalformedResponse, ReplayLLM, ResponseNeeded
+from storica.drivers import MalformedResponse, ReplayLLM, ResponseNeeded
 
 
 class Answer(BaseModel):

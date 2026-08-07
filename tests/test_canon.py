@@ -2,7 +2,7 @@
 Tests for the v2 canon core.
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 Proves the deterministic validator catches the exact failure modes that sank v1
 (name fragmentation F7/F10, dangling refs, ledger inconsistencies) and that the corrected
@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from app.v2.canon import (
+from storica.canon import (
     Character,
     CharacterRole,
     Constraints,
@@ -32,8 +32,8 @@ from app.v2.canon import (
     validate,
 )
 
-# repo root = .../storica ; this file = .../storica/backend/app/v2/tests/test_canon.py
-REPO_ROOT = Path(__file__).resolve().parents[4]
+# repo root = .../storica ; this file = .../storica/tests/test_canon.py
+REPO_ROOT = Path(__file__).resolve().parents[1]
 DER_CHRACHEN_CANON = REPO_ROOT / "novels" / "der-chrachen" / "01_canon"
 
 
@@ -85,7 +85,7 @@ def test_dangling_relationship_is_blocking():
 
 
 def test_dangling_timeline_involve_is_blocking():
-    from app.v2.canon import TimelineEvent
+    from storica.canon import TimelineEvent
 
     model = StoryModel(
         characters={"hero": Character(canonical_name="Hero", role=CharacterRole.PROTAGONIST)},

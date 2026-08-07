@@ -2,7 +2,7 @@
 Tests for the v2 stages (P2: Conception + structured world/cast).
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 No network: every stage is driven by `FakeStructuredLLM` with pre-built schema instances, so what
 is under test is our contract (normalisation, the canon gate, the repair loop), not the model.
@@ -18,14 +18,14 @@ from pathlib import Path
 import pytest
 import yaml
 
-from app.v2.authors import load_author
-from app.v2.brief import Brief, load_brief, save_brief
-from app.v2.canon import CharacterRole, Premise, blocking, is_valid, load_canon, validate
-from app.v2.llm import FakeStructuredLLM
-from app.v2.pipeline import establish_canon
-from app.v2.stages import conceive, develop_world_and_cast, draft_to_canon
-from app.v2.stages.conception import ConceptionCandidates, ConceptionChoice, PremiseCandidate
-from app.v2.stages.world_cast import (
+from storica.authors import load_author
+from storica.brief import Brief, load_brief, save_brief
+from storica.canon import CharacterRole, Premise, blocking, is_valid, load_canon, validate
+from storica.llm import FakeStructuredLLM
+from storica.pipeline import establish_canon
+from storica.stages import conceive, develop_world_and_cast, draft_to_canon
+from storica.stages.conception import ConceptionCandidates, ConceptionChoice, PremiseCandidate
+from storica.stages.world_cast import (
     ArcDraft,
     CanonGateFailed,
     CharacterDraft,
@@ -36,7 +36,7 @@ from app.v2.stages.world_cast import (
     WorldCastDraft,
 )
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 AUTHORS_ROOT = REPO_ROOT / "authors"
 
 

@@ -1,8 +1,8 @@
 """
-Tests for stage 6 — Reconcile (`app/v2/stages/reconcile.py`).
+Tests for stage 6 — Reconcile (`src/storica/stages/reconcile.py`).
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 Offline: the extraction call is served by `FakeStructuredLLM`, so what is under test is our
 contract — classify new / consistent / contradiction, never overwrite canon, never fragment a
@@ -20,7 +20,7 @@ from typing import Sequence
 
 import pytest
 
-from app.v2.canon import (
+from storica.canon import (
     Character,
     CharacterRole,
     Constraints,
@@ -33,9 +33,9 @@ from app.v2.canon import (
     TimelineEvent,
     blocking,
 )
-from app.v2.llm import FakeStructuredLLM
-from app.v2.plan import ChapterSpec
-from app.v2.stages.reconcile import (
+from storica.llm import FakeStructuredLLM
+from storica.plan import ChapterSpec
+from storica.stages.reconcile import (
     AliasExtract,
     ChapterExtraction,
     CharacterFactExtract,

@@ -2,7 +2,7 @@
 Integration tests for the autonomous chapter loop: spec -> prose -> reconcile.
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 These are the tests for the properties that let the pipeline run unattended (DESIGN §6.5): an
 escalation is adjudicated and the ruling binds the retry, a unit that cannot be made correct is
@@ -19,8 +19,8 @@ from typing import List, Optional
 
 import pytest
 
-from app.v2.brief import Brief, save_brief
-from app.v2.canon import (
+from storica.brief import Brief, save_brief
+from storica.canon import (
     Character,
     CharacterArc,
     CharacterRole,
@@ -34,18 +34,18 @@ from app.v2.canon import (
     load_canon,
     save_canon,
 )
-from app.v2.checkers import Decision, Verdict
-from app.v2.checkers.base import CheckerIssue
-from app.v2.canon.validation import Severity
-from app.v2.drafts import load_chapter_draft
-from app.v2.llm import FakeStructuredLLM
-from app.v2.pipeline import (
+from storica.checkers import Decision, Verdict
+from storica.checkers.base import CheckerIssue
+from storica.canon.validation import Severity
+from storica.drafts import load_chapter_draft
+from storica.llm import FakeStructuredLLM
+from storica.pipeline import (
     ChapterOutcome,
     adjudicate_flags,
     draft_chapter,
     reconcile_chapter_into_canon,
 )
-from app.v2.plan import (
+from storica.plan import (
     Act,
     ArcBeat,
     ChapterSpec,
@@ -57,8 +57,8 @@ from app.v2.plan import (
     save_chapter_spec,
     save_macro_arc,
 )
-from app.v2.reports import DecisionLog, QuarantineLog, Ruling, RulingKind
-from app.v2.stages.reconcile import (
+from storica.reports import DecisionLog, QuarantineLog, Ruling, RulingKind
+from storica.stages.reconcile import (
     AliasExtract,
     ChapterExtraction,
     ContradictionExtract,
@@ -66,7 +66,7 @@ from app.v2.stages.reconcile import (
     LedgerObservation,
 )
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 AUTHORS_ROOT = REPO_ROOT / "authors"
 
 PROSE = (
@@ -380,7 +380,7 @@ def test_the_same_contradiction_twice_reuses_the_first_ruling(novel):
 
 
 def _flag_from(c: ContradictionExtract):
-    from app.v2.stages.reconcile import Flag, FlagKind
+    from storica.stages.reconcile import Flag, FlagKind
 
     return Flag(kind=FlagKind.CONTRADICTION, ref=c.canon_ref,
                 reason=f"the draft contradicts canon at '{c.canon_ref}'",

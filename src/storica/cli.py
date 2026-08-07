@@ -9,15 +9,16 @@ Two ways to supply the model, and the choice is the whole point of this file:
   is identical either way, so a book produced this way validates the real prompts.
 
 Usage:
-    venv/bin/python -m app.v2.cli new    novels/der-chrachen --author duerrenmatt
-    venv/bin/python -m app.v2.cli run    novels/der-chrachen --driver replay
-    venv/bin/python -m app.v2.cli status novels/der-chrachen
+    storica new    novels/der-chrachen --author duerrenmatt
+    storica run    novels/der-chrachen --driver replay
+    storica status novels/der-chrachen
 """
 
 from __future__ import annotations
 
 import argparse
 import asyncio
+import os
 import sys
 from pathlib import Path
 
@@ -30,14 +31,39 @@ from .plan import load_macro_arc, macro_arc_path, specced_chapters
 from .reports import QuarantineLog
 from .runner import run_novel
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_AUTHORS = REPO_ROOT / "authors"
+
+
+def _load_dotenv() -> None:
+    """
+    Read `.env` at the repo root into the environment, without adding a dependency.
+
+    The Anthropic SDK reads ANTHROPIC_API_KEY from the environment and knows nothing about
+    files, so without this `.env.example` would be a lie. Never overrides an existing variable:
+    an explicit `ANTHROPIC_API_KEY=... storica run` wins over the file.
+    """
+    path = REPO_ROOT / ".env"
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip().strip("'\""))
 
 
 def _driver(name: str, novel_dir: Path) -> StructuredLLM:
     if name == "replay":
         return ReplayLLM(novel_dir / "06_session")
     if name == "anthropic":
+        _load_dotenv()
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            raise SystemExit(
+                "ANTHROPIC_API_KEY is not set. Put it in .env (see .env.example), "
+                "or use --driver replay to run without an API key."
+            )
         return AnthropicStructuredLLM()
     raise SystemExit(f"unknown driver '{name}' (expected 'replay' or 'anthropic')")
 
@@ -128,7 +154,7 @@ def cmd_status(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="storica-v2", description="Canon-centric novel pipeline")
+    parser = argparse.ArgumentParser(prog="storica", description="Canon-centric novel pipeline")
     sub = parser.add_subparsers(dest="command", required=True)
 
     new = sub.add_parser("new", help="create a novel folder and its brief")

@@ -2,7 +2,7 @@
 Tests for P3: the macro arc, just-in-time chapter specs, the meaning ledger, and the Intent checker.
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 Offline: every LLM call is served by `FakeStructuredLLM`, so what is under test is the plan
 contract — does the deterministic gate catch drift between plan and canon, does the cheap checker
@@ -17,9 +17,9 @@ from pathlib import Path
 
 import pytest
 
-from app.v2.authors import load_author
-from app.v2.brief import Brief, save_brief
-from app.v2.canon import (
+from storica.authors import load_author
+from storica.brief import Brief, save_brief
+from storica.canon import (
     Character,
     CharacterArc,
     CharacterRole,
@@ -37,12 +37,12 @@ from app.v2.canon import (
     load_canon,
     save_canon,
 )
-from app.v2.checkers import Decision, Escalation, IntentChecker, Verdict
-from app.v2.checkers.base import CheckerIssue
-from app.v2.canon.validation import Severity
-from app.v2.llm import FakeStructuredLLM
-from app.v2.pipeline import plan_macro_arc, spec_chapter
-from app.v2.plan import (
+from storica.checkers import Decision, Escalation, IntentChecker, Verdict
+from storica.checkers.base import CheckerIssue
+from storica.canon.validation import Severity
+from storica.llm import FakeStructuredLLM
+from storica.pipeline import plan_macro_arc, spec_chapter
+from storica.plan import (
     Act,
     ArcBeat,
     ChapterSpec,
@@ -62,7 +62,7 @@ from app.v2.plan import (
     validate_continuity,
     validate_macro_arc_draft,
 )
-from app.v2.stages import (
+from storica.stages import (
     ChapterSpecGateFailed,
     MacroArcGateFailed,
     build_chapter_spec,
@@ -71,7 +71,7 @@ from app.v2.stages import (
     to_macro_arc,
 )
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 AUTHORS_ROOT = REPO_ROOT / "authors"
 
 

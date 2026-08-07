@@ -2,7 +2,7 @@
 Tests for the prose checkers (P4/P5: micro-sense, author-voice, canon-consistency).
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 No network: every checker is driven by `FakeStructuredLLM` with a pre-built `Verdict`, so what is
 under test is our contract — the grounding we hand the reader, the rubric we hold it to, and the
@@ -17,8 +17,8 @@ import json
 
 import pytest
 
-from app.v2.authors import AuthorModel
-from app.v2.canon import (
+from storica.authors import AuthorModel
+from storica.canon import (
     Character,
     CharacterArc,
     CharacterRole,
@@ -31,14 +31,14 @@ from app.v2.canon import (
     StoryModel,
     TimelineEvent,
 )
-from app.v2.checkers.base import CheckerIssue, Decision, Verdict
-from app.v2.checkers.canon_consistency import CanonConsistencyChecker
-from app.v2.checkers.micro_sense import MicroSenseChecker
-from app.v2.checkers.prose_base import ProseChecker
-from app.v2.checkers.voice import AuthorVoiceChecker
-from app.v2.llm import FakeStructuredLLM
-from app.v2.plan import ChapterSpec, SceneSpec, StateFact
-from app.v2.trace import Tracer
+from storica.checkers.base import CheckerIssue, Decision, Verdict
+from storica.checkers.canon_consistency import CanonConsistencyChecker
+from storica.checkers.micro_sense import MicroSenseChecker
+from storica.checkers.prose_base import ProseChecker
+from storica.checkers.voice import AuthorVoiceChecker
+from storica.llm import FakeStructuredLLM
+from storica.plan import ChapterSpec, SceneSpec, StateFact
+from storica.trace import Tracer
 
 CHECKERS = [MicroSenseChecker, AuthorVoiceChecker, CanonConsistencyChecker]
 

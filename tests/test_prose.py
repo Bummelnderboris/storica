@@ -2,7 +2,7 @@
 Tests for P4 stage 5: grounded, scene-by-scene prose and the `03_drafts/` store.
 
 Run from the backend/ directory:
-    venv/bin/python -m pytest app/v2/tests/ -q
+    .venv/bin/python -m pytest tests/ -q
 
 Offline: every LLM call is served by `FakeStructuredLLM` and every checker by `FakeProseChecker`,
 so what is under test is the *contract* of the prose stage — is each scene grounded in the canon of
@@ -19,8 +19,8 @@ from typing import List, Optional
 
 import pytest
 
-from app.v2.authors import load_author
-from app.v2.canon import (
+from storica.authors import load_author
+from storica.canon import (
     Character,
     CharacterArc,
     CharacterRole,
@@ -31,18 +31,18 @@ from app.v2.canon import (
     StoryModel,
     TimelineEvent,
 )
-from app.v2.checkers import Decision, Escalation, Verdict
-from app.v2.checkers.base import CheckerIssue
-from app.v2.checkers.prose_base import ProseChecker
-from app.v2.drafts import (
+from storica.checkers import Decision, Escalation, Verdict
+from storica.checkers.base import CheckerIssue
+from storica.checkers.prose_base import ProseChecker
+from storica.drafts import (
     chapter_draft_path,
     drafted_chapters,
     load_chapter_draft,
     load_chapter_draft_if_present,
     save_chapter_draft,
 )
-from app.v2.llm import FakeStructuredLLM
-from app.v2.plan import (
+from storica.llm import FakeStructuredLLM
+from storica.plan import (
     Act,
     ArcBeat,
     ChapterSpec,
@@ -54,10 +54,10 @@ from app.v2.plan import (
     TensionPoint,
     TurningPoint,
 )
-from app.v2.stages import promote_ledger, to_macro_arc
-from app.v2.stages.prose import SCENE_DIVIDER, ProseGateFailed, write_chapter
+from storica.stages import promote_ledger, to_macro_arc
+from storica.stages.prose import SCENE_DIVIDER, ProseGateFailed, write_chapter
 
-REPO_ROOT = Path(__file__).resolve().parents[4]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 AUTHORS_ROOT = REPO_ROOT / "authors"
 
 # The tests use short prose, so the stub floor is lowered for everything except the tests that are
