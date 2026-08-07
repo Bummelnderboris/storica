@@ -1,0 +1,56 @@
+{
+  "decision": "revise",
+  "summary": "Chapter 2 stages Feuz's discovery of the Vogel file, his confrontation of Stettler, and the near-confession at the Pfarrhaus, but the revision corrupts the victim's identity and kinship, invents an autopsy and poisoning that overwrite the canon cause of death and the reused certificate formula, misstates Stettler's office, blurs Rutz into an unnamed priest, and relocates Berta into apparent domestic service to Feuz, so it does not earn its place as written.",
+  "issues": [
+    {
+      "unit": "Vogel, Anna, geborene Aebi",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "klara",
+      "fix_hint": "Restore her name to Klara Vogel, per canon; cut the invented first name 'Anna' and the invented maiden name 'Aebi', which is not in the name registry."
+    },
+    {
+      "unit": "drei Blätter, ein Protokoll, ein Sektionsbefund",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "melchior",
+      "fix_hint": "Remove the autopsy report (Sektionsbefund) from Melchior's file; canon records his death was filed without an autopsy."
+    },
+    {
+      "unit": "das man im Magen gefunden hatte",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "world_fact:formula",
+      "fix_hint": "Replace the poison-found-in-stomach detail with the canon certificate formula 'Herzversagen, vermutlich beim Sturz', the actual identical wording linking both files."
+    },
+    {
+      "unit": "gezeichnet Stettler, Amtsstatthalter",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "stettler",
+      "fix_hint": "Change 'Amtsstatthalter' to 'Amtsarzt', Stettler's canon office."
+    },
+    {
+      "unit": "suchte Feuz nicht den Amtsstatthalter",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "stettler",
+      "fix_hint": "Change 'Amtsstatthalter' to 'Amtsarzt' here as well, to match Stettler's canon profession."
+    },
+    {
+      "unit": "Zu Hause hatte Berta die Suppe",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "berta",
+      "fix_hint": "Cut or rewrite this scene so Berta is not shown serving soup/coffee in what reads as Feuz's household; canon makes her Melchior's widow, with no domestic relation to Feuz."
+    },
+    {
+      "unit": "der Pfarrer stand in der Tür",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "rutz",
+      "fix_hint": "Name him Rutz or Pfarrer Rutz explicitly in this scene so the creditor introduced earlier and the priest at the Pfarrhaus read as the same canon person, not two."
+    }
+  ],
+  "conflict": ""
+}

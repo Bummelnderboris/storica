@@ -254,15 +254,37 @@ upstream conflict that makes prose dull.
 - Cheap checkers first (Canon-Consistency is largely structural/deterministic), expensive LLM
   checkers only on what passes — reclaims the F3 cost.
 
-**Sampling (open, and it matters).** The calibration run answered one identical consistency call
-twice and got `revise` with a blocking issue on one draw and `pass` on the other
-(`calibration/FINDINGS.md` C4). Same prompt, same model, opposite gate outcome. That is survivable in
-a human editor and corrosive in an automatic gate: a chapter's fate depends on which sample it drew,
-and a passing run says much less than it appears to. The likely fix is to stop resting *blocking*
-decisions on a single draw — run the consistency checker k times and block on any blocking issue any
-run finds, or require agreement before **passing** rather than before failing. Not yet implemented:
-the flip rate needs measuring on a real book before choosing k, and the choice should be made before
-P6 or P6's result is unreadable.
+### 6.1 Sampling: majority decides, union reports
+
+A single LLM verdict is not a stable gate. Measured on the same prompt drawn five times
+(`calibration/FINDINGS.md` C4): the chapter with five planted contradictions returned `revise` in
+**5/5** draws; the clean control returned a blocking issue in **1/5**. The checker is decisive about
+real breakage and noisy about clean text.
+
+That asymmetry rules out the intuitive aggregation:
+
+| rule | blocks clean text | catches broken text |
+|---|---|---|
+| single draw | 20% | reliably |
+| union over k=3 ("any draw blocks") | **49%** | reliably |
+| **majority over k=3** | **10%** | reliably |
+
+Union-blocking multiplies the noise it is meant to average out, and every false block costs a trip
+through the repair loop — the step that flattens prose (§5.1). Majority beats even a single draw on
+false positives and loses nothing on recall, because genuinely broken text blocks in every draw.
+
+**The rule: majority decides, union reports.** Once a majority judges the unit broken, the repair
+agent receives every issue *any* draw found — a real contradiction spotted by one careful reader is
+still real, and this is what recovers the error a single draw missed 1 time in 5. Escalation needs
+the same majority: a binding ruling is too expensive to trigger on one alarmed reader.
+
+Applied to canon-consistency only (`--checker-samples 3`, `1` to disable). Sampling every checker
+would triple the gate for asymmetries nobody has measured — micro-sense, voice and vitality remain
+uncalibrated, and vitality is the one most likely to be generous, since LLM judges reward fluency and
+fluency is exactly what an inert chapter has.
+
+**A pass is still weaker evidence than it looks.** The final auditor should not treat per-chapter
+passes as settled.
 
 ### Instructions — what each checker is handed
 
@@ -381,8 +403,8 @@ Each phase is independently testable and leaves the system runnable.
    binding/logged rulings (no oscillation), convergence caps with quarantine, and the Final Auditor.
    *(The "plausible-but-flat story" that used to sit here has been promoted out of the risk list: it
    is failure class four in §2, with selection and the Vitality checker against it.)*
-1b. **The gate is non-deterministic** (`calibration/FINDINGS.md` C4). One draw blocks a chapter,
-   another passes it. Unresolved; sampling policy must be chosen before P6 — see §6.
+1b. ~~**The gate is non-deterministic.**~~ Measured and handled: majority-of-3 sampling (§6.1).
+   Residual: only canon-consistency is sampled, and only it has been calibrated at all.
 1c. **Ground truth can be corrupted by a human.** Already happened once, in the reference canon and
    in this document's own §4 example. The rule in §4.1 is the mitigation; nothing enforces it
    mechanically yet.

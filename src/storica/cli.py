@@ -107,6 +107,7 @@ def cmd_run(args: argparse.Namespace) -> int:
             check_intent=not args.no_checkers,
             max_repairs=args.max_repairs,
             n_candidates=args.prose_candidates,
+            samples=args.checker_samples,
         ))
     except ResponseNeeded as pause:
         # Not a failure: the replay driver has run out of recorded answers.
@@ -181,6 +182,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--prose-candidates", type=int, default=3, dest="prose_candidates",
         help="drafts to generate per scene before selecting the most alive one (1 = no selection). "
              "Costs N generate calls plus one cheap selection call per scene; set 1 for a cheap run.",
+    )
+    run.add_argument(
+        "--checker-samples", type=int, default=3, dest="checker_samples",
+        help="draws per canon-consistency check; blocks only on a majority. 1 disables sampling. "
+             "Measured: a single draw flags clean text ~20%% of the time (calibration/FINDINGS.md C4).",
     )
     run.add_argument("--no-audit", action="store_true", help="skip the whole-book final audit")
     run.add_argument("--no-checkers", action="store_true", help="skip LLM checkers (structure only)")

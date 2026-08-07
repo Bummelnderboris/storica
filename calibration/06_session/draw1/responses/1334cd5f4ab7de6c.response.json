@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The finale correctly closes the Aebischer case through Feuz's co-signed report, Berta's flat non-question, and Stettler filing the new file beside the Vogel file before locking the Eichenschrank, but one clause softens canon's identical death-certificate formula into mere coincidence.",
+  "issues": [
+    {
+      "unit": "Fast dieselbe Formulierung",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "formula",
+      "fix_hint": "Cut 'Fast' (or replace with 'Dieselbe Formulierung') and drop 'Reiner Zufall, die Ähnlichkeit' — canon states the formula is identical across both cases, not merely similar or coincidental."
+    }
+  ],
+  "conflict": ""
+}

@@ -127,6 +127,10 @@ Here any checker raising a blocking issue triggers repair, and checkers run on t
 meaningful unit so a problem is localised rather than averaged away. Cheap structural checks run
 before expensive LLM ones.
 
+**Canon-consistency is sampled three times and blocks on a majority**, because a single LLM verdict
+flags clean prose about 20% of the time. Majority decides; once blocked, repair sees the union of
+everything all three draws found. See the calibration below.
+
 **Vitality is the odd one out, on purpose.** The other four are conformance checks, so a chapter that
 matches canon, hits its beats and sounds like the author passes the whole gate no matter how inert it
 is — and since repair pushes prose toward the rubric, that is the chapter this pipeline naturally
@@ -313,11 +317,19 @@ test costing about ten calls instead of a whole book. Full write-up in
   written by reading the corrupted v1 output. `DESIGN.md` §4's own example had it too. Both fixed;
   the design now says canon is authored from the brief and **never reconstructed from prose** — a
   rule that binds humans, not just agents.
-- **The gate is not deterministic.** The same call answered twice returned `revise` with a blocking
-  issue and then `pass`. Unresolved, and it needs deciding before P6 or P6's result is unreadable.
+- **The gate was not deterministic — now it is.** Drawing the same call five times: broken text
+  blocked in 5/5, clean text in 1/5. So a single verdict is 20% noise on clean prose, and
+  union-blocking ("repair if any draw complains") would reject good chapters **49%** of the time at
+  k=3. The pipeline now takes a **majority of 3**, which drops that to ~10% while losing no recall —
+  and once a majority blocks, repair sees the *union* of what every draw found. `--checker-samples 1`
+  opts out.
+- **Two of the original findings were artefacts.** At n=1 an unlucky draw is indistinguishable from a
+  real miss; resampling overturned both. Worth knowing before trusting any single verdict here.
 
-Known open questions, in `DESIGN.md` §10: the sampling policy above; convergence caps need empirical
-tuning; cost per book versus v1 is unmeasured.
+Known open questions, in `DESIGN.md` §10: only canon-consistency has been calibrated (vitality is the
+likeliest to be generous, since LLM judges reward fluency and fluency is what a dead chapter has);
+every planted error tested was a *fact* changing, not a contradiction of tone or motive; convergence
+caps need tuning; cost per book versus v1 is unmeasured.
 
 ---
 

@@ -1,0 +1,56 @@
+{
+  "decision": "revise",
+  "summary": "Chapter 2 dramatizes Feuz uncovering the reused death-certificate formula and closing the net toward Stettler, but along the way it silently rewrites several load-bearing canon facts (the victim's name, Melchior's cause of death, Stettler's office, Berta's household, and the priest's identity), so as written it does not earn its place.",
+  "issues": [
+    {
+      "unit": "Nr. 1934/14, Vogel, Anna, geborene Aebi.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "klara",
+      "fix_hint": "Restore the victim's name to Klara Vogel; cut the invented forename 'Anna' and the invented maiden name 'geborene Aebi', which is not in canon and implies a kinship to Aebischer that does not exist."
+    },
+    {
+      "unit": "drei Blätter, ein Protokoll, ein Sektionsbefund",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "t4",
+      "fix_hint": "Cut the Sektionsbefund from Melchior's file; canon (t4) records that Feuz files the certificate without an autopsy."
+    },
+    {
+      "unit": "die Zusammensetzung des Präparats, das man im Magen gefunden hatte",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "formula",
+      "fix_hint": "Replace the poisoning finding with the canon formula 'Herzversagen, vermutlich beim Sturz', reused identically across both cases."
+    },
+    {
+      "unit": "gezeichnet Stettler, Amtsstatthalter",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "stettler",
+      "fix_hint": "Call him Amtsarzt, as canon does, not Amtsstatthalter."
+    },
+    {
+      "unit": "Zu Hause hatte Berta die Suppe schon aufgetragen",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "berta",
+      "fix_hint": "Cut Berta serving soup and coffee in Feuz's home; canon places her only as Melchior's widow, with no relation to Feuz's household."
+    },
+    {
+      "unit": "der Pfarrer stand in der Tür",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "rutz",
+      "fix_hint": "Name the priest as Rutz (or Pfarrer Rutz) so this figure explicitly resolves to the one priest canon records, rather than reading as a second, unnamed cleric distinct from the creditor introduced earlier in the chapter."
+    },
+    {
+      "unit": "Feuz hatte in zwanzig Jahren keinen Amtsstatthalter seine Unterschrift unterstreichen sehen",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "feuz",
+      "fix_hint": "Cut the twenty-years-of-service claim; canon records Feuz as young, not a veteran of two decades."
+    }
+  ],
+  "conflict": ""
+}

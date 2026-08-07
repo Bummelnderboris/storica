@@ -27,6 +27,7 @@ from .checkers import (
     MicroSenseChecker,
     ProseChecker,
     VitalityChecker,
+    with_consensus,
 )
 from .drafts import load_chapter_draft, load_chapter_draft_if_present, save_chapter_draft
 from .llm import StructuredLLM
@@ -191,7 +192,9 @@ async def spec_chapter(
 # --------------------------------------------------------------------------------------------
 
 
-def default_prose_checkers(llm: StructuredLLM, tracer: Optional[Tracer] = None) -> List[ProseChecker]:
+def default_prose_checkers(
+    llm: StructuredLLM, tracer: Optional[Tracer] = None, *, samples: int = 3
+) -> List[ProseChecker]:
     """
     One reader per failure class (DESIGN §2), cheapest-to-satisfy first.
 
@@ -204,12 +207,16 @@ def default_prose_checkers(llm: StructuredLLM, tracer: Optional[Tracer] = None) 
     and sounds like the author passes the whole gate no matter how inert it is — and since repair
     moves prose toward the rubric, that is the chapter this pipeline naturally produces.
     """
-    return [
-        CanonConsistencyChecker(llm, tracer=tracer),
-        MicroSenseChecker(llm, tracer=tracer),
-        AuthorVoiceChecker(llm, tracer=tracer),
-        VitalityChecker(llm, tracer=tracer),
-    ]
+    return with_consensus(
+        [
+            CanonConsistencyChecker(llm, tracer=tracer),
+            MicroSenseChecker(llm, tracer=tracer),
+            AuthorVoiceChecker(llm, tracer=tracer),
+            VitalityChecker(llm, tracer=tracer),
+        ],
+        samples=samples,
+        tracer=tracer,
+    )
 
 
 @dataclass
@@ -253,6 +260,7 @@ async def draft_chapter(
     model: str = "opus",
     trace: bool = True,
     n_candidates: int = 1,
+    samples: int = 3,
 ) -> ChapterOutcome:
     """
     Write one chapter (stage 5) and survive what goes wrong with it.
@@ -280,7 +288,9 @@ async def draft_chapter(
 
     previous_draft = load_chapter_draft_if_present(novel_dir / DRAFTS_DIR, chapter - 1)
     previous_tail = (previous_draft or "").strip()[-800:]
-    prose_checkers = list(checkers) if checkers is not None else default_prose_checkers(llm, tracer)
+    prose_checkers = (
+        list(checkers) if checkers is not None else default_prose_checkers(llm, tracer, samples=samples)
+    )
 
     guidance = ""
     for attempt in range(max_escalations + 1):

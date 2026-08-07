@@ -99,6 +99,7 @@ async def run_novel(
     max_repairs: int = 2,
     trace: bool = True,
     n_candidates: int = 1,
+    samples: int = 3,
 ) -> RunResult:
     """
     Run the whole pipeline for one novel, skipping any stage whose artifact already exists.
@@ -146,7 +147,7 @@ async def run_novel(
             outcome = await draft_chapter(
                 novel_dir=novel_dir, authors_root=authors_root, chapter=chapter, llm=llm,
                 checkers=checkers, max_repairs=max_repairs, trace=trace,
-                n_candidates=n_candidates,
+                n_candidates=n_candidates, samples=samples,
             )
             if outcome.quarantined:
                 continue

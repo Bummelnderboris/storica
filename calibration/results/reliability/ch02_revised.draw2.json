@@ -1,0 +1,70 @@
+{
+  "decision": "revise",
+  "summary": "Chapter 2 dramatizes Feuz uncovering the twenty-year-old Vogel file and confronting Stettler and Rutz, but it repeatedly displaces load-bearing canon facts (victim's name, Melchior's autopsy status, Stettler's office, the reused formula) and drifts two characters out of their canon identities, so it does not earn its place as written.",
+  "issues": [
+    {
+      "unit": "Vogel, Anna, geborene Aebi",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "klara",
+      "fix_hint": "restore the name to Klara Vogel; cut the invented first name 'Anna' and the invented maiden name 'geborene Aebi'"
+    },
+    {
+      "unit": "ein Protokoll, ein Sektionsbefund",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "melchior",
+      "fix_hint": "cut the Sektionsbefund from Melchior's file; canon records no autopsy was performed on him"
+    },
+    {
+      "unit": "das Präparat, das man im Magen gefunden hatte",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "melchior",
+      "fix_hint": "cut the poison-in-stomach detail; Melchior's death was a fall with no autopsy, not a poisoning"
+    },
+    {
+      "unit": "gezeichnet Stettler, Amtsstatthalter",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "stettler",
+      "fix_hint": "call him Amtsarzt, as canon does, not Amtsstatthalter, and remove the later repetition of the title"
+    },
+    {
+      "unit": "der Pfarrer stand in der Tür",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "rutz",
+      "fix_hint": "name him Rutz / Pfarrer Rutz explicitly here; he is the same creditor named earlier in the chapter, not a second, unnamed priest"
+    },
+    {
+      "unit": "Zu Hause hatte Berta die Suppe schon aufgetragen",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "berta",
+      "fix_hint": "cut this scene of Berta serving Feuz in his home; canon has her as Melchior's widow, not a housekeeper in Feuz's household"
+    },
+    {
+      "unit": "die Zusammensetzung des Präparats",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "world_facts.formula",
+      "fix_hint": "restore the reused formula to the certificate phrase 'Herzversagen, vermutlich beim Sturz', not a poison's chemical composition"
+    },
+    {
+      "unit": "Drei Wirte hielten Zettel, der Bären, der Kreuz, der Löwe",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "melchior",
+      "fix_hint": "canon is silent on the number and names of innkeepers Melchior owed; fine as invention, but reconcile into canon if kept"
+    },
+    {
+      "unit": "Die Unterschrift war zweimal unterstrichen",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "feuz",
+      "fix_hint": "double-underlining is Feuz's own habit in canon; clarify this is his private observation, not attribute it to the old file's signer without comment"
+    }
+  ],
+  "conflict": ""
+}

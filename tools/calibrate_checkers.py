@@ -393,12 +393,135 @@ def score() -> int:
     return 0
 
 
+# --------------------------------------------------------------------------------------------
+# Reliability: the same call, drawn many times
+# --------------------------------------------------------------------------------------------
+#
+# C4 showed one call returning 'revise' with a blocking issue on one draw and 'pass' on another. A
+# gate that flips is a gate whose verdict is partly luck, so before choosing a sampling policy we
+# need two rates: how often clean text gets flagged (which is what union-blocking amplifies), and
+# whether extra draws actually find errors a single draw misses.
+#
+# The prompt must stay byte-identical across draws — the variance under study is the model's, not
+# the prompt's. ReplayLLM keys on a content hash, so identical prompts would replay the same cached
+# answer; each draw therefore gets its own session directory instead of a tweaked prompt.
+
+RELIABILITY_CASES = ["ch02_revised", "ch03_draft"]  # the two that decide the policy
+
+
+async def run_reliability(draws: int) -> int:
+    canon = load_canon(V1 / "01_canon")
+    author = load_author("duerrenmatt", REPO_ROOT / "authors")
+    results_dir = OUT / "results" / "reliability"
+    results_dir.mkdir(parents=True, exist_ok=True)
+    by_id = {c.id: c for c in CASES}
+
+    pending = 0
+    for case_id in RELIABILITY_CASES:
+        case = by_id[case_id]
+        prose = case.prose_path.read_text(encoding="utf-8")
+        for n in range(1, draws + 1):
+            target = results_dir / f"{case.id}.draw{n}.json"
+            if target.exists():
+                continue
+            llm = ReplayLLM(OUT / "06_session" / f"draw{n}")  # separate cache, same prompt
+            try:
+                verdict = await cc.CanonConsistencyChecker(llm, tracer=Tracer(None)).check_prose(
+                    prose=prose, canon=canon, spec=spec_for(case), author=author
+                )
+            except ResponseNeeded as need:
+                print(f"[pending] {case.id} draw{n}\n{need}\n")
+                pending += 1
+                continue
+            target.write_text(verdict.model_dump_json(indent=2), encoding="utf-8")
+            print(f"[done] {case.id} draw{n}: {verdict.decision.value}, {len(verdict.issues)} issues")
+
+    if pending:
+        print(f"{pending} call(s) awaiting answers — answer them and run again.")
+        return 2
+    return 0
+
+
+def score_reliability() -> int:
+    results_dir = OUT / "results" / "reliability"
+    by_id = {c.id: c for c in CASES}
+    print("\n=== Reliability: same prompt, independent draws ===\n")
+
+    policy_rows = []
+    for case_id in RELIABILITY_CASES:
+        case = by_id[case_id]
+        draws = sorted(results_dir.glob(f"{case.id}.draw*.json"))
+        if not draws:
+            continue
+        verdicts = [json.loads(p.read_text(encoding="utf-8")) for p in draws]
+        blocking_per_draw = [
+            [i for i in v.get("issues", []) if i.get("severity") == "blocking"] for v in verdicts
+        ]
+        n = len(verdicts)
+        blocked = sum(1 for b in blocking_per_draw if b)
+
+        label = "CONTROL (clean text)" if case.is_control else "planted errors"
+        print(f"{case.id}  [{label}]  n={n}")
+        print(f"  decisions:          {[v['decision'] for v in verdicts]}")
+        print(f"  blocking per draw:  {[len(b) for b in blocking_per_draw]}")
+        print(f"  draws that blocked: {blocked}/{n}")
+
+        if case.is_control:
+            # Every block here is a false positive: this chapter is clean.
+            p = blocked / n if n else 0.0
+            print(f"  ==> false-positive rate per draw: {p:.0%}")
+            for k in (1, 3, 5):
+                union = 1 - (1 - p) ** k
+                print(f"      union-block at k={k}: {union:.0%} chance of blocking clean text")
+            policy_rows.append(("fp_per_draw", p))
+        else:
+            for planted in case.planted:
+                if planted.canon_permits:
+                    continue
+                hits = sum(
+                    1 for b in blocking_per_draw
+                    if any(any(kw in _haystack(i) for kw in planted.keywords) for i in b)
+                )
+                print(f"  {planted.id:<22} caught in {hits}/{n} draws")
+            union_recall = sum(
+                1 for p_ in case.planted if not p_.canon_permits
+                and any(any(any(kw in _haystack(i) for kw in p_.keywords) for i in b)
+                        for b in blocking_per_draw)
+            )
+            valid = sum(1 for p_ in case.planted if not p_.canon_permits)
+            print(f"  ==> union of all {n} draws catches {union_recall}/{valid} "
+                  f"(single draw caught 4/{valid})")
+            policy_rows.append(("union_recall", (union_recall, valid)))
+        print()
+
+    print("--- reading this ---")
+    print(
+        "Union-blocking (fire repair if ANY draw raises a blocking issue) is the right rule only if\n"
+        "the control's false-positive rate stays low enough that 1-(1-p)^k is tolerable. If clean\n"
+        "text blocks often, prefer majority-blocking, or keep k=1 and accept the misses."
+    )
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", action="store_true", help="score existing results only")
+    parser.add_argument(
+        "--reliability", type=int, metavar="N", default=0,
+        help="draw the same call N times per case to measure the flip rate",
+    )
     args = parser.parse_args()
+
+    if args.reliability:
+        code = asyncio.run(run_reliability(args.reliability))
+        if code == 0:
+            score_reliability()
+        return code
     if args.report:
-        return score()
+        score()
+        if (OUT / "results" / "reliability").exists():
+            score_reliability()
+        return 0
     code = asyncio.run(run())
     if code == 0:
         score()
