@@ -18,5 +18,6 @@ A novel references an author by id; nothing here is novel-specific.
 - `nudges.md` + `profile.yaml.critique_rubric` feed the **Author-Voice checker** (§6).
 - `examples/` ground both generation and checking with concrete, annotated exemplars.
 
-> `profile.yaml` here is copied from `backend/app/authors/profiles/`. Until the pipeline is rewired
-> to read from this library (later phase), the running app still reads the originals — keep them in sync.
+> This library is the single source for author assets. The v2 pipeline reads it directly
+> (`--authors` defaults here); the v1 copies under `legacy/backend/app/authors/profiles/` are archived
+> and no longer read by anything.
