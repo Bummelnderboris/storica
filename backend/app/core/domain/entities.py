@@ -53,12 +53,63 @@ class Author:
     critique_rubric: Dict[str, Any]
 
     def get_style_guide(self) -> str:
-        """Generate condensed style guide for prompts."""
-        parts = [
-            f"# Style Guide: {self.name}",
-            f"Language: {self.language.upper()}",
-            f"Philosophy: {self.philosophy.get('worldview', '')}",
-        ]
+        """Generate comprehensive style guide for prompts."""
+        parts = [f"# Style Guide: {self.name}"]
+        parts.append(f"Language: {self.language.upper()}")
+
+        # Philosophy
+        worldview = self.philosophy.get("worldview", "")
+        obsession = self.philosophy.get("central_obsession", "")
+        if worldview:
+            parts.append(f"\n## Philosophy\n{worldview}")
+        if obsession:
+            parts.append(f"Central obsession: {obsession}")
+
+        # Language & style
+        style = self.style
+        if style.get("vocabulary"):
+            parts.append(f"\n## Vocabulary\n{style['vocabulary']}")
+        if style.get("register"):
+            parts.append(f"Register: {style['register']}")
+        if style.get("sentence_patterns"):
+            patterns = style["sentence_patterns"]
+            if isinstance(patterns, list):
+                parts.append("\n## Sentence Patterns")
+                for p in patterns:
+                    parts.append(f"- {p}")
+            else:
+                parts.append(f"\n## Sentence Patterns\n{patterns}")
+        if style.get("dialogue_style"):
+            parts.append(f"\n## Dialogue\n{style['dialogue_style']}")
+        if style.get("markers"):
+            parts.append("\n## Voice Markers")
+            for m in style["markers"]:
+                parts.append(f"- {m}")
+        if style.get("anti_patterns"):
+            parts.append("\n## NEVER DO (Anti-Patterns)")
+            for a in style["anti_patterns"]:
+                parts.append(f"- {a}")
+
+        # Structural patterns
+        structure = self.patterns.get("structure", {})
+        if structure.get("signature_pattern"):
+            parts.append(f"\n## Structure\n{structure['signature_pattern']}")
+        if structure.get("openings"):
+            parts.append(f"Openings: {structure['openings']}")
+        if structure.get("endings"):
+            parts.append(f"Endings: {structure['endings']}")
+
+        # Thematic guidance
+        themes = self.patterns.get("themes", {})
+        if themes.get("primary"):
+            parts.append("\n## Core Themes")
+            for t in themes["primary"]:
+                parts.append(f"- {t}")
+        if themes.get("forbidden"):
+            parts.append("\n## Forbidden Themes (AVOID)")
+            for t in themes["forbidden"]:
+                parts.append(f"- {t}")
+
         return "\n".join(parts)
 
 

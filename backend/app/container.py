@@ -17,6 +17,9 @@ from .adapters import (
 )
 from .prompts import PromptEngine
 
+# Import agents package to trigger registration
+import app.agents  # noqa: F401
+
 
 class Container:
     """
@@ -27,21 +30,18 @@ class Container:
 
     def __init__(self):
         """Initialize container with adapters."""
-        # Initialize adapters
         self._llm = AnthropicLLMAdapter(
             api_key=settings.ANTHROPIC_API_KEY,
             default_model="sonnet",
         )
 
-        # Author profiles directory
         authors_dir = Path(__file__).parent / "authors" / "profiles"
         self._authors = YAMLAuthorAdapter(str(authors_dir))
 
-        # Prompt engine
         templates_dir = Path(__file__).parent / "prompts" / "templates"
         self._prompt_engine = PromptEngine(str(templates_dir))
 
-        # Connection manager (will be set by app startup)
+        # Connection manager (set by app startup)
         self._connection_manager = None
 
     def set_connection_manager(self, manager) -> None:
@@ -66,7 +66,7 @@ class Container:
             storage=storage,
             events=events,
             authors=self._authors,
-            prompt_renderer=self._prompt_engine.render,
+            prompt_engine=self._prompt_engine,
         )
 
     def get_approve_phase_usecase(self, session) -> ApprovePhaseUseCase:
@@ -89,21 +89,17 @@ class Container:
 
     @property
     def llm(self) -> AnthropicLLMAdapter:
-        """Get LLM adapter."""
         return self._llm
 
     @property
     def authors(self) -> YAMLAuthorAdapter:
-        """Get authors adapter."""
         return self._authors
 
     @property
     def prompt_engine(self) -> PromptEngine:
-        """Get prompt engine."""
         return self._prompt_engine
 
 
-# Global container instance
 @lru_cache()
 def get_container() -> Container:
     """Get the global container instance."""

@@ -82,9 +82,9 @@ class GenerationConfig:
     max_iterations: int = 3
     passing_threshold: float = 7.0
     auto_approve: bool = False
-    model_default: str = "claude-sonnet-4-20250514"
-    model_prose: str = "claude-opus-4-20250514"
-    max_tokens_per_chapter: int = 4000
+    model_default: str = "sonnet"
+    model_prose: str = "opus"
+    max_tokens_per_chapter: int = 8000
     temperature: float = 0.7
 
 

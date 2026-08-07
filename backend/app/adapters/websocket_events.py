@@ -159,5 +159,6 @@ class WebSocketEventAdapter(EventPort):
     async def _broadcast(self, project_id: int, data: Dict[str, Any]) -> None:
         """Broadcast message to project connections."""
         if self.manager:
-            message = json.dumps(data)
-            await self.manager.broadcast_to_project(project_id, message)
+            # ConnectionManager.broadcast sends via websocket.send_json, so pass
+            # the dict directly rather than a pre-serialized string.
+            await self.manager.broadcast(project_id, data)

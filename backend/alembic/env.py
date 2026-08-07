@@ -9,7 +9,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from app.config import get_settings
-from app.database import Base
+from app.database import Base, _get_async_url
 from app.models import *  # noqa: F401, F403 - Import all models
 
 config = context.config
@@ -20,8 +20,10 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 
-# Override sqlalchemy.url from settings
-config.set_main_option("sqlalchemy.url", settings.database_url)
+# Override sqlalchemy.url from settings.
+# Migrations run through an async engine (async_engine_from_config), so the URL
+# must use an async driver (e.g. sqlite+aiosqlite / postgresql+asyncpg).
+config.set_main_option("sqlalchemy.url", _get_async_url(settings.DATABASE_URL))
 
 
 def run_migrations_offline() -> None:

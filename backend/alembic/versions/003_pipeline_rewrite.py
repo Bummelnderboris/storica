@@ -11,7 +11,7 @@ from sqlalchemy.dialects import postgresql
 
 # revision identifiers
 revision = '003_pipeline'
-down_revision = '002_add_cost_fields'
+down_revision = '002'
 branch_labels = None
 depends_on = None
 

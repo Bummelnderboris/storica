@@ -14,6 +14,11 @@ class LLMResponse:
     model: str
     stop_reason: Optional[str] = None
 
+    @property
+    def text(self) -> str:
+        """Alias for content — used by agent layer."""
+        return self.content
+
 
 class LLMPort(ABC):
     """Abstract interface for LLM operations."""

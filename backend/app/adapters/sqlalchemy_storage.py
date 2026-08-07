@@ -1,5 +1,6 @@
 """SQLAlchemy Storage Adapter - implements StoragePort using SQLAlchemy."""
 
+import json
 from typing import Optional, List
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -86,9 +87,10 @@ class SQLAlchemyStorageAdapter(StoragePort):
         result = await self.session.execute(
             select(PipelineRunModel)
             .where(PipelineRunModel.project_id == project_id)
-            .order_by(PipelineRunModel.started_at.desc())
+            .order_by(PipelineRunModel.id.desc())
+            .limit(1)
         )
-        model = result.scalar_one_or_none()
+        model = result.scalars().first()
         if not model:
             return None
         return self._pipeline_run_to_domain(model)
@@ -123,9 +125,10 @@ class SQLAlchemyStorageAdapter(StoragePort):
         run_result = await self.session.execute(
             select(PipelineRunModel)
             .where(PipelineRunModel.project_id == project_id)
-            .order_by(PipelineRunModel.started_at.desc())
+            .order_by(PipelineRunModel.id.desc())
+            .limit(1)
         )
-        run_model = run_result.scalar_one_or_none()
+        run_model = run_result.scalars().first()
         if not run_model:
             raise ValueError(f"No pipeline run for project {project_id}")
 
@@ -133,7 +136,7 @@ class SQLAlchemyStorageAdapter(StoragePort):
             pipeline_run_id=run_model.id,
             phase_name=result.phase.value,
             status=result.status,
-            output=result.output,
+            output_json=self._dump_json(result.output),
             error=result.error,
             input_tokens=result.input_tokens,
             output_tokens=result.output_tokens,
@@ -254,19 +257,39 @@ class SQLAlchemyStorageAdapter(StoragePort):
 
     # Mapping helpers
 
+    @staticmethod
+    def _load_json(raw: Optional[str]) -> Optional[dict]:
+        """Deserialize a JSON text column, tolerating null/empty values."""
+        if not raw:
+            return None
+        return json.loads(raw)
+
+    @staticmethod
+    def _dump_json(value: Optional[dict]) -> Optional[str]:
+        """Serialize a dict to a JSON text column value (None stays NULL)."""
+        if value is None:
+            return None
+        return json.dumps(value)
+
     def _project_to_domain(self, model: ProjectModel) -> DomainProject:
         """Convert ORM model to domain entity."""
+        dna_data = self._load_json(model.story_dna_json)
         story_dna = None
-        if model.story_dna:
+        if dna_data:
             story_dna = StoryDNA(
-                spark=model.story_dna.get("spark", {}),
-                genre=model.story_dna.get("genre", {}),
-                world=model.story_dna.get("world", {}),
-                characters=model.story_dna.get("characters", {}),
-                conflict=model.story_dna.get("conflict", {}),
-                structure=model.story_dna.get("structure", {}),
-                voice=model.story_dna.get("voice", {}),
+                spark=dna_data.get("spark", {}),
+                genre=dna_data.get("genre", {}),
+                world=dna_data.get("world", {}),
+                characters=dna_data.get("characters", {}),
+                conflict=dna_data.get("conflict", {}),
+                structure=dna_data.get("structure", {}),
+                voice=dna_data.get("voice", {}),
             )
+
+        # target_words has no dedicated column; derive it from the DNA structure.
+        target_words = 50000
+        if story_dna and isinstance(story_dna.structure, dict):
+            target_words = story_dna.structure.get("target_words", target_words)
 
         return DomainProject(
             id=model.id,
@@ -274,13 +297,13 @@ class SQLAlchemyStorageAdapter(StoragePort):
             user_id=model.user_id,
             author_id=model.author_id or "",
             story_dna=story_dna,
-            target_words=model.target_words or 50000,
-            total_chapters=model.total_chapters or 10,
+            target_words=target_words,
+            total_chapters=model.chapter_count or 10,
             created_at=model.created_at,
-            topic_analysis=model.topic_analysis,
-            thesis=model.story_thesis,
-            character_system=model.character_system,
-            architecture=model.story_architecture,
+            topic_analysis=self._load_json(model.topic_analysis_json),
+            thesis=self._load_json(model.story_thesis_json),
+            character_system=self._load_json(model.character_system_json),
+            architecture=self._load_json(model.story_architecture_json),
         )
 
     def _project_to_model(self, project: DomainProject) -> ProjectModel:
@@ -289,9 +312,8 @@ class SQLAlchemyStorageAdapter(StoragePort):
             name=project.name,
             user_id=project.user_id,
             author_id=project.author_id,
-            story_dna=project.story_dna.to_dict() if project.story_dna else None,
-            target_words=project.target_words,
-            total_chapters=project.total_chapters,
+            story_dna_json=self._dump_json(project.story_dna.to_dict() if project.story_dna else None),
+            chapter_count=project.total_chapters,
         )
 
     def _update_project_model(
@@ -302,16 +324,18 @@ class SQLAlchemyStorageAdapter(StoragePort):
         """Update ORM model from domain entity."""
         model.name = project.name
         model.author_id = project.author_id
-        model.story_dna = project.story_dna.to_dict() if project.story_dna else None
-        model.target_words = project.target_words
-        model.total_chapters = project.total_chapters
-        model.topic_analysis = project.topic_analysis
-        model.story_thesis = project.thesis
-        model.character_system = project.character_system
-        model.story_architecture = project.architecture
+        model.story_dna_json = self._dump_json(project.story_dna.to_dict() if project.story_dna else None)
+        model.chapter_count = project.total_chapters
+        model.topic_analysis_json = self._dump_json(project.topic_analysis)
+        model.story_thesis_json = self._dump_json(project.thesis)
+        model.character_system_json = self._dump_json(project.character_system)
+        model.story_architecture_json = self._dump_json(project.architecture)
 
     def _pipeline_run_to_domain(self, model: PipelineRunModel) -> DomainPipelineRun:
         """Convert ORM model to domain entity."""
+        # auto_approve / estimated_cost_usd have no dedicated columns; they live
+        # in the state_json blob.
+        state = self._load_json(model.state_json) or {}
         return DomainPipelineRun(
             id=model.id,
             project_id=model.project_id,
@@ -319,13 +343,20 @@ class SQLAlchemyStorageAdapter(StoragePort):
             status=model.status,
             current_phase=PhaseType(model.current_phase) if model.current_phase else None,
             current_chapter=model.current_chapter or 0,
-            auto_approve=model.auto_approve,
-            total_input_tokens=model.total_input_tokens,
-            total_output_tokens=model.total_output_tokens,
-            estimated_cost_usd=model.estimated_cost_usd,
+            auto_approve=state.get("auto_approve", False),
+            total_input_tokens=model.total_input_tokens or 0,
+            total_output_tokens=model.total_output_tokens or 0,
+            estimated_cost_usd=state.get("estimated_cost_usd", 0.0),
             started_at=model.started_at,
             completed_at=model.completed_at,
         )
+
+    def _run_state_json(self, run: DomainPipelineRun) -> str:
+        """Serialize the run fields that have no dedicated columns."""
+        return self._dump_json({
+            "auto_approve": run.auto_approve,
+            "estimated_cost_usd": run.estimated_cost_usd,
+        })
 
     def _pipeline_run_to_model(self, run: DomainPipelineRun) -> PipelineRunModel:
         """Convert domain entity to ORM model."""
@@ -335,10 +366,10 @@ class SQLAlchemyStorageAdapter(StoragePort):
             status=run.status,
             current_phase=run.current_phase.value if run.current_phase else None,
             current_chapter=run.current_chapter,
-            auto_approve=run.auto_approve,
             total_input_tokens=run.total_input_tokens,
             total_output_tokens=run.total_output_tokens,
-            estimated_cost_usd=run.estimated_cost_usd,
+            state_json=self._run_state_json(run),
+            started_at=run.started_at,
         )
 
     def _update_pipeline_run_model(
@@ -352,7 +383,9 @@ class SQLAlchemyStorageAdapter(StoragePort):
         model.current_chapter = run.current_chapter
         model.total_input_tokens = run.total_input_tokens
         model.total_output_tokens = run.total_output_tokens
-        model.estimated_cost_usd = run.estimated_cost_usd
+        model.state_json = self._run_state_json(run)
+        if run.started_at:
+            model.started_at = run.started_at
         model.completed_at = run.completed_at
 
     def _chapter_to_domain(self, model: ChapterModel) -> DomainChapter:
