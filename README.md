@@ -253,11 +253,26 @@ what stage 2 is supposed to produce.
 
 ---
 
-## What's next
+## What's next — P6
 
-`DESIGN.md` §9 lays out the build plan P0–P6. P0–P5 are implemented and tested. **P6 is open:**
-run *Der Chrachen* end-to-end under v2 and compare its coherence, meaning and micro-truth against
-the v1 capture — the same story, the same author, the same spark, so the comparison is direct.
+`DESIGN.md` §9 lays out the build plan P0–P6. P0–P5 are implemented and tested. **P6 is the open
+one:** run *Der Chrachen* end-to-end under v2 and compare it against the v1 capture — same spark,
+same world, same author, same three chapters, so the comparison is direct.
+
+It is set up and ready to run:
+
+- **[`novels/der-chrachen-v2/`](novels/der-chrachen-v2/)** — the brief, a faithful translation of the
+  v1 inputs. `question_lines`, `nudges` and `forbidden` are deliberately left empty even though v2
+  supports them, because v1 had no equivalent; otherwise an improvement could be credited to a
+  better brief rather than to the pipeline.
+- **[`/write-novel`](.claude/skills/write-novel/SKILL.md)** — a skill that drives the run on a Claude
+  subscription instead of the API, answering each call with a freshly spawned subagent.
+- **[`docs/proving-the-concept.md`](docs/proving-the-concept.md)** — what that method does and does
+  not prove, the contamination trap that would silently invalidate it, and the scorecard for judging
+  the result against the v1 findings.
+
+Run it with `/write-novel novels/der-chrachen-v2`. Expect roughly 40–60 model calls for three
+chapters.
 
 Known open questions, all flagged in `DESIGN.md` §10: the convergence caps need empirical tuning
 (too tight quarantines good chapters, too loose burns tokens); cost per book versus v1 is unmeasured;

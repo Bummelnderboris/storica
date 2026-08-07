@@ -1,0 +1,46 @@
+# P6 — the v2 re-run of Der Chrachen.
+#
+# This brief is a faithful translation of the v1 run's Story DNA
+# (../../der-chrachen/inputs_story_dna.json) into the v2 brief schema. Same spark, same world,
+# same conflict, same tone, same 3 chapters, same author.
+#
+# Deliberately NOT used, even though v2 supports them: `question_lines`, `nudges` and `forbidden`
+# are left empty because v1 had no equivalent input. Filling them would hand v2 steering that v1
+# never had, and any improvement in the result could then be credited to the better brief rather
+# than to the pipeline. Everything v1 knew is in `spark` and `thoughts`; nothing more.
+#
+# The author's own question-lines (authors/duerrenmatt/question_lines.md) DO apply — those are an
+# author-library asset, not creator input, and v1's author profile carried the same material.
+
+author_id: duerrenmatt
+
+spark: >-
+  In einem abgelegenen Schweizer Bergdorf stirbt bei einem Autounfall in einer Winternacht der
+  einzige Mann, der beweisen könnte, dass der Amtsarzt des Dorfes vor zwanzig Jahren einen
+  tödlichen Behandlungsfehler vertuscht hat. Nun liegt der Tote auf dem Tisch eben dieses Arztes,
+  der als einziger Mediziner am Ort den Totenschein ausstellen muss.
+
+thoughts: |
+  Gattung: Kriminalroman / Tragikomödie (philosophisch). Nebenformen: Justizdrama, Dorfgroteske.
+
+  Welt: Abgelegenes Schweizer Alpendorf, durch einen Passwinter von der Welt abgeschnitten.
+  Zeit: die 1950er Jahre. Atmosphäre: eng, verschneit, von Schweigen und stillschweigenden
+  Übereinkünften regiert.
+
+  Konflikt: Die Wahrheit auf dem Totenschein wäre die Selbstanzeige des Arztes; das Schweigen
+  überlässt es dem Zufall, die alte Schuld endgültig zu begraben. Zwischen beidem muss ein Mann
+  entscheiden, der zeitlebens an die Ordnung geglaubt hat.
+
+  Figurenkeime: Der Amtsarzt — müde, ordnungsgläubig, seit zwanzig Jahren Verwalter seiner
+  eigenen Schuld. Der Tote fungiert als Antagonist: der Zufall in Person. Dazu eine junge
+  Amtsperson (Landjäger oder Untersuchungsrichter) und die Witwe des Toten.
+
+  Ton: nüchtern, grotesk, ironisch; das Schreckliche sachlich protokolliert.
+
+question_lines: []
+nudges: []
+forbidden: []
+
+language: de
+chapter_count: 3
+title_hint: ''

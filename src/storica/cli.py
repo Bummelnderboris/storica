@@ -25,7 +25,7 @@ from pathlib import Path
 from .brief import Brief, save_brief
 from .canon import load_canon
 from .drafts import drafted_chapters
-from .drivers import ReplayLLM, ResponseNeeded
+from .drivers import MalformedResponse, ReplayLLM, ResponseNeeded
 from .llm import AnthropicStructuredLLM, StructuredLLM
 from .plan import load_macro_arc, macro_arc_path, specced_chapters
 from .reports import QuarantineLog
@@ -111,6 +111,12 @@ def cmd_run(args: argparse.Namespace) -> int:
         # Not a failure: the replay driver has run out of recorded answers.
         print(f"\n[paused] {pause}\n")
         return 2
+    except MalformedResponse as bad:
+        # A recorded answer does not fit its schema. Also not a crash — the answer needs
+        # rewriting. Distinct exit code so a driving loop can tell "write a new answer" (2)
+        # from "fix the one you wrote" (3) without parsing text.
+        print(f"\n[malformed] {bad}\n")
+        return 3
 
     print(f"chapters written: {result.chapters or '(none)'}")
     if result.quarantined:
