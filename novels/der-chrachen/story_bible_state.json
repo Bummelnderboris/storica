@@ -1,0 +1,39 @@
+{
+  "_note": "Simulated AgentStoryBible after applying Ch1 guardian updates. Character/location/object keys are dict keys (F7: exact-string match, no variant normalization). Timeline is append-only (no dedup). Updated after each chapter's consistency step.",
+  "_applied_through_chapter": 1,
+  "characters": {
+    "Melchior Aebischer": "Deceased; found dead at the Chrachen gorge near Lauenegg. Husband of Berta. Chin scar (axe). Heavily in debt (innkeeper, Rutz, everyone). Known drunk on the Chrachenpfad. Official cause: heart failure during a ~12m fall. Found face-down between two boulders, nailed boots.",
+    "Dr. Konrad Stettler": "Amtsarzt (district physician), 58. Examines the body, rules 'Herzversagen, vermutlich beim Sturz.' Delivers the death certificate, argues against an autopsy on cost/predictability grounds.",
+    "Martin Feuz": "Untersuchungsrichter (investigating judge), young. Methodical note-taker (double-underlines). Interviews witnesses; accepts no-autopsy; files the certificate in his oak cabinet.",
+    "Berta Aebischer": "Widow of Melchior. Identifies the body by the chin scar; keeps gloves on. Last saw him the previous evening. Hesitates a beat too long before agreeing with Stettler's account.",
+    "Marolf": "Young Träger of the Dorfwehr who retrieves the body. Dialect speaker; notes Melchior's debts and unsteadiness.",
+    "Rutz": "[⚠️ WRONG — canonized from a Writer slip] Recorded as a local creditor to whom Melchior owed money; waits silently in the hallway to hear the matter is settled. (Canon per Phase 3: Rutz is the village PRIEST and Stettler's old friend/confessor.)"
+  },
+  "locations": {
+    "Der Chrachen": "Gorge south of Lauenegg; stream freezes greenish in winter. Site of Melchior's fatal ~12m fall. Includes the treacherous Chrachenpfad.",
+    "Lauenegg": "The village; the Chrachen lies to its south.",
+    "Amtsraum (unheated examination room)": "Unheated official room where the body is laid out under a too-short sheet for identification.",
+    "Feuz's Amtsstube": "The judge's office with an oak filing cabinet; adjoining hallway where Rutz waits."
+  },
+  "objects": {
+    "Der Totenschein": "Death certificate by Stettler recording heart failure during the fall; filed without autopsy.",
+    "Narbe am Kinn": "Melchior's chin scar (old axe injury); used by Berta to identify him.",
+    "Genagelte Bergschuhe": "Melchior's nailed mountain boots, protruding from under the sheet.",
+    "Eichenschrank": "Oak cabinet in Feuz's office where the certificate is filed."
+  },
+  "timeline": [
+    {"chapter": 1, "description": "Night: snow; Melchior falls to his death in the Chrachen (~12m)."},
+    {"chapter": 1, "description": "By first light: the Dorfwehr (incl. Marolf) retrieves the body."},
+    {"chapter": 1, "description": "Morning: Stettler examines the body, declares heart failure/fall; Feuz interviews witnesses on site."},
+    {"chapter": 1, "description": "Same day: body moved to the Amtsraum; Berta identifies and is questioned."},
+    {"chapter": 1, "description": "Afternoon: Stettler delivers the certificate; Feuz declines autopsy and files it; Rutz waits in the hallway."}
+  ],
+  "foreshadowing": [
+    "Berta hesitates a beat too long before agreeing with Stettler's account.",
+    "Accidental-death verdict accepted for cost/convenience despite an incomplete exam — possible cover-up.",
+    "Melchior's debts establish financial motives for multiple parties.",
+    "Rutz waits to hear the matter is 'settled' — a personal stake.",
+    "Berta's 'dass er einmal hinunterfällt' reads as ominous foreknowledge.",
+    "Feuz double-underlines notes — privately flagged something while closing the case."
+  ]
+}

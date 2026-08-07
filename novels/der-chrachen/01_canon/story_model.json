@@ -1,0 +1,127 @@
+{
+  "premise": {
+    "spark": "In a remote Swiss mountain village the one man who could prove the district doctor covered up a fatal malpractice 20 years ago dies in a fall, and now lies awaiting the death certificate that same doctor must sign.",
+    "central_question": "Can a man whom chance offers the means to bury his guilt for good resist the offer — or does the very chance to make it final force a second, worse crime?",
+    "thesis": "Guilt administered for twenty years instead of confessed turns every accident of the world into a verdict the guilty man can no longer escape, because he is the only one who could still recognize it as an accident.",
+    "why_this_author": "Duerrenmatt's obsession: justice possible only by grotesque chance; the institution (the death certificate, the file) as the trap that closes on its keeper."
+  },
+  "author_id": "duerrenmatt",
+  "characters": {
+    "stettler": {
+      "canonical_name": "Dr. Konrad Stettler",
+      "aliases": ["Stettler", "Konrad Stettler"],
+      "role": "protagonist",
+      "facts": {
+        "profession": "Amtsarzt (district physician)",
+        "age": "58",
+        "secret": "20 years ago forged Klara Vogel's death certificate to 'Herzversagen'",
+        "trait": "conflates record-keeping with absolution; dry, procedural speech"
+      },
+      "arc": {
+        "want": "close the Aebischer case quickly and keep his standing",
+        "need": "to confess rather than administer his guilt",
+        "flaw": "belief in order as self-exculpation",
+        "trajectory": "does not change; hardens into his own system until it becomes his prison"
+      }
+    },
+    "melchior": {
+      "canonical_name": "Melchior Aebischer",
+      "aliases": ["Melchior"],
+      "role": "antagonist",
+      "facts": {
+        "occupation": "hotelier and Sennenbauer",
+        "reputation": "womanizer and debtor; owed money to the innkeeper and to Rutz",
+        "death": "fall of ~12m into the Chrachen, no autopsy performed",
+        "identifier": "scar on the chin from an old axe injury"
+      }
+    },
+    "feuz": {
+      "canonical_name": "Martin Feuz",
+      "aliases": ["Feuz"],
+      "role": "supporting",
+      "facts": {
+        "office": "Untersuchungsrichter (investigating judge)",
+        "age": "young",
+        "habit": "double-underlines his notes; believes in procedure"
+      }
+    },
+    "berta": {
+      "canonical_name": "Berta Aebischer",
+      "aliases": ["Berta"],
+      "role": "supporting",
+      "facts": {
+        "status": "widow of Melchior Aebischer",
+        "trait": "unsentimental, exact memory; states the unspeakable plainly"
+      }
+    },
+    "rutz": {
+      "canonical_name": "Pfarrer Johannes Rutz",
+      "aliases": ["Rutz", "Pfarrer Rutz", "Johannes Rutz"],
+      "role": "supporting",
+      "facts": {
+        "office": "village priest of Lauenegg",
+        "relation": "old friend of Stettler; Melchior owed him 300 francs privately",
+        "trait": "never preaches; accuses through silence"
+      }
+    },
+    "klara": {
+      "canonical_name": "Klara Vogel",
+      "aliases": ["Vogel", "die Vogel"],
+      "role": "background",
+      "facts": {
+        "fate": "died ~20 years ago",
+        "cover": "Stettler forged her death certificate to 'Herzversagen'"
+      }
+    },
+    "marolf": {
+      "canonical_name": "Marolf",
+      "aliases": [],
+      "role": "background",
+      "facts": {
+        "role": "young Traeger of the Dorfwehr",
+        "trait": "speaks dialect"
+      }
+    }
+  },
+  "relationships": [
+    { "a": "berta", "b": "melchior", "type": "widow_of" },
+    { "a": "rutz", "b": "melchior", "type": "creditor_of" },
+    { "a": "rutz", "b": "stettler", "type": "friend_of" },
+    { "a": "stettler", "b": "klara", "type": "concealed_death_of" },
+    { "a": "feuz", "b": "melchior", "type": "investigates_death_of" }
+  ],
+  "world_facts": {
+    "setting": "Lauenegg, a remote village in Graubuenden, Switzerland",
+    "era": "1950s",
+    "winter": "cut off by a pass-winter",
+    "loc:chrachen": "a gorge south of the village; the stream freezes greenish in winter; site of Melchior's fall",
+    "loc:eichenschrank": "the oak filing cabinet where case files are archived",
+    "formula": "'Herzversagen, vermutlich beim Sturz' — the reused death-certificate formula, identical across both cases"
+  },
+  "timeline": [
+    { "id": "t1", "when": "20y prior", "event": "Klara Vogel dies; Stettler forges her death certificate to 'Herzversagen'", "involves": ["stettler", "klara"], "order": 1 },
+    { "id": "t2", "when": "ch1 night", "event": "Melchior Aebischer falls to his death in the Chrachen (~12m)", "involves": ["melchior"], "order": 2 },
+    { "id": "t3", "when": "ch1 morning", "event": "Dorfwehr retrieves the body; Stettler declares heart failure/fall; Feuz interviews on site", "involves": ["stettler", "feuz", "marolf", "melchior"], "order": 3 },
+    { "id": "t4", "when": "ch1 day", "event": "Berta identifies the body; Feuz files the certificate without an autopsy", "involves": ["berta", "feuz", "stettler"], "order": 4 },
+    { "id": "t5", "when": "ch2", "event": "Feuz finds the 20-year-old Vogel file with the identical formula and Stettler's signature", "involves": ["feuz", "stettler"], "order": 5 },
+    { "id": "t6", "when": "ch2", "event": "Berta asks whether it is the same as the Vogel case", "involves": ["berta", "stettler"], "order": 6 },
+    { "id": "t7", "when": "ch2 evening", "event": "Stettler nearly confesses to Rutz, breaks off, flees into procedure; Rutz withholds a blessing", "involves": ["stettler", "rutz"], "order": 7 },
+    { "id": "t8", "when": "ch3", "event": "Feuz closes the case as accident; Stettler co-signs the report", "involves": ["feuz", "stettler"], "order": 8 },
+    { "id": "t9", "when": "ch3 evening", "event": "Stettler files the Aebischer record beside the Vogel file and locks the cabinet", "involves": ["stettler"], "order": 9 }
+  ],
+  "motifs": [
+    { "id": "formula_echo", "desc": "the identical death-certificate phrase recurs across both cases", "setup_ch": 1, "payoff_ch": 3, "status": "planned" },
+    { "id": "aktenschrank", "desc": "the oak filing cabinet as order-as-concealment; opens and closes the story", "setup_ch": 1, "payoff_ch": 3, "status": "planned" },
+    { "id": "chrachen", "desc": "the gorge as the indifferent site that 'takes' what the village discards", "setup_ch": 1, "payoff_ch": 3, "status": "planned" }
+  ],
+  "promises": [
+    { "id": "berta_question", "desc": "Berta's unanswered 'is it the same as the Vogel?' — deliberately never resolved", "made_ch": 2, "kept_ch": null, "status": "open" },
+    { "id": "rutz_silence", "desc": "Rutz's withheld blessing pays off as the final wordless verdict", "made_ch": 2, "kept_ch": 3, "status": "kept" }
+  ],
+  "constraints": {
+    "language": "de",
+    "forbidden": ["sentimental redemption", "justice triumphs", "hopeful resolution", "explanatory psychology"],
+    "chapter_count": 3
+  },
+  "version": 1
+}

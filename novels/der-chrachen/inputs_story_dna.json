@@ -1,0 +1,29 @@
+{
+  "spark": {
+    "description": "In einem abgelegenen Schweizer Bergdorf stirbt bei einem Autounfall in einer Winternacht der einzige Mann, der beweisen könnte, dass der Amtsarzt des Dorfes vor zwanzig Jahren einen tödlichen Behandlungsfehler vertuscht hat. Nun liegt der Tote auf dem Tisch eben dieses Arztes, der als einziger Mediziner am Ort den Totenschein ausstellen muss."
+  },
+  "genre": {
+    "primary_genre": "Kriminalroman / Tragikomödie (philosophisch)",
+    "subgenres": ["Justizdrama", "Dorfgroteske"]
+  },
+  "world": {
+    "setting": "Abgelegenes Schweizer Alpendorf, durch einen Passwinter von der Welt abgeschnitten",
+    "era": "1950er Jahre",
+    "atmosphere": "Eng, verschneit, von Schweigen und stillschweigenden Übereinkünften regiert"
+  },
+  "characters": {
+    "protagonist_seed": "Der Amtsarzt: müde, ordnungsgläubig, seit zwanzig Jahren Verwalter seiner eigenen Schuld",
+    "notes": "Der Tote fungiert als Antagonist (der Zufall in Person); eine junge Amtsperson (Landjäger/Untersuchungsrichter); die Witwe des Toten"
+  },
+  "conflict": {
+    "core": "Die Wahrheit auf dem Totenschein wäre die Selbstanzeige des Arztes; das Schweigen überlässt es dem Zufall, die alte Schuld endgültig zu begraben. Zwischen beidem muss ein Mann entscheiden, der zeitlebens an die Ordnung geglaubt hat."
+  },
+  "structure": {
+    "structure_type": "three_act",
+    "chapter_count": 3
+  },
+  "voice": {
+    "language": "de",
+    "tone": "Nüchtern, grotesk, ironisch; das Schreckliche sachlich protokolliert"
+  }
+}
