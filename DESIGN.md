@@ -245,6 +245,27 @@ with the repair loop's minimal-edit contract: deleting the sentence that explain
 small, local, non-inventing edit, and it is usually the whole fix. It never escalates — there is no
 upstream conflict that makes prose dull.
 
+**Vitality gates on density, and that is not a relapse into v1's score.** Measured on a matched pair
+— one chapter as written, and the same chapter with the anti-patterns inserted (`FINDINGS.md` C6):
+
+| | blocking issues / 1000 words |
+|---|---|
+| as written | 2.5, 2.5, 5.1 |
+| flattened | 18.1, 18.1, 15.7 |
+
+Threefold separation, and the flagged spans are exactly the inserted ones — the signal works. But
+*both* returned `revise` in every draw, because good prose also has two or three places a sharp
+reader would cut. Under "any blocking issue → repair" this checker fires on **every chapter ever
+written**, sending the whole book through the step that flattens prose: it would have manufactured
+the failure it exists to prevent. So it blocks at **≥ 8 issues per 1000 words and ≥ 3 issues**, with
+sub-threshold findings demoted to warnings rather than dropped.
+
+Nothing is averaged and nothing is scored; every issue stays located and independently actionable.
+The count answers only *how much* — a chapter with a few soft spots, or a chapter that is dead
+throughout — and degree is what a count is for. The threshold is fitted to n=3 on one chapter of one
+restrained author, which is where the gap between *withholding* and *flat* is narrowest; expect to
+retune it.
+
 ### Triggers — designed to avoid the F8 failure
 
 - **Not** a single weighted-average threshold. Each checker returns a **verdict per issue**, and the

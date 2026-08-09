@@ -1,0 +1,35 @@
+{
+  "decision": "revise",
+  "summary": "The scene earns its restraint through concrete institutional images (the doubled signature, the two grey file-covers two fingers apart, the faceless reflection in the blind tin door), but it repeatedly undercuts those images by adding a flat explanatory sentence right after them, most damagingly in the closing line that states the theme the mirror image just enacted.",
+  "issues": [
+    {
+      "unit": "Der Fall Aebischer war abgeschlossen, wie der Fall Vogel",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Delete the final sentence; end on 'schloss die Tür zum Keller ab.' The two file-covers and the faceless reflection already said this."
+    },
+    {
+      "unit": "Sie gingen jeder in seine Richtung, und keiner",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the sentence beginning 'Sie gingen jeder in seine Richtung'; the prior two sentences already show them parting."
+    },
+    {
+      "unit": "Keiner sagte, was zwischen ihnen stand",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut 'Keiner sagte, was zwischen ihnen stand.'; the silence and the loose leaf against the wall already carry it."
+    },
+    {
+      "unit": "es kalt geworden, der Himmel ... farblos",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut 'kalt geworden' and 'farblos'; stock weather that carries no charge specific to this street, this man."
+    }
+  ],
+  "conflict": ""
+}

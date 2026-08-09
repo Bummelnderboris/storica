@@ -1,0 +1,98 @@
+{
+  "decision": "revise",
+  "summary": "The chapter has the right bones — the co-signed certificate, the widow who doesn't read the paper, the file shelved beside Vogel's — but nearly every beat is followed by a sentence that explains what it meant, and it closes on a stated moral, so it reads as the outline executed rather than a scene pictured.",
+  "issues": [
+    {
+      "unit": "Er spürte eine tiefe Unruhe in sich aufsteigen",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the sentence beginning 'Er spürte eine tiefe Unruhe'; the paused hand over the paper two paragraphs later already carries this."
+    },
+    {
+      "unit": "Stettler verstand sie sofort",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'Es war eine Warnung, auch wenn sie nicht als solche ausgesprochen wurde, und Stettler verstand sie sofort.' End the beat on Feuz's line about sitting long enough in the files."
+    },
+    {
+      "unit": "Mit dieser Unterschrift besiegelte er nicht nur den Tod Aebischers",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the sentence from 'Mit dieser Unterschrift' through 'ohne sie je zu bekennen'; end the beat on the signature going down under Feuz's, doubly underlined."
+    },
+    {
+      "unit": "Sie las es nicht, weil sie ihm vertraute",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'weil sie ihm vertraute'; the unread document is the fact, not the reason for it."
+    },
+    {
+      "unit": "die Feststellung einer Frau, die sich mit dem Schicksal abgefunden hatte",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut everything after 'Es war keine Frage'; her line stands without the gloss on her state of mind."
+    },
+    {
+      "unit": "Es war die Lüge seines Lebens",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'Es war die Lüge seines Lebens, und sie ging ihm überraschend leicht über die Lippen.' End on 'Ja.'"
+    },
+    {
+      "unit": "und dachte über alles nach, was geschehen war",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'und dachte über alles nach, was geschehen war'; go from 'blieb bis zum Abend im Amtszimmer' straight to the cold street."
+    },
+    {
+      "unit": "Es war ein Nicken, das bedeutete",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the sentence glossing the nod ('Es war ein Nicken, das bedeutete: ich weiss es...'); the nod and Rutz turning toward the church already say it."
+    },
+    {
+      "unit": "Er sah es, und er erkannte darin sein eigenes Urteil",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'Er sah es, und er erkannte darin sein eigenes Urteil'; the two folders standing side by side is the image, it doesn't need naming as a verdict."
+    },
+    {
+      "unit": "So endete es: nicht mit einem Geständnis, sondern mit einer Ablage",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Delete the closing paragraph from 'So endete es' to 'die Akten waren in Ordnung'; end the chapter on the key turning in the lock."
+    },
+    {
+      "unit": "Der Vormittag war kalt und trostlos",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the pathetic-fallacy opener equating the grey light with the room's mood; open the chapter on the report already lying on the desk."
+    },
+    {
+      "unit": "wirkte sehr traurig und sehr müde",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'und wirkte sehr traurig und sehr müde'; the dark dress and the sudden appearance in the doorway don't need the adjectives stacked on top."
+    },
+    {
+      "unit": "zufrieden mit sich und seiner Arbeit",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'zufrieden mit sich und seiner Arbeit'; Feuz putting on his coat and leaving is the exit, it doesn't need his mood named."
+    }
+  ],
+  "conflict": ""
+}

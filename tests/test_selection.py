@@ -16,7 +16,7 @@ import asyncio
 import pytest
 
 from storica.authors import AuthorModel
-from storica.canon import Character, CharacterRole, Constraints, Premise, StoryModel
+from storica.canon import Character, CharacterRole, Constraints, Premise, Severity, StoryModel
 from storica.checkers.base import CheckerIssue, Decision, Verdict
 from storica.checkers.prose_base import ProseChecker
 from storica.checkers.vitality import VitalityChecker
@@ -156,23 +156,76 @@ def test_selection_runs_before_repair_not_after():
 # Vitality
 # --------------------------------------------------------------------------------------------
 
-def test_vitality_checker_can_block_prose_that_contradicts_nothing():
-    """The point of the checker: correct, canon-clean, and still failable."""
-    verdict = Verdict(
+def _vitality_issues(n: int) -> Verdict:
+    return Verdict(
         decision=Decision.REVISE,
         summary="executes the outline; nothing is imagined",
-        issues=[CheckerIssue(
-            unit="Es war sehr traurig", kind="meaning", severity="blocking",
-            canon_ref="", fix_hint="Cut the sentence; the gesture already carries it.",
-        )],
+        issues=[
+            CheckerIssue(unit=f"span {i}", kind="meaning", severity="blocking",
+                         canon_ref="", fix_hint="Cut it.")
+            for i in range(n)
+        ],
         conflict="",
     )
-    llm = FakeStructuredLLM(responses=[verdict])
+
+
+def test_vitality_checker_can_block_prose_that_contradicts_nothing():
+    """The point of the checker: correct, canon-clean, and still failable — when it is dense."""
+    short_dead = "wort " * 100          # 100 words
+    llm = FakeStructuredLLM(responses=[_vitality_issues(10)])   # 100 per 1000 words
     got = asyncio.run(VitalityChecker(llm).check_prose(
-        prose=DEAD, canon=_canon(), spec=_spec(), author=_author(),
+        prose=short_dead, canon=_canon(), spec=_spec(), author=_author(),
     ))
     assert got.decision == Decision.REVISE
-    assert got.blocking_issues()
+    assert len(got.blocking_issues()) == 10
+
+
+def test_a_few_soft_spots_in_good_prose_do_not_trigger_repair():
+    """
+    Measured (FINDINGS C6): good prose draws 2-4 blocking issues, flattened prose 13-15. Blocking on
+    presence would send every chapter ever written into the repair loop — the step that flattens
+    prose — so the checker would manufacture the failure it exists to prevent.
+    """
+    good = "wort " * 800
+    llm = FakeStructuredLLM(responses=[_vitality_issues(3)])    # 3.75 per 1000 words
+    got = asyncio.run(VitalityChecker(llm).check_prose(
+        prose=good, canon=_canon(), spec=_spec(), author=_author(),
+    ))
+    assert got.decision == Decision.PASS
+    assert not got.blocking_issues()
+
+
+def test_sub_threshold_findings_are_demoted_not_discarded():
+    """They are real observations; they just do not justify a repair pass."""
+    llm = FakeStructuredLLM(responses=[_vitality_issues(3)])
+    got = asyncio.run(VitalityChecker(llm).check_prose(
+        prose="wort " * 800, canon=_canon(), spec=_spec(), author=_author(),
+    ))
+    assert len(got.issues) == 3
+    assert all(i.severity == Severity.WARNING for i in got.issues)
+
+
+def test_min_blocking_stops_one_flag_from_blocking_a_tiny_scene():
+    """Density alone would make a single issue block a 40-word scene."""
+    llm = FakeStructuredLLM(responses=[_vitality_issues(2)])
+    got = asyncio.run(VitalityChecker(llm).check_prose(
+        prose="wort " * 40, canon=_canon(), spec=_spec(), author=_author(),
+    ))
+    assert got.decision == Decision.PASS
+
+
+def test_the_measured_pair_lands_on_opposite_sides_of_the_gate():
+    """Guards the calibration numbers themselves: 4/790 must pass, 13/800 must block."""
+    checker_pass = FakeStructuredLLM(responses=[_vitality_issues(4)])
+    alive = asyncio.run(VitalityChecker(checker_pass).check_prose(
+        prose="wort " * 790, canon=_canon(), spec=_spec(), author=_author(),
+    ))
+    checker_block = FakeStructuredLLM(responses=[_vitality_issues(13)])
+    flat = asyncio.run(VitalityChecker(checker_block).check_prose(
+        prose="wort " * 800, canon=_canon(), spec=_spec(), author=_author(),
+    ))
+    assert alive.decision == Decision.PASS
+    assert flat.decision == Decision.REVISE
 
 
 def test_vitality_prompt_withholds_character_facts_to_keep_it_off_consistency():

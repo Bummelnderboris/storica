@@ -146,6 +146,50 @@ is the kind that is invisible in one chapter and fatal across ten.
 
 ---
 
+## C6 — Vitality: the signal is good, the gate was fatally wrong · **critical, fixed**
+
+Planted-error scoring cannot test vitality, because a dull chapter is not *wrong*. So: a matched
+pair — `novels/der-chrachen/06_prose/ch03/2_draft.md` as written, and
+`fixtures/ch03_flattened.md`, the same chapter with the rubric's anti-patterns inserted (explained
+gestures, announced interiority, a closing paragraph that states the meaning). **Every canonical fact
+is identical**, so anything the checker flags is about vitality and nothing else. Three draws each.
+
+| | blocking issues per draw | per 1000 words | decision |
+|---|---|---|---|
+| as written | 2, 2, 4 | 2.5, 2.5, 5.1 | `revise` ×3 |
+| flattened | 15, 15, 13 | 18.1, 18.1, 15.7 | `revise` ×3 |
+
+Two opposite readings of the same table, and both matter:
+
+**The signal is excellent.** Threefold separation, no overlap, and the flagged spans are exactly the
+inserted ones — *"Er spürte eine tiefe Unruhe"*, *"Mit dieser Unterschrift besiegelte er nicht nur
+den Tod Aebischers, sondern auch seine eigene Schuld"*, *"Sie las es nicht, weil sie ihm vertraute"*.
+It finds what it was built to find.
+
+**The gate was broken, and would have been worse than useless.** Both sides returned `revise` in
+3/3 draws, because good prose *also* has two or three places a sharp reader would cut. Under
+"any blocking issue → repair", vitality fires on **every chapter ever written** — including the ones
+it should protect. It would have sent the whole book through the repair loop, which is the step that
+flattens prose. **The checker would have manufactured the exact failure it exists to prevent**, and
+nothing in the test suite would have noticed, because each individual verdict is defensible.
+
+**Fixed** by gating on *density*: block at ≥ 8 blocking issues per 1000 words **and** ≥ 3 issues
+(the second condition stops one flag blocking a 40-word scene). Sub-threshold findings are demoted
+to warnings, not discarded — they are real observations that simply do not justify a repair pass.
+The threshold sits in the empty band between 5.1 and 15.7.
+
+This is not v1's averaged quality score returning by the back door. Nothing is averaged and nothing
+is scored; every issue stays located and independently actionable. The count answers only *how
+much* — "a chapter with a few soft spots, or a chapter that is dead throughout" — which is a
+question of degree, and degree is what a count is for.
+
+**Caveats, and they are large.** The fixture was built from the checker's own rubric, so this is a
+**floor test**: failing it would have been decisive, passing it shows only that blatant inserted
+flatness is detectable. It says nothing about whether the checker catches the subtler, unlisted
+dullness a generator actually produces. And the threshold is fitted to n=3 on one chapter of one
+author — a restrained author, where the gap between "withholding" and "flat" is narrowest. Expect to
+retune it, and expect a human reading a real run to be the only real test.
+
 ## What this changes
 
 | Finding | Action |
@@ -155,6 +199,7 @@ is the kind that is invisible in one chapter and fatal across ten.
 | C3 | Keep the warning/blocking distinction; it is working. |
 | C4 | **Done.** Majority-of-3 sampling on canon-consistency (`--checker-samples`), majority decides / union reports. |
 | C5 | Split/merge identity axis added. Recall is better than first reported; the "miss" was a bad roll. |
+| C6 | **Done.** Vitality gates on density (>=8 per 1000 words and >=3 issues), not on presence. Binary blocking would have flattened every chapter. |
 
 The headline: the checker layer is worth keeping, and **the data it was tested against was the
 broken part** — both the reference canon (C1) and, twice, this document's own answer key (C1, C5).
@@ -165,9 +210,9 @@ That is a much better thing to learn from twenty calls than from a finished book
 - **Recall is measured on five errors in one chapter of one book.** Every planted error here is a
   *fact* changing. Nothing tests whether the checker catches a contradiction of tone, motive, or
   implication — and those are likelier failure modes now that facts are structured.
-- **Only canon-consistency has been calibrated.** Micro-sense, voice and vitality are unmeasured, and
-  vitality is the one most likely to be generous, because LLM judges reward fluency and fluency is
-  exactly what a dead chapter has.
+- **Micro-sense and voice are still unmeasured.** Vitality has now had a floor test (C6); those two
+  have had nothing. Both are binary-gated, which is exactly the design that failed in C6 — worth
+  checking whether they too fire on good prose before trusting them.
 - **The control is one clean chapter.** A 20% false-positive rate estimated from 5 draws of 1 chapter
   has a wide interval; if it is really 35%, majority-of-3 costs ~28% and the rule needs revisiting.
 - **Sampling was measured on a chapter-level check.** Scene-level checks see less context and may be

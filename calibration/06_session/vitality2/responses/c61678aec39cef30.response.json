@@ -1,0 +1,28 @@
+{
+  "decision": "revise",
+  "summary": "The chapter earns its central image — Stettler seeing the Vogel and Aebischer folders sit side by side before re-burying them under the others — but two moments still explain what the scene has already shown, and a closing paragraph re-narrates the theme instead of ending on the blind, faceless mirror.",
+  "issues": [
+    {
+      "unit": "Es war keine Frage. Ihre Stimme war ruhig",
+      "kind": "meaning",
+      "canon_ref": "",
+      "fix_hint": "Cut 'Es war keine Frage... wie man einen Betrag feststellt oder ein Datum.' Keep only Berta's line and let its flatness stand unglossed.",
+      "severity": "blocking"
+    },
+    {
+      "unit": "Der Fall Aebischer war abgeschlossen, wie der Fall Vogel",
+      "kind": "meaning",
+      "canon_ref": "",
+      "fix_hint": "Delete the final paragraph; the chapter ends on 'Er zog den Schlüssel ab und steckte ihn ein' or on the faceless reflection in the cabinet door.",
+      "severity": "blocking"
+    },
+    {
+      "unit": "keiner sah dem anderen nach",
+      "kind": "meaning",
+      "canon_ref": "",
+      "fix_hint": "This repeats Berta's 'Sie drehte sich nicht um' without adding anything the first instance didn't already carry; cut 'und keiner sah dem anderen nach.'",
+      "severity": "warning"
+    }
+  ],
+  "conflict": ""
+}

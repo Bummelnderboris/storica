@@ -503,8 +503,116 @@ def score_reliability() -> int:
     return 0
 
 
+# --------------------------------------------------------------------------------------------
+# Vitality: can it tell alive from flat?
+# --------------------------------------------------------------------------------------------
+#
+# Planted-error scoring cannot work here, because a dull chapter is not *wrong*. So this is a
+# discrimination test on a matched pair: the same chapter, same events, same canonical facts, once
+# as written and once with the rubric's anti-patterns inserted (explained gestures, announced
+# interiority, a closing paragraph that states the meaning).
+#
+# WHAT THIS CAN AND CANNOT SHOW. The flattened fixture was written by applying the checker's own
+# categories, so this is a FLOOR test: if it cannot separate deliberately, blatantly deadened prose
+# from the original, it is useless and we know so cheaply. Passing it is weak evidence — it does not
+# show the checker can detect the naturally occurring dullness a generator actually produces, which
+# is subtler and is not built from a list. Only a human reading a real run can establish that.
+
+VITALITY_PAIR = [
+    ("alive", V1 / "06_prose" / "ch03" / "2_draft.md", False),
+    ("flattened", OUT / "fixtures" / "ch03_flattened.md", True),
+]
+
+
+async def run_vitality(draws: int) -> int:
+    from storica.checkers.vitality import VitalityChecker
+
+    canon = load_canon(V1 / "01_canon")
+    author = load_author("duerrenmatt", REPO_ROOT / "authors")
+    case = next(c for c in CASES if c.id == "ch03_draft")
+    results_dir = OUT / "results" / "vitality"
+    results_dir.mkdir(parents=True, exist_ok=True)
+
+    pending = 0
+    for label, path, _ in VITALITY_PAIR:
+        prose = path.read_text(encoding="utf-8")
+        for n in range(1, draws + 1):
+            target = results_dir / f"{label}.draw{n}.json"
+            if target.exists():
+                continue
+            llm = ReplayLLM(OUT / "06_session" / f"vitality{n}")
+            try:
+                verdict = await VitalityChecker(llm, tracer=Tracer(None)).check_prose(
+                    prose=prose, canon=canon, spec=spec_for(case), author=author
+                )
+            except ResponseNeeded as need:
+                print(f"[pending] vitality/{label} draw{n}\n{need}\n")
+                pending += 1
+                continue
+            target.write_text(verdict.model_dump_json(indent=2), encoding="utf-8")
+            print(f"[done] vitality/{label} draw{n}: {verdict.decision.value}, "
+                  f"{len(verdict.issues)} issues")
+
+    if pending:
+        print(f"{pending} call(s) awaiting answers — answer them and run again.")
+        return 2
+    return 0
+
+
+def score_vitality() -> int:
+    results_dir = OUT / "results" / "vitality"
+    print("\n=== Vitality: can it tell alive from flat? ===\n")
+
+    from storica.checkers.vitality import VITALITY_BLOCK_PER_1000_WORDS, VITALITY_MIN_BLOCKING
+
+    density = {}
+    for label, path, should_block in VITALITY_PAIR:
+        paths = sorted(results_dir.glob(f"{label}.draw*.json"))
+        if not paths:
+            continue
+        words = max(len(path.read_text(encoding="utf-8").split()), 1)
+        verdicts = [json.loads(p.read_text(encoding="utf-8")) for p in paths]
+        counts = [
+            len([i for i in v.get("issues", []) if i.get("severity") == "blocking"]) for v in verdicts
+        ]
+        densities = [c * 1000 / words for c in counts]
+        density[label] = densities
+
+        want = "SHOULD block" if should_block else "SHOULD pass"
+        print(f"{label:<10} [{want}]  n={len(verdicts)}, {words} words")
+        print(f"  raw decisions:      {[v['decision'] for v in verdicts]}  <- binary: no signal")
+        print(f"  blocking per draw:  {counts}")
+        print(f"  per 1000 words:     {[round(d, 1) for d in densities]}")
+        print()
+
+    if len(density) == 2:
+        worst_alive, best_flat = max(density["alive"]), min(density["flattened"])
+        print(f"separation: alive tops out at {worst_alive:.1f}/1000, "
+              f"flattened bottoms out at {best_flat:.1f}/1000")
+        print(f"gate: block at >= {VITALITY_BLOCK_PER_1000_WORDS}/1000 "
+              f"and >= {VITALITY_MIN_BLOCKING} issues")
+
+        if best_flat <= worst_alive:
+            print("VERDICT: the populations overlap. Density cannot gate this either.")
+        elif not (worst_alive < VITALITY_BLOCK_PER_1000_WORDS <= best_flat):
+            print("VERDICT: separated, but the configured threshold does not sit between them.")
+        else:
+            print("VERDICT: the SIGNAL discriminates cleanly and the threshold sits between the")
+            print("         populations. The BINARY (any issue = block) does not discriminate at")
+            print("         all — both sides block 3/3 — which is why the gate is density-based.")
+    print(
+        "\nFloor test only: the flattened fixture was built from the checker's own rubric, so a pass\n"
+        "is weak evidence. A failure would have been decisive."
+    )
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--vitality", type=int, metavar="N", default=0,
+        help="discrimination test: N draws on a matched alive/flattened pair",
+    )
     parser.add_argument("--report", action="store_true", help="score existing results only")
     parser.add_argument(
         "--reliability", type=int, metavar="N", default=0,
@@ -512,6 +620,11 @@ def main() -> int:
     )
     args = parser.parse_args()
 
+    if args.vitality:
+        code = asyncio.run(run_vitality(args.vitality))
+        if code == 0:
+            score_vitality()
+        return code
     if args.reliability:
         code = asyncio.run(run_reliability(args.reliability))
         if code == 0:

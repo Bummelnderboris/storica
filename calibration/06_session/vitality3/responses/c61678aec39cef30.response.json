@@ -1,0 +1,42 @@
+{
+  "decision": "revise",
+  "summary": "A doctor countersigns a death certificate under a colleague's veiled threat, dismisses the widow, trades a wordless standoff with the priest, and files the new death beside the twenty-year-old one it mirrors — the cabinet scene earns its place, but several explanatory asides and a summarizing closing line keep telling the reader what the silence has already shown.",
+  "issues": [
+    {
+      "unit": "obwohl Stettler sie hätte lesen können",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'obwohl Stettler sie hätte lesen können'. Feuz reading the report aloud already performs the power move; the clause explains why it's odd instead of letting it sit odd."
+    },
+    {
+      "unit": "Keiner sagte, was zwischen ihnen stand.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Delete this sentence. Rutz's ambiguous nod two lines later already carries the unspoken weight; naming that something 'stood between them' explains the silence instead of trusting it."
+    },
+    {
+      "unit": "Auf der Straße war es kalt geworden",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'kalt geworden' and 'farblos'. Stock weather does no work here; go straight from the cellar to 'Vor der Kirche stand Rutz.'"
+    },
+    {
+      "unit": "Der Fall Aebischer war abgeschlossen, wie der Fall Vogel abgeschlossen war",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Delete the final sentence. End on 'Im Blech der Schranktür... das Gesicht ohne Züge' — the distorted reflection already says the case is closed; restating it in ledger language flattens the image into a caption."
+    },
+    {
+      "unit": "und keiner sah dem anderen nach",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut 'und keiner sah dem anderen nach'. Berta's 'Sie drehte sich nicht um' already established the not-looking-back gesture; repeating it on Stettler and Rutz explains the parting instead of just letting them walk off."
+    }
+  ],
+  "conflict": ""
+}

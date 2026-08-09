@@ -1,0 +1,119 @@
+{
+  "decision": "revise",
+  "summary": "The chapter delivers every canonical beat in order — the humiliating reading-aloud, the signature, the lie to the widow, the look with Rutz, the two files side by side in the Eichenschrank — but almost every gesture, line, and image is immediately followed by a sentence explaining what it meant, and the chapter closes with a paragraph that states its own thesis outright, so nothing is left for the reader to discover.",
+  "issues": [
+    {
+      "unit": "eine kleine Demütigung, die zeigte, wer hier das Verfahren führte",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the clause 'eine kleine Demütigung, die zeigte, wer hier das Verfahren führte'; let Feuz reading the report aloud stand unexplained."
+    },
+    {
+      "unit": "Er spürte eine tiefe Unruhe in sich aufsteigen",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the sentence 'Er spürte eine tiefe Unruhe... entscheiden würde'; the taken pen, the pause, and Feuz looking away already carry it."
+    },
+    {
+      "unit": "Es war eine Warnung, auch wenn sie nicht als solche",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'Es war eine Warnung... verstand sie sofort'; end the beat on 'Man kommt darauf, wenn man lange genug in den Akten sitzt.'"
+    },
+    {
+      "unit": "Mit dieser Unterschrift besiegelte er nicht nur den Tod",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'Mit dieser Unterschrift... ohne sie je zu bekennen'; end the paragraph on 'Dann unterschrieb er.'"
+    },
+    {
+      "unit": "Sie las es nicht, weil sie ihm vertraute.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'weil sie ihm vertraute'; leave 'Sie las es nicht.'"
+    },
+    {
+      "unit": "wirkte sehr traurig und sehr müde",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'und wirkte sehr traurig und sehr müde'; the dark dress and the doorway are enough."
+    },
+    {
+      "unit": "Es war keine Frage, sondern die Feststellung einer Frau",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the sentence after her line; let 'Es ist also wirklich nur ein Unfall gewesen' stand alone."
+    },
+    {
+      "unit": "Es war die Lüge seines Lebens, und sie ging",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'Es war die Lüge seines Lebens... über die Lippen'; end the beat on 'Ja', sagte Stettler."
+    },
+    {
+      "unit": "Er blieb bis zum Abend im Amtszimmer und dachte",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'und dachte über alles nach, was geschehen war'; go straight from the office to the street."
+    },
+    {
+      "unit": "und zwischen ihnen stand alles, was nie gesagt worden",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the list of what stood between them; the look and 'Kalt heute' already carry it."
+    },
+    {
+      "unit": "Es war ein Nicken, das bedeutete: ich weiss es",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the translation of the nod; leave 'Rutz nickte' and let him turn toward the church."
+    },
+    {
+      "unit": "wie sie es von nun an immer tun würden",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'wie sie es von nun an immer tun würden'; end on 'Jeder ging seinen Weg.'"
+    },
+    {
+      "unit": "Es war das Bild seines ganzen Lebens: zwei Tote",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'Es war das Bild seines ganzen Lebens... sein eigenes Urteil'; let the two visible folders stand without commentary."
+    },
+    {
+      "unit": "So endete es: nicht mit einem Geständnis, sondern mit",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Delete the entire final paragraph from 'So endete es' to the end; close the chapter on 'geordnet.'"
+    },
+    {
+      "unit": "Der Vormittag war kalt und trostlos, und das Licht",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'und trostlos' and 'wie die Stimmung, die darin herrschte'; let the grey light stand without telling us what it means."
+    },
+    {
+      "unit": "Es war ein Fach, wenige Fächer neben einem anderen",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Vary or cut this 'Es war...' tag sentence; the construction recurs five times across the chapter and has gone monotone."
+    }
+  ],
+  "conflict": ""
+}

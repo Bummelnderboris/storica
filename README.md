@@ -323,13 +323,20 @@ test costing about ten calls instead of a whole book. Full write-up in
   k=3. The pipeline now takes a **majority of 3**, which drops that to ~10% while losing no recall —
   and once a majority blocks, repair sees the *union* of what every draw found. `--checker-samples 1`
   opts out.
+- **The vitality checker would have flattened every chapter.** Tested on a matched pair — one chapter
+  as written, the same one deliberately deadened — the *signal* separates threefold (2.5–5.1 vs
+  15.7–18.1 blocking issues per 1000 words) and finds exactly the right sentences. But **both** got
+  `revise` every time, because good prose also has two or three places a sharp reader would cut.
+  Under "any issue → repair" it fires on everything, sending the whole book through the step that
+  flattens prose — it would have caused the failure it exists to prevent. It now gates on **density**,
+  not presence.
 - **Two of the original findings were artefacts.** At n=1 an unlucky draw is indistinguishable from a
   real miss; resampling overturned both. Worth knowing before trusting any single verdict here.
 
-Known open questions, in `DESIGN.md` §10: only canon-consistency has been calibrated (vitality is the
-likeliest to be generous, since LLM judges reward fluency and fluency is what a dead chapter has);
-every planted error tested was a *fact* changing, not a contradiction of tone or motive; convergence
-caps need tuning; cost per book versus v1 is unmeasured.
+Known open questions, in `DESIGN.md` §10: **micro-sense and voice are still uncalibrated, and both are
+binary-gated — the exact design that failed for vitality**; every planted error tested was a *fact*
+changing, not a contradiction of tone or motive; the vitality threshold is fitted to one chapter of
+one author; convergence caps need tuning; cost per book versus v1 is unmeasured.
 
 ---
 
