@@ -101,6 +101,8 @@ class ReplayLLM(StructuredLLM):
         self.stage_hint = stage_hint
         self.replayed = 0
         self.requested = 0
+        # base key -> how many times this exact prose prompt has been drawn in this process.
+        self._draws: dict[str, int] = {}
 
     # -- keying ---------------------------------------------------------------------------------
 
@@ -205,7 +207,20 @@ Write the prose to `{response_path.name}` as markdown. No commentary, no fences 
         model: str = "opus",
         max_tokens: int = 32000,
     ) -> str:
-        key = self._key(model=model, system=system, prompt=prompt, schema_name="<text>", schema_json="")
+        # Content addressing breaks on the one call the pipeline makes REPEATEDLY with an identical
+        # prompt: generate-and-select draws k candidates from the same text (stages/prose.py §5.1),
+        # deliberately, so the spread comes from sampling rather than from asking for k different
+        # things. Keyed on content alone, all k would collapse to one cached answer and the selector
+        # would choose between k copies of the same draft — selection silently becomes a no-op.
+        #
+        # So repeated draws of the same prompt get an occurrence suffix. This is order-dependent
+        # where the rest of the cache is not, which is safe here because the draws happen inside one
+        # deterministic loop: a resumed run reissues the same calls in the same order, so draw 2
+        # still resolves to draw 2. Nothing else in the pipeline repeats a prompt verbatim.
+        base = self._key(model=model, system=system, prompt=prompt, schema_name="<text>", schema_json="")
+        self._draws[base] = self._draws.get(base, 0) + 1
+        draw = self._draws[base]
+        key = base if draw == 1 else f"{base}-{draw}"
         request_path, response_path = self._paths(key, is_text=True)
 
         if response_path.exists():

@@ -147,3 +147,57 @@ def test_pending_lists_only_unanswered_requests(tmp_path):
     assert len(llm.pending()) == 2
     a.value.response_path.write_text(json.dumps({"value": "answered"}))
     assert len(llm.pending()) == 1
+
+
+# --------------------------------------------------------------------------------------------
+# Repeated draws of one prompt (generate-and-select)
+# --------------------------------------------------------------------------------------------
+
+def test_identical_prose_prompts_get_separate_slots(tmp_path):
+    """
+    Generate-and-select draws k candidates from the SAME prompt on purpose. Content addressing alone
+    would hand back k copies of one cached answer and the selector would choose between identical
+    drafts — selection silently becomes a no-op under replay.
+    """
+    llm = ReplayLLM(tmp_path)
+    keys = []
+    for _ in range(3):
+        try:
+            asyncio.run(llm.generate(prompt="same prompt", model="opus"))
+        except ResponseNeeded as need:
+            keys.append(need.key)
+    assert len(set(keys)) == 3, "three draws of one prompt must be three distinct requests"
+
+
+def test_repeated_draws_replay_in_the_same_order_after_a_restart(tmp_path):
+    """Resumability: draw 2 must still resolve to draw 2 on the next process."""
+    llm = ReplayLLM(tmp_path)
+    keys = []
+    for _ in range(2):
+        try:
+            asyncio.run(llm.generate(prompt="same prompt", model="opus"))
+        except ResponseNeeded as need:
+            keys.append(need.key)
+            (tmp_path / "responses" / f"{need.key}.response.md").write_text(
+                f"draft for {need.key}", encoding="utf-8"
+            )
+
+    fresh = ReplayLLM(tmp_path)
+    got = [asyncio.run(fresh.generate(prompt="same prompt", model="opus")) for _ in range(2)]
+    assert got == [f"draft for {keys[0]}", f"draft for {keys[1]}"]
+
+
+def test_different_prompts_are_unaffected(tmp_path):
+    """The suffix must only apply to verbatim repeats, not to ordinary distinct calls."""
+    llm = ReplayLLM(tmp_path)
+    first = second = None
+    try:
+        asyncio.run(llm.generate(prompt="prompt A", model="opus"))
+    except ResponseNeeded as need:
+        first = need.key
+    try:
+        asyncio.run(llm.generate(prompt="prompt B", model="opus"))
+    except ResponseNeeded as need:
+        second = need.key
+    assert first != second
+    assert "-" not in first and "-" not in second
