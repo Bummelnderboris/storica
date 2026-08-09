@@ -58,5 +58,18 @@ The honest bar: v2 has to beat v1 on **coherence, meaning and micro-truth**, not
 sentences were already good; that was never the problem.
 
 **Read `05_reports/` before you read `novel.md`.** Whether the checkers fired at all, and on what, is
-the part no automated test can tell you — and it is more informative than the prose, because a run
-where nothing ever blocked means the gate is not working, however good the book turns out.
+the part no automated test can tell you — and it is more informative than the prose.
+
+Two failure signatures to look for, in this order:
+
+1. **Nothing ever blocked.** The gate is not working, however good the book turns out.
+2. **Almost everything blocked, especially on micro-sense or voice.** This is
+   [C6](../calibration/FINDINGS.md) recurring. Vitality had exactly this defect — every individual
+   verdict defensible, the gate firing on every chapter regardless — and it was only caught by
+   testing the *gate* rather than the judgements. Micro-sense and voice are still binary-gated and
+   have never been calibrated, so they are the two most likely to carry the same flaw. If the repair
+   count per chapter is high and the repairs are not obviously improving anything, suspect this
+   before suspecting the prose.
+
+A run that reveals either of those is a successful run. The book is the deliverable; the reports are
+the measurement.
