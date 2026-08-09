@@ -1,0 +1,121 @@
+{
+  "chapter": 1,
+  "title": "Der Totenschein",
+  "purpose": "Vor diesem Kapitel ist Stettlers zwanzig Jahre alte Schuld vertuscht und ohne lebenden Zeugen gefährdet nur durch Kalts Schweigen; nach diesem Kapitel ist sie schriftlich gestanden, Rieder amtlich vorgelegt und formell entgegengenommen - aber der Pass hat sich in derselben Nacht geschlossen, sodass das Geständnis existiert, ohne dass irgendeine Instanz ausserhalb des Tals davon erfahren kann. Die Vertuschung ist beendet; an ihre Stelle tritt nicht das Urteil, sondern eine Falle aus Form und Schnee.",
+  "pov_character_id": "stettler",
+  "present_character_ids": [
+    "stettler",
+    "kalt",
+    "rieder"
+  ],
+  "advances_beats": [
+    "b1",
+    "b2",
+    "b3"
+  ],
+  "setups": [
+    "zitternde_hand",
+    "krankenblatt"
+  ],
+  "payoffs": [],
+  "promises_made": [
+    "wird_selbstanzeige_verhandelt",
+    "krankenblatt_taucht_auf"
+  ],
+  "promises_kept": [],
+  "entry_state": [
+    {
+      "key": "kalt:status",
+      "value": "Lebt; fährt in der Unfallnacht allein mit dem Auto über die verschneite Passstrasse nach Chrachen."
+    },
+    {
+      "key": "stettler:secret_status",
+      "value": "Der tödliche Behandlungsfehler von vor zwanzig Jahren ist seit t1 in den Akten vertuscht; ausser Kalt weiss niemand davon."
+    },
+    {
+      "key": "rieder:knowledge_altes_verbrechen",
+      "value": "unaware - Rieder weiss zu Kapitelbeginn nichts von Stettlers altem Behandlungsfehler."
+    },
+    {
+      "key": "pass:status",
+      "value": "Noch passierbar; starker Schneefall setzt in der Nacht ein."
+    },
+    {
+      "key": "totenschein_kalt:status",
+      "value": "Noch nicht ausgestellt; Kalt lebt."
+    }
+  ],
+  "exit_state": [
+    {
+      "key": "kalt:status",
+      "value": "Tot; sein Leichnam liegt in Stettlers Praxis, der Totenschein ist ausgestellt."
+    },
+    {
+      "key": "totenschein_kalt:status",
+      "value": "Ausgestellt mit der Wahrheit über den alten Behandlungsfehler, von Stettler eigenhändig geschrieben und unterschrieben."
+    },
+    {
+      "key": "rieder:knowledge_altes_verbrechen",
+      "value": "knows (since t3) - Rieder hat Stettlers schriftliches Geständnis formgerecht entgegengenommen."
+    },
+    {
+      "key": "k_beweis_verloren:status",
+      "value": "Mit Kalts Tod existiert kein lebender Zeuge mehr, der Stettlers alte Vertuschung bestätigen könnte."
+    },
+    {
+      "key": "pass:status",
+      "value": "Vollständig zugeschneit; kein Schriftstück und keine Weisung kann das Tal verlassen oder erreichen."
+    },
+    {
+      "key": "rieder:weiterleitung_status",
+      "value": "Noch nicht an die übergeordnete Behörde weitergeleitet - der zugeschneite Pass verhindert vorerst jede Meldung."
+    },
+    {
+      "key": "stettler:zitternde_hand",
+      "value": "Seit dem Niederschreiben der Wahrheit auf den Totenschein zittert Stettlers rechte, schreibende Hand leicht."
+    },
+    {
+      "key": "krankenblatt:status",
+      "value": "Verbleib unbekannt; das Krankenblatt ist nicht aufgetaucht, seine Existenz nur Stettler noch gegenwärtig."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "s1",
+      "location": "isolation_passwinter",
+      "character_ids": [
+        "kalt"
+      ],
+      "intent": "Zeigt Kalts letzte Fahrt über die verschneite Passstrasse und den Unfall, der ihn tötet - der einzige lebende Zeuge von Stettlers altem Fehler erlischt, bevor er selbst noch etwas hätte tun können; seine Rolle als personifizierter Zufall schliesst sich hier ab. (trägt Beat b2)",
+      "turn": "Kalt beginnt die Szene lebend und allein am Steuer im Schneetreiben; sie endet mit dem Wagen von der Strasse und Kalt tot im Schnee, sein zwanzigjähriges Wissen mit ihm."
+    },
+    {
+      "id": "s2",
+      "location": "institution_amtsarzt_chrachen",
+      "character_ids": [
+        "stettler"
+      ],
+      "intent": "Stettler identifiziert den zu ihm gebrachten Toten als Kalt, erkennt im Untersuchen des Leichnams den Zeugen von damals wieder und erinnert sich an das alte Krankenblatt, das Kalt als einziges verbliebenes Beweisstück aufbewahrt hatte - der Moment, in dem er beschliesst, den fälligen Totenschein nicht wie all die Jahre zuvor zur Vertuschung zu nutzen. (setzt Motiv krankenblatt, macht Promise krankenblatt_taucht_auf)",
+      "turn": "Aus dem Amtsarzt, der routinemässig einen Totenschein für einen Unfalltoten ausstellen will, wird zum Ende der Szene ein Mann, der entschlossen ist, mit zwanzig Jahren Vertuschung zu brechen."
+    },
+    {
+      "id": "s3",
+      "location": "institution_amtsarzt_chrachen",
+      "character_ids": [
+        "stettler",
+        "rieder"
+      ],
+      "intent": "Stettler schreibt mit zitternder Hand die Wahrheit über den alten Behandlungsfehler auf Kalts Totenschein und legt das Blatt dem zur Leichenschau erschienenen Rieder als förmliche Selbstanzeige vor; Rieder erkennt die Tragweite und nimmt das Geständnis amtlich entgegen. (trägt Beat b1, Turning Point tp1, setzt Motiv zitternde_hand, macht Promise wird_selbstanzeige_verhandelt, trägt den ersten Teil von Beat b3)",
+      "turn": "Zu Beginn ist der Totenschein ein leeres Formular und Stettlers Schuld ungenannt; am Ende liegt sie schriftlich, unterschrieben und von Rieder amtlich entgegengenommen vor - zum ersten Mal seit zwanzig Jahren ausserhalb von Stettlers eigenem Wissen."
+    },
+    {
+      "id": "s4",
+      "location": "Rieders Amtszimmer in Chrachen",
+      "character_ids": [
+        "rieder"
+      ],
+      "intent": "Rieder bleibt mit dem entgegengenommenen Geständnis allein zurück und stellt fest, dass der Pass sich in derselben Nacht endgültig geschlossen hat - keine Meldung kann das Tal verlassen, keine übergeordnete Behörde kann ihn beraten oder ihm die Entscheidung abnehmen. (schliesst Beat b3 ab)",
+      "turn": "Rieder beginnt die Szene als Richter, der ein Geständnis routinemässig weiterleiten will; er endet als der einzige Amtsträger im eingeschneiten Tal, der mit einer unweiterleitbaren Wahrheit allein bleibt."
+    }
+  ]
+}

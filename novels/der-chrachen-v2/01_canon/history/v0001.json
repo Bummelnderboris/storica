@@ -1,0 +1,321 @@
+{
+  "premise": {
+    "spark": "In der Nacht des Autounfalls schreibt der Amtsarzt auf den Totenschein des einzigen Zeugen seiner alten Schuld die Wahrheit und legt das Papier dem jungen Untersuchungsrichter vor — eine Selbstanzeige. Doch der Pass ist verschneit, kein Schriftstück verlässt das Tal, und ausgerechnet der Beschuldigte ist der einzige Arzt, der den Tod beurkunden darf; während die Wochen vergehen und das eingeschneite Dorf krank wird, beginnt es, seinen Arzt Schritt für Schritt zu entlasten.",
+    "central_question": "Kann ein Mensch seine Schuld noch bekennen, wenn ihm Zufall, Amt und Dorf mit dem Freispruch zuvorkommen — oder bleibt ihm am Ende nur ein Geständnis, das niemand mehr annimmt?",
+    "thesis": "Der Zufall ist nicht nur der Feind des Verbrechens, sondern ebenso der Feind der Reue: er nimmt dem Schuldigen die Strafe und mit ihr die einzige Form, in der Schuld noch etwas hätte bedeuten können.",
+    "why_this_author": "Getrieben von Dürrenmatts Zentralobsession, dem Einbruch des Zufalls in den sorgfältig konstruierten Plan — hier umgekehrt gedreht: Der Plan ist kein Verbrechen, sondern ein Bekenntnis, und gerade darum wird sein Scheitern zur Groteske statt zur Tragödie. Der Tote ist, wie im Brief angelegt, der Zufall in Person; er stirbt zu früh, um anzuklagen, und zu spät, um vergessen zu sein. Dazu tritt die Institution als Falle (der Beschuldigte ist die einzige zuständige Urkundsperson, das Verfahren kennt für diesen Fall keine Form) und der Ordnungsgläubige, der zerrieben wird — doppelt: der alte Arzt, der zeitlebens an die Ordnung glaubte und feststellt, dass sie ihn schützt statt ihn zu richten, und der junge Untersuchungsrichter, der aus lauter guten Gründen zum zweiten Verwalter derselben Schuld wird. Die Winterisolation liefert die bürokratisch ruhige Mechanik, mit der eine Beichte Woche um Woche an Wert verliert; der Ton bleibt nüchtern, weil das Amt nüchtern ist und das Entsetzliche sich am besten protokollieren lässt. Das Ende urteilt nicht, es zeigt: einen Mann, der seinen Freispruch besitzt wie eine lebenslängliche Strafe."
+  },
+  "author_id": "duerrenmatt",
+  "characters": {
+    "stettler": {
+      "canonical_name": "Dr. Konrad Stettler",
+      "aliases": [
+        "Stettler",
+        "der Amtsarzt",
+        "Doktor Stettler",
+        "der Arzt",
+        "der alte Arzt",
+        "der alte Doktor"
+      ],
+      "role": "protagonist",
+      "facts": {
+        "profession": "Amtsarzt des Dorfes Chrachen, seit über zwanzig Jahren einziger amtlich bestellter Arzt am Ort.",
+        "age": "61 Jahre alt.",
+        "secret": "Vertuschte vor zwanzig Jahren einen tödlichen Behandlungsfehler an einem Patienten in den amtlichen Unterlagen.",
+        "physical_mark": "Hat seit der Unfallnacht ein leichtes Zittern in der rechten, schreibenden Hand.",
+        "obligation": "Ist als einziger Mediziner des Tals gesetzlich verpflichtet, jeden Totenschein im Dorf selbst auszustellen — auch den von Anton Kalt."
+      },
+      "arc": {
+        "want": "Den Totenschein Anton Kalts mit der Wahrheit über den alten Behandlungsfehler auszufüllen und sich damit selbst anzuzeigen.",
+        "need": "Zu begreifen, dass die Ordnung, an die er zeitlebens glaubte, ihn nicht richten, sondern freisprechen wird — und dass er das nicht verhindern kann.",
+        "flaw": "Sein lebenslanger Glaube an die Ordnung, der ihn erst zur Vertuschung und nun zur hilflosen Passivität treibt, während Zufall, Amt und Dorf ihn entlasten.",
+        "trajectory": "does not change — er bleibt bis zum Schluss ordnungsgläubig und unfähig, sein Geständnis gegen den Apparat durchzusetzen; sein Freispruch wird ihm zur lebenslänglichen Strafe."
+      }
+    },
+    "kalt": {
+      "canonical_name": "Anton Kalt",
+      "aliases": [
+        "Kalt",
+        "Anton",
+        "der Tote",
+        "der Verunglückte",
+        "der Verstorbene"
+      ],
+      "role": "antagonist",
+      "facts": {
+        "profession": "War zur Zeit des alten Vorfalls Sanitätsgehilfe, zuletzt Kleinbauer in Chrachen.",
+        "age": "War 58 Jahre alt.",
+        "secret_knowledge": "War als Einziger unmittelbarer Zeuge von Stettlers tödlichem Behandlungsfehler vor zwanzig Jahren und schwieg seither darüber.",
+        "death": "Stirbt in der Eröffnungsnacht des Romans bei einem Autounfall auf der verschneiten Passstrasse.",
+        "possession": "Bewahrte das einzige noch vorhandene Schriftstück auf, ein altes Krankenblatt, das den Vorfall von damals belegen könnte."
+      },
+      "arc": {
+        "want": "Vor seinem Tod hätte er, als einziger Zeuge, Stettlers alten Fehler beweisen können.",
+        "need": "Keins — er stirbt, bevor er handeln oder etwas lernen kann.",
+        "flaw": "Sein zwanzigjähriges Schweigen, das seinen Tod ebenso bedeutungslos macht wie ein späteres Reden es gewesen wäre.",
+        "trajectory": "does not change — er ist von der ersten Nacht an tot; seine Rolle als personifizierter Zufall ist abgeschlossen, bevor die Handlung beginnt."
+      }
+    },
+    "rieder": {
+      "canonical_name": "Peter Rieder",
+      "aliases": [
+        "Rieder",
+        "der Untersuchungsrichter",
+        "der junge Richter",
+        "der Richter",
+        "Herr Rieder"
+      ],
+      "role": "supporting",
+      "facts": {
+        "profession": "Junger Untersuchungsrichter, seit kurzem für das Tal von Chrachen zuständig.",
+        "age": "29 Jahre alt.",
+        "status": "Neu im Amt, ohne verwandtschaftliche oder freundschaftliche Bindungen im Dorf.",
+        "obligation": "Ist durch den verschneiten Pass von der übergeordneten Behörde abgeschnitten und muss vorerst allein über Stettlers Geständnis entscheiden."
+      },
+      "arc": {
+        "want": "Stettlers schriftliches Geständnis formgerecht entgegenzunehmen und an die übergeordnete Behörde weiterzuleiten.",
+        "need": "Zu erkennen, dass das Verfahren selbst ihn zum zweiten Verwalter derselben Schuld macht, sobald er es aus lauter guten Gründen aufschiebt.",
+        "flaw": "Sein Vertrauen in Formen und Fristen, das ihn zögern lässt, bis das Zögern selbst zur Mitschuld wird.",
+        "trajectory": "Wandelt sich vom gläubigen Verwalter der Ordnung zum stillen Komplizen des Aufschubs — er ändert sich, aber ins Groteske statt ins Gute."
+      }
+    },
+    "kalt_witwe": {
+      "canonical_name": "Rosa Kalt",
+      "aliases": [
+        "die Witwe",
+        "die Witwe Kalt",
+        "Frau Kalt",
+        "Rosa"
+      ],
+      "role": "supporting",
+      "facts": {
+        "relationship": "Witwe von Anton Kalt.",
+        "age": "54 Jahre alt.",
+        "motivation": "Drängt auf eine rasche, unauffällige Ausstellung des Totenscheins, um Beerdigung und Erbschaft zu regeln.",
+        "awareness": "Weiss nichts von der alten Schuld ihres verstorbenen Mannes oder von Stettlers Behandlungsfehler."
+      },
+      "arc": {
+        "want": "Den Totenschein rasch und ohne Aufsehen zu erhalten, um Beerdigung und Zukunft zu regeln.",
+        "need": "Bleibt ihr verwehrt: nie zu begreifen, dass ihre Eile den Mann deckt, der die Wahrheit über ihren Mann besass.",
+        "flaw": "Ihre praktische Dringlichkeit, die sie blind macht für das, was hinter dem Papier steht.",
+        "trajectory": "does not change — sie bleibt bis zum Schluss ahnungslose Nutzniesserin der Vertuschung; ihr Drängen beschleunigt unwissentlich Stettlers Freispruch."
+      }
+    }
+  },
+  "relationships": [
+    {
+      "a": "kalt_witwe",
+      "b": "kalt",
+      "type": "witwe_von"
+    },
+    {
+      "a": "kalt",
+      "b": "stettler",
+      "type": "einziger_zeuge_gegen"
+    },
+    {
+      "a": "stettler",
+      "b": "kalt",
+      "type": "totenschein_aussteller_fuer"
+    },
+    {
+      "a": "rieder",
+      "b": "stettler",
+      "type": "untersuchungsrichter_ueber"
+    },
+    {
+      "a": "rieder",
+      "b": "kalt_witwe",
+      "type": "vernimmt_als_richter"
+    }
+  ],
+  "world_facts": {
+    "setting": "Ein abgelegenes Schweizer Alpendorf, das im Winter durch die verschneite Passstrasse von der Aussenwelt abgeschnitten ist.",
+    "era": "1950er Jahre.",
+    "location_chrachen": "Das Dorf Chrachen: einziger Ort im Tal, erreichbar nur über einen einzigen Passweg.",
+    "institution_amtsarzt_chrachen": "Das Amt des Amtsarztes von Chrachen: es gibt nur einen amtlich bestellten Arzt im Dorf, und nur er darf Totenscheine ausstellen — auch dann, wenn er selbst Partei im Fall ist.",
+    "isolation_passwinter": "Der einzige Pass ins Tal ist im Winter tage- bis wochenlang durch Schnee blockiert; kein Schriftstück und keine Anweisung von aussen erreicht in dieser Zeit das Dorf.",
+    "institution_aussenbehoerde": "Die dem Untersuchungsrichter Rieder übergeordnete Bezirksbehörde ausserhalb des Tals, die während der Einschneiung nicht erreichbar ist.",
+    "grippewelle": "Während der Wochen der Einschneiung bricht im Dorf eine Grippewelle aus, die die Bewohner zunehmend von der ärztlichen Versorgung durch Stettler abhängig macht und ihn schrittweise entlastet."
+  },
+  "timeline": [
+    {
+      "id": "t1",
+      "when": "20y prior",
+      "event": "Stettler behandelt einen Patienten mit einem tödlichen Kunstfehler und vertuscht die wahre Todesursache in den Akten; der Sanitätsgehilfe Anton Kalt ist einziger Zeuge des Vorfalls und schweigt seither.",
+      "involves": [
+        "stettler",
+        "kalt"
+      ],
+      "order": 1
+    },
+    {
+      "id": "t2",
+      "when": "ch1 night",
+      "event": "Anton Kalt verunglückt auf der verschneiten Passstrasse tödlich mit dem Auto; sein Leichnam wird zu Stettler gebracht, der als einziger Arzt des Dorfes den Totenschein ausstellen muss.",
+      "involves": [
+        "kalt",
+        "stettler"
+      ],
+      "order": 2
+    },
+    {
+      "id": "t3",
+      "when": "ch1 night",
+      "event": "Stettler schreibt die Wahrheit über seinen alten Behandlungsfehler auf Kalts Totenschein und legt das Schriftstück dem jungen Untersuchungsrichter Rieder als Selbstanzeige vor.",
+      "involves": [
+        "stettler",
+        "rieder"
+      ],
+      "order": 3
+    },
+    {
+      "id": "t4",
+      "when": "ch1",
+      "event": "Der Pass verschneit vollständig; kein Schriftstück kann das Tal verlassen, und Rieders Meldung an die übergeordnete Behörde bleibt liegen.",
+      "involves": [
+        "rieder"
+      ],
+      "order": 4
+    },
+    {
+      "id": "t5",
+      "when": "ch2",
+      "event": "Rosa Kalt drängt Stettler, den Totenschein ihres Mannes rasch und ohne Aufsehen fertigzustellen, um Beerdigung und Erbschaft zu regeln.",
+      "involves": [
+        "kalt_witwe",
+        "stettler"
+      ],
+      "order": 5
+    },
+    {
+      "id": "t6",
+      "when": "ch2",
+      "event": "Im eingeschneiten Dorf bricht eine Grippewelle aus; die Bewohner werden zunehmend von Stettler als einzigem Arzt abhängig und beginnen, ihn stillschweigend zu entlasten.",
+      "involves": [
+        "stettler"
+      ],
+      "order": 6
+    },
+    {
+      "id": "t7",
+      "when": "ch3",
+      "event": "Rieder verzögert aus Formgründen die Weiterleitung von Stettlers Geständnis, bis der Pass sich öffnet und die Selbstanzeige an Wert verloren hat.",
+      "involves": [
+        "rieder",
+        "stettler"
+      ],
+      "order": 7
+    }
+  ],
+  "knowledge": [
+    {
+      "id": "k_altes_verbrechen",
+      "fact": "Stettler hat vor zwanzig Jahren einen tödlichen Behandlungsfehler begangen und in den Akten vertuscht.",
+      "concerns": [
+        "stettler",
+        "kalt",
+        "t1"
+      ],
+      "holders": [
+        {
+          "character_id": "stettler",
+          "awareness": "knows",
+          "since": "",
+          "instead": ""
+        },
+        {
+          "character_id": "kalt",
+          "awareness": "knows",
+          "since": "",
+          "instead": ""
+        },
+        {
+          "character_id": "rieder",
+          "awareness": "knows",
+          "since": "t3",
+          "instead": ""
+        },
+        {
+          "character_id": "kalt_witwe",
+          "awareness": "unaware",
+          "since": "",
+          "instead": ""
+        }
+      ]
+    },
+    {
+      "id": "k_beweis_verloren",
+      "fact": "Mit Kalts Tod existiert kein lebender Zeuge mehr, der Stettlers alte Vertuschung bestätigen könnte.",
+      "concerns": [
+        "kalt",
+        "stettler",
+        "t2"
+      ],
+      "holders": [
+        {
+          "character_id": "stettler",
+          "awareness": "knows",
+          "since": "t2",
+          "instead": ""
+        },
+        {
+          "character_id": "rieder",
+          "awareness": "knows",
+          "since": "t3",
+          "instead": ""
+        },
+        {
+          "character_id": "kalt_witwe",
+          "awareness": "unaware",
+          "since": "",
+          "instead": ""
+        }
+      ]
+    },
+    {
+      "id": "k_selbstanzeige_verzoegert",
+      "fact": "Rieder hat Stettlers schriftliches Geständnis erhalten, aber aus Verfahrensgründen noch nicht an die übergeordnete Behörde weitergeleitet.",
+      "concerns": [
+        "rieder",
+        "stettler",
+        "t3",
+        "t7"
+      ],
+      "holders": [
+        {
+          "character_id": "rieder",
+          "awareness": "knows",
+          "since": "t3",
+          "instead": ""
+        },
+        {
+          "character_id": "stettler",
+          "awareness": "suspects",
+          "since": "ch2",
+          "instead": ""
+        },
+        {
+          "character_id": "kalt_witwe",
+          "awareness": "unaware",
+          "since": "",
+          "instead": ""
+        }
+      ]
+    }
+  ],
+  "motifs": [],
+  "promises": [],
+  "constraints": {
+    "language": "de",
+    "forbidden": [
+      "Kein tränenreiches, sentimentales Pathos.",
+      "Keine glatte, alles auflösende Gerechtigkeit am Ende.",
+      "Keine explizite moralische Kommentierung durch einen auktorialen Erzähler — das Entsetzliche wird sachlich protokolliert, nicht beweint.",
+      "Kein Schluss, der Stettlers Schuld tatsächlich bestraft oder ihn auf eine Weise entlastet, die den Zufall als Motor der Handlung negiert.",
+      "Kein zweiter lebender Zeuge, der den alten Behandlungsfehler nachträglich beweisen könnte."
+    ],
+    "chapter_count": 3
+  },
+  "version": 1
+}

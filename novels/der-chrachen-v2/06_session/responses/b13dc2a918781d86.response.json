@@ -1,0 +1,159 @@
+{
+  "chapter_count": 3,
+  "shape": "Ein Geständnis wird in einer Unfallnacht niedergeschrieben und in eine Welt gelegt, die zu verschneit ist, um es entgegenzunehmen, und verliert Woche um Woche an Kraft, während Zufall, Amt und Dorf den Schuldigen entlasten, ohne ihn je zu richten. Am Ende steht kein Urteil, sondern ein Mann, der seinen Freispruch trägt wie eine lebenslängliche Strafe.",
+  "acts": [
+    {
+      "number": 1,
+      "title": "Die Selbstanzeige",
+      "chapters": [1],
+      "purpose": "Kalt ist tot, Stettler hat die Wahrheit über den alten Behandlungsfehler schriftlich auf den Totenschein gesetzt und Rieder als Selbstanzeige vorgelegt; der Pass hat sich geschlossen, sodass kein Schriftstück und keine Weisung mehr aus- oder eintreffen kann."
+    },
+    {
+      "number": 2,
+      "title": "Die stille Entlastung",
+      "chapters": [2],
+      "purpose": "Das Dorf hat begonnen, Stettler durch die Grippewelle unwissentlich zu entlasten, Rosa Kalt drängt auf einen raschen, unauffälligen Abschluss, und Rieder hält das Geständnis aus Formgründen zurück, statt es sofort weiterzuleiten."
+    },
+    {
+      "number": 3,
+      "title": "Der Freispruch als Strafe",
+      "chapters": [3],
+      "purpose": "Der Pass öffnet sich, Rieder leitet das entwertete Geständnis endlich weiter, doch ohne lebenden Zeugen und ohne Konsequenz bleibt Stettler formell unbestraft — sein Freispruch steht fest, und mit ihm die Erkenntnis, dass er ihn nicht verhindern konnte."
+    }
+  ],
+  "turning_points": [
+    {
+      "id": "tp1",
+      "chapter": 1,
+      "description": "Stettler nutzt den amtlichen Totenschein nicht zur gewohnten Vertuschung, sondern schreibt die Wahrheit über seinen zwanzig Jahre alten Behandlungsfehler darauf und legt ihn Rieder als Selbstanzeige vor, während der Pass hinter ihm zuschneit.",
+      "reverses": "Die Erwartung, dass der Amtsarzt seine alte Schuld wie all die Jahre zuvor stillschweigend verwaltet und vertuscht, statt sie selbst preiszugeben."
+    },
+    {
+      "id": "tp2",
+      "chapter": 2,
+      "description": "Statt dass Stettlers schriftliches Geständnis einen Prozess in Gang setzt, der ihn zur Rechenschaft zieht, beginnt das eingeschneite Dorf, ihn durch die Grippewelle immer notwendiger zu machen, während Rieder die Weiterleitung aus Formgründen zurückhält.",
+      "reverses": "Die Erwartung, dass ein förmlich vorgelegtes Geständnis automatisch ein Verfahren in Gang setzt, das den Schuldigen einholt."
+    },
+    {
+      "id": "tp3",
+      "chapter": 3,
+      "description": "Rieder leitet das Geständnis nach der Schneeschmelze endlich weiter, doch ohne lebenden Zeugen und nach Wochen der Verzögerung nimmt die übergeordnete Behörde es entgegen, ohne dass es noch etwas bedeutet — Stettler bleibt formell frei.",
+      "reverses": "Die Erwartung, dass Gerechtigkeit, einmal schriftlich in Gang gesetzt, irgendwann doch noch ihren Lauf nimmt und den Schuldigen erreicht."
+    }
+  ],
+  "arc_beats": [
+    {
+      "id": "b1",
+      "character_id": "stettler",
+      "chapter": 1,
+      "beat": "Stettler füllt Kalts Totenschein mit der Wahrheit über den alten Behandlungsfehler aus und legt ihn Rieder als Selbstanzeige vor, im festen Glauben, die Ordnung werde nun über ihn richten.",
+      "advances": "want"
+    },
+    {
+      "id": "b2",
+      "character_id": "kalt",
+      "chapter": 1,
+      "beat": "Kalt verunglückt auf der verschneiten Passstrasse tödlich; mit seinem Tod erlischt der einzige lebende Zeuge von Stettlers altem Fehler, und seine Rolle als personifizierter Zufall ist damit abgeschlossen, bevor er selbst noch etwas hätte tun können.",
+      "advances": "trajectory"
+    },
+    {
+      "id": "b3",
+      "character_id": "rieder",
+      "chapter": 1,
+      "beat": "Rieder nimmt Stettlers Geständnis formgerecht entgegen, erkennt seine Tragweite, muss aber wegen des zugeschneiten Passes ohne Rückhalt der übergeordneten Behörde allein damit bleiben.",
+      "advances": "want"
+    },
+    {
+      "id": "b4",
+      "character_id": "kalt_witwe",
+      "chapter": 2,
+      "beat": "Rosa Kalt drängt Stettler, den Totenschein ihres Mannes rasch und ohne Aufsehen abzuschliessen, um Beerdigung und Erbschaft zu regeln, und beschleunigt damit unwissentlich seine Entlastung.",
+      "advances": "want"
+    },
+    {
+      "id": "b5",
+      "character_id": "stettler",
+      "chapter": 2,
+      "beat": "Während die Grippewelle das Dorf zunehmend von ihm als einzigem Arzt abhängig macht, lässt Stettler sich von dieser stillschweigenden Entlastung tragen, statt sein Geständnis selbst einzufordern — sein lebenslanger Ordnungsglaube kippt in hilflose Passivität.",
+      "advances": "flaw"
+    },
+    {
+      "id": "b6",
+      "character_id": "rieder",
+      "chapter": 2,
+      "beat": "Rieder verzögert die Weiterleitung von Stettlers Geständnis mit Verweis auf Formvorschriften, obwohl er wüsste, wie er handeln könnte, und wird damit selbst zum Verwalter des Aufschubs.",
+      "advances": "flaw"
+    },
+    {
+      "id": "b7",
+      "character_id": "stettler",
+      "chapter": 3,
+      "beat": "Als der Pass sich öffnet und sein Geständnis ohne Zeugen und ohne Wirkung bei der Behörde verpufft, begreift Stettler, dass die Ordnung, an die er zeitlebens glaubte, ihn nicht richten, sondern freisprechen wird — und dass er dies nicht verhindern kann.",
+      "advances": "need"
+    },
+    {
+      "id": "b8",
+      "character_id": "rieder",
+      "chapter": 3,
+      "beat": "Rieder leitet das entwertete Geständnis endlich formgerecht weiter und vollendet damit seinen Wandel vom gläubigen Verwalter der Ordnung zum stillen Komplizen des Aufschubs.",
+      "advances": "trajectory"
+    }
+  ],
+  "motifs": [
+    {
+      "id": "zitternde_hand",
+      "desc": "Das leichte Zittern in Stettlers rechter, schreibender Hand seit der Unfallnacht — zuerst beim Niederschreiben der Wahrheit auf den Totenschein.",
+      "setup_ch": 1,
+      "payoff_ch": 3
+    },
+    {
+      "id": "krankenblatt",
+      "desc": "Das alte Krankenblatt, das Kalt als einziges verbliebenes Schriftstück des damaligen Vorfalls aufbewahrt hatte.",
+      "setup_ch": 1,
+      "payoff_ch": 3
+    }
+  ],
+  "promises": [
+    {
+      "id": "wird_selbstanzeige_verhandelt",
+      "desc": "Stettlers schriftliche Selbstanzeige auf dem Totenschein verspricht, dass seine zwanzig Jahre alte Schuld nun formell verhandelt wird.",
+      "made_ch": 1,
+      "kept_ch": 3
+    },
+    {
+      "id": "krankenblatt_taucht_auf",
+      "desc": "Kalts Krankenblatt als letztes verbliebenes Beweisstück wirft die Frage auf, ob es je auftauchen und erkannt werden wird.",
+      "made_ch": 1,
+      "kept_ch": 3
+    },
+    {
+      "id": "rieders_weiterleitung",
+      "desc": "Rieder verspricht sich selbst und implizit dem Leser, das Geständnis weiterzuleiten, sobald die Form es zulässt.",
+      "made_ch": 2,
+      "kept_ch": 3
+    },
+    {
+      "id": "rosas_unwissenheit",
+      "desc": "Die Frage, ob Rosa Kalt je erfährt, dass ihre Eile um den Totenschein den Mann deckte, der die Wahrheit über ihren Mann besass.",
+      "made_ch": 2,
+      "kept_ch": 0
+    }
+  ],
+  "tension_curve": [
+    {
+      "chapter": 1,
+      "tension": 6,
+      "note": "Unfalltod in der Nacht, die schriftliche Selbstanzeige und das plötzliche Zuschneien des Passes setzen die Falle in einer einzigen Nacht."
+    },
+    {
+      "chapter": 2,
+      "tension": 4,
+      "note": "Scheinbare Ruhe der Einschneiung: Grippewelle, Rosas Drängen und Rieders formale Verzögerung arbeiten leise, aber unaufhaltsam gegen die Selbstanzeige."
+    },
+    {
+      "chapter": 3,
+      "tension": 8,
+      "note": "Die Schneeschmelze zwingt zur Weiterleitung des entwerteten Geständnisses; die Erkenntnis, dass Freispruch statt Urteil folgt, bricht mit voller Wucht über Stettler herein."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The scene delivers Kalt's fatal drive and crash in concrete, physically grounded action that correctly retires him as the sole witness, but it saddles him with an invented workshop/second-residence biography that canon never gives him and that sits oddly against his established profession.",
+  "issues": [
+    {
+      "unit": "P3: \"er wohnte allein in der Kammer über der Werkstatt, wenn er nicht daheim war\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the workshop-chamber clause; keep only that there was no one to tell and his wife was asleep."
+    },
+    {
+      "unit": "P6: \"er hatte es hundertmal jüngeren Leuten erklärt, in der Werkstatt, mit den Händen\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut \"in der Werkstatt\" so the sentence doesn't lean on the ungrounded workshop detail from P3."
+    }
+  ],
+  "conflict": ""
+}

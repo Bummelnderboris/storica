@@ -1,0 +1,174 @@
+{
+  "seq": 4,
+  "digest": "4c1d38c08d8d996f",
+  "stage": "macro_arc",
+  "model": "sonnet",
+  "note": "",
+  "system": "You are the Macro-arc agent of an autonomous novel pipeline.\n\nYou plan the whole book's movement — acts, turning points, per-character beats, the motif and\npromise schedule, the tension curve. You do not write prose and you do not restate canon: every\ncharacter, motif and promise is referenced by ID.\n\nYour plan is checked mechanically and then read by an Intent checker that asks whether each unit\nearns its place. A chapter that carries no beat, no turn and no ledger event will be rejected.",
+  "prompt": "# Canon slice (SOURCE OF TRUTH — do not contradict any line below)\n\n## Premise\n- spark: In der Nacht des Autounfalls schreibt der Amtsarzt auf den Totenschein des einzigen Zeugen seiner alten Schuld die Wahrheit und legt das Papier dem jungen Untersuchungsrichter vor — eine Selbstanzeige. Doch der Pass ist verschneit, kein Schriftstück verlässt das Tal, und ausgerechnet der Beschuldigte ist der einzige Arzt, der den Tod beurkunden darf; während die Wochen vergehen und das eingeschneite Dorf krank wird, beginnt es, seinen Arzt Schritt für Schritt zu entlasten.\n- central_question: Kann ein Mensch seine Schuld noch bekennen, wenn ihm Zufall, Amt und Dorf mit dem Freispruch zuvorkommen — oder bleibt ihm am Ende nur ein Geständnis, das niemand mehr annimmt?\n- thesis: Der Zufall ist nicht nur der Feind des Verbrechens, sondern ebenso der Feind der Reue: er nimmt dem Schuldigen die Strafe und mit ihr die einzige Form, in der Schuld noch etwas hätte bedeuten können.\n- why_this_author: Getrieben von Dürrenmatts Zentralobsession, dem Einbruch des Zufalls in den sorgfältig konstruierten Plan — hier umgekehrt gedreht: Der Plan ist kein Verbrechen, sondern ein Bekenntnis, und gerade darum wird sein Scheitern zur Groteske statt zur Tragödie. Der Tote ist, wie im Brief angelegt, der Zufall in Person; er stirbt zu früh, um anzuklagen, und zu spät, um vergessen zu sein. Dazu tritt die Institution als Falle (der Beschuldigte ist die einzige zuständige Urkundsperson, das Verfahren kennt für diesen Fall keine Form) und der Ordnungsgläubige, der zerrieben wird — doppelt: der alte Arzt, der zeitlebens an die Ordnung glaubte und feststellt, dass sie ihn schützt statt ihn zu richten, und der junge Untersuchungsrichter, der aus lauter guten Gründen zum zweiten Verwalter derselben Schuld wird. Die Winterisolation liefert die bürokratisch ruhige Mechanik, mit der eine Beichte Woche um Woche an Wert verliert; der Ton bleibt nüchtern, weil das Amt nüchtern ist und das Entsetzliche sich am besten protokollieren lässt. Das Ende urteilt nicht, es zeigt: einen Mann, der seinen Freispruch besitzt wie eine lebenslängliche Strafe.\n\n## Characters\n\n### stettler  (protagonist)\n  canonical_name: Dr. Konrad Stettler\n  also called: Stettler, der Amtsarzt, Doktor Stettler, der Arzt, der alte Arzt, der alte Doktor\n  facts:\n    - profession: Amtsarzt des Dorfes Chrachen, seit über zwanzig Jahren einziger amtlich bestellter Arzt am Ort.\n    - age: 61 Jahre alt.\n    - secret: Vertuschte vor zwanzig Jahren einen tödlichen Behandlungsfehler an einem Patienten in den amtlichen Unterlagen.\n    - physical_mark: Hat seit der Unfallnacht ein leichtes Zittern in der rechten, schreibenden Hand.\n    - obligation: Ist als einziger Mediziner des Tals gesetzlich verpflichtet, jeden Totenschein im Dorf selbst auszustellen — auch den von Anton Kalt.\n  arc:\n    - want: Den Totenschein Anton Kalts mit der Wahrheit über den alten Behandlungsfehler auszufüllen und sich damit selbst anzuzeigen.\n    - need: Zu begreifen, dass die Ordnung, an die er zeitlebens glaubte, ihn nicht richten, sondern freisprechen wird — und dass er das nicht verhindern kann.\n    - flaw: Sein lebenslanger Glaube an die Ordnung, der ihn erst zur Vertuschung und nun zur hilflosen Passivität treibt, während Zufall, Amt und Dorf ihn entlasten.\n    - trajectory: does not change — er bleibt bis zum Schluss ordnungsgläubig und unfähig, sein Geständnis gegen den Apparat durchzusetzen; sein Freispruch wird ihm zur lebenslänglichen Strafe.\n\n### kalt  (antagonist)\n  canonical_name: Anton Kalt\n  also called: Kalt, Anton, der Tote, der Verunglückte, der Verstorbene\n  facts:\n    - profession: War zur Zeit des alten Vorfalls Sanitätsgehilfe, zuletzt Kleinbauer in Chrachen.\n    - age: War 58 Jahre alt.\n    - secret_knowledge: War als Einziger unmittelbarer Zeuge von Stettlers tödlichem Behandlungsfehler vor zwanzig Jahren und schwieg seither darüber.\n    - death: Stirbt in der Eröffnungsnacht des Romans bei einem Autounfall auf der verschneiten Passstrasse.\n    - possession: Bewahrte das einzige noch vorhandene Schriftstück auf, ein altes Krankenblatt, das den Vorfall von damals belegen könnte.\n  arc:\n    - want: Vor seinem Tod hätte er, als einziger Zeuge, Stettlers alten Fehler beweisen können.\n    - need: Keins — er stirbt, bevor er handeln oder etwas lernen kann.\n    - flaw: Sein zwanzigjähriges Schweigen, das seinen Tod ebenso bedeutungslos macht wie ein späteres Reden es gewesen wäre.\n    - trajectory: does not change — er ist von der ersten Nacht an tot; seine Rolle als personifizierter Zufall ist abgeschlossen, bevor die Handlung beginnt.\n\n### rieder  (supporting)\n  canonical_name: Peter Rieder\n  also called: Rieder, der Untersuchungsrichter, der junge Richter, der Richter, Herr Rieder\n  facts:\n    - profession: Junger Untersuchungsrichter, seit kurzem für das Tal von Chrachen zuständig.\n    - age: 29 Jahre alt.\n    - status: Neu im Amt, ohne verwandtschaftliche oder freundschaftliche Bindungen im Dorf.\n    - obligation: Ist durch den verschneiten Pass von der übergeordneten Behörde abgeschnitten und muss vorerst allein über Stettlers Geständnis entscheiden.\n  arc:\n    - want: Stettlers schriftliches Geständnis formgerecht entgegenzunehmen und an die übergeordnete Behörde weiterzuleiten.\n    - need: Zu erkennen, dass das Verfahren selbst ihn zum zweiten Verwalter derselben Schuld macht, sobald er es aus lauter guten Gründen aufschiebt.\n    - flaw: Sein Vertrauen in Formen und Fristen, das ihn zögern lässt, bis das Zögern selbst zur Mitschuld wird.\n    - trajectory: Wandelt sich vom gläubigen Verwalter der Ordnung zum stillen Komplizen des Aufschubs — er ändert sich, aber ins Groteske statt ins Gute.\n\n### kalt_witwe  (supporting)\n  canonical_name: Rosa Kalt\n  also called: die Witwe, die Witwe Kalt, Frau Kalt, Rosa\n  facts:\n    - relationship: Witwe von Anton Kalt.\n    - age: 54 Jahre alt.\n    - motivation: Drängt auf eine rasche, unauffällige Ausstellung des Totenscheins, um Beerdigung und Erbschaft zu regeln.\n    - awareness: Weiss nichts von der alten Schuld ihres verstorbenen Mannes oder von Stettlers Behandlungsfehler.\n  arc:\n    - want: Den Totenschein rasch und ohne Aufsehen zu erhalten, um Beerdigung und Zukunft zu regeln.\n    - need: Bleibt ihr verwehrt: nie zu begreifen, dass ihre Eile den Mann deckt, der die Wahrheit über ihren Mann besass.\n    - flaw: Ihre praktische Dringlichkeit, die sie blind macht für das, was hinter dem Papier steht.\n    - trajectory: does not change — sie bleibt bis zum Schluss ahnungslose Nutzniesserin der Vertuschung; ihr Drängen beschleunigt unwissentlich Stettlers Freispruch.\n\n## Relationships\n- kalt_witwe is witwe_von kalt\n- kalt is einziger_zeuge_gegen stettler\n- stettler is totenschein_aussteller_fuer kalt\n- rieder is untersuchungsrichter_ueber stettler\n- rieder is vernimmt_als_richter kalt_witwe\n\n## World facts\n- setting: Ein abgelegenes Schweizer Alpendorf, das im Winter durch die verschneite Passstrasse von der Aussenwelt abgeschnitten ist.\n- era: 1950er Jahre.\n- location_chrachen: Das Dorf Chrachen: einziger Ort im Tal, erreichbar nur über einen einzigen Passweg.\n- institution_amtsarzt_chrachen: Das Amt des Amtsarztes von Chrachen: es gibt nur einen amtlich bestellten Arzt im Dorf, und nur er darf Totenscheine ausstellen — auch dann, wenn er selbst Partei im Fall ist.\n- isolation_passwinter: Der einzige Pass ins Tal ist im Winter tage- bis wochenlang durch Schnee blockiert; kein Schriftstück und keine Anweisung von aussen erreicht in dieser Zeit das Dorf.\n- institution_aussenbehoerde: Die dem Untersuchungsrichter Rieder übergeordnete Bezirksbehörde ausserhalb des Tals, die während der Einschneiung nicht erreichbar ist.\n- grippewelle: Während der Wochen der Einschneiung bricht im Dorf eine Grippewelle aus, die die Bewohner zunehmend von der ärztlichen Versorgung durch Stettler abhängig macht und ihn schrittweise entlastet.\n\n## Timeline\n- [t1] 20y prior: Stettler behandelt einen Patienten mit einem tödlichen Kunstfehler und vertuscht die wahre Todesursache in den Akten; der Sanitätsgehilfe Anton Kalt ist einziger Zeuge des Vorfalls und schweigt seither. (involves: stettler, kalt)\n- [t2] ch1 night: Anton Kalt verunglückt auf der verschneiten Passstrasse tödlich mit dem Auto; sein Leichnam wird zu Stettler gebracht, der als einziger Arzt des Dorfes den Totenschein ausstellen muss. (involves: kalt, stettler)\n- [t3] ch1 night: Stettler schreibt die Wahrheit über seinen alten Behandlungsfehler auf Kalts Totenschein und legt das Schriftstück dem jungen Untersuchungsrichter Rieder als Selbstanzeige vor. (involves: stettler, rieder)\n- [t4] ch1: Der Pass verschneit vollständig; kein Schriftstück kann das Tal verlassen, und Rieders Meldung an die übergeordnete Behörde bleibt liegen. (involves: rieder)\n- [t5] ch2: Rosa Kalt drängt Stettler, den Totenschein ihres Mannes rasch und ohne Aufsehen fertigzustellen, um Beerdigung und Erbschaft zu regeln. (involves: kalt_witwe, stettler)\n- [t6] ch2: Im eingeschneiten Dorf bricht eine Grippewelle aus; die Bewohner werden zunehmend von Stettler als einzigem Arzt abhängig und beginnen, ihn stillschweigend zu entlasten. (involves: stettler)\n- [t7] ch3: Rieder verzögert aus Formgründen die Weiterleitung von Stettlers Geständnis, bis der Pass sich öffnet und die Selbstanzeige an Wert verloren hat. (involves: rieder, stettler)\n\n## Knowledge state (WHO KNOWS WHAT)\nA character may only act on, allude to, or react to what this table gives them. Writing someone as aware of a fact they do not hold is a contradiction exactly like renaming them. 'suspects' is not 'knows': it may show as unease or a question, never as certainty.\n\n### [k_altes_verbrechen] Stettler hat vor zwanzig Jahren einen tödlichen Behandlungsfehler begangen und in den Akten vertuscht.\n  - stettler: knows\n  - kalt: knows\n  - rieder: knows (since t3)\n  - kalt_witwe: unaware\n\n### [k_beweis_verloren] Mit Kalts Tod existiert kein lebender Zeuge mehr, der Stettlers alte Vertuschung bestätigen könnte.\n  - stettler: knows (since t2)\n  - kalt: unaware\n  - rieder: knows (since t3)\n  - kalt_witwe: unaware\n\n### [k_selbstanzeige_verzoegert] Rieder hat Stettlers schriftliches Geständnis erhalten, aber aus Verfahrensgründen noch nicht an die übergeordnete Behörde weitergeleitet.\n  - stettler: suspects (since ch2)\n  - kalt: unaware\n  - rieder: knows (since t3)\n  - kalt_witwe: unaware\n\n## Constraints\n- language: de\n- chapter_count: 3\n- forbidden:\n    - Kein tränenreiches, sentimentales Pathos.\n    - Keine glatte, alles auflösende Gerechtigkeit am Ende.\n    - Keine explizite moralische Kommentierung durch einen auktorialen Erzähler — das Entsetzliche wird sachlich protokolliert, nicht beweint.\n    - Kein Schluss, der Stettlers Schuld tatsächlich bestraft oder ihn auf eine Weise entlastet, die den Zufall als Motor der Handlung negiert.\n    - Kein zweiter lebender Zeuge, der den alten Behandlungsfehler nachträglich beweisen könnte.\n\n# Author: Friedrich Dürrenmatt (duerrenmatt)\n\n## Worldview\nDie Welt ist ein groteskes Labyrinth, in dem Gerechtigkeit nur durch Zufall\nmöglich ist. Der Mensch ist gefangen zwischen seiner Sehnsucht nach Ordnung\nund dem Chaos der Realität. Das Komische und das Tragische sind untrennbar—\ndie größten Katastrophen entfalten sich oft mit der Logik einer Farce.\n\n## Central obsession\nDie Unmöglichkeit der Gerechtigkeit in einer chaotischen Welt. Immer wieder\nkreist Dürrenmatt um die Frage: Was geschieht, wenn der Zufall in die sorgfältig\nkonstruierten Pläne der Menschen einbricht? Die Antwort ist stets: Groteske.\n\n## Question-lines (the questions this author keeps asking)\n# Dürrenmatt — question-lines (obsessions that drive conception)\n\nThese are the questions Dürrenmatt keeps asking. In **Stage 1 Conception**, a vague brief is mapped\nonto one or more of these to decide *what story this author would tell*.\n\n- **Der Zufall gegen den Plan.** Was geschieht, wenn der Zufall in die sorgfältig konstruierten Pläne\n  der Menschen einbricht? Die Antwort ist stets: Groteske.\n- **Die Unmöglichkeit der Gerechtigkeit.** Ist Gerechtigkeit in einer chaotischen Welt überhaupt\n  möglich — oder bestenfalls ein grotesker Zufall, der zufällig mit unserem moralischen Bedürfnis\n  übereinstimmt?\n- **Der Glaube an die Ordnung und seine Zerstörung.** Wer glaubt an Ordnung (der Kommissar, der\n  Richter, der Wissenschaftler, der Beamte), und wie wird dieser Glaube zerrieben?\n- **Wo kippt das Tragische ins Komische?** Die größten Katastrophen entfalten sich mit der Logik einer\n  Farce; wo genau schlägt Entsetzen in Groteske um?\n- **Die Institution als Falle.** Wie wird das System (Amt, Verfahren, Wissenschaft), das schützen\n  soll, zum Instrument, das den Einzelnen einschließt oder sein Verbrechen ermöglicht?\n- **Schuld ohne Sühne.** Was wird aus einem Menschen, der seine Schuld verwaltet statt sie zu beichten?\n\n> Conception should pick a **central question** from (or in the spirit of) this list and bind it into\n> the canon as immutable intent, so the Intent-checker can enforce that the novel keeps asking it.\n\n## What it feels like to read them\n# Dürrenmatt — impression\n\nReading Dürrenmatt feels like watching a precise machine slowly go out of control. He begins with a\nplausible premise and drives it into grotesque extremes with bureaucratic calm. The prose is dry,\nalmost clinical; the horror is *stated*, never wept over. Comedy and tragedy are inseparable — the\nworst catastrophes unfold with the logic of a farce.\n\nHis world is a grotesque labyrinth where justice is possible only by accident. His people are types\n(the commissar, the judge, the physician, the priest) who fulfil their roles with fatalistic\nprecision — until they can't. Depth comes from contradiction, not explanation. Chance is a character:\nit breaks into careful plans and exposes the absurdity of the order that preceded it.\n\nEndings don't resolve; they *point* — an opening into the absurd, a bitter irony, an uncomfortable\ntruth the reader is sent home with. There are no happy endings; at best, there is grim comedy.\n\n**Notable works to echo:** *Der Besuch der alten Dame*, *Die Physiker*, *Der Richter und sein Henker*,\n*Das Versprechen*, *Die Panne*.\n\n# Creator brief (IMMUTABLE GROUND TRUTH)\n\nSpark: In einem abgelegenen Schweizer Bergdorf stirbt bei einem Autounfall in einer Winternacht der einzige Mann, der beweisen könnte, dass der Amtsarzt des Dorfes vor zwanzig Jahren einen tödlichen Behandlungsfehler vertuscht hat. Nun liegt der Tote auf dem Tisch eben dieses Arztes, der als einziger Mediziner am Ort den Totenschein ausstellen muss.\n\nThoughts:\nGattung: Kriminalroman / Tragikomödie (philosophisch). Nebenformen: Justizdrama, Dorfgroteske.\n\nWelt: Abgelegenes Schweizer Alpendorf, durch einen Passwinter von der Welt abgeschnitten.\nZeit: die 1950er Jahre. Atmosphäre: eng, verschneit, von Schweigen und stillschweigenden\nÜbereinkünften regiert.\n\nKonflikt: Die Wahrheit auf dem Totenschein wäre die Selbstanzeige des Arztes; das Schweigen\nüberlässt es dem Zufall, die alte Schuld endgültig zu begraben. Zwischen beidem muss ein Mann\nentscheiden, der zeitlebens an die Ordnung geglaubt hat.\n\nFigurenkeime: Der Amtsarzt — müde, ordnungsgläubig, seit zwanzig Jahren Verwalter seiner\neigenen Schuld. Der Tote fungiert als Antagonist: der Zufall in Person. Dazu eine junge\nAmtsperson (Landjäger oder Untersuchungsrichter) und die Witwe des Toten.\n\nTon: nüchtern, grotesk, ironisch; das Schreckliche sachlich protokolliert.\n\n\nLanguage: de\nTarget chapter count: 3\n\n## Task\nPlan the macro arc of this novel in exactly 3 chapters.\n\nStructural rules (checked mechanically — violations fail the stage):\n- Acts must partition the chapters: every chapter belongs to exactly one act, none left over.\n- The tension curve has exactly one entry per chapter.\n- Arc beats reference canon character IDS. Every protagonist and antagonist gets at least one beat.\n- Motifs: `payoff_ch` >= `setup_ch`. Promises: `kept_ch` >= `made_ch`, or 0 for a promise you are\n  deliberately leaving unresolved.\n\nMeaning rules (checked by a fresh Intent checker):\n- Every chapter must do work: carry a beat, a turn, or a ledger event. No connective-tissue chapters.\n- The central question must stay open until the ending answers it.\n- A beat changes a character's state; it does not restate a fact already in canon.\n- Every motif's payoff must land *because* of its setup. Cut decorative motifs.\n- Every promise is kept, or pointedly broken — never quietly dropped.\n- The shape must be this author's, judged by their obsessions, not by general craft.\n- Honour the brief's forbidden list absolutely.",
+  "artifact": {
+    "chapter_count": 3,
+    "shape": "Ein Geständnis wird in einer Unfallnacht niedergeschrieben und in eine Welt gelegt, die zu verschneit ist, um es entgegenzunehmen, und verliert Woche um Woche an Kraft, während Zufall, Amt und Dorf den Schuldigen entlasten, ohne ihn je zu richten. Am Ende steht kein Urteil, sondern ein Mann, der seinen Freispruch trägt wie eine lebenslängliche Strafe.",
+    "acts": [
+      {
+        "number": 1,
+        "title": "Die Selbstanzeige",
+        "chapters": [
+          1
+        ],
+        "purpose": "Kalt ist tot, Stettler hat die Wahrheit über den alten Behandlungsfehler schriftlich auf den Totenschein gesetzt und Rieder als Selbstanzeige vorgelegt; der Pass hat sich geschlossen, sodass kein Schriftstück und keine Weisung mehr aus- oder eintreffen kann."
+      },
+      {
+        "number": 2,
+        "title": "Die stille Entlastung",
+        "chapters": [
+          2
+        ],
+        "purpose": "Das Dorf hat begonnen, Stettler durch die Grippewelle unwissentlich zu entlasten, Rosa Kalt drängt auf einen raschen, unauffälligen Abschluss, und Rieder hält das Geständnis aus Formgründen zurück, statt es sofort weiterzuleiten."
+      },
+      {
+        "number": 3,
+        "title": "Der Freispruch als Strafe",
+        "chapters": [
+          3
+        ],
+        "purpose": "Der Pass öffnet sich, Rieder leitet das entwertete Geständnis endlich weiter, doch ohne lebenden Zeugen und ohne Konsequenz bleibt Stettler formell unbestraft — sein Freispruch steht fest, und mit ihm die Erkenntnis, dass er ihn nicht verhindern konnte."
+      }
+    ],
+    "turning_points": [
+      {
+        "id": "tp1",
+        "chapter": 1,
+        "description": "Stettler nutzt den amtlichen Totenschein nicht zur gewohnten Vertuschung, sondern schreibt die Wahrheit über seinen zwanzig Jahre alten Behandlungsfehler darauf und legt ihn Rieder als Selbstanzeige vor, während der Pass hinter ihm zuschneit.",
+        "reverses": "Die Erwartung, dass der Amtsarzt seine alte Schuld wie all die Jahre zuvor stillschweigend verwaltet und vertuscht, statt sie selbst preiszugeben."
+      },
+      {
+        "id": "tp2",
+        "chapter": 2,
+        "description": "Statt dass Stettlers schriftliches Geständnis einen Prozess in Gang setzt, der ihn zur Rechenschaft zieht, beginnt das eingeschneite Dorf, ihn durch die Grippewelle immer notwendiger zu machen, während Rieder die Weiterleitung aus Formgründen zurückhält.",
+        "reverses": "Die Erwartung, dass ein förmlich vorgelegtes Geständnis automatisch ein Verfahren in Gang setzt, das den Schuldigen einholt."
+      },
+      {
+        "id": "tp3",
+        "chapter": 3,
+        "description": "Rieder leitet das Geständnis nach der Schneeschmelze endlich weiter, doch ohne lebenden Zeugen und nach Wochen der Verzögerung nimmt die übergeordnete Behörde es entgegen, ohne dass es noch etwas bedeutet — Stettler bleibt formell frei.",
+        "reverses": "Die Erwartung, dass Gerechtigkeit, einmal schriftlich in Gang gesetzt, irgendwann doch noch ihren Lauf nimmt und den Schuldigen erreicht."
+      }
+    ],
+    "arc_beats": [
+      {
+        "id": "b1",
+        "character_id": "stettler",
+        "chapter": 1,
+        "beat": "Stettler füllt Kalts Totenschein mit der Wahrheit über den alten Behandlungsfehler aus und legt ihn Rieder als Selbstanzeige vor, im festen Glauben, die Ordnung werde nun über ihn richten.",
+        "advances": "want"
+      },
+      {
+        "id": "b2",
+        "character_id": "kalt",
+        "chapter": 1,
+        "beat": "Kalt verunglückt auf der verschneiten Passstrasse tödlich; mit seinem Tod erlischt der einzige lebende Zeuge von Stettlers altem Fehler, und seine Rolle als personifizierter Zufall ist damit abgeschlossen, bevor er selbst noch etwas hätte tun können.",
+        "advances": "trajectory"
+      },
+      {
+        "id": "b3",
+        "character_id": "rieder",
+        "chapter": 1,
+        "beat": "Rieder nimmt Stettlers Geständnis formgerecht entgegen, erkennt seine Tragweite, muss aber wegen des zugeschneiten Passes ohne Rückhalt der übergeordneten Behörde allein damit bleiben.",
+        "advances": "want"
+      },
+      {
+        "id": "b4",
+        "character_id": "kalt_witwe",
+        "chapter": 2,
+        "beat": "Rosa Kalt drängt Stettler, den Totenschein ihres Mannes rasch und ohne Aufsehen abzuschliessen, um Beerdigung und Erbschaft zu regeln, und beschleunigt damit unwissentlich seine Entlastung.",
+        "advances": "want"
+      },
+      {
+        "id": "b5",
+        "character_id": "stettler",
+        "chapter": 2,
+        "beat": "Während die Grippewelle das Dorf zunehmend von ihm als einzigem Arzt abhängig macht, lässt Stettler sich von dieser stillschweigenden Entlastung tragen, statt sein Geständnis selbst einzufordern — sein lebenslanger Ordnungsglaube kippt in hilflose Passivität.",
+        "advances": "flaw"
+      },
+      {
+        "id": "b6",
+        "character_id": "rieder",
+        "chapter": 2,
+        "beat": "Rieder verzögert die Weiterleitung von Stettlers Geständnis mit Verweis auf Formvorschriften, obwohl er wüsste, wie er handeln könnte, und wird damit selbst zum Verwalter des Aufschubs.",
+        "advances": "flaw"
+      },
+      {
+        "id": "b7",
+        "character_id": "stettler",
+        "chapter": 3,
+        "beat": "Als der Pass sich öffnet und sein Geständnis ohne Zeugen und ohne Wirkung bei der Behörde verpufft, begreift Stettler, dass die Ordnung, an die er zeitlebens glaubte, ihn nicht richten, sondern freisprechen wird — und dass er dies nicht verhindern kann.",
+        "advances": "need"
+      },
+      {
+        "id": "b8",
+        "character_id": "rieder",
+        "chapter": 3,
+        "beat": "Rieder leitet das entwertete Geständnis endlich formgerecht weiter und vollendet damit seinen Wandel vom gläubigen Verwalter der Ordnung zum stillen Komplizen des Aufschubs.",
+        "advances": "trajectory"
+      }
+    ],
+    "motifs": [
+      {
+        "id": "zitternde_hand",
+        "desc": "Das leichte Zittern in Stettlers rechter, schreibender Hand seit der Unfallnacht — zuerst beim Niederschreiben der Wahrheit auf den Totenschein.",
+        "setup_ch": 1,
+        "payoff_ch": 3
+      },
+      {
+        "id": "krankenblatt",
+        "desc": "Das alte Krankenblatt, das Kalt als einziges verbliebenes Schriftstück des damaligen Vorfalls aufbewahrt hatte.",
+        "setup_ch": 1,
+        "payoff_ch": 3
+      }
+    ],
+    "promises": [
+      {
+        "id": "wird_selbstanzeige_verhandelt",
+        "desc": "Stettlers schriftliche Selbstanzeige auf dem Totenschein verspricht, dass seine zwanzig Jahre alte Schuld nun formell verhandelt wird.",
+        "made_ch": 1,
+        "kept_ch": 3
+      },
+      {
+        "id": "krankenblatt_taucht_auf",
+        "desc": "Kalts Krankenblatt als letztes verbliebenes Beweisstück wirft die Frage auf, ob es je auftauchen und erkannt werden wird.",
+        "made_ch": 1,
+        "kept_ch": 3
+      },
+      {
+        "id": "rieders_weiterleitung",
+        "desc": "Rieder verspricht sich selbst und implizit dem Leser, das Geständnis weiterzuleiten, sobald die Form es zulässt.",
+        "made_ch": 2,
+        "kept_ch": 3
+      },
+      {
+        "id": "rosas_unwissenheit",
+        "desc": "Die Frage, ob Rosa Kalt je erfährt, dass ihre Eile um den Totenschein den Mann deckte, der die Wahrheit über ihren Mann besass.",
+        "made_ch": 2,
+        "kept_ch": 0
+      }
+    ],
+    "tension_curve": [
+      {
+        "chapter": 1,
+        "tension": 6,
+        "note": "Unfalltod in der Nacht, die schriftliche Selbstanzeige und das plötzliche Zuschneien des Passes setzen die Falle in einer einzigen Nacht."
+      },
+      {
+        "chapter": 2,
+        "tension": 4,
+        "note": "Scheinbare Ruhe der Einschneiung: Grippewelle, Rosas Drängen und Rieders formale Verzögerung arbeiten leise, aber unaufhaltsam gegen die Selbstanzeige."
+      },
+      {
+        "chapter": 3,
+        "tension": 8,
+        "note": "Die Schneeschmelze zwingt zur Weiterleitung des entwerteten Geständnisses; die Erkenntnis, dass Freispruch statt Urteil folgt, bricht mit voller Wucht über Stettler herein."
+      }
+    ]
+  }
+}

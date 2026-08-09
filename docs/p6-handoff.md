@@ -2,6 +2,37 @@
 
 Paste the block below into a **new** Claude Code session in this repo.
 
+## The run is already part-done — it resumes, it does not restart
+
+State as of the handoff: **canon v2 established and validated** (4 characters, 5 relationships, 7
+timeline events, 3 knowledge items, 0 issues), **macro arc committed** (3 acts, 3 turning points, 8
+beats, 2 motifs, 4 promises), **chapter 1 specced and passed its Intent check**, and **scene 1 of
+chapter 1 drafted three times, selected, and part-way through its checkers**.
+
+Every answered call is cached in `06_session/`, so `storica run` replays the lot in seconds and stops
+at the first unanswered call. Do not delete that directory.
+
+## Pace: pick a config before you start
+
+Measured on this run, one subagent round-trip takes **1–25 minutes** (the tail is long and
+unpredictable). Per scene the shipped defaults cost ~10 calls; there are ~9 scenes, plus
+chapter-level checks, specs, reconciles and the audit. That is ~150 calls — many hours.
+
+| config | calls/scene | what it still tests | what it gives up |
+|---|---|---|---|
+| defaults | ~10 | everything | finishing this decade |
+| `--checker-samples 1` | ~8 | selection, all four checkers | majority sampling (C4) |
+| `--checker-samples 1 --prose-candidates 1` | ~5 | all four checkers, the whole spine | selection (C6/§5.1) |
+
+**Recommended for a first complete book: `--checker-samples 1 --prose-candidates 1`**, then re-run at
+defaults once it has finished once. Both dropped mechanisms are unit-tested and were watched working
+live on this run (three drafts at 937/871/739 words, selector correctly declining the longest).
+
+One caveat if you drop `--prose-candidates` to 1: scene 1's three drafts are already cached, and a
+single-candidate run replays **draft A**, not the draft the selector chose. Scene 1's text will
+change. Nothing is corrupted; the selection is simply discarded. Use the same flags on **every**
+subsequent run or scenes will keep flipping between the two behaviours.
+
 ## Why a fresh session
 
 Not context budget — contamination. The session that built this pipeline has read the v1 novel's

@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The three-act arc earns its place as a precise Dürrenmatt inversion — a confession quietly devalued by chance, institution and village until Stettler's acquittal becomes his lifelong sentence — but two loose threads need a fix before it can proceed as-is.",
+  "issues": [
+    {
+      "unit": "motif krankenblatt / promise krankenblatt_taucht_auf (ch3)",
+      "kind": "coherence",
+      "severity": "warning",
+      "canon_ref": "krankenblatt",
+      "fix_hint": "Add one concrete line to chapter 3's turning point or an arc_beat stating what becomes of Kalt's Krankenblatt (e.g. it is lost with the wreck, or it surfaces but is never recognized) so the declared payoff_ch:3 and kept_ch:3 are an actual plotted event rather than an unstated absence, and so it visibly does not become a second proof that would violate the 'no living witness'/no-punishment constraints."
+    },
+    {
+      "unit": "b4",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "kalt_witwe",
+      "fix_hint": "Rosa's beat currently paraphrases her existing canon 'motivation' fact almost verbatim without moving her own state. Add one small escalation beyond the established want (e.g. she threatens to raise the matter with the authorities herself, or her patience visibly runs out) so the beat marks a development in pressure on Stettler rather than repeating a fact already on record."
+    }
+  ],
+  "conflict": ""
+}
