@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The scene concretely stages Stettler writing the confession and Rieder formally receiving it, with tight physical and social logic and well-grounded motif setup (zitternde Hand, Krankenblatt), earning its place; only a couple of unglossed invented specifics about the old malpractice go beyond what canon establishes.",
+  "issues": [
+    {
+      "unit": "P1: \"die Dosis, die er damals verordnet hatte\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "t1",
+      "fix_hint": "Describe the old error without naming a specific medication dose; canon only establishes a fatal 'Kunstfehler', not a dosage mechanism."
+    },
+    {
+      "unit": "P31: \"Am elften März\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "t1",
+      "fix_hint": "Cut the specific date or replace with what canon actually gives ('vor zwanzig Jahren'); '11. März' is not established anywhere in canon."
+    }
+  ],
+  "conflict": ""
+}

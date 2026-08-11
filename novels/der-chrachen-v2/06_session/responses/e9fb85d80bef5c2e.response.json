@@ -1,0 +1,35 @@
+{
+  "decision": "revise",
+  "summary": "The scene stages Stettler's written confession and Rieder's exact, procedurally grounded acceptance of it with strong physical continuity and correct motif/knowledge-state handling, but paragraph 1 invents a specific medical mechanism (a dosage error) for the twenty-year-old malpractice that canon deliberately leaves unspecified, and a few later paragraphs pin down unglossed dates/times/locations canon never gives.",
+  "issues": [
+    {
+      "unit": "P1: \"die Dosis, die er damals verordnet hatte\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "t1",
+      "fix_hint": "Remove the specific dosage framing; describe the confession structurally (what he did vs. what should have been done) without naming a medical mechanism, since canon only establishes a 'tödlicher Behandlungsfehler' and leaves its nature unspecified."
+    },
+    {
+      "unit": "P9: \"Passstrasse, oberhalb der zweiten Kehre?\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut 'oberhalb der zweiten Kehre' or replace with the general 'auf der Passstrasse' that canon actually specifies."
+    },
+    {
+      "unit": "P14: \"Zwischen zehn und elf\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut the specific hour window or replace with a vaguer time reference, since canon fixes no time of death."
+    },
+    {
+      "unit": "P31: \"Am elften März\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut the specific date or replace with a vaguer reference, since canon fixes the old incident only as '20 Jahre zuvor', not a calendar date."
+    }
+  ],
+  "conflict": ""
+}

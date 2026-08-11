@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The scene protocols Stettler's written confession and Rieder's formal acceptance of it with dry, bureaucratic precision and earns its place through fact-arranged irony (the frozen-man aphorism, Rieder's steady signature against Stettler's tremor); one line breaks that discipline by having the narrator gloss the moment's future significance instead of just showing it.",
+  "issues": [
+    {
+      "unit": "wie man jemanden ansieht, dessen Antwort man erst später verstehen wird",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "Ironie ausschließlich aus der Anordnung der Fakten, nie aus Erzählerkommentar.",
+      "fix_hint": "Cut the clause explaining that the answer will only be understood later; end the sentence on the flat observation of the look itself."
+    }
+  ],
+  "conflict": ""
+}

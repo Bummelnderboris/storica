@@ -1,0 +1,28 @@
+{
+  "decision": "revise",
+  "summary": "The scene grounds Stettler's forensic recognition of Kalt and his turn toward confession in concrete, physically coherent action, but leans on a few specific details (an identifying scar, a mislabeled-ampulle memory, a birth year) that canon never supplies.",
+  "issues": [
+    {
+      "unit": "P8: \"eine alte Narbe, keine aus dieser Nacht\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "note that this identifying mark on Kalt has no canon basis (canon defines a physical_mark only for stettler); keep as unglossed detail or ground it in an established fact."
+    },
+    {
+      "unit": "P9: \"das Etikett nach oben gedreht, damit er es lesen konnte\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "canon only states a 'tödlicher Behandlungsfehler'; the mislabeled-ampulle mechanism is invented beyond that and nothing later can rely on it being an ampulle specifically unless confirmed."
+    },
+    {
+      "unit": "P18: \"Achtzehnhundertvierundneunzig\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "cut the specific birth year or leave the field's content unstated, since canon gives no age or birth year for Kalt."
+    }
+  ],
+  "conflict": ""
+}

@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The scene mostly enacts its confession through procedure and object rather than statement — the chair striking the cabinet, the folder of unbroken numbers, the vanishing tracks — but one line at the close explains a look instead of leaving it to stand.",
+  "issues": [
+    {
+      "unit": "wie man jemanden ansieht, dessen Antwort man erst später verstehen wird",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'wie man jemanden ansieht, dessen Antwort man erst später verstehen wird'; end the sentence at 'Rieder sah ihn an, kurz.'"
+    }
+  ],
+  "conflict": ""
+}

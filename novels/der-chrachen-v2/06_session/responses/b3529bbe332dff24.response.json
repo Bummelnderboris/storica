@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "Stettler identifies the corpse as Kalt and turns from routine death certificate to deliberate confession, mostly enacted through sharp physical detail (the frozen tap, the arm that won't lie flat, the trembling handwriting), but two explanatory aphorisms spell out in the abstract what those images already show, undercutting an otherwise alive scene.",
+  "issues": [
+    {
+      "unit": "Das ist wahr, es ist nachprüfbar, und es ist nicht die Wahrheit.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the paragraph from 'Man kann in diese Zeile schreiben' through 'deshalb so bequem sind'; the trembling hand that follows already dramatizes the gap between verifiable and true, stating it first flattens the reveal."
+    },
+    {
+      "unit": "Man fragt nicht nach einem Papier, dessen Existenz man nicht zugeben will.",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut this sentence; 'Stettler hatte in zwanzig Jahren nicht danach gefragt' already shows the avoidance without needing the aphorism to explain it."
+    }
+  ],
+  "conflict": ""
+}

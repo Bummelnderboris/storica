@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The scene delivers the confession and its formal uptake by Rieder as canon requires, but it hands Rieder knowledge of the Krankenblatt and treats the report's outward passage as still routine, both contradicting the exit state assigned to this unit.",
+  "issues": [
+    {
+      "unit": "Er hat es mir einmal gesagt und nie wieder.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "krankenblatt:status",
+      "fix_hint": "Cut Stettler's account of the Krankenblatt and Kalt taking it from the dialogue with Rieder; the exit state requires that its existence remain present only to Stettler at this scene's close."
+    },
+    {
+      "unit": "Sie geht morgen mit dem Bericht über den Unfalltod",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "pass:status",
+      "fix_hint": "Cut or hedge Rieder's confident claim that the report will reach the Bezirksbehörde tomorrow; the exit state requires the pass already fully snowed in, so no document can leave the valley by the scene's close."
+    }
+  ],
+  "conflict": ""
+}
