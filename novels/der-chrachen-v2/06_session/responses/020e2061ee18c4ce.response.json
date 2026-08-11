@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The scene delivers Kalt's fatal drive and crash with tight, correctly grounded detail (age 58, Sanitätsgehilfe past, the Krankenblatt as the single surviving document, the loss of the last living witness) and earns its place; only two minor invented specifics lack canon basis without breaking anything.",
+  "issues": [
+    {
+      "unit": "P4: \"kannte sie seit dreiundzwanzig Jahren\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "kalt",
+      "fix_hint": "Cut 'dreiundzwanzig Jahre' or replace the invented figure with a duration that ties to a canon fact instead of a new precise number."
+    },
+    {
+      "unit": "P6: \"er hatte es hundertmal jüngeren Leuten erklärt\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut this clause; canon gives Kalt (Sanitätsgehilfe, then Kleinbauer) no basis as someone who instructed others on driving."
+    }
+  ],
+  "conflict": ""
+}

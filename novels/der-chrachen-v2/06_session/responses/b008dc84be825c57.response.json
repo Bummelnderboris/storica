@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The scene grounds Kalt's death in his canonical age, profession, and the Krankenblatt he carries, and the physical sequence of the crash and burial coheres cleanly, but one paragraph invents an ungrounded biographical detail about Kalt's past.",
+  "issues": [
+    {
+      "unit": "P6: \"er hatte es hundertmal jüngeren Leuten erklärt, in der Werkstatt\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "kalt",
+      "fix_hint": "cut 'in der Werkstatt, mit den Händen' or ground the explanation in a canon fact about Kalt (e.g. his time as Sanitätsgehilfe) instead of an unestablished workshop/teaching role"
+    },
+    {
+      "unit": "P4: \"Er kannte sie seit dreiundzwanzig Jahren\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "replace the specific figure with a vaguer phrase like 'seit vielen Jahren', since canon states nothing about how long Kalt has driven this road"
+    }
+  ],
+  "conflict": ""
+}

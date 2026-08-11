@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The accident and Kalt's failed last reach for the file are rendered with real physical specificity, but the closing paragraph drops into summary and an explanatory aphorism exactly where the scene should hold its nerve.",
+  "issues": [
+    {
+      "unit": "war das Einzige, was noch vorhanden war",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this opening clause of the final paragraph; it restates what paragraph three already showed (the file, the twenty years, the silence). Start the paragraph at 'Um zehn Uhr war der Wagen zugeweht...'."
+    },
+    {
+      "unit": "wer schweigt, verliert nichts, solange er lebt",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this maxim. The twenty years of silence and the outstretched arm a meter short of the folder already say it; the aphorism tells the reader what the image meant instead of leaving it to stand."
+    }
+  ],
+  "conflict": ""
+}

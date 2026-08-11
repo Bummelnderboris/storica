@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "Kalt's last drive and the crash itself are built from sharply imagined, non-generic detail and land their turn through action, but the closing paragraph steps outside the wreck to explain what the folder and his silence meant, undoing the restraint the scene had just earned.",
+  "issues": [
+    {
+      "unit": "Was Anton Kalt in dieser Nacht die Passstrasse hinauffuhr, war das Einzige",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Delete the final paragraph (beginning 'Was Anton Kalt in dieser Nacht...'); end the scene on 'Etwas später erloschen die Scheinwerfer, erst der rechte, dann der linke.'"
+    }
+  ],
+  "conflict": ""
+}
