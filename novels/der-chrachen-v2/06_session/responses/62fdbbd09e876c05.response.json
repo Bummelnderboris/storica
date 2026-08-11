@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The scene earns its place with a genuinely restrained, procedural rendering of the confession and a quiet, unexpected close, but one line breaks the otherwise strict external camera by telling the reader in advance what a glance will turn out to mean.",
+  "issues": [
+    {
+      "unit": "wie man jemanden ansieht, dessen Antwort man erst später verstehen wird",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the clause 'wie man jemanden ansieht, dessen Antwort man erst später verstehen wird'; let 'Rieder sah ihn an, kurz.' stand alone before 'Dann öffnete er die Tür.'"
+    }
+  ],
+  "conflict": ""
+}

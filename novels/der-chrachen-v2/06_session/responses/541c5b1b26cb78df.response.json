@@ -1,0 +1,28 @@
+{
+  "decision": "revise",
+  "summary": "The scene stages the confession handover and Rieder's formal uptake with tight, mostly canon-grounded physical and social logic, but one dialogue beat invents a specific date the canon never gives and a late paragraph has a small coat/pocket sequencing slip.",
+  "issues": [
+    {
+      "unit": "P31: \"Am elften März. Der Name steht dort.\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the specific date 'Am elften März' and answer only with 'Der Name steht dort' or an unspecific time reference already grounded in canon (e.g. 'vor zwanzig Jahren'), since timeline t1 gives no exact date for the old error."
+    },
+    {
+      "unit": "P9: \"oberhalb der zweiten Kehre\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Replace with an unspecific location ('auf der Passstrasse') or cut the clause, since canon names only the Passstrasse in general, not a numbered Kehre."
+    },
+    {
+      "unit": "P59: \"das Notizbuch in die Innentasche und schlug den Mantel darüber\"",
+      "kind": "coherence",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Move 'Rieder stand auf und knöpfte den Mantel zu' (P57) to after he tucks the notebook into the inner pocket, so he isn't reopening an already-buttoned coat."
+    }
+  ],
+  "conflict": ""
+}

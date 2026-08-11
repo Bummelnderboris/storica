@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The scene turns a twenty-year-old private confession into an officially received document through cold, procedural dialogue that mostly earns its dryness, but it twice explains the trembling-hand motif instead of letting the physical evidence of the shaking hand stand on its own.",
+  "issues": [
+    {
+      "unit": "weil die Hand sie grösser machte",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'weil die Hand sie grösser machte'; end the sentence at 'grösser als sonst' and let the oversized signature imply the tremor unexplained."
+    },
+    {
+      "unit": "weil sie auf dem Tisch ruhiger lag",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'weil sie auf dem Tisch ruhiger lag'; end on 'legte die rechte Hand auf den Tisch' and let the gesture stand without restating why."
+    }
+  ],
+  "conflict": ""
+}
