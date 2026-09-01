@@ -4,17 +4,21 @@ from .auditor import FinalAuditor, audit_ledger
 from .base import Checker, CheckerIssue, Decision, Escalation, Verdict
 from .canon_consistency import CanonConsistencyChecker
 from .consensus import ConsensusProseChecker, majority_threshold, with_consensus
+from .defaults import default_prose_checkers
 from .intent import IntentChecker
 from .micro_sense import MicroSenseChecker
-from .prose_base import ProseChecker
+from .prose_base import ProseChecker, ProseCheckerBase, unit_label
 from .vitality import VitalityChecker
 from .voice import AuthorVoiceChecker
 
 __all__ = [
     # contracts
-    "Checker", "CheckerIssue", "Decision", "Escalation", "Verdict", "ProseChecker",
+    "Checker", "CheckerIssue", "Decision", "Escalation", "Verdict",
+    "ProseChecker", "ProseCheckerBase", "unit_label",
     # sampling: majority-blocking over k draws (calibration C4)
     "ConsensusProseChecker", "with_consensus", "majority_threshold",
+    # the shipped gate: which readers, in which order, which sampled
+    "default_prose_checkers",
     # plan units
     "IntentChecker",
     # prose units — one per failure class (DESIGN §2)

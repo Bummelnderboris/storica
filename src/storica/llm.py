@@ -15,6 +15,8 @@ Two rules the stage schemas must obey (Anthropic structured-output limits):
 
 from __future__ import annotations
 
+import asyncio
+
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Type, TypeVar
@@ -37,6 +39,108 @@ def resolve_model(model: str) -> str:
     return MODELS.get(model, model)
 
 
+# Which tier does which job — the run's cost profile, in one readable place.
+#
+# The rule is about the *kind* of work, not its importance. Opus goes where the output is invention
+# that nothing downstream can supply: the premise, the prose itself, and adjudication, where a wrong
+# ruling is permanent. Sonnet goes where the work is structured transformation against material
+# already in hand — planning, extraction, and judging a unit against a slice — which is most of the
+# calls. Selection is Sonnet because choosing between drafts is cheaper than writing one.
+#
+# Every stage still takes a `model=` argument, so this is the default, not a constraint.
+STAGE_MODELS: Dict[str, str] = {
+    # invention
+    "conception": "opus",
+    "prose": "opus",
+    "adjudicator": "opus",
+    "final_auditor": "opus",
+    # structured transformation
+    "world_cast": "sonnet",
+    "macro_arc": "sonnet",
+    "chapter_spec": "sonnet",
+    "reconcile": "sonnet",
+    "selection": "sonnet",
+    # judgement against a slice
+    "canon_consistency": "sonnet",
+    "intent": "sonnet",
+    "micro_sense": "sonnet",
+    "voice": "sonnet",
+    "vitality": "sonnet",
+}
+
+
+def stage_model(stage: str) -> str:
+    """The default alias for one stage or checker. Unknown names fall back to sonnet."""
+    return STAGE_MODELS.get(stage, "sonnet")
+
+
+async def gather_draws(coros):
+    """
+    Run k independent draws and surface the first failure only after all of them have finished.
+
+    `asyncio.gather` with its default would propagate the first exception while the siblings are
+    still in flight, leaving their results unretrieved. That matters for more than tidiness: under
+    the replay driver every unanswered draw writes a request file, so letting all k complete means
+    one stop produces all k requests to answer, instead of one stop per draw.
+    """
+    results = await asyncio.gather(*coros, return_exceptions=True)
+    for r in results:
+        if isinstance(r, BaseException):
+            raise r
+    return results
+
+
+# Published per-million-token prices (anthropic.com/pricing, checked 2026-09-01), used only to turn
+# a token count into a number a human can act on. Wrong prices produce a wrong estimate and nothing
+# else — no behaviour depends on this — but check them against the current price list before quoting
+# a figure, because they go stale silently and a stale rate is worse than no rate.
+PRICES: Dict[str, tuple[float, float]] = {   # alias -> (input $/Mtok, output $/Mtok)
+    "opus": (5.00, 25.00),
+    "sonnet": (2.00, 10.00),
+    "haiku": (1.00, 5.00),
+}
+
+
+@dataclass
+class Usage:
+    """
+    What a run actually cost, accumulated across every call.
+
+    The pipeline has always been able to say what it *did*; it could not say what that came to.
+    That is the one number a person needs before letting it write a second book, so it is counted
+    here — at the only place every call passes through — rather than reconstructed from the trace.
+    """
+
+    calls: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
+    by_model: Dict[str, int] = field(default_factory=dict)   # alias -> calls
+    cost_usd: float = 0.0
+
+    def record(self, *, model: str, input_tokens: int, output_tokens: int) -> None:
+        self.calls += 1
+        self.input_tokens += input_tokens
+        self.output_tokens += output_tokens
+        self.by_model[model] = self.by_model.get(model, 0) + 1
+        rate_in, rate_out = PRICES.get(model, (0.0, 0.0))
+        self.cost_usd += (input_tokens * rate_in + output_tokens * rate_out) / 1_000_000
+
+    def as_dict(self) -> Dict[str, Any]:
+        return {
+            "calls": self.calls,
+            "input_tokens": self.input_tokens,
+            "output_tokens": self.output_tokens,
+            "calls_by_model": dict(sorted(self.by_model.items())),
+            "estimated_cost_usd": round(self.cost_usd, 4),
+        }
+
+    def summary(self) -> str:
+        return (
+            f"{self.calls} calls, {self.input_tokens:,} in / {self.output_tokens:,} out tokens, "
+            f"~${self.cost_usd:,.2f}"
+        )
+
+
 class LLMRefusal(RuntimeError):
     """The model declined the request (`stop_reason == "refusal"`)."""
 
@@ -49,7 +153,18 @@ class StructuredLLM(ABC):
     downstream has to re-interpret prose to find out what was decided. `generate` exists only for
     the one artifact that genuinely is prose (stage 5), and even that is generated *from* canon
     and reconciled back *into* it, never read back as truth.
+
+    Both take a `draw` index. The pipeline deliberately makes the *same* call more than once in two
+    places — k prose candidates, and k consensus samples of one checker — and those draws must stay
+    distinguishable. A live model ignores `draw` (sampling already differs); `ReplayLLM` uses it to
+    give each draw its own cache slot. Passing it explicitly rather than counting calls internally
+    is what makes those fan-outs safe to run concurrently.
+
+    Every adapter carries a `usage` counter so a caller can ask what a run cost without knowing
+    which adapter it got.
     """
+
+    usage: "Usage"
 
     @abstractmethod
     async def parse(
@@ -60,6 +175,7 @@ class StructuredLLM(ABC):
         system: Optional[str] = None,
         model: str = "opus",
         max_tokens: int = 16000,
+        draw: int = 1,
     ) -> T:
         """Generate a response constrained to `schema` and return it parsed."""
 
@@ -71,6 +187,7 @@ class StructuredLLM(ABC):
         system: Optional[str] = None,
         model: str = "opus",
         max_tokens: int = 32000,
+        draw: int = 1,
     ) -> str:
         """Generate free text. Prose only — never used to carry structure."""
 
@@ -84,6 +201,16 @@ class AnthropicStructuredLLM(StructuredLLM):
 
             client = AsyncAnthropic(api_key=api_key) if api_key else AsyncAnthropic()
         self.client = client
+        self.usage = Usage()
+
+    def _count(self, model: str, raw) -> None:
+        """Record one call's token usage. Never lets accounting break a run."""
+        u = getattr(raw, "usage", None)
+        self.usage.record(
+            model=model,
+            input_tokens=getattr(u, "input_tokens", 0) or 0,
+            output_tokens=getattr(u, "output_tokens", 0) or 0,
+        )
 
     async def parse(
         self,
@@ -93,6 +220,7 @@ class AnthropicStructuredLLM(StructuredLLM):
         system: Optional[str] = None,
         model: str = "opus",
         max_tokens: int = 16000,
+        draw: int = 1,  # noqa: ARG002 — sampling already differs; only the replay cache needs it
     ) -> T:
         response = await self.client.messages.parse(
             model=resolve_model(model),
@@ -104,6 +232,7 @@ class AnthropicStructuredLLM(StructuredLLM):
         # Check stop_reason before touching content: a refusal returns HTTP 200 with no parse.
         if response.stop_reason == "refusal":
             raise LLMRefusal(f"model refused ({getattr(response, 'stop_details', None)})")
+        self._count(model, response)
         parsed = response.parsed_output
         if parsed is None:
             raise RuntimeError(
@@ -119,6 +248,7 @@ class AnthropicStructuredLLM(StructuredLLM):
         system: Optional[str] = None,
         model: str = "opus",
         max_tokens: int = 32000,
+        draw: int = 1,  # noqa: ARG002 — see `parse`
     ) -> str:
         # Streamed: prose runs long, and a non-streaming request at this max_tokens risks an
         # HTTP timeout. We only want the finished text, so we never touch the events.
@@ -130,6 +260,7 @@ class AnthropicStructuredLLM(StructuredLLM):
         ) as stream:
             message = await stream.get_final_message()
 
+        self._count(model, message)
         if message.stop_reason == "refusal":
             raise LLMRefusal(f"model refused ({getattr(message, 'stop_details', None)})")
         return "".join(b.text for b in message.content if b.type == "text")
@@ -154,6 +285,7 @@ class FakeStructuredLLM(StructuredLLM):
     responses: List[BaseModel] = field(default_factory=list)
     texts: List[str] = field(default_factory=list)
     calls: List[FakeCall] = field(default_factory=list)
+    usage: Usage = field(default_factory=Usage)
 
     async def parse(
         self,
@@ -163,6 +295,7 @@ class FakeStructuredLLM(StructuredLLM):
         system: Optional[str] = None,
         model: str = "opus",
         max_tokens: int = 16000,
+        draw: int = 1,
     ) -> T:
         self.calls.append(FakeCall(prompt=prompt, schema=schema.__name__, system=system, model=model))
         for i, r in enumerate(self.responses):
@@ -180,6 +313,7 @@ class FakeStructuredLLM(StructuredLLM):
         system: Optional[str] = None,
         model: str = "opus",
         max_tokens: int = 32000,
+        draw: int = 1,
     ) -> str:
         self.calls.append(FakeCall(prompt=prompt, schema="<text>", system=system, model=model))
         if not self.texts:

@@ -17,7 +17,6 @@ so it fixes what is broken instead of inventing a bridging fact.
 
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
@@ -26,6 +25,8 @@ from pydantic import BaseModel, ConfigDict, Field
 from ..authors import AuthorModel
 from ..brief import Brief
 from ..canon import (
+    norm,
+    slug,
     Awareness,
     Character,
     CharacterArc,
@@ -41,7 +42,7 @@ from ..canon import (
     blocking,
     validate,
 )
-from ..llm import StructuredLLM
+from ..llm import StructuredLLM, stage_model
 from ..trace import Tracer
 from .gate import GateFailed, format_issues, run_gated
 
@@ -166,16 +167,12 @@ class WorldCastDraft(BaseModel):
 # Draft → canon
 # --------------------------------------------------------------------------------------------
 
-_SLUG_RE = re.compile(r"[^a-z0-9]+")
-
-
 def _slug(value: str) -> str:
-    s = _SLUG_RE.sub("_", value.strip().lower()).strip("_")
-    return s or "unnamed"
+    """Canon ids must exist even when the model gave us nothing to make one from."""
+    return slug(value) or "unnamed"
 
 
-def _norm(name: str) -> str:
-    return " ".join(name.strip().lower().split())
+_norm = norm
 
 
 def _pairs_to_dict(pairs: List[FactPair]) -> Dict[str, str]:
@@ -364,7 +361,7 @@ async def develop_world_and_cast(
     author: AuthorModel,
     llm: StructuredLLM,
     tracer: Optional[Tracer] = None,
-    model: str = "sonnet",
+    model: str = stage_model("world_cast"),
     max_repairs: int = 2,
     strict: bool = True,
     max_tokens: int = 24000,

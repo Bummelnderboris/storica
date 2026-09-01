@@ -17,6 +17,7 @@ import json
 import pytest
 from pydantic import BaseModel, ConfigDict
 
+from storica.checkers.base import Verdict
 from storica.drivers import MalformedResponse, ReplayLLM, ResponseNeeded
 
 
@@ -161,9 +162,9 @@ def test_identical_prose_prompts_get_separate_slots(tmp_path):
     """
     llm = ReplayLLM(tmp_path)
     keys = []
-    for _ in range(3):
+    for i in range(3):
         try:
-            asyncio.run(llm.generate(prompt="same prompt", model="opus"))
+            asyncio.run(llm.generate(prompt="same prompt", model="opus", draw=i + 1))
         except ResponseNeeded as need:
             keys.append(need.key)
     assert len(set(keys)) == 3, "three draws of one prompt must be three distinct requests"
@@ -173,9 +174,9 @@ def test_repeated_draws_replay_in_the_same_order_after_a_restart(tmp_path):
     """Resumability: draw 2 must still resolve to draw 2 on the next process."""
     llm = ReplayLLM(tmp_path)
     keys = []
-    for _ in range(2):
+    for i in range(2):
         try:
-            asyncio.run(llm.generate(prompt="same prompt", model="opus"))
+            asyncio.run(llm.generate(prompt="same prompt", model="opus", draw=i + 1))
         except ResponseNeeded as need:
             keys.append(need.key)
             (tmp_path / "responses" / f"{need.key}.response.md").write_text(
@@ -183,8 +184,42 @@ def test_repeated_draws_replay_in_the_same_order_after_a_restart(tmp_path):
             )
 
     fresh = ReplayLLM(tmp_path)
-    got = [asyncio.run(fresh.generate(prompt="same prompt", model="opus")) for _ in range(2)]
+    got = [asyncio.run(fresh.generate(prompt="same prompt", model="opus", draw=i + 1)) for i in range(2)]
     assert got == [f"draft for {keys[0]}", f"draft for {keys[1]}"]
+
+    # And out of order — the point of an explicit index is that completion order cannot decide a slot.
+    shuffled = ReplayLLM(tmp_path)
+    assert asyncio.run(shuffled.generate(prompt="same prompt", model="opus", draw=2)) == f"draft for {keys[1]}"
+    assert asyncio.run(shuffled.generate(prompt="same prompt", model="opus", draw=1)) == f"draft for {keys[0]}"
+
+
+def test_repeated_parse_draws_get_their_own_slots(tmp_path):
+    """
+    Consensus sampling draws one checker k times from an identical prompt and blocks on a majority.
+
+    Keyed on content alone, all k collapse onto one cached answer and majority-of-3 becomes one
+    verdict counted three times — the gate looks sampled and is not. This is the same failure that
+    made generate-and-select a no-op (de44dc2); it applies to `parse` for exactly the same reason.
+    """
+    llm = ReplayLLM(tmp_path)
+    keys = []
+    for i in range(3):
+        try:
+            asyncio.run(llm.parse(prompt="judge this", schema=Verdict, model="sonnet", draw=i + 1))
+        except ResponseNeeded as need:
+            keys.append(need.key)
+            (tmp_path / "responses" / f"{need.key}.response.json").write_text(
+                json.dumps({"decision": "pass", "summary": f"draw {i}", "issues": [], "conflict": ""}),
+                encoding="utf-8",
+            )
+
+    assert len(set(keys)) == 3, "three draws of one prompt must not share a cache slot"
+
+    fresh = ReplayLLM(tmp_path)
+    got = [asyncio.run(fresh.parse(prompt="judge this", schema=Verdict, model="sonnet", draw=i + 1))
+           for i in range(3)]
+    assert [v.summary for v in got] == ["draw 0", "draw 1", "draw 2"]
+    assert fresh.requested == 0, "a resumed run must replay every draw, not ask again"
 
 
 def test_different_prompts_are_unaffected(tmp_path):

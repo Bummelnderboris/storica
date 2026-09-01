@@ -12,13 +12,14 @@ which competent-but-hollow drafts always passed (F8).
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
 from ..canon import Issue, Severity
+from ..llm import StructuredLLM
+from ..trace import Tracer
 
 
 class Decision(str, Enum):
@@ -63,8 +64,13 @@ class Verdict(BaseModel):
 
 class Escalation(RuntimeError):
     """
-    A checker escalated. Until P5's adjudicator exists, this stops the run loudly rather than
-    letting a downstream agent invent a bridging fact to paper over the conflict (F11/F12).
+    A checker escalated: the unit cannot be fixed without changing something upstream.
+
+    This is not a crash. `chapter.attempt_chapter` catches it, hands the conflict to the
+    `Adjudicator` for a binding ruling against immutable ground truth, and re-attempts the unit
+    bound by that ruling. Raising rather than returning is deliberate — an escalation must not be
+    mistakeable for a verdict a caller can shrug off, because the alternative is the failure this
+    pipeline exists to prevent: a downstream agent inventing a bridging fact (F11/F12).
     """
 
     def __init__(self, unit: str, conflict: str, verdict: Verdict):
@@ -74,11 +80,58 @@ class Escalation(RuntimeError):
         super().__init__(f"escalated on {unit}: {conflict}")
 
 
-class Checker(ABC):
-    """Marker base: something that judges a unit against canon and returns a verdict."""
+class Checker:
+    """
+    Something that judges a unit against canon and returns a verdict.
 
+    Subclasses supply four class attributes and their own prompt-building methods; the one call
+    every checker makes — parse a `Verdict`, then trace it — lives here exactly once. That is not
+    only less code: the readers gate every seam in the pipeline, and a gate that behaves slightly
+    differently depending on which reader you are looking at is a gate nobody can reason about.
+
+    What a subclass owns is what should differ between readers: `SYSTEM`, its rubric, and how it
+    assembles a canon slice and an assignment into a prompt. What it inherits is the machinery.
+    """
+
+    #: Stable identity. Prefixes the issue codes this reader produces and its trace records.
     name: str = "checker"
+    #: The system prompt this reader is given. Set by every concrete subclass.
+    SYSTEM: str = ""
+    #: Per-reader call defaults — a whole-book audit needs a bigger budget than a scene check.
+    DEFAULT_MODEL: str = "sonnet"
+    DEFAULT_MAX_TOKENS: int = 8000
+    #: Trace filename prefix; defaults to `<name>_check`.
+    TRACE_STAGE: str = ""
 
-    @abstractmethod
-    async def check(self, *args, **kwargs) -> Verdict:
-        """Judge one unit."""
+    def __init__(
+        self,
+        llm: StructuredLLM,
+        *,
+        model: Optional[str] = None,
+        max_tokens: Optional[int] = None,
+        tracer: Optional[Tracer] = None,
+    ):
+        self.llm = llm
+        self.model = model or self.DEFAULT_MODEL
+        self.max_tokens = max_tokens or self.DEFAULT_MAX_TOKENS
+        self.tracer = tracer or Tracer(None)
+
+    async def check(self, *, prompt: str, unit: str, draw: int = 1) -> Verdict:
+        """Judge one unit: one schema-constrained call, recorded to the trace."""
+        verdict = await self.llm.parse(
+            prompt=prompt,
+            schema=Verdict,
+            system=self.SYSTEM,
+            model=self.model,
+            max_tokens=self.max_tokens,
+            draw=draw,
+        )
+        self.tracer.record(
+            f"{self.TRACE_STAGE or f'{self.name}_check'}_{unit}",
+            prompt=prompt,
+            system=self.SYSTEM,
+            model=self.model,
+            artifact=verdict,
+            note=verdict.decision.value,
+        )
+        return verdict

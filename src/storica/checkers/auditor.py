@@ -25,12 +25,11 @@ Two disciplines keep it from becoming a rewriter:
 
 from __future__ import annotations
 
-from typing import List, Optional, Sequence
+from typing import List, Sequence
 
+from ..llm import stage_model
 from ..canon import Issue, MotifStatus, PromiseStatus, Severity, StoryModel, canon_slice
-from ..llm import StructuredLLM
 from ..plan import MacroArc
-from ..trace import Tracer
 from .base import Checker, Verdict
 
 SYSTEM = """You are the Final Auditor of an autonomous novel pipeline.
@@ -154,7 +153,7 @@ def audit_ledger(canon: StoryModel) -> List[Issue]:
     return issues
 
 
-def _ledger_block(findings: Sequence[Issue]) -> str:
+def _ledger_findings_block(findings: Sequence[Issue]) -> str:
     if not findings:
         return (
             "# Ledger findings (mechanical pre-check)\n"
@@ -200,36 +199,10 @@ class FinalAuditor(Checker):
 
     name = "final_auditor"
 
-    def __init__(
-        self,
-        llm: StructuredLLM,
-        *,
-        model: str = "opus",
-        max_tokens: int = 16000,
-        tracer: Optional[Tracer] = None,
-    ):
-        self.llm = llm
-        self.model = model
-        self.max_tokens = max_tokens
-        self.tracer = tracer or Tracer(None)
-
-    async def check(self, *, prompt: str, unit: str) -> Verdict:
-        verdict = await self.llm.parse(
-            prompt=prompt,
-            schema=Verdict,
-            system=SYSTEM,
-            model=self.model,
-            max_tokens=self.max_tokens,
-        )
-        self.tracer.record(
-            f"final_audit_{unit}",
-            prompt=prompt,
-            system=SYSTEM,
-            model=self.model,
-            artifact=verdict,
-            note=verdict.decision.value,
-        )
-        return verdict
+    SYSTEM = SYSTEM
+    DEFAULT_MODEL = stage_model("final_auditor")
+    DEFAULT_MAX_TOKENS = 16000
+    TRACE_STAGE = "final_audit"
 
     async def audit(
         self,
@@ -250,7 +223,7 @@ class FinalAuditor(Checker):
 The central question this book exists to answer:
     {canon.premise.central_question or '(none recorded — say so, it is a finding)'}
 
-{_ledger_block(findings)}
+{_ledger_findings_block(findings)}
 
 {_quarantine_block(quarantined)}
 

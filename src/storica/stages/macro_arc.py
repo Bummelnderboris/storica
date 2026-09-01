@@ -32,7 +32,7 @@ from ..canon import (
 )
 from ..checkers import Escalation, IntentChecker
 from ..checkers.base import Decision
-from ..llm import StructuredLLM
+from ..llm import StructuredLLM, stage_model
 from ..plan import MacroArc, MacroArcDraft, validate_macro_arc_draft
 from ..trace import Tracer
 from .gate import GateFailed, format_issues, run_gated
@@ -161,7 +161,7 @@ async def build_macro_arc(
     llm: StructuredLLM,
     tracer: Optional[Tracer] = None,
     intent_checker: Optional[IntentChecker] = None,
-    model: str = "sonnet",
+    model: str = stage_model("macro_arc"),
     max_repairs: int = 2,
     strict: bool = True,
     max_tokens: int = 20000,

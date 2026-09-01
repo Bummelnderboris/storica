@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 218 tests passing. Never yet run end-to-end against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 281 tests passing. Never yet run end-to-end against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -170,20 +170,25 @@ storica/
 ├── src/storica/           ← THE PIPELINE
 │   ├── cli.py             new / run / status
 │   ├── runner.py          the run loop; resumable by construction
-│   ├── pipeline.py        stage wiring: load from disk, run stage, write back
+│   ├── pipeline.py        I/O only: load from disk, run the stage, write back
+│   ├── chapter.py         one chapter's attempt loop: escalate → adjudicate → retry → quarantine
 │   ├── brief.py           the front-door brief — immutable ground truth
 │   ├── authors.py         loads the author library
-│   ├── canon/             story_model.json: schema, validation, slicing, versioned store
+│   ├── canon/             story_model.json: model, validation, ids, slicing, versioned store
 │   ├── plan/              macro arc + chapter specs: schema, validation, store
-│   ├── stages/            conception, world_cast, macro_arc, chapter_spec, prose, reconcile
-│   ├── checkers/          canon_consistency, intent, micro_sense, voice, vitality, auditor
+│   ├── stages/            conception, world_cast, macro_arc, chapter_spec, prose/, reconcile/
+│   │   ├── gate.py            the shared generate → check → repair loop
+│   │   ├── prose/             prompts · selection · quality (the hand-written loop)
+│   │   └── reconcile/         schema · prompts · promote · ledger
+│   ├── checkers/          base (the one shared call) + canon_consistency, intent, micro_sense,
+│   │                      voice, vitality, auditor, consensus, defaults
 │   ├── adjudicator.py     binding rulings against frozen ground truth
 │   ├── reports.py         decision log, quarantine log, run report
 │   ├── assembly.py        chapters → novel.md, excluding quarantined units
 │   ├── trace.py           every filled prompt and artifact, to 04_trace/
 │   ├── llm.py             the only place the Anthropic SDK is touched; model aliases
 │   └── drivers/replay.py  run the real prompts with no API key
-├── tests/                 218 tests
+├── tests/                 281 tests
 │
 ├── authors/               author library, shared across novels — see authors/README.md
 │   ├── duerrenmatt/
@@ -194,6 +199,7 @@ storica/
 │   └── der-chrachen/          the v1 capture kept as reference evidence
 │
 ├── tools/                 calibrate_checkers.py — known-answer test for the checker layer
+│                       smoke_test_api.py    — proves the live adapter works, for ~$0.001
 ├── calibration/           its results and FINDINGS.md
 ├── docs/archive/          point-in-time v1 documents, not maintained
 └── legacy/                the archived v1 web app — see legacy/README.md
@@ -237,7 +243,7 @@ The author is a **generative driver, not a paint job**: their question-lines fee
 ## Development
 
 ```bash
-.venv/bin/python -m pytest -q      # 218 tests, ~1s, no API key, no network
+.venv/bin/python -m pytest -q      # 281 tests, ~1s, no API key, no network
 ```
 
 Model aliases (`opus`, `sonnet`, `haiku`) resolve to current model IDs in exactly one place —
@@ -301,6 +307,23 @@ It is set up and ready to run:
 
 Run it with `/write-novel novels/der-chrachen-v2`. Expect roughly 40–60 model calls for three
 chapters at `--prose-candidates 1`, more with selection on.
+
+### How far the run has got, and what it has already shown
+
+51 calls answered. Canon v2 established and validated, macro arc committed, chapter 1 specced and
+past its Intent check, and all three scenes of chapter 1 drafted with selection on — then **chapter 1
+was quarantined**, which is the first thing this pipeline has ever proved in anger:
+
+- **Selection works and is cheap.** Three drafts of scene 1 at 937 / 871 / 739 words; the selector
+  declined the longest. One call, and the spread was real.
+- **The repair loop is the expensive part, not selection** — and it did not converge. Micro-sense
+  found an ungrounded date (*"Am elften März"*, against a timeline that fixes no exact day), two
+  repair passes failed to remove it, and the budget ran out.
+- **So the chapter was excluded rather than shipped.** `05_reports/quarantine.jsonl` names the unit,
+  the reason and the exact issue. That is the designed behaviour, on a real failure, unattended.
+
+The open question it raises is convergence economics, not correctness: two repairs was not enough
+for a small, local, precisely-stated fix. `--max-repairs` is the first dial to try.
 
 ### What the calibration found first
 

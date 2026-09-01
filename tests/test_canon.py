@@ -19,7 +19,6 @@ import pytest
 from storica.canon import (
     Character,
     CharacterRole,
-    Constraints,
     Motif,
     MotifStatus,
     Relationship,

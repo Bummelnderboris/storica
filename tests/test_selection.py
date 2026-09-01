@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import asyncio
 
-import pytest
 
 from storica.authors import AuthorModel
 from storica.canon import Character, CharacterRole, Constraints, Premise, Severity, StoryModel

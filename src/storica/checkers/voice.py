@@ -20,11 +20,11 @@ from __future__ import annotations
 from typing import Optional
 
 from ..authors import AuthorModel
-from ..canon import StoryModel, canon_slice
-from ..llm import StructuredLLM
+from ..llm import stage_model
+from ..canon import StoryModel
 from ..plan import ChapterSpec, SceneSpec
-from ..trace import Tracer
-from .base import Checker, Verdict
+from .base import Verdict
+from .prose_base import ProseCheckerBase, unit_label
 
 SYSTEM = """You are an Author-Voice checker in an autonomous novel pipeline.
 
@@ -88,41 +88,14 @@ def _constraints_block(canon: StoryModel) -> str:
 {forbidden}"""
 
 
-class AuthorVoiceChecker(Checker):
+class AuthorVoiceChecker(ProseCheckerBase):
     """Fresh-context reader for one question: is this that author, and is anything forbidden here?"""
 
     name = "voice"
 
-    def __init__(
-        self,
-        llm: StructuredLLM,
-        *,
-        model: str = "sonnet",
-        max_tokens: int = 8000,
-        tracer: Optional[Tracer] = None,
-    ):
-        self.llm = llm
-        self.model = model
-        self.max_tokens = max_tokens
-        self.tracer = tracer or Tracer(None)
-
-    async def check(self, *, prompt: str, unit: str) -> Verdict:
-        verdict = await self.llm.parse(
-            prompt=prompt,
-            schema=Verdict,
-            system=SYSTEM,
-            model=self.model,
-            max_tokens=self.max_tokens,
-        )
-        self.tracer.record(
-            f"voice_check_{unit}",
-            prompt=prompt,
-            system=SYSTEM,
-            model=self.model,
-            artifact=verdict,
-            note=verdict.decision.value,
-        )
-        return verdict
+    SYSTEM = SYSTEM
+    DEFAULT_MODEL = stage_model("voice")
+    DEFAULT_MAX_TOKENS = 8000
 
     async def check_prose(
         self,
@@ -132,26 +105,20 @@ class AuthorVoiceChecker(Checker):
         spec: ChapterSpec,
         author: AuthorModel,
         scene: Optional[SceneSpec] = None,
+        draw: int = 1,
     ) -> Verdict:
         # Voice is judged in situ: an aphorism that lands in a confession scene is not the same move
         # in an interrogation, so the reader gets the same canon slice the writer had.
-        character_ids = scene.character_ids if scene else spec.present_character_ids
-        slice_text = canon_slice(
-            canon,
-            character_ids=character_ids,
-            motif_ids=[*spec.setups, *spec.payoffs],
-            promise_ids=[*spec.promises_made, *spec.promises_kept],
-        )
+        slice_text = self.scene_slice(canon, spec, scene)
+        unit = unit_label(spec, scene)
 
         if scene:
-            unit = f"ch{spec.chapter:02d}_{scene.id}"
             header = f"""# Unit under review: chapter {spec.chapter}, scene {scene.id}
 - location: {scene.location}
 - scene intent: {scene.intent}
 - scene turn: {scene.turn}
 - chapter purpose (context): {spec.purpose}"""
         else:
-            unit = f"ch{spec.chapter:02d}"
             scenes = "\n".join(
                 f"  - [{s.id}] {s.location} — intent: {s.intent} | turn: {s.turn}" for s in spec.scenes
             ) or "  - (no scenes specced)"
@@ -176,4 +143,4 @@ class AuthorVoiceChecker(Checker):
 {prose}
 
 {VOICE_RUBRIC}"""
-        return await self.check(prompt=prompt, unit=unit)
+        return await self.check(prompt=prompt, unit=unit, draw=draw)

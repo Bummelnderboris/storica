@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import json
 import os
 import sys
 from pathlib import Path
@@ -42,6 +43,11 @@ def _load_dotenv() -> None:
     The Anthropic SDK reads ANTHROPIC_API_KEY from the environment and knows nothing about
     files, so without this `.env.example` would be a lie. Never overrides an existing variable:
     an explicit `ANTHROPIC_API_KEY=... storica run` wins over the file.
+
+    An empty assignment (`ANTHROPIC_API_KEY=`, which is what `.env.example` is copied to) is
+    skipped rather than exported as "". The SDK resolves credentials in order and an empty
+    variable still *wins* that resolution — so loading it would shadow a key the user had
+    supplied another way, and produce an auth error that points at the wrong thing.
     """
     path = REPO_ROOT / ".env"
     if not path.exists():
@@ -51,7 +57,9 @@ def _load_dotenv() -> None:
         if not line or line.startswith("#") or "=" not in line:
             continue
         key, _, value = line.partition("=")
-        os.environ.setdefault(key.strip(), value.strip().strip("'\""))
+        value = value.strip().strip("'\"")
+        if value:
+            os.environ.setdefault(key.strip(), value)
 
 
 def _driver(name: str, novel_dir: Path) -> StructuredLLM:
@@ -127,6 +135,8 @@ def cmd_run(args: argparse.Namespace) -> int:
         print(f"novel: {result.novel_path}")
     if result.audit_decision:
         print(f"final audit: {result.audit_decision} — {result.audit_summary}")
+    if llm.usage.calls:
+        print(f"cost: {llm.usage.summary()}")
     return 0
 
 
@@ -135,29 +145,37 @@ def cmd_status(args: argparse.Namespace) -> int:
     canon_file = novel_dir / "01_canon" / "story_model.json"
 
     print(f"novel: {novel_dir}")
+
     if not canon_file.exists():
         print("  canon:    not established yet")
-        return 0
-
-    canon = load_canon(novel_dir / "01_canon")
-    print(f"  canon:    v{canon.version}, {len(canon.characters)} characters, "
-          f"{len(canon.motifs)} motifs, {len(canon.promises)} promises")
-
-    if macro_arc_path(novel_dir / "02_plan").exists():
-        arc = load_macro_arc(novel_dir / "02_plan")
-        specced = specced_chapters(novel_dir / "02_plan")
-        drafted = drafted_chapters(novel_dir / "03_drafts")
-        print(f"  arc:      {arc.chapter_count} chapters, {len(arc.arc_beats)} beats")
-        print(f"  specced:  {specced or '(none)'}")
-        print(f"  drafted:  {drafted or '(none)'}")
     else:
-        print("  arc:      not planned yet")
+        canon = load_canon(novel_dir / "01_canon")
+        print(f"  canon:    v{canon.version}, {len(canon.characters)} characters, "
+              f"{len(canon.motifs)} motifs, {len(canon.promises)} promises")
 
+        if macro_arc_path(novel_dir / "02_plan").exists():
+            arc = load_macro_arc(novel_dir / "02_plan")
+            print(f"  arc:      {arc.chapter_count} chapters, {len(arc.arc_beats)} beats")
+            print(f"  specced:  {specced_chapters(novel_dir / '02_plan') or '(none)'}")
+            print(f"  drafted:  {drafted_chapters(novel_dir / '03_drafts') or '(none)'}")
+        else:
+            print("  arc:      not planned yet")
+
+        if (novel_dir / "novel.md").exists():
+            print(f"  novel.md: {(novel_dir / 'novel.md').stat().st_size} bytes")
+
+    # Reported unconditionally, and last. These are the two things a person most needs to see —
+    # what was dropped, and what it cost — so neither may hide behind an earlier "nothing yet".
     quarantined = QuarantineLog(novel_dir / "05_reports").units()
     if quarantined:
         print(f"  QUARANTINED: {', '.join(quarantined)}")
-    if (novel_dir / "novel.md").exists():
-        print(f"  novel.md: {(novel_dir / 'novel.md').stat().st_size} bytes")
+
+    report = novel_dir / "05_reports" / "run_report.json"
+    if report.exists():
+        usage = json.loads(report.read_text(encoding="utf-8")).get("usage") or {}
+        if usage.get("calls"):
+            print(f"  last run: {usage['calls']} calls, "
+                  f"~${usage.get('estimated_cost_usd', 0):.2f}")
     return 0
 
 

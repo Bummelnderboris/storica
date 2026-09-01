@@ -9,7 +9,7 @@ This is the fast, certain gate. It catches the *mechanical* failures that sank v
 - timeline id/order sanity
 
 Semantic contradictions (a priest who behaves like a creditor, a fact that changed meaning)
-are the LLM Canon-Consistency checker's job (P5). This module is the deterministic backbone
+are the LLM Canon-Consistency checker's job. This module is the deterministic backbone
 that runs on every canon write.
 """
 
@@ -19,6 +19,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List
 
+from .ids import norm
 from .model import Awareness, CharacterRole, MotifStatus, PromiseStatus, StoryModel
 
 
@@ -39,8 +40,6 @@ class Issue:
         return f"[{self.severity.value}] {self.code}{loc}: {self.message}"
 
 
-def _norm(name: str) -> str:
-    return " ".join(name.strip().lower().split())
 
 
 def validate(model: StoryModel) -> List[Issue]:
@@ -67,7 +66,7 @@ def validate(model: StoryModel) -> List[Issue]:
     name_owner: dict[str, str] = {}  # normalized surface name -> character id
     for cid, ch in model.characters.items():
         for nm in ch.all_names():
-            key = _norm(nm)
+            key = norm(nm)
             if not key:
                 issues.append(Issue(
                     "canon.empty_name", Severity.WARNING,

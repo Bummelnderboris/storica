@@ -22,11 +22,11 @@ import re
 from typing import List, Optional
 
 from ..authors import AuthorModel
-from ..canon import StoryModel, canon_slice
-from ..llm import StructuredLLM
+from ..llm import stage_model
+from ..canon import StoryModel
 from ..plan import ChapterSpec, SceneSpec
-from ..trace import Tracer
-from .base import Checker, Verdict
+from .base import Verdict
+from .prose_base import ProseCheckerBase, unit_label
 
 SYSTEM = """You are a Micro-Sense checker in an autonomous novel pipeline.
 
@@ -94,41 +94,14 @@ def _numbered_paragraphs(prose: str) -> str:
     return "\n\n".join(f"[P{i}] {p}" for i, p in enumerate(paragraphs, start=1))
 
 
-class MicroSenseChecker(Checker):
+class MicroSenseChecker(ProseCheckerBase):
     """Fresh-context paragraph reader: grounded, coherent, load-bearing — or an issue with a quote."""
 
     name = "micro_sense"
 
-    def __init__(
-        self,
-        llm: StructuredLLM,
-        *,
-        model: str = "sonnet",
-        max_tokens: int = 8000,
-        tracer: Optional[Tracer] = None,
-    ):
-        self.llm = llm
-        self.model = model
-        self.max_tokens = max_tokens
-        self.tracer = tracer or Tracer(None)
-
-    async def check(self, *, prompt: str, unit: str) -> Verdict:
-        verdict = await self.llm.parse(
-            prompt=prompt,
-            schema=Verdict,
-            system=SYSTEM,
-            model=self.model,
-            max_tokens=self.max_tokens,
-        )
-        self.tracer.record(
-            f"micro_sense_check_{unit}",
-            prompt=prompt,
-            system=SYSTEM,
-            model=self.model,
-            artifact=verdict,
-            note=verdict.decision.value,
-        )
-        return verdict
+    SYSTEM = SYSTEM
+    DEFAULT_MODEL = stage_model("micro_sense")
+    DEFAULT_MAX_TOKENS = 8000
 
     async def check_prose(
         self,
@@ -138,20 +111,15 @@ class MicroSenseChecker(Checker):
         spec: ChapterSpec,
         author: AuthorModel,
         scene: Optional[SceneSpec] = None,
+        draw: int = 1,
     ) -> Verdict:
         # The slice is scoped to exactly what the unit touches: a scene is judged against its own
         # cast, so a hallucinated third person shows up as absent from the slice rather than being
         # quietly covered by the chapter's wider roster.
-        character_ids = scene.character_ids if scene else spec.present_character_ids
-        slice_text = canon_slice(
-            canon,
-            character_ids=character_ids,
-            motif_ids=[*spec.setups, *spec.payoffs],
-            promise_ids=[*spec.promises_made, *spec.promises_kept],
-        )
+        slice_text = self.scene_slice(canon, spec, scene)
+        unit = unit_label(spec, scene)
 
         if scene:
-            unit = f"ch{spec.chapter:02d}_{scene.id}"
             header = f"""# Unit under review: chapter {spec.chapter}, scene {scene.id}
 - location: {scene.location}
 - present: {', '.join(scene.character_ids) or '(nobody listed)'}
@@ -159,7 +127,6 @@ class MicroSenseChecker(Checker):
 - scene turn: {scene.turn}
 - chapter purpose (context): {spec.purpose}"""
         else:
-            unit = f"ch{spec.chapter:02d}"
             scenes = "\n".join(
                 f"  - [{s.id}] {s.location} — intent: {s.intent} | turn: {s.turn}" for s in spec.scenes
             ) or "  - (no scenes specced)"
@@ -189,4 +156,4 @@ class MicroSenseChecker(Checker):
 {_numbered_paragraphs(prose)}
 
 {MICRO_RUBRIC}"""
-        return await self.check(prompt=prompt, unit=unit)
+        return await self.check(prompt=prompt, unit=unit, draw=draw)

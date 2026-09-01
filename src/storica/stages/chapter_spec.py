@@ -22,7 +22,7 @@ from ..authors import AuthorModel
 from ..canon import Issue, Severity, StoryModel, blocking, canon_slice
 from ..checkers import Escalation, IntentChecker
 from ..checkers.base import Decision
-from ..llm import StructuredLLM
+from ..llm import StructuredLLM, stage_model
 from ..plan import ChapterSpec, MacroArc, validate_chapter_spec, validate_continuity
 from ..trace import Tracer
 from .gate import GateFailed, format_issues, run_gated
@@ -53,7 +53,7 @@ class ChapterSpecResult:
         return not blocking(self.issues)
 
 
-def assignment_block(chapter: int, canon: StoryModel, arc: MacroArc, previous: Optional[ChapterSpec]) -> str:
+def chapter_assignment_block(chapter: int, canon: StoryModel, arc: MacroArc, previous: Optional[ChapterSpec]) -> str:
     """Exactly what the macro arc requires of this chapter. The spec must match it, item for item."""
     act = arc.act_for(chapter)
     tension = next((t for t in arc.tension_curve if t.chapter == chapter), None)
@@ -116,7 +116,7 @@ def _draft_prompt(
 
 {author.voice_block()}
 
-{assignment_block(chapter, canon, arc, previous)}
+{chapter_assignment_block(chapter, canon, arc, previous)}
 
 ## Task
 Write the specification for chapter {chapter}.
@@ -168,7 +168,7 @@ async def build_chapter_spec(
     previous_spec: Optional[ChapterSpec] = None,
     tracer: Optional[Tracer] = None,
     intent_checker: Optional[IntentChecker] = None,
-    model: str = "sonnet",
+    model: str = stage_model("chapter_spec"),
     max_repairs: int = 2,
     strict: bool = True,
     max_tokens: int = 16000,

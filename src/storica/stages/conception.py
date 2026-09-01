@@ -22,7 +22,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from ..authors import AuthorModel
 from ..brief import Brief
 from ..canon import Premise
-from ..llm import StructuredLLM
+from ..llm import StructuredLLM, stage_model
 from ..trace import Tracer
 
 SYSTEM = """You are the Conception agent of an autonomous novel pipeline.
@@ -121,7 +121,7 @@ async def conceive(
     llm: StructuredLLM,
     tracer: Optional[Tracer] = None,
     n_candidates: int = 3,
-    model: str = "opus",
+    model: str = stage_model("conception"),
 ) -> Premise:
     """Run stage 1 and return the premise to write into canon."""
     tracer = tracer or Tracer(None)

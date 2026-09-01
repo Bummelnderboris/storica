@@ -26,7 +26,7 @@ from typing import Optional, Union
 
 from .brief import Brief, load_brief
 from .canon import StoryModel, canon_slice
-from .llm import StructuredLLM
+from .llm import StructuredLLM, stage_model
 from .reports import DecisionLog, DecisionRecord, Ruling, RulingKind
 from .trace import Tracer
 
@@ -122,7 +122,7 @@ class Adjudicator:
         *,
         ground_truth: GroundTruth,
         log: DecisionLog,
-        model: str = "opus",
+        model: str = stage_model("adjudicator"),
         tracer: Optional[Tracer] = None,
         max_attempts: int = 2,
     ):

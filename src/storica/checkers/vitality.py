@@ -29,10 +29,11 @@ from typing import Optional
 
 from ..authors import AuthorModel
 from ..canon import Severity, StoryModel, canon_slice
-from ..llm import StructuredLLM
+from ..llm import StructuredLLM, stage_model
 from ..plan import ChapterSpec, SceneSpec
 from ..trace import Tracer
-from .base import Checker, Decision, Verdict
+from .base import Decision, Verdict
+from .prose_base import ProseCheckerBase, unit_label
 
 SYSTEM = """You are the Vitality reader in an autonomous novel pipeline.
 
@@ -115,25 +116,25 @@ VITALITY_BLOCK_PER_1000_WORDS = 8.0
 VITALITY_MIN_BLOCKING = 3
 
 
-class VitalityChecker(Checker):
+class VitalityChecker(ProseCheckerBase):
     """Fresh-context reader for inertness. The only checker that fails prose for playing it safe."""
 
     name = "vitality"
+    SYSTEM = SYSTEM
+    DEFAULT_MODEL = stage_model("vitality")
+    DEFAULT_MAX_TOKENS = 6000
 
     def __init__(
         self,
         llm: StructuredLLM,
         *,
-        model: str = "sonnet",
-        max_tokens: int = 6000,
+        model: Optional[str] = None,
+        max_tokens: Optional[int] = None,
         tracer: Optional[Tracer] = None,
         block_per_1000_words: float = VITALITY_BLOCK_PER_1000_WORDS,
         min_blocking: int = VITALITY_MIN_BLOCKING,
     ):
-        self.llm = llm
-        self.model = model
-        self.max_tokens = max_tokens
-        self.tracer = tracer or Tracer(None)
+        super().__init__(llm, model=model, max_tokens=max_tokens, tracer=tracer)
         self.block_per_1000_words = block_per_1000_words
         self.min_blocking = min_blocking
 
@@ -165,24 +166,6 @@ class VitalityChecker(Checker):
             ),
         })
 
-    async def check(self, *, prompt: str, unit: str) -> Verdict:
-        verdict = await self.llm.parse(
-            prompt=prompt,
-            schema=Verdict,
-            system=SYSTEM,
-            model=self.model,
-            max_tokens=self.max_tokens,
-        )
-        self.tracer.record(
-            f"vitality_check_{unit}",
-            prompt=prompt,
-            system=SYSTEM,
-            model=self.model,
-            artifact=verdict,
-            note=verdict.decision.value,
-        )
-        return verdict
-
     async def check_prose(
         self,
         *,
@@ -191,6 +174,7 @@ class VitalityChecker(Checker):
         spec: ChapterSpec,
         author: AuthorModel,
         scene: Optional[SceneSpec] = None,
+        draw: int = 1,
     ) -> Verdict:
         # A deliberately thin slice: premise and constraints only, no character facts or timeline.
         # This reader must not start checking consistency — that is someone else's job, and handing
@@ -204,13 +188,13 @@ class VitalityChecker(Checker):
             include_premise=True,
         )
 
+        unit = unit_label(spec, scene)
+
         if scene:
-            unit = f"ch{spec.chapter:02d}_{scene.id}"
             assignment = f"""# Unit: chapter {spec.chapter}, scene {scene.id}
 - what this scene is FOR: {scene.intent}
 - what must change in it: {scene.turn}"""
         else:
-            unit = f"ch{spec.chapter:02d}"
             assignment = f"""# Unit: chapter {spec.chapter} — {spec.title}
 - what this chapter is FOR: {spec.purpose}"""
 
@@ -225,4 +209,4 @@ class VitalityChecker(Checker):
 {prose}
 
 {VITALITY_RUBRIC}"""
-        return self._apply_density_gate(await self.check(prompt=prompt, unit=unit), prose)
+        return self._apply_density_gate(await self.check(prompt=prompt, unit=unit, draw=draw), prose)

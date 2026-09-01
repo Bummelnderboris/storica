@@ -6,17 +6,16 @@ assigned — and does it earn its place?* This is the checker aimed squarely at 
 coherent but hollow. Structural validity is already proven by the deterministic plan validator
 before this runs, so the checker is free to spend its judgement on meaning rather than bookkeeping.
 
-It judges plan units (stage 3 and stage 4). Prose gets its own checkers in P4/P5.
+It judges plan units (stages 3 and 4). Prose has its own four readers — canon-consistency,
+micro-sense, author-voice and vitality — assembled by `checkers/defaults.py`.
 """
 
 from __future__ import annotations
 
-from typing import Optional
 
+from ..llm import stage_model
 from ..canon import StoryModel, canon_slice
-from ..llm import StructuredLLM
 from ..plan import ChapterSpec, MacroArc, MacroArcDraft
-from ..trace import Tracer
 from .base import Checker, Verdict
 
 SYSTEM = """You are an Intent checker in an autonomous novel pipeline.
@@ -67,36 +66,9 @@ class IntentChecker(Checker):
 
     name = "intent"
 
-    def __init__(
-        self,
-        llm: StructuredLLM,
-        *,
-        model: str = "sonnet",
-        max_tokens: int = 8000,
-        tracer: Optional[Tracer] = None,
-    ):
-        self.llm = llm
-        self.model = model
-        self.max_tokens = max_tokens
-        self.tracer = tracer or Tracer(None)
-
-    async def check(self, *, prompt: str, unit: str) -> Verdict:
-        verdict = await self.llm.parse(
-            prompt=prompt,
-            schema=Verdict,
-            system=SYSTEM,
-            model=self.model,
-            max_tokens=self.max_tokens,
-        )
-        self.tracer.record(
-            f"intent_check_{unit}",
-            prompt=prompt,
-            system=SYSTEM,
-            model=self.model,
-            artifact=verdict,
-            note=verdict.decision.value,
-        )
-        return verdict
+    SYSTEM = SYSTEM
+    DEFAULT_MODEL = stage_model("intent")
+    DEFAULT_MAX_TOKENS = 8000
 
     async def check_macro_arc(
         self, draft: MacroArcDraft, canon: StoryModel, *, author_block: str = ""

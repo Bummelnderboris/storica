@@ -17,7 +17,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List, Optional, Sequence, Union
+from typing import Any, Dict, List, Optional, Sequence, Union
 
 from .adjudicator import AdjudicationFailed
 from .assembly import assemble_novel, save_novel
@@ -76,6 +76,7 @@ class RunResult:
     audit_decision: str = ""
     audit_issues: List[str] = field(default_factory=list)
     audit_ruling: str = ""
+    usage: Dict[str, Any] = field(default_factory=dict)
 
     @property
     def is_done(self) -> bool:
@@ -194,6 +195,8 @@ async def run_novel(
             except AdjudicationFailed as failure:
                 result.audit_ruling = f"adjudication failed: {failure.reason}"
 
+    result.usage = llm.usage.as_dict()
+
     write_run_report(reports_dir, {
         "chapters_included": assembled.chapters,
         "chapters_excluded": assembled.excluded,
@@ -205,5 +208,6 @@ async def run_novel(
         "audit_ruling": result.audit_ruling,
         "canon_version": canon.version,
         "is_done": result.is_done,
+        "usage": result.usage,
     })
     return result

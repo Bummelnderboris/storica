@@ -1,17 +1,18 @@
 """
-Pipeline entry points for the v2 stages implemented so far.
+Pipeline entry points: load from disk, run the stage, write back.
 
-- `establish_canon` — P2: brief + author → premise → world & cast → validated canon (v1 on disk).
-- `plan_macro_arc`  — P3 stage 3: canon → macro arc + the ledger committed into canon (v2 on disk).
-- `spec_chapter`    — P3 stage 4: canon + arc → one chapter spec, elaborated just-in-time.
+- `establish_canon`             — stages 1–2: brief + author → premise → world & cast → canon v1.
+- `plan_macro_arc`              — stage 3: canon → macro arc + the ledger committed into canon.
+- `spec_chapter`                — stage 4: canon + arc → one chapter spec, elaborated just-in-time.
+- `draft_chapter`               — stage 5: the inputs and the saved draft around `attempt_chapter`.
+- `reconcile_chapter_into_canon`— stage 6, and the adjudication of what it flagged.
 
-Each is a thin wire-up: load from disk, run the stage, write back. All the judgement lives in the
-stages and the checkers.
+Every function here is I/O. The judgement lives in `stages/` and `checkers/`; the decision tree for
+a chapter that goes wrong lives in `chapter.py`; this module only moves things on and off disk.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Optional, Sequence, Union
 
@@ -19,18 +20,10 @@ from .adjudicator import AdjudicationFailed, Adjudicator, GroundTruth
 from .authors import load_author
 from .brief import load_brief
 from .canon import StoryModel, commit_canon, load_canon, save_canon
-from .checkers import (
-    AuthorVoiceChecker,
-    CanonConsistencyChecker,
-    Escalation,
-    IntentChecker,
-    MicroSenseChecker,
-    ProseChecker,
-    VitalityChecker,
-    with_consensus,
-)
+from .chapter import ChapterOutcome, attempt_chapter
+from .checkers import IntentChecker, ProseChecker, default_prose_checkers
 from .drafts import load_chapter_draft, load_chapter_draft_if_present, save_chapter_draft
-from .llm import StructuredLLM
+from .llm import StructuredLLM, stage_model
 from .plan import (
     ChapterSpec,
     MacroArc,
@@ -39,18 +32,16 @@ from .plan import (
     save_chapter_spec,
     save_macro_arc,
 )
-from .reports import DecisionLog, DecisionRecord, QuarantineLog, RulingKind
+from .reports import DecisionLog, DecisionRecord, QuarantineLog
 from .stages import (
     Flag,
     FlagKind,
-    ProseGateFailed,
     ReconcileResult,
     build_chapter_spec,
     build_macro_arc,
     conceive,
     develop_world_and_cast,
     reconcile_chapter,
-    write_chapter,
 )
 from .trace import Tracer
 
@@ -62,6 +53,10 @@ INPUT_DIR = "00_input"
 DRAFTS_DIR = "03_drafts"
 TRACE_DIR = "04_trace"
 REPORTS_DIR = "05_reports"
+
+# How much of the previous chapter rides into the next one, to inherit its rhythm without the
+# model continuing a paragraph instead of opening a chapter. Matches `stages.prose.TAIL_CHARS`.
+PREVIOUS_TAIL_CHARS = 800
 
 
 def _tracer(novel_dir: Path, trace: bool) -> Tracer:
@@ -75,8 +70,8 @@ async def establish_canon(
     llm: StructuredLLM,
     n_candidates: int = 3,
     max_repairs: int = 2,
-    conception_model: str = "opus",
-    world_cast_model: str = "sonnet",
+    conception_model: str = stage_model("conception"),
+    world_cast_model: str = stage_model("world_cast"),
     trace: bool = True,
 ) -> StoryModel:
     """Run stages 1–2 for one novel and write the resulting canon."""
@@ -114,7 +109,7 @@ async def plan_macro_arc(
     llm: StructuredLLM,
     check_intent: bool = True,
     max_repairs: int = 2,
-    model: str = "sonnet",
+    model: str = stage_model("macro_arc"),
     trace: bool = True,
 ) -> MacroArc:
     """
@@ -153,7 +148,7 @@ async def spec_chapter(
     llm: StructuredLLM,
     check_intent: bool = True,
     max_repairs: int = 2,
-    model: str = "sonnet",
+    model: str = stage_model("chapter_spec"),
     trace: bool = True,
 ) -> ChapterSpec:
     """
@@ -192,52 +187,8 @@ async def spec_chapter(
 # --------------------------------------------------------------------------------------------
 
 
-def default_prose_checkers(
-    llm: StructuredLLM, tracer: Optional[Tracer] = None, *, samples: int = 3
-) -> List[ProseChecker]:
-    """
-    One reader per failure class (DESIGN §2), cheapest-to-satisfy first.
-
-    Canon-consistency runs before micro-sense and voice because a contradiction makes the other two
-    judgements moot: there is no point polishing the texture of a paragraph that says the wrong man
-    signed the certificate.
-
-    Vitality runs last, and it is the odd one out: the first three ask whether the prose conforms,
-    and it asks whether the prose is alive. Without it a chapter that matches canon, hits its beats
-    and sounds like the author passes the whole gate no matter how inert it is — and since repair
-    moves prose toward the rubric, that is the chapter this pipeline naturally produces.
-    """
-    return with_consensus(
-        [
-            CanonConsistencyChecker(llm, tracer=tracer),
-            MicroSenseChecker(llm, tracer=tracer),
-            AuthorVoiceChecker(llm, tracer=tracer),
-            VitalityChecker(llm, tracer=tracer),
-        ],
-        samples=samples,
-        tracer=tracer,
-    )
-
-
-@dataclass
-class ChapterOutcome:
-    """What happened to one chapter, including the parts that went badly."""
-
-    chapter: int
-    spec: Optional[ChapterSpec] = None
-    draft: Optional[str] = None
-    reconcile: Optional[ReconcileResult] = None
-    rulings: List[DecisionRecord] = field(default_factory=list)
-    quarantined: bool = False
-    reason: str = ""
-
-    @property
-    def unit(self) -> str:
-        return f"ch{self.chapter:02d}"
-
-
 def adjudicator_for(
-    novel_dir: Path, llm: StructuredLLM, tracer: Tracer, model: str = "opus"
+    novel_dir: Path, llm: StructuredLLM, tracer: Tracer, model: str = stage_model("adjudicator")
 ) -> Adjudicator:
     return Adjudicator(
         llm,
@@ -257,21 +208,16 @@ async def draft_chapter(
     checkers: Optional[Sequence[ProseChecker]] = None,
     max_repairs: int = 2,
     max_escalations: int = 2,
-    model: str = "opus",
+    model: str = stage_model("prose"),
     trace: bool = True,
     n_candidates: int = 1,
     samples: int = 3,
 ) -> ChapterOutcome:
     """
-    Write one chapter (stage 5) and survive what goes wrong with it.
+    Run stage 5 for one chapter: load its inputs, attempt it, persist the draft if it survived.
 
-    Three outcomes, all of them bounded and none of them a pause (DESIGN D3):
-    - it passes its checkers → the draft is written to `03_drafts/`;
-    - a checker escalates → the adjudicator rules against immutable ground truth, the ruling is
-      logged as binding, and the chapter is re-written *bound by it*. Bounded by `max_escalations`,
-      and a re-escalation of the same conflict returns the same ruling rather than looping;
-    - the repair budget runs out → the chapter is **quarantined**, not shipped. It is recorded in
-      `05_reports/quarantine.jsonl` and excluded from `novel.md`.
+    The attempt loop itself — escalate, adjudicate, retry, quarantine — is `chapter.attempt_chapter`.
+    This function is the disk around it.
     """
     novel_dir = Path(novel_dir)
     brief = load_brief(novel_dir / INPUT_DIR)
@@ -283,69 +229,31 @@ async def draft_chapter(
         raise FileNotFoundError(f"no spec for chapter {chapter} — run spec_chapter first")
 
     tracer = Tracer(novel_dir / TRACE_DIR if trace else None)
-    quarantine = QuarantineLog(novel_dir / REPORTS_DIR)
-    outcome = ChapterOutcome(chapter=chapter, spec=spec)
-
     previous_draft = load_chapter_draft_if_present(novel_dir / DRAFTS_DIR, chapter - 1)
-    previous_tail = (previous_draft or "").strip()[-800:]
-    prose_checkers = (
-        list(checkers) if checkers is not None else default_prose_checkers(llm, tracer, samples=samples)
+
+    outcome = await attempt_chapter(
+        chapter=chapter,
+        spec=spec,
+        canon=canon,
+        arc=arc,
+        author=author,
+        llm=llm,
+        adjudicator=adjudicator_for(novel_dir, llm, tracer),
+        quarantine=QuarantineLog(novel_dir / REPORTS_DIR),
+        checkers=(
+            list(checkers) if checkers is not None
+            else default_prose_checkers(llm, tracer, samples=samples)
+        ),
+        tracer=tracer,
+        previous_tail=(previous_draft or "").strip()[-PREVIOUS_TAIL_CHARS:],
+        max_repairs=max_repairs,
+        max_escalations=max_escalations,
+        model=model,
+        n_candidates=n_candidates,
     )
 
-    guidance = ""
-    for attempt in range(max_escalations + 1):
-        try:
-            result = await write_chapter(
-                spec=spec,
-                canon=canon,
-                arc=arc,
-                author=author,
-                llm=llm,
-                previous_tail=previous_tail,
-                checkers=prose_checkers,
-                tracer=tracer,
-                model=model,
-                max_repairs=max_repairs,
-                guidance=guidance,
-                n_candidates=n_candidates,
-            )
-        except Escalation as esc:
-            if attempt == max_escalations:
-                outcome.quarantined = True
-                outcome.reason = f"escalated {attempt + 1}x without resolution: {esc.conflict}"
-                quarantine.add(outcome.unit, outcome.reason, [esc.conflict])
-                return outcome
-            try:
-                record = await adjudicator_for(novel_dir, llm, tracer).rule(
-                    unit=esc.unit, conflict=esc.conflict, context=f"chapter {chapter} prose"
-                )
-            except AdjudicationFailed as failure:
-                outcome.quarantined = True
-                outcome.reason = f"adjudication failed: {failure.reason}"
-                quarantine.add(outcome.unit, outcome.reason, [esc.conflict])
-                return outcome
-
-            outcome.rulings.append(record)
-            if record.ruling.kind == RulingKind.AMEND_CANON:
-                # Canon amendments are not applied automatically: the ruling is binding and logged,
-                # but rewriting canon from a chapter-level conflict is exactly the v1 ratchet. A
-                # human or a P5 specialist applies it; the chapter waits.
-                outcome.quarantined = True
-                outcome.reason = f"ruling requires a canon amendment: {record.ruling.canon_amendment}"
-                quarantine.add(outcome.unit, outcome.reason, [esc.conflict])
-                return outcome
-            guidance = record.ruling.instruction
-            continue
-        except ProseGateFailed as failed:
-            outcome.quarantined = True
-            outcome.reason = "prose repair budget exhausted"
-            quarantine.add(outcome.unit, outcome.reason, [str(i) for i in failed.issues])
-            return outcome
-
-        outcome.draft = result.text
-        save_chapter_draft(result.text, novel_dir / DRAFTS_DIR, chapter)
-        return outcome
-
+    if outcome.draft is not None:
+        save_chapter_draft(outcome.draft, novel_dir / DRAFTS_DIR, chapter)
     return outcome
 
 
@@ -354,7 +262,7 @@ async def reconcile_chapter_into_canon(
     novel_dir: PathLike,
     chapter: int,
     llm: StructuredLLM,
-    model: str = "sonnet",
+    model: str = stage_model("reconcile"),
     adjudicate: bool = True,
     trace: bool = True,
 ) -> ReconcileResult:
@@ -400,7 +308,7 @@ async def adjudicate_flags(
     flags: Sequence[Flag],
     llm: StructuredLLM,
     tracer: Optional[Tracer] = None,
-    model: str = "opus",
+    model: str = stage_model("adjudicator"),
 ) -> List[DecisionRecord]:
     """
     Rule on the flags that represent a genuine disagreement with canon.

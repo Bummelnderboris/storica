@@ -15,7 +15,7 @@ from __future__ import annotations
 import asyncio
 
 from storica.authors import AuthorModel
-from storica.canon import Character, CharacterRole, Constraints, Premise, Severity, StoryModel
+from storica.canon import Character, Constraints, Premise, Severity, StoryModel
 from storica.checkers.base import CheckerIssue, Decision, Verdict
 from storica.checkers.consensus import (
     ConsensusProseChecker,
@@ -69,7 +69,7 @@ class Scripted(ProseChecker):
         self.queue = list(verdicts)
         self.calls = 0
 
-    async def check_prose(self, *, prose, canon, spec, author, scene=None):
+    async def check_prose(self, *, prose, canon, spec, author, scene=None, draw=1):
         self.calls += 1
         return self.queue.pop(0)
 

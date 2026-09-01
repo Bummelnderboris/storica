@@ -27,7 +27,6 @@ from storica.canon import (
     Motif,
     MotifStatus,
     Premise,
-    Promise,
     PromiseStatus,
     Relationship,
     StoryModel,

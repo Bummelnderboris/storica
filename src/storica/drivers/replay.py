@@ -28,7 +28,7 @@ from typing import List, Optional, Type, TypeVar, Union
 
 from pydantic import BaseModel, ValidationError
 
-from ..llm import StructuredLLM, resolve_model
+from ..llm import StructuredLLM, Usage, resolve_model
 
 T = TypeVar("T", bound=BaseModel)
 PathLike = Union[str, Path]
@@ -101,8 +101,7 @@ class ReplayLLM(StructuredLLM):
         self.stage_hint = stage_hint
         self.replayed = 0
         self.requested = 0
-        # base key -> how many times this exact prose prompt has been drawn in this process.
-        self._draws: dict[str, int] = {}
+        self.usage = Usage()  # a replayed call cost nothing; the counter exists so callers need not care
 
     # -- keying ---------------------------------------------------------------------------------
 
@@ -110,6 +109,30 @@ class ReplayLLM(StructuredLLM):
     def _key(*, model: str, system: Optional[str], prompt: str, schema_name: str, schema_json: str) -> str:
         payload = "\x1f".join([resolve_model(model), system or "", prompt, schema_name, schema_json])
         return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+
+    def _draw_key(self, base: str, draw: int) -> str:
+        """
+        Give each *repeated* draw of an identical call its own cache slot.
+
+        Content addressing is right for the whole pipeline except where it deliberately makes the
+        same call more than once, and it does that in two places:
+
+        - **generate-and-select** draws k candidates from one prompt (`stages/prose/selection.py`),
+          so the spread comes from sampling rather than from asking for k different things;
+        - **consensus sampling** draws one checker k times (`checkers/consensus.py`) and blocks on
+          a majority, because a single verdict flags clean text ~20% of the time (calibration C4).
+
+        Keyed on content alone, all k collapse onto one cached answer: the selector chooses between
+        k copies of one draft, and majority-of-3 becomes one verdict counted three times. Both
+        mechanisms silently do nothing, and — worse — they look like they worked, because the trace
+        deduplicates the identical records.
+
+        So a repeated call gets an occurrence suffix, taken from the `draw` index the caller passes.
+        It is explicit rather than a counter kept here precisely so the fan-outs can run
+        concurrently: draw 2 resolves to slot 2 whichever draw happens to finish first, and a
+        resumed run replays every slot regardless of completion order.
+        """
+        return base if draw <= 1 else f"{base}-{draw}"
 
     def _paths(self, key: str, *, is_text: bool) -> tuple[Path, Path]:
         suffix = "md" if is_text else "json"
@@ -176,12 +199,13 @@ Write the prose to `{response_path.name}` as markdown. No commentary, no fences 
         system: Optional[str] = None,
         model: str = "opus",
         max_tokens: int = 16000,
+        draw: int = 1,
     ) -> T:
         schema_json = json.dumps(schema.model_json_schema(), sort_keys=True)
-        key = self._key(
+        key = self._draw_key(self._key(
             model=model, system=system, prompt=prompt,
             schema_name=schema.__name__, schema_json=schema_json,
-        )
+        ), draw)
         request_path, response_path = self._paths(key, is_text=False)
 
         if response_path.exists():
@@ -206,21 +230,12 @@ Write the prose to `{response_path.name}` as markdown. No commentary, no fences 
         system: Optional[str] = None,
         model: str = "opus",
         max_tokens: int = 32000,
+        draw: int = 1,
     ) -> str:
-        # Content addressing breaks on the one call the pipeline makes REPEATEDLY with an identical
-        # prompt: generate-and-select draws k candidates from the same text (stages/prose.py §5.1),
-        # deliberately, so the spread comes from sampling rather than from asking for k different
-        # things. Keyed on content alone, all k would collapse to one cached answer and the selector
-        # would choose between k copies of the same draft — selection silently becomes a no-op.
-        #
-        # So repeated draws of the same prompt get an occurrence suffix. This is order-dependent
-        # where the rest of the cache is not, which is safe here because the draws happen inside one
-        # deterministic loop: a resumed run reissues the same calls in the same order, so draw 2
-        # still resolves to draw 2. Nothing else in the pipeline repeats a prompt verbatim.
-        base = self._key(model=model, system=system, prompt=prompt, schema_name="<text>", schema_json="")
-        self._draws[base] = self._draws.get(base, 0) + 1
-        draw = self._draws[base]
-        key = base if draw == 1 else f"{base}-{draw}"
+        key = self._draw_key(
+            self._key(model=model, system=system, prompt=prompt, schema_name="<text>", schema_json=""),
+            draw,
+        )
         request_path, response_path = self._paths(key, is_text=True)
 
         if response_path.exists():

@@ -15,8 +15,7 @@ from __future__ import annotations
 import asyncio
 import json
 from pathlib import Path
-from typing import List, Optional
-
+from typing import List
 import pytest
 
 from storica.brief import Brief, save_brief

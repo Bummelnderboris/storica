@@ -35,6 +35,7 @@ from typing import List, Optional, Sequence
 
 from ..authors import AuthorModel
 from ..canon import Severity, StoryModel
+from ..llm import gather_draws
 from ..plan import ChapterSpec, SceneSpec
 from ..trace import Tracer
 from .base import CheckerIssue, Decision, Verdict
@@ -94,17 +95,21 @@ class ConsensusProseChecker(ProseChecker):
         spec: ChapterSpec,
         author: AuthorModel,
         scene: Optional[SceneSpec] = None,
+        draw: int = 1,
     ) -> Verdict:
         if self.samples == 1:
             return await self.inner.check_prose(
-                prose=prose, canon=canon, spec=spec, author=author, scene=scene
+                prose=prose, canon=canon, spec=spec, author=author, scene=scene, draw=draw
             )
 
-        verdicts: List[Verdict] = []
-        for _ in range(self.samples):
-            verdicts.append(await self.inner.check_prose(
-                prose=prose, canon=canon, spec=spec, author=author, scene=scene
-            ))
+        # Concurrent for the same reason as the candidate draw: k samples of one judgement are
+        # independent, and the `draw` index each carries keeps their replay slots distinct.
+        verdicts: List[Verdict] = list(await gather_draws(
+            self.inner.check_prose(
+                prose=prose, canon=canon, spec=spec, author=author, scene=scene, draw=i + 1
+            )
+            for i in range(self.samples)
+        ))
 
         threshold = majority_threshold(self.samples)
         blocked = [v for v in verdicts if v.blocking_issues()]

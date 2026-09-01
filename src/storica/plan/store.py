@@ -8,7 +8,6 @@ mega-outline dumped up front (principle 2).
 
 from __future__ import annotations
 
-import json
 import re
 from pathlib import Path
 from typing import List, Optional, Union
