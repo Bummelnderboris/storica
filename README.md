@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 297 tests passing. Never yet run end-to-end against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 305 tests passing. Never yet run end-to-end against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -208,7 +208,7 @@ storica/
 │   ├── trace.py           every filled prompt and artifact, to 04_trace/
 │   ├── llm.py             the only place the Anthropic SDK is touched; model aliases
 │   └── drivers/replay.py  run the real prompts with no API key
-├── tests/                 297 tests
+├── tests/                 305 tests
 │
 ├── authors/               author library, shared across novels — see authors/README.md
 │   ├── duerrenmatt/
@@ -268,7 +268,7 @@ The author is a **generative driver, not a paint job**: their question-lines fee
 ## Development
 
 ```bash
-.venv/bin/python -m pytest -q      # 297 tests, a few seconds, no API key, no network
+.venv/bin/python -m pytest -q      # 305 tests, a few seconds, no API key, no network
 ```
 
 Model aliases (`opus`, `sonnet`, `haiku`) resolve to current model IDs in exactly one place —
