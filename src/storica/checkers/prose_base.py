@@ -16,7 +16,7 @@ from __future__ import annotations
 from typing import Optional, Protocol, runtime_checkable
 
 from ..authors import AuthorModel
-from ..canon import StoryModel, canon_slice
+from ..canon import StoryModel, unit_slice, unit_label as _unit_label
 from ..plan import ChapterSpec, SceneSpec
 from .base import Checker, Verdict
 
@@ -42,13 +42,8 @@ class ProseChecker(Protocol):
 
 
 def unit_label(spec: ChapterSpec, scene: Optional[SceneSpec]) -> str:
-    """
-    The name a prose unit is known by everywhere: `ch01_s2` for a scene, `ch01` for a chapter.
-
-    It has to agree across the checkers, the tracer, the quarantine log and `assembly.chapter_unit`,
-    because those are joined on it after the fact by a human reading `05_reports/`.
-    """
-    return f"ch{spec.chapter:02d}" + (f"_{scene.id}" if scene else "")
+    """The name a prose unit is known by everywhere; the rule is `canon.unit_label`."""
+    return _unit_label(spec.chapter, scene.id if scene else None)
 
 
 class ProseCheckerBase(Checker):
@@ -68,10 +63,5 @@ class ProseCheckerBase(Checker):
     def scene_slice(
         self, canon: StoryModel, spec: ChapterSpec, scene: Optional[SceneSpec]
     ) -> str:
-        """The canon slice for one prose unit: its cast, and the ledger entries it was assigned."""
-        return canon_slice(
-            canon,
-            character_ids=scene.character_ids if scene else spec.present_character_ids,
-            motif_ids=[*spec.setups, *spec.payoffs],
-            promise_ids=[*spec.promises_made, *spec.promises_kept],
-        )
+        """The canon slice for one prose unit — the same one the writer had (`canon.unit_slice`)."""
+        return unit_slice(canon, spec, scene)

@@ -164,7 +164,17 @@ class StructuredLLM(ABC):
     which adapter it got.
     """
 
-    usage: "Usage"
+    @property
+    def usage(self) -> "Usage":
+        """The run's token counter. Lazily created, so an adapter that never sets one still has one."""
+        found = self.__dict__.get("_usage")
+        if found is None:
+            found = self.__dict__["_usage"] = Usage()
+        return found
+
+    @usage.setter
+    def usage(self, value: "Usage") -> None:
+        self.__dict__["_usage"] = value
 
     @abstractmethod
     async def parse(
@@ -195,22 +205,46 @@ class StructuredLLM(ABC):
 class AnthropicStructuredLLM(StructuredLLM):
     """Structured outputs via the Anthropic API. The only place the SDK is touched in v2."""
 
-    def __init__(self, api_key: Optional[str] = None, client: Any = None):
+    #: How many calls may be in flight at once. The candidate and consensus fan-outs each open
+    #: k streams concurrently; without a bound, a modest per-minute output limit turns into a 429
+    #: that escapes as a traceback instead of a wait.
+    DEFAULT_CONCURRENCY = 4
+    #: The SDK's own backoff on 429/5xx. Its default of 2 is too few for k parallel Opus streams.
+    DEFAULT_MAX_RETRIES = 6
+
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        client: Any = None,
+        *,
+        concurrency: int = DEFAULT_CONCURRENCY,
+        max_retries: int = DEFAULT_MAX_RETRIES,
+    ):
         if client is None:
             from anthropic import AsyncAnthropic
 
-            client = AsyncAnthropic(api_key=api_key) if api_key else AsyncAnthropic()
+            kwargs: Dict[str, Any] = {"max_retries": max_retries}
+            if api_key:
+                kwargs["api_key"] = api_key
+            client = AsyncAnthropic(**kwargs)
         self.client = client
         self.usage = Usage()
+        self._in_flight = asyncio.Semaphore(max(1, concurrency))
 
-    def _count(self, model: str, raw) -> None:
-        """Record one call's token usage. Never lets accounting break a run."""
+    def _finish(self, model: str, raw) -> None:
+        """
+        Account for one call, then check whether it was refused — in that order, for both
+        `parse` and `generate`, so a refusal is billed the way the API billed it.
+        """
         u = getattr(raw, "usage", None)
         self.usage.record(
             model=model,
             input_tokens=getattr(u, "input_tokens", 0) or 0,
             output_tokens=getattr(u, "output_tokens", 0) or 0,
         )
+        # Check stop_reason before touching content: a refusal returns HTTP 200 with no parse.
+        if getattr(raw, "stop_reason", None) == "refusal":
+            raise LLMRefusal(f"model refused ({getattr(raw, 'stop_details', None)})")
 
     async def parse(
         self,
@@ -222,17 +256,15 @@ class AnthropicStructuredLLM(StructuredLLM):
         max_tokens: int = 16000,
         draw: int = 1,  # noqa: ARG002 — sampling already differs; only the replay cache needs it
     ) -> T:
-        response = await self.client.messages.parse(
-            model=resolve_model(model),
-            max_tokens=max_tokens,
-            system=system or "You are part of an autonomous novel-writing pipeline.",
-            messages=[{"role": "user", "content": prompt}],
-            output_format=schema,
-        )
-        # Check stop_reason before touching content: a refusal returns HTTP 200 with no parse.
-        if response.stop_reason == "refusal":
-            raise LLMRefusal(f"model refused ({getattr(response, 'stop_details', None)})")
-        self._count(model, response)
+        async with self._in_flight:
+            response = await self.client.messages.parse(
+                model=resolve_model(model),
+                max_tokens=max_tokens,
+                system=system or "You are part of an autonomous novel-writing pipeline.",
+                messages=[{"role": "user", "content": prompt}],
+                output_format=schema,
+            )
+        self._finish(model, response)
         parsed = response.parsed_output
         if parsed is None:
             raise RuntimeError(
@@ -252,17 +284,16 @@ class AnthropicStructuredLLM(StructuredLLM):
     ) -> str:
         # Streamed: prose runs long, and a non-streaming request at this max_tokens risks an
         # HTTP timeout. We only want the finished text, so we never touch the events.
-        async with self.client.messages.stream(
-            model=resolve_model(model),
-            max_tokens=max_tokens,
-            system=system or "You are part of an autonomous novel-writing pipeline.",
-            messages=[{"role": "user", "content": prompt}],
-        ) as stream:
-            message = await stream.get_final_message()
+        async with self._in_flight:
+            async with self.client.messages.stream(
+                model=resolve_model(model),
+                max_tokens=max_tokens,
+                system=system or "You are part of an autonomous novel-writing pipeline.",
+                messages=[{"role": "user", "content": prompt}],
+            ) as stream:
+                message = await stream.get_final_message()
 
-        self._count(model, message)
-        if message.stop_reason == "refusal":
-            raise LLMRefusal(f"model refused ({getattr(message, 'stop_details', None)})")
+        self._finish(model, message)
         return "".join(b.text for b in message.content if b.type == "text")
 
 
@@ -272,6 +303,7 @@ class FakeCall:
     schema: str          # "<text>" for a `generate` call
     system: Optional[str]
     model: str
+    draw: int = 1
 
 
 @dataclass
@@ -297,7 +329,7 @@ class FakeStructuredLLM(StructuredLLM):
         max_tokens: int = 16000,
         draw: int = 1,
     ) -> T:
-        self.calls.append(FakeCall(prompt=prompt, schema=schema.__name__, system=system, model=model))
+        self.calls.append(FakeCall(prompt=prompt, schema=schema.__name__, system=system, model=model, draw=draw))
         for i, r in enumerate(self.responses):
             if isinstance(r, schema):
                 return self.responses.pop(i)  # type: ignore[return-value]
@@ -315,7 +347,7 @@ class FakeStructuredLLM(StructuredLLM):
         max_tokens: int = 32000,
         draw: int = 1,
     ) -> str:
-        self.calls.append(FakeCall(prompt=prompt, schema="<text>", system=system, model=model))
+        self.calls.append(FakeCall(prompt=prompt, schema="<text>", system=system, model=model, draw=draw))
         if not self.texts:
             raise AssertionError("FakeStructuredLLM: no queued text for generate()")
         return self.texts.pop(0)

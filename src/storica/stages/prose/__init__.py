@@ -32,7 +32,7 @@ from dataclasses import dataclass, field
 from typing import Awaitable, Callable, List, Optional, Sequence
 
 from ...authors import AuthorModel
-from ...canon import Issue, StoryModel, blocking
+from ...canon import Issue, StoryModel, blocking, chapter_unit
 from ...checkers.base import Decision, Escalation
 from ...checkers.prose_base import ProseChecker
 from ...llm import StructuredLLM, stage_model
@@ -123,7 +123,7 @@ async def write_chapter(
     """
     tracer = tracer or Tracer(None)
     language = _language(canon)
-    unit_prefix = f"ch{spec.chapter:02d}"
+    unit_prefix = chapter_unit(spec.chapter)
 
     def evaluator(unit: str, scene: Optional[SceneSpec]) -> Callable[[str], Awaitable[List[Issue]]]:
         async def evaluate(text: str) -> List[Issue]:

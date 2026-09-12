@@ -14,6 +14,7 @@ ids, reduce anything that is not `[a-z0-9]` to a single underscore.
 from __future__ import annotations
 
 import re
+from typing import Optional
 
 _NON_ALNUM = re.compile(r"[^a-z0-9]+")
 
@@ -26,3 +27,19 @@ def slug(value: str) -> str:
 def norm(name: str) -> str:
     """A name flattened for comparison only — never stored, never shown."""
     return " ".join(name.strip().lower().split())
+
+
+def chapter_unit(chapter: int) -> str:
+    """
+    The label a chapter is known by everywhere: `ch01`.
+
+    The quarantine log, the decision log, the tracer, the checkers and `assembly` are joined on
+    this string after the fact — by `run_novel` deciding what to skip and by a person reading
+    `05_reports/`. One format, one place.
+    """
+    return f"ch{chapter:02d}"
+
+
+def unit_label(chapter: int, scene_id: Optional[str] = None) -> str:
+    """`ch01_s2` for a scene, `ch01` for a chapter (see `chapter_unit`)."""
+    return chapter_unit(chapter) + (f"_{scene_id}" if scene_id else "")

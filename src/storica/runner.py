@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Optional, Sequence, Union
 
 from .adjudicator import AdjudicationFailed
 from .assembly import assemble_novel, save_novel
-from .canon import load_canon
+from .canon import chapter_unit, load_canon
 from .checkers import Decision, FinalAuditor, ProseChecker
 from .drafts import drafted_chapters
 from .llm import StructuredLLM
@@ -147,7 +147,7 @@ async def run_novel(
             quarantine.release(unit, "released for a re-attempt (--retry-quarantined)")
 
     for chapter in range(1, arc.chapter_count + 1):
-        unit = f"ch{chapter:02d}"
+        unit = chapter_unit(chapter)
         if quarantine.is_quarantined(unit):
             continue
 

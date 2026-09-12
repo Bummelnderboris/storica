@@ -19,7 +19,7 @@ from typing import List, Optional, Sequence, Union
 from .adjudicator import AdjudicationFailed, Adjudicator, GroundTruth
 from .authors import load_author
 from .brief import load_brief
-from .canon import Issue, Severity, StoryModel, commit_canon, load_canon, save_canon
+from .canon import Issue, Severity, StoryModel, chapter_unit, commit_canon, load_canon, save_canon
 from .chapter import ChapterOutcome, attempt_chapter
 from .checkers import IntentChecker, ProseChecker, default_prose_checkers
 from .drafts import load_chapter_draft, load_chapter_draft_if_present, save_chapter_draft
@@ -306,7 +306,7 @@ async def reconcile_chapter_into_canon(
         amendments = [r for r in records if r.ruling.kind == RulingKind.AMEND_CANON]
         if amendments:
             QuarantineLog(novel_dir / REPORTS_DIR).add(
-                f"ch{chapter:02d}",
+                chapter_unit(chapter),
                 "reconcile ruling requires a canon amendment",
                 [f"{r.conflict} -> {r.ruling.canon_amendment}" for r in amendments],
             )
@@ -343,7 +343,7 @@ async def correct_draft_by_ruling(
     """
     novel_dir = Path(novel_dir)
     tracer = tracer or Tracer(None)
-    unit = f"ch{chapter:02d}"
+    unit = chapter_unit(chapter)
     current = load_chapter_draft(novel_dir / DRAFTS_DIR, chapter)
     issues = [
         Issue(
@@ -396,7 +396,7 @@ async def adjudicate_flags(
         conflict = f"{flag.reason} (canon: {flag.canon_says!r}; prose: {flag.prose_says!r})"
         try:
             records.append(await adjudicator.rule(
-                unit=f"ch{chapter:02d}:{flag.ref}",
+                unit=f"{chapter_unit(chapter)}:{flag.ref}",
                 conflict=conflict,
                 context=f"evidence from the draft: {flag.evidence}",
             ))

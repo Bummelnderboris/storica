@@ -58,7 +58,12 @@ async def _repair_loop(
     while blocking(issues) and repairs < max_repairs:
         repairs += 1
         prompt = repair_prompt(text, blocking(issues))
-        text = await llm.generate(prompt=prompt, system=SYSTEM, model=model, max_tokens=max_tokens)
+        # `draw=repairs`: a second repair whose prompt is byte-identical to the first (the model
+        # handed the draft back unchanged, the same issues recurred) must be a *new* call, not a
+        # replay of the answer that already failed — or the budget drains with no model call made.
+        text = await llm.generate(
+            prompt=prompt, system=SYSTEM, model=model, max_tokens=max_tokens, draw=repairs
+        )
         tracer.record(
             f"{stage}_repair_{repairs}",
             prompt=prompt,

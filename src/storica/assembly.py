@@ -26,6 +26,7 @@ from pathlib import Path
 from typing import List, Optional, Union
 
 from .canon import Issue, Severity, StoryModel
+from .canon import chapter_unit as _chapter_unit
 from .drafts import drafted_chapters, load_chapter_draft
 from .plan import MacroArc
 from .reports import QuarantineLog
@@ -40,8 +41,8 @@ CHAPTER_SEPARATOR = "\n\n---\n\n"
 
 
 def chapter_unit(chapter: int) -> str:
-    """The unit label chapters are quarantined under — must match the `chNN` prefix `stages/prose` writes under."""
-    return f"ch{chapter:02d}"
+    """The unit label chapters are quarantined under. Kept as a name; the rule is `canon.chapter_unit`."""
+    return _chapter_unit(chapter)
 
 
 @dataclass

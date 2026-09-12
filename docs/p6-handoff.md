@@ -28,7 +28,8 @@ A quarantined chapter is skipped on every later run unless it is released. Eithe
    and the run still measures everything downstream.
 2. **Re-try chapter 1** with `--retry-quarantined --max-repairs 4`. The release is appended to
    `quarantine.jsonl` (the original record stays) and the chapter is attempted again. Under replay
-   the cached candidates, selection and repairs 1–2 replay from cache; only repair 3 onward and its
+   the cached candidates, selection and repair 1 replay from cache; repair 2 onward (each repair
+   pass now has its own cache slot) and its
    checks need new answers. Use the flag on that run only — once released, the chapter is a normal
    chapter again.
 

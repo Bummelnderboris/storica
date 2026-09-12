@@ -31,6 +31,7 @@ from pydantic import BaseModel, ConfigDict, Field
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
+from storica.cli import _load_dotenv  # noqa: E402  — the same .env rules the CLI applies
 from storica.llm import AnthropicStructuredLLM, LLMRefusal  # noqa: E402
 
 MODEL = "haiku"  # the cheapest tier; this is a wiring check, not a capability check
@@ -43,20 +44,6 @@ class Probe(BaseModel):
 
     colour: str = Field(description="One colour named in the prompt.")
     count: int = Field(description="How many colours the prompt named.")
-
-
-def _load_dotenv() -> None:
-    path = REPO_ROOT / ".env"
-    if not path.exists():
-        return
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, _, value = line.partition("=")
-        value = value.strip().strip("'\"")
-        if value:  # an empty assignment in .env is not a credential
-            os.environ.setdefault(key.strip(), value)
 
 
 async def main() -> int:

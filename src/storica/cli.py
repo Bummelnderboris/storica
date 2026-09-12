@@ -176,16 +176,23 @@ def cmd_status(args: argparse.Namespace) -> int:
 
     # Reported unconditionally, and last. These are the two things a person most needs to see —
     # what was dropped, and what it cost — so neither may hide behind an earlier "nothing yet".
-    quarantined = QuarantineLog(novel_dir / "05_reports").units()
+    # `status` is read-only: it must not create `05_reports/` for a path that has no novel.
+    reports_dir = novel_dir / "05_reports"
+    quarantined = QuarantineLog(reports_dir).units() if reports_dir.is_dir() else []
     if quarantined:
         print(f"  QUARANTINED: {', '.join(quarantined)}")
 
-    report = novel_dir / "05_reports" / "run_report.json"
+    report = reports_dir / "run_report.json"
     if report.exists():
-        usage = json.loads(report.read_text(encoding="utf-8")).get("usage") or {}
-        if usage.get("calls"):
-            print(f"  last run: {usage['calls']} calls, "
-                  f"~${usage.get('estimated_cost_usd', 0):.2f}")
+        try:
+            usage = json.loads(report.read_text(encoding="utf-8")).get("usage") or {}
+            calls = int(usage.get("calls") or 0)
+            cost = float(usage.get("estimated_cost_usd") or 0)
+        except (ValueError, TypeError, AttributeError) as bad:
+            print(f"  last run: run_report.json is unreadable ({bad})")
+        else:
+            if calls:
+                print(f"  last run: {calls} calls, ~${cost:.2f}")
     return 0
 
 

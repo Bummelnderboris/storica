@@ -463,3 +463,16 @@ def test_drafted_chapters_lists_what_is_on_disk(tmp_path):
     (tmp_path / "notes.md").write_text("not a chapter", encoding="utf-8")
 
     assert drafted_chapters(tmp_path) == [1, 3]
+
+
+def test_each_repair_pass_is_its_own_draw(author):
+    """Under replay, a repair whose prompt repeats byte-for-byte must be a new call, not a cache hit."""
+    llm = FakeStructuredLLM(texts=[_prose("Erste"), _prose("Erste"), _prose("Dritte")])
+    checker = FakeProseChecker(_verdict(Decision.REVISE, issues=[_issue()]),
+                               _verdict(Decision.REVISE, issues=[_issue()]))
+
+    result = _write(llm, author, spec=_spec(scenes=[S1]), checkers=[checker], max_repairs=2)
+
+    assert result.repairs == 2 and result.is_valid
+    generates = [c for c in llm.calls if c.schema == "<text>"]
+    assert [c.draw for c in generates] == [1, 1, 2]     # scene, repair 1, repair 2

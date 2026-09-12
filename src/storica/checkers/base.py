@@ -111,6 +111,10 @@ class Checker:
         max_tokens: Optional[int] = None,
         tracer: Optional[Tracer] = None,
     ):
+        if not self.SYSTEM.strip():
+            # A reader that forgot its SYSTEM would still return Verdict-shaped answers, so
+            # nothing downstream would notice it judging without its role. Fail here instead.
+            raise TypeError(f"{type(self).__name__} defines no SYSTEM prompt")
         self.llm = llm
         self.model = model or self.DEFAULT_MODEL
         self.max_tokens = max_tokens or self.DEFAULT_MAX_TOKENS

@@ -39,7 +39,7 @@ from ..llm import gather_draws
 from ..plan import ChapterSpec, SceneSpec
 from ..trace import Tracer
 from .base import CheckerIssue, Decision, Verdict
-from .prose_base import ProseChecker
+from .prose_base import unit_label, ProseChecker
 
 
 def majority_threshold(samples: int) -> int:
@@ -115,7 +115,7 @@ class ConsensusProseChecker(ProseChecker):
         blocked = [v for v in verdicts if v.blocking_issues()]
         escalated = [v for v in verdicts if v.decision == Decision.ESCALATE]
 
-        unit = f"ch{spec.chapter:02d}" + (f"_{scene.id}" if scene else "")
+        unit = unit_label(spec, scene)
         self.tracer.record(
             f"consensus_{self.inner.name}_{unit}",
             prompt="",

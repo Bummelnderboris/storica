@@ -17,14 +17,14 @@ from .model import (
     Premise,
     Constraints,
 )
-from .ids import norm, slug
+from .ids import chapter_unit, norm, slug, unit_label
 from .validation import validate, blocking, is_valid, Issue, Severity
 from .store import load_canon, save_canon, commit_canon
-from .slice import canon_slice
+from .slice import canon_slice, unit_slice
 
 __all__ = [
     "StoryModel", "Character", "CharacterArc", "CharacterRole", "Relationship",
     "TimelineEvent", "Awareness", "Knowing", "KnowledgeItem", "Motif", "MotifStatus", "Promise", "PromiseStatus", "Premise",
     "Constraints", "validate", "blocking", "is_valid", "Issue", "Severity",
-    "load_canon", "save_canon", "commit_canon", "canon_slice", "norm", "slug",
+    "load_canon", "save_canon", "commit_canon", "canon_slice", "unit_slice", "norm", "slug", "chapter_unit", "unit_label",
 ]

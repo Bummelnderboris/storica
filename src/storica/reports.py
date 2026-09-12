@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
@@ -221,5 +222,8 @@ def write_run_report(reports_dir: PathLike, payload: Dict[str, Any]) -> Path:
     reports_dir = Path(reports_dir)
     reports_dir.mkdir(parents=True, exist_ok=True)
     path = reports_dir / RUN_REPORT_FILE
-    path.write_text(json.dumps({"at": _now(), **payload}, indent=2, ensure_ascii=False), encoding="utf-8")
+    # Atomic: `status` reads this file, and a run killed mid-write must not leave half a JSON.
+    tmp = path.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps({"at": _now(), **payload}, indent=2, ensure_ascii=False), encoding="utf-8")
+    os.replace(tmp, path)
     return path

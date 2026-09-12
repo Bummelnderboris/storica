@@ -223,3 +223,46 @@ def test_retry_quarantined_is_off_by_default_and_parses():
     parser = build_parser()
     assert parser.parse_args(["run", "x"]).retry_quarantined is False
     assert parser.parse_args(["run", "x", "--retry-quarantined", "--max-repairs", "4"]).retry_quarantined
+
+
+def test_status_is_read_only_even_for_a_path_with_no_novel(tmp_path, capsys):
+    missing = tmp_path / "typo-slug"
+    assert main(["status", str(missing)]) == 0
+    assert "not established" in capsys.readouterr().out
+    assert not missing.exists(), "status must not create directories"
+
+
+def test_status_survives_a_malformed_run_report(tmp_path, capsys):
+    assert _new(tmp_path) == 0
+    reports = tmp_path / "book" / "05_reports"
+    (reports / "run_report.json").write_text("{not json", encoding="utf-8")
+    assert main(["status", str(tmp_path / "book")]) == 0
+    assert "unreadable" in capsys.readouterr().out
+
+
+def test_run_report_is_written_atomically(tmp_path):
+    from storica.reports import write_run_report
+    path = write_run_report(tmp_path, {"usage": {"calls": 1}})
+    assert path.name == "run_report.json"
+    assert sorted(p.name for p in tmp_path.iterdir()) == ["run_report.json"]   # no .tmp left behind
+
+
+def test_every_adapter_has_a_usage_counter_without_setting_one():
+    from storica.llm import StructuredLLM, Usage
+
+    class Bare(StructuredLLM):
+        async def parse(self, **kw):  # pragma: no cover - never called
+            raise NotImplementedError
+
+        async def generate(self, **kw):  # pragma: no cover - never called
+            raise NotImplementedError
+
+    assert isinstance(Bare().usage, Usage) and Bare().usage.calls == 0
+
+
+def test_the_live_adapter_bounds_concurrency_and_configures_retries():
+    from storica.llm import AnthropicStructuredLLM
+
+    llm = AnthropicStructuredLLM(client=object(), concurrency=2)
+    assert llm._in_flight._value == 2
+    assert AnthropicStructuredLLM.DEFAULT_MAX_RETRIES > 2      # the SDK default is not enough for k parallel streams

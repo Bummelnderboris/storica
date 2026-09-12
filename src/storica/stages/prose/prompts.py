@@ -17,7 +17,7 @@ from __future__ import annotations
 from typing import List
 
 from ...authors import AuthorModel
-from ...canon import Issue, StoryModel, canon_slice
+from ...canon import Issue, StoryModel, unit_slice
 from ...plan import ChapterSpec, MacroArc, SceneSpec
 from ..gate import format_issues
 
@@ -65,21 +65,11 @@ def _tail(text: str, chars: int = TAIL_CHARS) -> str:
 
 
 def _scene_slice(spec: ChapterSpec, canon: StoryModel, scene: SceneSpec) -> str:
-    return canon_slice(
-        canon,
-        character_ids=scene.character_ids,
-        motif_ids=[*spec.setups, *spec.payoffs],
-        promise_ids=[*spec.promises_made, *spec.promises_kept],
-    )
+    return unit_slice(canon, spec, scene)
 
 
 def _chapter_slice(spec: ChapterSpec, canon: StoryModel) -> str:
-    return canon_slice(
-        canon,
-        character_ids=spec.present_character_ids,
-        motif_ids=[*spec.setups, *spec.payoffs],
-        promise_ids=[*spec.promises_made, *spec.promises_kept],
-    )
+    return unit_slice(canon, spec, None)
 
 
 def _ledger_assignment_block(spec: ChapterSpec, canon: StoryModel) -> str:

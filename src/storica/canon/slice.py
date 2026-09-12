@@ -13,9 +13,12 @@ from `StoryModel`, so nothing is re-interpreted on the way.
 
 from __future__ import annotations
 
-from typing import Iterable, List, Optional
+from typing import TYPE_CHECKING, Iterable, List, Optional
 
 from .model import StoryModel
+
+if TYPE_CHECKING:  # plan imports canon; keep this a type-only edge
+    from ..plan import ChapterSpec, SceneSpec
 
 
 def _fmt_facts(facts: dict, indent: str = "    ") -> str:
@@ -151,3 +154,20 @@ def canon_slice(
     )
 
     return "\n".join(parts)
+
+
+def unit_slice(model: StoryModel, spec: "ChapterSpec", scene: Optional["SceneSpec"] = None) -> str:
+    """
+    The slice one prose unit is written from — and judged against (DESIGN §5, F9).
+
+    A unit is grounded in exactly what it touches: a scene gets its own cast, a chapter the whole
+    chapter cast, and both get the ledger entries the chapter was assigned. The writer and every
+    reader must be handed the *same* slice, or a fact the writer was told becomes an invention the
+    checker flags. This function is that guarantee; do not re-derive the arguments elsewhere.
+    """
+    return canon_slice(
+        model,
+        character_ids=scene.character_ids if scene is not None else spec.present_character_ids,
+        motif_ids=[*spec.setups, *spec.payoffs],
+        promise_ids=[*spec.promises_made, *spec.promises_kept],
+    )

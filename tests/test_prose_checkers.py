@@ -425,3 +425,27 @@ def llm_system(cls, canon, spec, author) -> str:
     llm = FakeStructuredLLM(responses=[_verdict()])
     _run(cls(llm), canon=canon, spec=spec, author=author)
     return llm.calls[0].system
+
+
+def test_a_reader_without_a_system_prompt_cannot_be_constructed():
+    from storica.checkers.base import Checker
+    from storica.llm import FakeStructuredLLM
+
+    class Forgot(Checker):
+        name = "forgot"
+
+    with pytest.raises(TypeError, match="SYSTEM"):
+        Forgot(FakeStructuredLLM())
+
+
+def test_writer_and_readers_are_handed_the_same_slice(canon, spec):
+    """DESIGN §5 / F9: one rule, `canon.unit_slice`, feeds both sides of every seam."""
+    from storica.canon import unit_slice
+    from storica.checkers.canon_consistency import CanonConsistencyChecker
+    from storica.llm import FakeStructuredLLM
+    from storica.stages.prose.prompts import _chapter_slice, _scene_slice
+
+    reader = CanonConsistencyChecker(FakeStructuredLLM())
+    scene = spec.scenes[0]
+    assert reader.scene_slice(canon, spec, scene) == _scene_slice(spec, canon, scene) == unit_slice(canon, spec, scene)
+    assert reader.scene_slice(canon, spec, None) == _chapter_slice(spec, canon) == unit_slice(canon, spec)

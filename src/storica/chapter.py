@@ -26,7 +26,7 @@ from typing import List, Optional, Sequence
 
 from .adjudicator import AdjudicationFailed, Adjudicator
 from .authors import AuthorModel
-from .canon import StoryModel
+from .canon import StoryModel, chapter_unit
 from .checkers import Escalation, ProseChecker
 from .llm import StructuredLLM, stage_model
 from .plan import ChapterSpec, MacroArc
@@ -48,7 +48,7 @@ class ChapterOutcome:
 
     @property
     def unit(self) -> str:
-        return f"ch{self.chapter:02d}"
+        return chapter_unit(self.chapter)
 
 
 async def attempt_chapter(
