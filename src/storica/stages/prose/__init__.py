@@ -69,6 +69,11 @@ __all__ = [
 ]
 
 
+# The reader whose blocking verdict short-circuits the rest of the gate. The name is the one
+# `checkers.with_consensus` keys on, so the consensus wrapper carries it too.
+CANON_CONSISTENCY = "canon_consistency"
+
+
 class ProseGateFailed(GateFailed):
     """A prose unit still had blocking issues when its repair budget ran out."""
 
@@ -132,6 +137,11 @@ async def write_chapter(
                 if verdict.decision == Decision.ESCALATE:
                     raise Escalation(unit, verdict.conflict, verdict)
                 issues += verdict.to_issues(checker.name)
+                if checker.name == CANON_CONSISTENCY and blocking(issues):
+                    # A contradiction makes the other judgements moot (checkers/defaults.py): no
+                    # point paying to polish the texture of a paragraph that says the wrong man
+                    # signed the certificate. The rest run on the repaired text.
+                    break
             return issues
         return evaluate
 
@@ -157,17 +167,10 @@ async def write_chapter(
                 prompt=prompt, n=n_candidates, llm=llm, model=model, max_tokens=max_tokens,
                 tracer=tracer, unit=unit, min_chars=min_scene_chars,
             )
-            if candidates:
-                text = await _select(
-                    candidates=candidates, assignment=prompt, llm=llm,
-                    model=selection_model, tracer=tracer, unit=unit,
-                )
-            else:
-                # Every candidate was a stub. Keep the last one so the repair loop sees the real
-                # failure and reports it, rather than raising something less informative here.
-                text = await llm.generate(
-                    prompt=prompt, system=SYSTEM, model=model, max_tokens=max_tokens
-                )
+            text = await _select(
+                candidates=candidates, assignment=prompt, llm=llm,
+                model=selection_model, tracer=tracer, unit=unit,
+            )
         else:
             text = await llm.generate(prompt=prompt, system=SYSTEM, model=model, max_tokens=max_tokens)
         tracer.record(f"{unit}_prose", prompt=prompt, system=SYSTEM, model=model, artifact=text)

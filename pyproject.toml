@@ -8,7 +8,7 @@ version = "2.0.0"
 description = "Canon-centric autonomous novel generation"
 requires-python = ">=3.11"
 dependencies = [
-    "anthropic>=0.40.0",  # only touched by AnthropicStructuredLLM in storica/llm.py
+    "anthropic>=0.115,<1",  # only touched by AnthropicStructuredLLM in storica/llm.py; 1.x changes the HTTP stack
     "pydantic>=2.5.3",    # every stage output is a validated model
     "pyyaml>=6.0.1",      # briefs and author profiles
 ]

@@ -172,8 +172,6 @@ def _slug(value: str) -> str:
     return slug(value) or "unnamed"
 
 
-_norm = norm
-
 
 def _pairs_to_dict(pairs: List[FactPair]) -> Dict[str, str]:
     return {_slug(p.key): p.value for p in pairs if p.key.strip()}
@@ -219,7 +217,7 @@ def draft_to_canon(
             ),
         )
         for nm in characters[cid].all_names():
-            name_to_id.setdefault(_norm(nm), cid)
+            name_to_id.setdefault(norm(nm), cid)
 
     def _ref(value: str) -> str:
         """Resolve a drafted reference to a stored character id, if we can do it safely."""
@@ -228,7 +226,7 @@ def draft_to_canon(
         slug = _slug(value)
         if slug in characters:
             return slug
-        return name_to_id.get(_norm(value), value)  # unresolved refs stay put for the validator
+        return name_to_id.get(norm(value), value)  # unresolved refs stay put for the validator
 
     relationships = [
         Relationship(a=_ref(r.a), b=_ref(r.b), type=r.type) for r in draft.relationships
@@ -262,9 +260,10 @@ def draft_to_canon(
         for k in draft.knowledge
     ]
 
-    language = draft.constraints.language or (brief.language if brief else "en")
+    # The brief is immutable ground truth: where it speaks, the model's draft does not get a vote.
+    language = ((brief.language if brief else "") or draft.constraints.language or "en")
     forbidden = list(dict.fromkeys([*(brief.forbidden if brief else []), *draft.constraints.forbidden]))
-    chapter_count = draft.constraints.chapter_count or (brief.chapter_count if brief else None)
+    chapter_count = (brief.chapter_count if brief else None) or draft.constraints.chapter_count
 
     return StoryModel(
         premise=premise,
@@ -369,7 +368,7 @@ async def develop_world_and_cast(
     """
     Run stage 2 and return validated canon.
 
-    The deterministic Canon-Consistency gate runs on every attempt; blocking issues trigger a
+    The deterministic canon validator (`canon.validate`) gates every attempt; blocking issues trigger a
     grounded repair call, bounded by `max_repairs`. With `strict` (the default) a canon that still
     has blocking issues raises rather than being handed downstream.
     """

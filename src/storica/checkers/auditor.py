@@ -98,11 +98,22 @@ def audit_ledger(canon: StoryModel) -> List[Issue]:
     issues: List[Issue] = []
 
     for p in canon.promises:
-        if p.status == PromiseStatus.OPEN:
+        if p.status == PromiseStatus.OPEN and p.kept_ch is None:
+            # The arc scheduled no chapter to keep it in (`kept_ch: 0` at planning time), so it
+            # was never meant to be resolved. Nothing in the pipeline marks a promise BROKEN on
+            # its own; this is where "deliberately unresolved" is recognised, and it is a
+            # judgement for the auditor, not a mechanical failure.
+            issues.append(Issue(
+                "audit.promise_unresolved", Severity.WARNING,
+                f"promise '{p.id}' was planned as deliberately unresolved (made ch{p.made_ch}): "
+                f"{p.desc} — confirm the book withholds it on purpose and the reader can feel that",
+                p.id,
+            ))
+        elif p.status == PromiseStatus.OPEN:
             issues.append(Issue(
                 "audit.promise_open", Severity.BLOCKING,
-                f"promise '{p.id}' is still open at the end of the book (made ch{p.made_ch}): "
-                f"{p.desc}",
+                f"promise '{p.id}' is still open at the end of the book (made ch{p.made_ch}, "
+                f"due ch{p.kept_ch}): {p.desc}",
                 p.id,
             ))
         elif p.status == PromiseStatus.BROKEN:

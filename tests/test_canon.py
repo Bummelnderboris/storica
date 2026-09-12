@@ -1,7 +1,7 @@
 """
 Tests for the v2 canon core.
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 Proves the deterministic validator catches the exact failure modes that sank v1

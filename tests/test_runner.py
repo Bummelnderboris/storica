@@ -1,7 +1,7 @@
 """
 End-to-end tests for the run loop and the CLI.
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 The property that matters most here is **resumability**: every stage asks the filesystem whether
@@ -276,3 +276,49 @@ def test_cli_run_reports_a_pause_rather_than_crashing(planned, capsys):
     assert main(["run", str(planned), "--driver", "replay", "--authors", str(AUTHORS_ROOT),
                  "--no-audit"]) == 2
     assert "[paused]" in capsys.readouterr().out
+
+
+# --------------------------------------------------------------------------------------------
+# Quarantine is sticky across runs — unless released on purpose
+# --------------------------------------------------------------------------------------------
+
+def test_a_quarantined_chapter_is_skipped_on_the_next_run(planned):
+    QuarantineLog(planned / "05_reports").add("ch01", "prose repair budget exhausted", ["x"])
+    llm = FakeStructuredLLM(texts=[PROSE])
+
+    result = asyncio.run(run_novel(novel_dir=planned, authors_root=AUTHORS_ROOT, llm=llm,
+                                   checkers=[], audit=False))
+
+    assert result.chapters == [] and llm.calls == []          # nothing was re-attempted
+
+
+def test_retry_quarantined_releases_the_chapter_and_writes_it(planned):
+    log = QuarantineLog(planned / "05_reports")
+    log.add("ch01", "prose repair budget exhausted", ["x"])
+    llm = FakeStructuredLLM(responses=[_extraction()], texts=[PROSE])
+
+    result = asyncio.run(run_novel(novel_dir=planned, authors_root=AUTHORS_ROOT, llm=llm,
+                                   checkers=[], audit=False, retry_quarantined=True))
+
+    assert result.chapters == [1] and result.quarantined == []
+    assert not log.is_quarantined("ch01")
+    assert [r.released for r in log.records()] == [False, True]  # the history is kept
+
+
+def test_a_spec_that_fails_its_gate_quarantines_the_chapter_instead_of_crashing(planned, monkeypatch):
+    from storica.stages import ChapterSpecGateFailed
+    from storica.canon import Issue, Severity
+    import storica.runner as runner_module
+
+    (planned / "02_plan" / "chapters" / "ch01.spec.json").unlink()
+
+    async def failing_spec(**_):
+        raise ChapterSpecGateFailed([Issue("intent.beat_missing", Severity.BLOCKING, "b1 unassigned", "b1")])
+
+    monkeypatch.setattr(runner_module, "spec_chapter", failing_spec)
+    result = asyncio.run(run_novel(novel_dir=planned, authors_root=AUTHORS_ROOT,
+                                   llm=FakeStructuredLLM(), checkers=[], audit=False))
+
+    assert result.quarantined == ["ch01"] and result.chapters == []
+    record = QuarantineLog(planned / "05_reports").records()[0]
+    assert record.reason == "chapter spec gate failed" and "b1 unassigned" in record.issues[0]

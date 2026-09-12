@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 281 tests passing. Never yet run end-to-end against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 297 tests passing. Never yet run end-to-end against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -56,7 +56,12 @@ The three commands are all there are:
 | `status <dir>` | Canon version, chapters specced/drafted, anything quarantined |
 
 Useful flags: `--no-checkers` (structure only, no LLM judgement — fast and cheap), `--no-audit`
-(skip the whole-book final read), `--max-repairs N`.
+(skip the whole-book final read), `--max-repairs N` (default 2), `--retry-quarantined` (release
+every quarantined chapter and attempt it again — without it, a quarantined chapter is skipped on
+every later run).
+
+Exit codes: `0` done, `1` a stage failed its gate or the model refused, `2` a call needs an answer
+(replay driver), `3` a recorded answer was malformed.
 
 ---
 
@@ -114,7 +119,7 @@ return `PASS`, `REVISE` (with located issues) or `ESCALATE`.
 
 | Checker | Asks | Runs on |
 |---|---|---|
-| **Canon-consistency** | Does this contradict a canonical fact, relationship or timeline entry? | every stage output |
+| **Canon-consistency** | Does this contradict a canonical fact, relationship or timeline entry? | prose (plans are gated by schema validation plus Intent) |
 | **Intent** | Does this advance the beats it was *assigned*? Does it keep its promises? | plans and prose |
 | **Micro-sense** | Paragraph by paragraph: are details grounded, does the situation cohere, is the language load-bearing? | prose |
 | **Author-voice** | Is this the author, and inside the forbidden list? | prose |
@@ -129,7 +134,9 @@ before expensive LLM ones.
 
 **Canon-consistency is sampled three times and blocks on a majority**, because a single LLM verdict
 flags clean prose about 20% of the time. Majority decides; once blocked, repair sees the union of
-everything all three draws found. See the calibration below.
+everything all three draws found. See the calibration below. It also runs first and
+**short-circuits**: if it blocks, micro-sense, voice and vitality are not spent on that draft — they
+read the repaired text instead.
 
 **Vitality is the odd one out, on purpose.** The other four are conformance checks, so a chapter that
 matches canon, hits its beats and sounds like the author passes the whole gate no matter how inert it
@@ -143,13 +150,24 @@ because "add tension" just produces longer dead prose.
 `ESCALATE` fires when a unit contradicts canon, canon contradicts itself, or an assigned beat is
 unsatisfiable. The run does not pause. Instead:
 
-1. A fresh **adjudicator** gets the conflict, the **frozen ground truth** (the brief plus the canon
-   locked at stage 2) and the decision log, and issues exactly one binding ruling: correct the unit,
-   or — only if canon itself violates ground truth — amend canon.
+1. A fresh **adjudicator** gets the conflict, the checker's located issues, the **frozen ground
+   truth** (the brief plus the canon locked at stage 2) and the decision log, and issues exactly one
+   binding ruling: correct the unit, or — only if canon itself violates ground truth — amend canon.
 2. The ruling is appended to `05_reports/decisions.jsonl` and is **binding**. The same conflict can
-   never be reopened, which is what guarantees the run converges instead of oscillating.
+   never be reopened, and every ruling is carried into each later re-attempt of the chapter, which
+   is what guarantees the run converges instead of oscillating. A ruling has consequences: at
+   reconcile, `correct_the_unit` sends the saved draft through one grounded repair pass bound by the
+   ruling's instruction; `amend_canon` quarantines the chapter and commits nothing to canon, because
+   an excluded chapter must not leave facts behind.
 3. If repair budget runs out anyway, the chapter is **quarantined** — logged, and excluded from
-   `novel.md` rather than shipped broken.
+   `novel.md` rather than shipped broken. A chapter spec or reconcile that cannot pass its gate is
+   quarantined the same way instead of crashing the run.
+
+Quarantine is not permanent. `storica run --retry-quarantined` releases every quarantined chapter
+(the release is appended to `quarantine.jsonl`; the original record stays) and attempts it again,
+typically with a larger `--max-repairs`. Only canon (stages 1–2) and the macro arc (stage 3) have no
+chapter to quarantine into: if one of those fails its gate the CLI prints `[failed]` with the issues
+and exits 1, as does a model refusal (`[refused]`).
 
 This is the direct answer to v1's worst failure: an agent told to reconcile a contradiction invented
 a bridging fact, and the invention became canon. Repair here can only resolve *toward* something
@@ -172,6 +190,7 @@ storica/
 │   ├── runner.py          the run loop; resumable by construction
 │   ├── pipeline.py        I/O only: load from disk, run the stage, write back
 │   ├── chapter.py         one chapter's attempt loop: escalate → adjudicate → retry → quarantine
+│   ├── drafts.py          reading and writing 03_drafts/
 │   ├── brief.py           the front-door brief — immutable ground truth
 │   ├── authors.py         loads the author library
 │   ├── canon/             story_model.json: model, validation, ids, slicing, versioned store
@@ -180,15 +199,16 @@ storica/
 │   │   ├── gate.py            the shared generate → check → repair loop
 │   │   ├── prose/             prompts · selection · quality (the hand-written loop)
 │   │   └── reconcile/         schema · prompts · promote · ledger
-│   ├── checkers/          base (the one shared call) + canon_consistency, intent, micro_sense,
-│   │                      voice, vitality, auditor, consensus, defaults
+│   ├── checkers/          base (the one shared call), prose_base (the shared prose gate) +
+│   │                      canon_consistency, intent, micro_sense, voice, vitality, auditor,
+│   │                      consensus, defaults
 │   ├── adjudicator.py     binding rulings against frozen ground truth
 │   ├── reports.py         decision log, quarantine log, run report
 │   ├── assembly.py        chapters → novel.md, excluding quarantined units
 │   ├── trace.py           every filled prompt and artifact, to 04_trace/
 │   ├── llm.py             the only place the Anthropic SDK is touched; model aliases
 │   └── drivers/replay.py  run the real prompts with no API key
-├── tests/                 281 tests
+├── tests/                 297 tests
 │
 ├── authors/               author library, shared across novels — see authors/README.md
 │   ├── duerrenmatt/
@@ -196,11 +216,16 @@ storica/
 │
 ├── novels/                one folder per novel — see novels/README.md
 │   ├── _template/             empty skeleton to copy
-│   └── der-chrachen/          the v1 capture kept as reference evidence
+│   ├── der-chrachen/          the v1 capture kept as reference evidence
+│   └── der-chrachen-v2/       the P6 run: same story under v2, in progress
 │
 ├── tools/                 calibrate_checkers.py — known-answer test for the checker layer
 │                       smoke_test_api.py    — proves the live adapter works, for ~$0.001
+│                       next_call.sh         — prints the next pending replay call (run from repo root)
 ├── calibration/           its results and FINDINGS.md
+├── .claude/skills/write-novel/   the /write-novel skill: drive a run on a subscription
+├── docs/p6-handoff.md     the prompt for a fresh session to continue P6
+├── docs/proving-the-concept.md   what the replay method does and does not prove
 ├── docs/archive/          point-in-time v1 documents, not maintained
 └── legacy/                the archived v1 web app — see legacy/README.md
 ```
@@ -218,9 +243,9 @@ novels/<slug>/
     chapters/chNN.spec.json    written just in time, one chapter ahead of the prose
   03_drafts/chNN.md
   04_trace/                    every filled prompt and every artifact, per agent
-  05_reports/
+  05_reports/                  each file appears when it is first needed
     decisions.jsonl            binding rulings — the record of every conflict and how it was settled
-    quarantine.jsonl           units excluded from the book, and why
+    quarantine.jsonl           units excluded from the book, and why; a release appends, never deletes
     state.json                 which chapters have been reconciled
   06_session/                  --driver replay only: the request/response cache
   novel.md                     the assembled book
@@ -233,7 +258,7 @@ why `status` can just look at the disk.
 
 An author is a folder of assets reused across novels: `profile.yaml` (philosophy, style, critique
 rubric), `question_lines.md` (the obsessions this author has), `nudges.md`, `impression.md`, and
-annotated `examples/`. Dürrenmatt and Hemingway exist today.
+annotated `examples/` — which nothing in the pipeline reads yet. Dürrenmatt and Hemingway exist today.
 
 The author is a **generative driver, not a paint job**: their question-lines feed Stage 1 and shape
 *which story gets told*, not only how it sounds.
@@ -243,11 +268,12 @@ The author is a **generative driver, not a paint job**: their question-lines fee
 ## Development
 
 ```bash
-.venv/bin/python -m pytest -q      # 281 tests, ~1s, no API key, no network
+.venv/bin/python -m pytest -q      # 297 tests, a few seconds, no API key, no network
 ```
 
 Model aliases (`opus`, `sonnet`, `haiku`) resolve to current model IDs in exactly one place —
-`MODELS` in `src/storica/llm.py`.
+`MODELS` in `src/storica/llm.py`. The SDK is pinned to `anthropic>=0.115,<1`; 1.x changes the HTTP
+stack, so re-run `tools/smoke_test_api.py` before lifting it.
 
 Two constraints the stage schemas must obey, both from Anthropic's structured-output support:
 every model is `extra="forbid"`, and **no `Dict[...]` fields** — stages emit lists with explicit
@@ -305,25 +331,35 @@ It is set up and ready to run:
   not prove, the contamination trap that would silently invalidate it, and the scorecard for judging
   the result against the v1 findings.
 
-Run it with `/write-novel novels/der-chrachen-v2`. Expect roughly 40–60 model calls for three
-chapters at `--prose-candidates 1`, more with selection on.
+Run it with `/write-novel novels/der-chrachen-v2`. Chapter 1's spec has four scenes and a scene
+costs about ten calls at defaults, so expect roughly 120–150 model calls for three chapters at
+defaults, and 60–75 with `--checker-samples 1 --prose-candidates 1`.
 
 ### How far the run has got, and what it has already shown
 
-51 calls answered. Canon v2 established and validated, macro arc committed, chapter 1 specced and
-past its Intent check, and all three scenes of chapter 1 drafted with selection on — then **chapter 1
-was quarantined**, which is the first thing this pipeline has ever proved in anger:
+51 calls answered. Canon v2 established and validated, macro arc committed, chapter 1 specced (four
+scenes) and past its Intent check, and scenes 1–3 drafted with selection on — then **chapter 1 was
+quarantined** on scene 3, scene 4 never drafted, which is the first thing this pipeline has ever
+proved in anger:
 
 - **Selection works and is cheap.** Three drafts of scene 1 at 937 / 871 / 739 words; the selector
   declined the longest. One call, and the spread was real.
-- **The repair loop is the expensive part, not selection** — and it did not converge. Micro-sense
-  found an ungrounded date (*"Am elften März"*, against a timeline that fixes no exact day), two
-  repair passes failed to remove it, and the budget ran out.
+- **The repair loop is the expensive part, not selection** — and it did not converge. Scene 1 went
+  through two repairs and passed. On scene 3, micro-sense found an ungrounded date (*"Am elften
+  März"*, against a timeline that fixes no exact day), two repair passes failed to remove it, and
+  the budget ran out.
 - **So the chapter was excluded rather than shipped.** `05_reports/quarantine.jsonl` names the unit,
   the reason and the exact issue. That is the designed behaviour, on a real failure, unattended.
+  The drafted prose lives only inside `04_trace/*.json` until a chapter passes, so there is no
+  `03_drafts/` yet.
 
 The open question it raises is convergence economics, not correctness: two repairs was not enough
-for a small, local, precisely-stated fix. `--max-repairs` is the first dial to try.
+for a small, local, precisely-stated fix. The next pending call is the chapter 2 spec
+(`06_session/requests/03605b6b645af714.request.md`, sonnet); the run can continue past the
+quarantine as it stands, or re-try chapter 1 with `--retry-quarantined --max-repairs 4`, which is
+the first dial to turn — `--max-repairs` alone does nothing for a chapter already quarantined. The
+cached verdicts predate the fix to the consensus draw (commit `affe38b`); request hashes were kept
+stable, so the run resumes at the same call.
 
 ### What the calibration found first
 

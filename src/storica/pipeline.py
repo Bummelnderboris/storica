@@ -19,7 +19,7 @@ from typing import List, Optional, Sequence, Union
 from .adjudicator import AdjudicationFailed, Adjudicator, GroundTruth
 from .authors import load_author
 from .brief import load_brief
-from .canon import StoryModel, commit_canon, load_canon, save_canon
+from .canon import Issue, Severity, StoryModel, commit_canon, load_canon, save_canon
 from .chapter import ChapterOutcome, attempt_chapter
 from .checkers import IntentChecker, ProseChecker, default_prose_checkers
 from .drafts import load_chapter_draft, load_chapter_draft_if_present, save_chapter_draft
@@ -32,7 +32,7 @@ from .plan import (
     save_chapter_spec,
     save_macro_arc,
 )
-from .reports import DecisionLog, DecisionRecord, QuarantineLog
+from .reports import DecisionLog, DecisionRecord, QuarantineLog, RulingKind
 from .stages import (
     Flag,
     FlagKind,
@@ -43,6 +43,9 @@ from .stages import (
     develop_world_and_cast,
     reconcile_chapter,
 )
+from .stages.prose import MIN_SCENE_CHARS, SYSTEM as PROSE_SYSTEM, TAIL_CHARS
+from .stages.prose.prompts import _chapter_slice, _language, _repair_prompt
+from .stages.prose.quality import _deterministic_issues
 from .trace import Tracer
 
 PathLike = Union[str, Path]
@@ -53,11 +56,6 @@ INPUT_DIR = "00_input"
 DRAFTS_DIR = "03_drafts"
 TRACE_DIR = "04_trace"
 REPORTS_DIR = "05_reports"
-
-# How much of the previous chapter rides into the next one, to inherit its rhythm without the
-# model continuing a paragraph instead of opening a chapter. Matches `stages.prose.TAIL_CHARS`.
-PREVIOUS_TAIL_CHARS = 800
-
 
 def _tracer(novel_dir: Path, trace: bool) -> Tracer:
     return Tracer(novel_dir / TRACE_DIR if trace else None)
@@ -245,7 +243,9 @@ async def draft_chapter(
             else default_prose_checkers(llm, tracer, samples=samples)
         ),
         tracer=tracer,
-        previous_tail=(previous_draft or "").strip()[-PREVIOUS_TAIL_CHARS:],
+        # How much of the previous chapter rides into the next one, to inherit its rhythm without
+        # the model continuing a paragraph instead of opening a chapter.
+        previous_tail=(previous_draft or "").strip()[-TAIL_CHARS:],
         max_repairs=max_repairs,
         max_escalations=max_escalations,
         model=model,
@@ -267,12 +267,19 @@ async def reconcile_chapter_into_canon(
     trace: bool = True,
 ) -> ReconcileResult:
     """
-    Run stage 6 and commit the result.
+    Run stage 6, act on what was ruled, and commit the result.
 
     Contradictions between the draft and canon are **adjudicated, not absorbed**: each one gets a
-    binding ruling logged to `decisions.jsonl`, and canon keeps its version of the fact unless the
-    adjudicator finds canon itself violates ground truth. This is the inverse of v1's guardian,
-    which wrote whatever the prose said into the bible and never looked back (F10).
+    binding ruling logged to `decisions.jsonl`. Canon keeps its version of the fact in every case.
+    This is the inverse of v1's guardian, which wrote whatever the prose said into the bible and
+    never looked back (F10). What a ruling then *does*:
+
+    - `correct_the_unit` — the saved draft gets one grounded repair pass bound by the ruling's
+      instruction and is re-saved. (The checkers passed this prose before the reconciler
+      disagreed with it; the ruling, not the reconciler, is what makes the draft wrong.)
+    - `amend_canon` — canon is never rewritten from a chapter-level conflict (the v1 ratchet), so
+      the chapter is quarantined for a human to apply the amendment, and **nothing** from it is
+      committed: an excluded chapter must not leave facts behind in canon.
     """
     novel_dir = Path(novel_dir)
     canon = load_canon(novel_dir / CANON_DIR)
@@ -293,12 +300,73 @@ async def reconcile_chapter_into_canon(
     )
 
     if adjudicate:
-        await adjudicate_flags(
+        records = await adjudicate_flags(
             novel_dir=novel_dir, chapter=chapter, flags=result.flagged, llm=llm, tracer=tracer
         )
+        amendments = [r for r in records if r.ruling.kind == RulingKind.AMEND_CANON]
+        if amendments:
+            QuarantineLog(novel_dir / REPORTS_DIR).add(
+                f"ch{chapter:02d}",
+                "reconcile ruling requires a canon amendment",
+                [f"{r.conflict} -> {r.ruling.canon_amendment}" for r in amendments],
+            )
+            return result  # canon deliberately NOT committed
+        corrections = [r for r in records if r.ruling.kind == RulingKind.CORRECT_UNIT]
+        if corrections:
+            await correct_draft_by_ruling(
+                novel_dir=novel_dir, chapter=chapter, canon=canon, spec=spec,
+                records=corrections, llm=llm, tracer=tracer,
+            )
 
     commit_canon(result.canon, novel_dir / CANON_DIR)
     return result
+
+
+async def correct_draft_by_ruling(
+    *,
+    novel_dir: PathLike,
+    chapter: int,
+    canon: StoryModel,
+    spec: ChapterSpec,
+    records: Sequence[DecisionRecord],
+    llm: StructuredLLM,
+    tracer: Optional[Tracer] = None,
+    model: str = stage_model("prose"),
+    max_tokens: int = 32000,
+) -> str:
+    """
+    One grounded repair of the saved draft, bound by the rulings that found it wrong.
+
+    Uses the same repair contract as the prose gate — fix what is named, change nothing else,
+    invent no fact — with each ruling's instruction as the issue to fix. A repair that comes back
+    as a stub is discarded and the previous draft kept, so a bad call cannot blank a chapter.
+    """
+    novel_dir = Path(novel_dir)
+    tracer = tracer or Tracer(None)
+    unit = f"ch{chapter:02d}"
+    current = load_chapter_draft(novel_dir / DRAFTS_DIR, chapter)
+    issues = [
+        Issue(
+            "ruling.correct_the_unit", Severity.BLOCKING,
+            f"{r.ruling.instruction} (binding: {r.ruling.binding_summary})", r.unit,
+        )
+        for r in records
+    ]
+    prompt = _repair_prompt(
+        unit=f"chapter {chapter}", current=current, issues=issues,
+        canon_block=_chapter_slice(spec, canon), language=_language(canon), regenerate_prompt="",
+    )
+    text = await llm.generate(prompt=prompt, system=PROSE_SYSTEM, model=model, max_tokens=max_tokens)
+    stub = _deterministic_issues(text, unit, MIN_SCENE_CHARS)
+    tracer.record(
+        f"{unit}_prose_ruling_repair", prompt=prompt, system=PROSE_SYSTEM, model=model,
+        artifact=text,
+        note=f"{len(records)} binding ruling(s)" + ("; repair discarded as a stub" if stub else ""),
+    )
+    if stub:
+        return current
+    save_chapter_draft(text, novel_dir / DRAFTS_DIR, chapter)
+    return text
 
 
 async def adjudicate_flags(

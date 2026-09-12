@@ -40,7 +40,7 @@ CHAPTER_SEPARATOR = "\n\n---\n\n"
 
 
 def chapter_unit(chapter: int) -> str:
-    """The unit label chapters are quarantined under — must match `stages/prose.py`'s prefix."""
+    """The unit label chapters are quarantined under — must match the `chNN` prefix `stages/prose` writes under."""
     return f"ch{chapter:02d}"
 
 

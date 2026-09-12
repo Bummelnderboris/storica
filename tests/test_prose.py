@@ -1,7 +1,7 @@
 """
 Tests for P4 stage 5: grounded, scene-by-scene prose and the `03_drafts/` store.
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 Offline: every LLM call is served by `FakeStructuredLLM` and every checker by `FakeProseChecker`,
@@ -323,6 +323,43 @@ def test_the_repair_prompt_names_the_fix_and_forbids_inventing_a_bridging_fact(a
     assert "byte-identical" in repair
     assert "canon wins" in repair
     assert "You may not invent a fact" in repair
+
+
+def test_a_canon_contradiction_short_circuits_the_other_readers(author):
+    """defaults.py's promise, kept: a contradiction makes texture and voice judgements moot."""
+    llm = FakeStructuredLLM(texts=[_prose("Erste Fassung"), _prose("Reparierte Fassung")])
+    canon_reader = FakeProseChecker(_verdict(Decision.REVISE, issues=[_issue()]), name="canon_consistency")
+    voice = FakeProseChecker(name="voice")
+
+    result = _write(llm, author, spec=_spec(scenes=[S1]), checkers=[canon_reader, voice])
+
+    assert result.repairs == 1 and result.is_valid
+    # voice was skipped on the contradicted draft, then ran on the repaired scene and the chapter
+    assert voice.prose[0].startswith("Reparierte Fassung")
+    assert voice.prose[1].startswith("# Das Protokoll")
+    assert len(canon_reader.prose) == 3
+
+
+def test_a_blocking_texture_issue_does_not_short_circuit(author):
+    llm = FakeStructuredLLM(texts=[_prose("Erste Fassung"), _prose("Reparierte Fassung")])
+    micro = FakeProseChecker(_verdict(Decision.REVISE, issues=[_issue()]), name="micro_sense")
+    voice = FakeProseChecker(name="voice")
+
+    _write(llm, author, spec=_spec(scenes=[S1]), checkers=[micro, voice])
+
+    assert len(voice.prose) == 3   # repair sees the union of everything the readers found
+
+
+def test_when_every_candidate_is_a_stub_the_last_one_goes_to_repair_without_another_draw(author):
+    llm = FakeStructuredLLM(texts=["kurz 1", "kurz 2", "kurz 3", _prose("Reparierte Fassung")])
+    checker = FakeProseChecker()
+
+    result = _write(llm, author, spec=_spec(scenes=[S1]), checkers=[checker], n_candidates=3)
+
+    assert result.is_valid and result.repairs == 1
+    generates = [c for c in llm.calls if c.schema == "<text>"]
+    assert len(generates) == 4                       # 3 draws + 1 repair, no 4th draw
+    assert "kurz 3" in generates[3].prompt           # the last stub is what was repaired
 
 
 def test_a_warning_verdict_does_not_spin_the_repair_loop(author):

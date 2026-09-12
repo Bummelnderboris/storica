@@ -27,10 +27,11 @@ from .brief import Brief, save_brief
 from .canon import load_canon
 from .drafts import drafted_chapters
 from .drivers import MalformedResponse, ReplayLLM, ResponseNeeded
-from .llm import AnthropicStructuredLLM, StructuredLLM
+from .llm import AnthropicStructuredLLM, LLMRefusal, StructuredLLM
 from .plan import load_macro_arc, macro_arc_path, specced_chapters
 from .reports import QuarantineLog
 from .runner import run_novel
+from .stages import GateFailed
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_AUTHORS = REPO_ROOT / "authors"
@@ -116,6 +117,7 @@ def cmd_run(args: argparse.Namespace) -> int:
             max_repairs=args.max_repairs,
             n_candidates=args.prose_candidates,
             samples=args.checker_samples,
+            retry_quarantined=args.retry_quarantined,
         ))
     except ResponseNeeded as pause:
         # Not a failure: the replay driver has run out of recorded answers.
@@ -127,6 +129,14 @@ def cmd_run(args: argparse.Namespace) -> int:
         # from "fix the one you wrote" (3) without parsing text.
         print(f"\n[malformed] {bad}\n")
         return 3
+    except GateFailed as failed:
+        # Canon or the macro arc could not pass its gate. There is no chapter to quarantine at
+        # that point, so the run stops — with the issues, not a traceback.
+        print(f"\n[failed] a stage could not pass its gate within the repair budget:\n{failed}\n")
+        return 1
+    except LLMRefusal as refusal:
+        print(f"\n[refused] the model declined a call: {refusal}\n")
+        return 1
 
     print(f"chapters written: {result.chapters or '(none)'}")
     if result.quarantined:
@@ -205,6 +215,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--checker-samples", type=int, default=3, dest="checker_samples",
         help="draws per canon-consistency check; blocks only on a majority. 1 disables sampling. "
              "Measured: a single draw flags clean text ~20%% of the time (calibration/FINDINGS.md C4).",
+    )
+    run.add_argument(
+        "--retry-quarantined", action="store_true", dest="retry_quarantined",
+        help="release every quarantined chapter and attempt it again (combine with a larger "
+             "--max-repairs). The original quarantine record is kept; a release is appended.",
     )
     run.add_argument("--no-audit", action="store_true", help="skip the whole-book final audit")
     run.add_argument("--no-checkers", action="store_true", help="skip LLM checkers (structure only)")

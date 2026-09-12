@@ -96,7 +96,9 @@ async def _generate_candidates(
         )
         if not _deterministic_issues(text, unit, min_chars):
             candidates.append(text)
-    return candidates
+    # Every draw a stub: keep the last one so the repair loop sees the real failure and reports
+    # it, rather than paying for another draw or raising something less informative here.
+    return candidates or list(texts[-1:])
 
 
 async def _select(

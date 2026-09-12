@@ -60,6 +60,7 @@ Repeat until done:
 | Exit | Meaning | Do |
 |---|---|---|
 | `0` | The run finished | Go to *Finishing* |
+| `1` | Canon or the macro arc failed its gate (`[failed]`, with the issues), or the model refused a call (`[refused]`) | Stop. Report the printed issues verbatim. Do not retry or patch around it |
 | `2` | A call needs an answer | Continue to step 3 |
 | `3` | A recorded answer does not fit its schema | Delete the named response file, then re-dispatch that call with the validation error appended to the subagent's prompt |
 | other | A real bug | Stop. Report the traceback verbatim. Do not try to patch around it |
@@ -109,10 +110,18 @@ exactly this prompt and nothing added:
 
 **6. Go back to step 1.** The answered call now replays from cache and the pipeline moves on.
 
+A chapter that exhausts its repair budget, or fails its spec or reconcile gate, is **quarantined**,
+not a stop: the run continues with the next chapter and the reason lands in
+`05_reports/quarantine.jsonl`. Mention it in your next report and keep going. A quarantined chapter
+is skipped on every later run unless the human asks for `--retry-quarantined` (usually with a larger
+`--max-repairs`); do not add that flag on your own.
+
 ## Pace and reporting
 
-A 3-chapter novel is roughly 40–60 calls; longer books scale from there. Work through them steadily
-without checking in — the run is meant to be unattended.
+A scene costs about ten calls at defaults, and a chapter has three to four scenes, so a 3-chapter
+novel is roughly 120–150 calls at defaults and 60–75 with `--checker-samples 1 --prose-candidates 1`;
+longer books scale from there. Work through them steadily without checking in — the run is meant to
+be unattended.
 
 Report only every ~10 calls, in one line: the stage names answered, the count so far, and anything
 quarantined. Do not summarise the story. Do not quote the prose. You have not read it and must not.

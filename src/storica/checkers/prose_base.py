@@ -1,8 +1,8 @@
 """
 The interface every prose checker implements (DESIGN §6).
 
-Prose is checked by *several* independent readers at once — micro-sense, author-voice,
-canon-consistency, intent — and the prose loop must be able to run them without knowing which is
+Prose is checked by *several* independent readers at once — canon-consistency, micro-sense,
+author-voice, vitality — and the prose loop must be able to run them without knowing which is
 which. One signature, one verdict type, so adding a reader is a list entry in
 `checkers/defaults.py` rather than a change to the loop.
 

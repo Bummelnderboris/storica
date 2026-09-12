@@ -1,7 +1,7 @@
 """
 Tests for the run trace.
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 The trace is the evidence that an unattended run can be reconstructed afterwards, so the thing

@@ -89,7 +89,8 @@ Rules:
 - Anything the draft says that the slice says otherwise about goes in `contradictions` — including
   a role, a relationship, a date, or a cause of death. Do NOT resolve it. Do NOT choose a winner.
   Do NOT invent a fact under which both could be true. Canon is ground truth; the draft is a draft.
-- A fact the slice already states is NOT a contradiction and does not need reporting as new — but
-  reporting it again is harmless, it will be recognised.
+- A fact the slice already states is NOT a contradiction. Do NOT report it again, and do NOT
+  report it reworded: a restatement in different words is indistinguishable from a changed fact
+  and would be flagged as a contradiction. Report only what is new or what disagrees.
 - For the ledger: `landed` is about the page, not the plan. If the chapter was told to pay a motif
   off and the payoff is not in the text, say landed=false and name what is missing."""

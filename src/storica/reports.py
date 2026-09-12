@@ -96,6 +96,7 @@ class QuarantineRecord(BaseModel):
     reason: str
     issues: List[str]
     at: str
+    released: bool = False  # a later record that lifts the quarantine (`--retry-quarantined`)
 
 
 class DecisionLog:
@@ -158,7 +159,13 @@ class DecisionLog:
 
 
 class QuarantineLog:
-    """Units excluded from the finished novel because they could not be made correct."""
+    """
+    Units excluded from the finished novel because they could not be made correct.
+
+    A quarantine can be *released* — appended, never deleted — so a person can raise the repair
+    budget and try the unit again without losing the record of why it was dropped the first time.
+    A unit is quarantined iff its most recent record is not a release.
+    """
 
     def __init__(self, reports_dir: Optional[PathLike]):
         self.reports_dir = Path(reports_dir) if reports_dir is not None else None
@@ -188,8 +195,22 @@ class QuarantineLog:
                 fh.write(record.model_dump_json() + "\n")
         return record
 
+    def release(self, unit: str, reason: str, at: Optional[str] = None) -> QuarantineRecord:
+        """Lift a quarantine so the next run re-attempts the unit. Appended, like everything here."""
+        record = QuarantineRecord(unit=unit, reason=reason, issues=[], at=at or _now(), released=True)
+        if self.path is None:
+            self._memory.append(record)
+        else:
+            with self.path.open("a", encoding="utf-8") as fh:
+                fh.write(record.model_dump_json() + "\n")
+        return record
+
     def units(self) -> List[str]:
-        return [r.unit for r in self.records()]
+        """Units currently quarantined, in first-quarantined order."""
+        latest: Dict[str, bool] = {}
+        for r in self.records():
+            latest[r.unit] = r.released
+        return [unit for unit, released in latest.items() if not released]
 
     def is_quarantined(self, unit: str) -> bool:
         return unit in set(self.units())

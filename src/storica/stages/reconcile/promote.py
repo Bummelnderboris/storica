@@ -18,9 +18,6 @@ from typing import List, Optional
 from ...canon import StoryModel, TimelineEvent, norm, slug
 from .schema import ChapterExtraction, Flag, FlagKind, Promotion, PromotionKind
 
-_slug = slug
-_norm = norm
-
 def _resolve_character(canon: StoryModel, ref: str, surface_name: str = "") -> Optional[str]:
     """
     Map whatever the extractor called a character onto a canon id, or None.
@@ -34,8 +31,8 @@ def _resolve_character(canon: StoryModel, ref: str, surface_name: str = "") -> O
     hit = canon.resolve_name(ref) if ref else None
     if hit:
         return hit
-    if ref and _slug(ref) in canon.characters:
-        return _slug(ref)
+    if ref and slug(ref) in canon.characters:
+        return slug(ref)
     return canon.resolve_name(surface_name) if surface_name.strip() else None
 
 
@@ -101,7 +98,7 @@ def _promote_character_facts(
             ))
             continue
 
-        key = _slug(f.key)
+        key = slug(f.key)
         if key and f.value.strip():
             current = canon.characters[cid].facts.get(key)
             if current is None:
@@ -112,7 +109,7 @@ def _promote_character_facts(
                     value=f.value.strip(),
                     evidence=f.evidence,
                 ))
-            elif _norm(current) != _norm(f.value):
+            elif norm(current) != norm(f.value):
                 # Canon wins by construction. We record the disagreement and change nothing.
                 flagged.append(Flag(
                     kind=FlagKind.CONTRADICTION,
@@ -160,7 +157,7 @@ def _promote_world_facts(
     canon: StoryModel, extraction: ChapterExtraction, promoted: List[Promotion], flagged: List[Flag]
 ) -> None:
     for w in extraction.world_facts:
-        key = _slug(w.key)
+        key = slug(w.key)
         if not key or not w.value.strip():
             continue
         current = canon.world_facts.get(key)
@@ -169,7 +166,7 @@ def _promote_world_facts(
             promoted.append(Promotion(
                 kind=PromotionKind.WORLD_FACT, ref=f"world:{key}", value=w.value.strip(), evidence=w.evidence
             ))
-        elif _norm(current) != _norm(w.value):
+        elif norm(current) != norm(w.value):
             flagged.append(Flag(
                 kind=FlagKind.CONTRADICTION,
                 ref=f"world:{key}",
@@ -195,16 +192,16 @@ def _promote_timeline(
     dropped and flagged rather than promoted with a dangling reference — a broken canon is worse
     than a missing entry.
     """
-    known_events = {_norm(ev.event): ev.id for ev in canon.timeline}
+    known_events = {norm(ev.event): ev.id for ev in canon.timeline}
     next_order = max((ev.order or 0 for ev in canon.timeline), default=0)
 
     for i, t in enumerate(extraction.timeline):
         if not t.event.strip():
             continue
-        if _norm(t.event) in known_events:
+        if norm(t.event) in known_events:
             continue                                   # consistent — already on the timeline
 
-        tid = _slug(t.id) or f"ch{chapter:02d}_e{i + 1}"
+        tid = slug(t.id) or f"ch{chapter:02d}_e{i + 1}"
         if any(ev.id == tid for ev in canon.timeline):
             flagged.append(Flag(
                 kind=FlagKind.CONTRADICTION,
@@ -229,7 +226,7 @@ def _promote_timeline(
             continue
 
         next_order += 1
-        known_events[_norm(t.event)] = tid
+        known_events[norm(t.event)] = tid
         canon.timeline.append(TimelineEvent(
             id=tid,
             when=t.when.strip() or f"ch{chapter}",

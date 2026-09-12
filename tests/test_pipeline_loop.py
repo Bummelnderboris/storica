@@ -1,7 +1,7 @@
 """
 Integration tests for the autonomous chapter loop: spec -> prose -> reconcile.
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 These are the tests for the properties that let the pipeline run unattended (DESIGN §6.5): an
@@ -58,6 +58,7 @@ from storica.plan import (
 )
 from storica.reports import DecisionLog, QuarantineLog, Ruling, RulingKind
 from storica.stages.reconcile import (
+    CharacterFactExtract,
     AliasExtract,
     ChapterExtraction,
     ContradictionExtract,
@@ -244,6 +245,24 @@ def test_an_escalation_is_adjudicated_and_the_ruling_binds_the_retry(novel):
     assert "Do not call him a notary." in retry_prompt
 
 
+def test_every_ruling_so_far_binds_the_next_attempt(novel):
+    """A second escalation must not make the chapter forget what the first one settled."""
+    checker = ScriptedChecker([_escalate("conflict A"), _escalate("conflict B")])
+    first = _ruling(instruction="Stettler is the Amtsarzt. Do not call him a notary.")
+    second = _ruling(instruction="The certificate is signed on the second evening, not the first.",
+                     binding_summary="signed on the second evening")
+    llm = FakeStructuredLLM(responses=[first, second], texts=[PROSE, PROSE, PROSE])
+
+    outcome = _draft(novel, llm, checkers=[checker], max_escalations=2)
+
+    assert not outcome.quarantined and len(outcome.rulings) == 2
+    third_attempt = llm.calls[-1].prompt
+    assert "Do not call him a notary." in third_attempt
+    assert "second evening, not the first" in third_attempt
+    # the adjudicator was shown what the checker actually found, not just a label
+    assert "cannot resolve" in llm.calls[1].prompt
+
+
 def test_repeated_escalation_is_bounded_and_quarantines(novel):
     checker = ScriptedChecker([_escalate("conflict A"), _escalate("conflict B"), _escalate("conflict C")])
     llm = FakeStructuredLLM(responses=[_ruling(), _ruling()], texts=[PROSE, PROSE, PROSE])
@@ -320,7 +339,7 @@ def test_a_contradiction_is_adjudicated_and_canon_keeps_its_fact(novel):
     extraction = _extraction(contradictions=[ContradictionExtract(
         canon_ref="rutz", canon_says="office: village priest",
         prose_says="Rutz is the village creditor", evidence="der Gläubiger Rutz")])
-    llm = FakeStructuredLLM(responses=[extraction, _ruling()])
+    llm = FakeStructuredLLM(responses=[extraction, _ruling()], texts=[PROSE + "\nKorrigiert."])
 
     result = asyncio.run(reconcile_chapter_into_canon(novel_dir=novel, chapter=1, llm=llm))
 
@@ -330,11 +349,63 @@ def test_a_contradiction_is_adjudicated_and_canon_keeps_its_fact(novel):
     assert len(logged) == 1 and "rutz" in logged[0].unit
 
 
+def test_a_correct_the_unit_ruling_repairs_the_saved_draft(novel):
+    """A ruling that says the draft is wrong must reach the draft — not only the log."""
+    _drafted(novel)
+    extraction = _extraction(contradictions=[ContradictionExtract(
+        canon_ref="rutz", canon_says="office: village priest",
+        prose_says="Rutz is the village creditor", evidence="der Gläubiger Rutz")])
+    llm = FakeStructuredLLM(responses=[extraction, _ruling()], texts=[PROSE + "\nKorrigiert."])
+
+    asyncio.run(reconcile_chapter_into_canon(novel_dir=novel, chapter=1, llm=llm))
+
+    repair = llm.calls[-1]
+    assert repair.schema == "<text>"
+    assert "Do not call him a notary." in repair.prompt              # the ruling's instruction
+    assert "Canon slice (SOURCE OF TRUTH" in repair.prompt           # grounded like every repair
+    assert load_chapter_draft(novel / "03_drafts", 1).endswith("Korrigiert.")
+    assert load_canon(novel / "01_canon").version == 2               # canon still committed
+
+
+def test_a_stub_ruling_repair_is_discarded_and_the_draft_kept(novel):
+    _drafted(novel)
+    extraction = _extraction(contradictions=[ContradictionExtract(
+        canon_ref="rutz", canon_says="office: village priest",
+        prose_says="creditor", evidence="x")])
+    llm = FakeStructuredLLM(responses=[extraction, _ruling()], texts=["zu kurz"])
+
+    asyncio.run(reconcile_chapter_into_canon(novel_dir=novel, chapter=1, llm=llm))
+
+    assert load_chapter_draft(novel / "03_drafts", 1) == PROSE
+
+
+def test_an_amend_canon_ruling_at_reconcile_quarantines_and_commits_nothing(novel):
+    """An excluded chapter must not leave its facts behind in canon."""
+    _drafted(novel)
+    extraction = _extraction(
+        character_facts=[CharacterFactExtract(character_id="stettler", surface_name="Stettler",
+                                              key="habit", value="counts the steps", evidence="x")],
+        contradictions=[ContradictionExtract(
+            canon_ref="stettler", canon_says="profession: Amtsarzt",
+            prose_says="Notar", evidence="der Notar Stettler")],
+    )
+    amend = _ruling(RulingKind.AMEND_CANON, canon_amendment="set stettler.profession to Notar",
+                    ground_truth_violation="the brief calls him a notary")
+    llm = FakeStructuredLLM(responses=[extraction, amend])
+
+    asyncio.run(reconcile_chapter_into_canon(novel_dir=novel, chapter=1, llm=llm))
+
+    log = QuarantineLog(novel / "05_reports")
+    assert log.is_quarantined("ch01") and "canon amendment" in log.records()[0].reason
+    canon = load_canon(novel / "01_canon")
+    assert canon.version == 1 and "habit" not in canon.characters["stettler"].facts
+
+
 def test_an_alias_collision_is_adjudicated_too(novel):
     _drafted(novel)
     extraction = _extraction(aliases=[AliasExtract(
         character_id="rutz", alias="der Amtsarzt", evidence="der Amtsarzt Rutz")])
-    llm = FakeStructuredLLM(responses=[extraction, _ruling()])
+    llm = FakeStructuredLLM(responses=[extraction, _ruling()], texts=[PROSE])
 
     result = asyncio.run(reconcile_chapter_into_canon(novel_dir=novel, chapter=1, llm=llm))
 

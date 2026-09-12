@@ -185,7 +185,3 @@ critique_rubric:
     - "Adverbs modifying dialogue"
     - "Long interior monologues"
     - "Sentimental tone"
-  weight_voice: 0.45
-  weight_theme: 0.20
-  weight_structure: 0.15
-  weight_language: 0.20

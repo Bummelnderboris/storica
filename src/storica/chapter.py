@@ -31,7 +31,7 @@ from .checkers import Escalation, ProseChecker
 from .llm import StructuredLLM, stage_model
 from .plan import ChapterSpec, MacroArc
 from .reports import DecisionRecord, QuarantineLog, RulingKind
-from .stages import ProseGateFailed, ReconcileResult, write_chapter
+from .stages import ProseGateFailed, write_chapter
 from .trace import Tracer
 
 
@@ -42,7 +42,6 @@ class ChapterOutcome:
     chapter: int
     spec: Optional[ChapterSpec] = None
     draft: Optional[str] = None
-    reconcile: Optional[ReconcileResult] = None
     rulings: List[DecisionRecord] = field(default_factory=list)
     quarantined: bool = False
     reason: str = ""
@@ -108,9 +107,12 @@ async def attempt_chapter(
                 return quarantined(
                     f"escalated {attempt + 1}x without resolution: {esc.conflict}", [esc.conflict]
                 )
+            located = "; ".join(f"{i.unit}: {i.fix_hint}" for i in esc.verdict.issues) or "(none located)"
             try:
                 record = await adjudicator.rule(
-                    unit=esc.unit, conflict=esc.conflict, context=f"chapter {chapter} prose"
+                    unit=esc.unit,
+                    conflict=esc.conflict,
+                    context=f"chapter {chapter} prose — {esc.verdict.summary}\nissues: {located}",
                 )
             except AdjudicationFailed as failure:
                 return quarantined(f"adjudication failed: {failure.reason}", [esc.conflict])
@@ -124,7 +126,9 @@ async def attempt_chapter(
                     f"ruling requires a canon amendment: {record.ruling.canon_amendment}",
                     [esc.conflict],
                 )
-            guidance = record.ruling.instruction
+            # Every ruling so far binds the re-attempt, not only the latest one: a second
+            # escalation must not make the chapter forget what the first one settled.
+            guidance = "\n".join(g for g in (guidance, record.ruling.instruction) if g)
             continue
 
         outcome.draft = result.text

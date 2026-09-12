@@ -114,6 +114,15 @@ Replay has done its job when:
    locally-fluent nonsense (the three failure classes in DESIGN §2);
 3. the prompts have stopped needing edits between runs.
 
+A quarantine along the way does not contradict condition 1; it is the gate doing its job, and a run
+that reveals blocking is a successful *run* — the [handoff](p6-handoff.md) says so and means it.
+What it is not is a finished *book*. So after a quarantine, read `05_reports/quarantine.jsonl` and
+the repair rounds in `04_trace/` first: if the issue is real and precisely located (P6's was — an
+ungrounded date), release the chapter with `--retry-quarantined --max-repairs 4` and see whether the
+loop converges given room; if the repairs were not improving anything, suspect the gate (C6 again)
+before the prose, and fix the prompt. Either way the run continues; the book is only done when
+condition 1 holds on the final assembly.
+
 Condition 3 matters most. Every prompt fix found under replay is a fix you did not pay for. Switch
 when you stop finding them — then run the same book on `--driver anthropic` and compare. Differences
 at that point are attributable to constrained decoding and call conditions, which is a small, sharp

@@ -1,7 +1,7 @@
 """
 Tests for P3: the macro arc, just-in-time chapter specs, the meaning ledger, and the Intent checker.
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 Offline: every LLM call is served by `FakeStructuredLLM`, so what is under test is the plan

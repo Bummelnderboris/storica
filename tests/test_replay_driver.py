@@ -1,7 +1,7 @@
 """
 Tests for the replay driver — running the pipeline with no API key.
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 The behaviour that matters: a call with no recorded answer pauses the run with a readable request

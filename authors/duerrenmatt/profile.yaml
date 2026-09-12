@@ -209,7 +209,3 @@ critique_rubric:
     - "Erklärende Psychologie statt Verhalten"
     - "Unkomplizierte moralische Urteile"
     - "Gerechte Auflösung der Konflikte"
-  weight_voice: 0.40
-  weight_theme: 0.25
-  weight_structure: 0.20
-  weight_language: 0.15

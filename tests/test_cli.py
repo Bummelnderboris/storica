@@ -200,3 +200,26 @@ def test_an_empty_env_assignment_is_not_loaded_as_a_credential(tmp_path, monkeyp
     import os
     assert "ANTHROPIC_API_KEY" not in os.environ, "an empty assignment must not be exported"
     assert os.environ["SOMETHING_REAL"] == "value", "real values must still load"
+
+
+def test_run_returns_1_when_canon_or_the_arc_cannot_pass_its_gate(tmp_path, capsys, monkeypatch):
+    """No chapter to quarantine that early — the run stops with the issues, not a traceback."""
+    import storica.cli as cli
+    from storica.canon import Issue, Severity
+    from storica.stages import CanonGateFailed
+
+    assert _new(tmp_path) == 0
+
+    async def failing(**_):
+        raise CanonGateFailed([Issue("ref.relationship", Severity.BLOCKING, "a_ghost is nobody", "a_ghost")])
+
+    monkeypatch.setattr(cli, "run_novel", failing)
+    assert main(["run", str(tmp_path / "book")]) == 1
+    out = capsys.readouterr().out
+    assert "[failed]" in out and "a_ghost is nobody" in out
+
+
+def test_retry_quarantined_is_off_by_default_and_parses():
+    parser = build_parser()
+    assert parser.parse_args(["run", "x"]).retry_quarantined is False
+    assert parser.parse_args(["run", "x", "--retry-quarantined", "--max-repairs", "4"]).retry_quarantined

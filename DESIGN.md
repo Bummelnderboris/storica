@@ -95,7 +95,7 @@ authors/
     impression.md              # "what it feels like to read them"
 novels/
   <slug>/                      # one novel = one folder
-    00_input/                  # spark, nudges, philosophical questions, user Story-DNA, author ref
+    00_input/brief.yaml        # author_id, spark, thoughts, question_lines, nudges, forbidden, language, chapter_count
     01_canon/
       story_model.json         # THE source of truth — structured, versioned, validated
       history/                 # every accepted canon version (audit trail of changes)
@@ -105,7 +105,8 @@ novels/
     03_drafts/
       ch03.md                  # prose per chapter (+ scene units if used)
     04_trace/                  # every filled prompt + artifact per agent (our capture format)
-    05_reports/                # checker verdicts, promote/reject decisions, repair logs
+    05_reports/                # decisions.jsonl, quarantine.jsonl, state.json
+    06_session/                # replay driver only: request/response cache
     novel.md                   # assembled output
 ```
 
@@ -189,7 +190,7 @@ Each stage **reads canon, writes canon (or plan), and is gated by the verificati
 |---|---|---|---|---|
 | 0 | **Author model** | `authors/<id>/*` | in-memory author object (obsessions, question-lines, signatures) | — |
 | 1 | **Conception** | input × author model | `canon.premise` (generate a few candidate "stories this author would tell"; pick/merge) | Opus |
-| 2 | **World & cast → canon** | premise, input, author | `canon.characters/relationships/world_facts/timeline/constraints` — **structured, validated** | Sonnet |
+| 2 | **World & cast → canon** | premise, input, author | `canon.characters/relationships/world_facts/timeline/constraints` — **structured, validated**; the brief outranks the model on `language` and `chapter_count` | Sonnet |
 | 3 | **Macro-arc** | full canon | `02_plan/macro_arc.json` — acts, turning points, per-character arc beats, **motif/promise schedule**, tension curve (all by ID) | Sonnet |
 | 4 | **Chapter spec (JIT)** | full canon + macro_arc | `chapters/chNN.spec.json` — purpose, arc-beats-to-advance (IDs), setups/payoffs (IDs), entry/exit state, POV | Sonnet |
 | 5 | **Prose** | chapter spec + **full canon slice** | `03_drafts/chNN.md` — *k* drafts per scene, then select (§5.1) | Opus |
@@ -212,7 +213,8 @@ which carries the actual book, did not.
 
 Cost shape matters or this gets switched off: k drafts cost **k generate calls plus one selection
 call**, never k full checker passes. Deterministic stub-filtering runs before the selector, so no
-judgement is ever spent comparing against an empty draft. The prompts are identical across drafts on
+judgement is ever spent comparing against an empty draft; if every candidate is a stub, the last
+one goes straight into the repair loop rather than costing another generate call. The prompts are identical across drafts on
 purpose — steering each toward "a darker version" would make it a choice between instructions rather
 than between imaginations.
 
@@ -231,7 +233,7 @@ if needed, trigger repair.
 
 | Checker | Question it answers | Fires on |
 |---|---|---|
-| **Canon-Consistency** | Does this unit contradict any canonical fact/relationship/timeline? (structured diff) | every stage output |
+| **Canon-Consistency** | Does this unit contradict any canonical fact/relationship/timeline? (structured diff) | prose (5); plan units (3,4) are gated by schema validation plus Intent |
 | **Intent / Meaning** | Does this unit advance the arc-beats / keep the promises it was *assigned*? Does it earn its place? | plan units (3,4) and prose (5) |
 | **Micro-Sense** | Read paragraph-by-paragraph: are details grounded in canon, does the situation cohere, is the language load-bearing (not filler/hallucination)? | prose only (5) |
 | **Author-Voice** | Is this the author's voice + within `constraints.forbidden`? | prose only (5) |
@@ -273,7 +275,9 @@ retune it.
 - Checkers run on the **smallest meaningful unit** (a paragraph/scene for Micro-Sense, the chapter
   for Intent, the whole diff for Canon-Consistency) so a problem is localized, not averaged away.
 - Cheap checkers first (Canon-Consistency is largely structural/deterministic), expensive LLM
-  checkers only on what passes — reclaims the F3 cost.
+  checkers only on what passes — reclaims the F3 cost. On prose this is a short-circuit: if
+  canon-consistency blocks, micro-sense, voice and vitality are not run on that draft; they read
+  the repaired text.
 
 ### 6.1 Sampling: majority decides, union reports
 
@@ -335,7 +339,10 @@ internally inconsistent, or an assigned beat is unsatisfiable. Instead of pausin
    - *Spawn a specialist* — emit a new sub-task + generated instructions for a fresh agent
      (e.g. "timeline underspecified around event t7 — run a timeline-repair agent with these rules").
 2. The ruling is appended to an **immutable decision log** (`05_reports/decisions.jsonl`) and becomes
-   binding: the same conflict can never be re-opened, which guarantees **convergence** (no oscillation).
+   binding: the same conflict can never be re-opened, and every earlier ruling rides into each later
+   re-attempt of the chapter, which guarantees **convergence** (no oscillation). Rulings act: at
+   reconcile, *correct the unit* triggers one grounded repair pass on the saved draft, bound by the
+   ruling's instruction; *amend canon* quarantines the chapter and commits nothing to canon.
 3. The spawned work runs the normal write→check cycle; if *it* escalates, it inherits the decision log,
    so each round strictly reduces open conflicts.
 
@@ -343,9 +350,15 @@ internally inconsistent, or an assigned beat is unsatisfiable. Instead of pausin
 - **Immutable ground truth**: the brief and the Phase-2 canon are frozen at creation; nothing
   downstream may edit them — only read and be checked against them.
 - **Convergence bounds**: per-unit repair iterations and per-run escalation depth are capped; on cap,
-  the unit is quarantined (flagged in `05_reports/`, excluded from `novel.md`) rather than shipped broken.
+  the unit is quarantined (flagged in `05_reports/`, excluded from `novel.md`) rather than shipped
+  broken. A quarantine is skipped on every later run until released with `--retry-quarantined`,
+  which appends a release record and re-attempts the chapter, usually with a larger repair budget.
+  A chapter spec or reconcile that fails its gate is contained the same way; only canon and the
+  macro arc, which have no chapter to quarantine into, stop the run.
 - **Final Auditor pass**: after assembly, one whole-book fresh agent re-verifies coherence + every
-  promise `kept` + no quarantined units — the last gate before the novel is declared done.
+  promise `kept` + no quarantined units — the last gate before the novel is declared done. A promise
+  the arc scheduled as deliberately unresolved (`kept_ch: 0`) is a warning, not a block; one planned
+  for a chapter and never kept still blocks.
 - **Full trace**: every prompt, artifact, checker verdict, and ruling is on disk (`04_trace/`,
   `05_reports/`), so the surprise is *auditable after the fact* even though no human watched it happen.
 
@@ -401,7 +414,11 @@ rework of the agent layer + the state substrate, which is exactly where v1 inten
 - **P5 — Verification/repair layer.** The §6 checkers (Micro-Sense, Intent, Voice) + triggers + repair
   + escalate-to-ground-truth. Tune triggers/instructions here.
 - **P6 — Assembly + eval.** Re-run *Der Chrachen* end-to-end; compare coherence/meaning/micro-truth
-  against the v1 capture to prove the redesign.
+  against the v1 capture to prove the redesign. **Underway** in `novels/der-chrachen-v2/`: canon,
+  macro arc and the chapter 1 spec passed; chapter 1 was quarantined when scene 3 exhausted two
+  repairs on a micro-sense issue — an ungrounded date the timeline does not fix. Selection was
+  cheap and worked; the repair loop is the expensive part, and two repairs was not enough for a
+  small, precisely-located fix. Convergence tuning (risk 4) is the live question, not correctness.
 
 Each phase is independently testable and leaves the system runnable.
 
@@ -425,7 +442,8 @@ Each phase is independently testable and leaves the system runnable.
    *(The "plausible-but-flat story" that used to sit here has been promoted out of the risk list: it
    is failure class four in §2, with selection and the Vitality checker against it.)*
 1b. ~~**The gate is non-deterministic.**~~ Measured and handled: majority-of-3 sampling (§6.1).
-   Residual: only canon-consistency is sampled, and only it has been calibrated at all.
+   Residual: only canon-consistency is sampled; it and vitality (`calibration/FINDINGS.md` C4, C6)
+   are the only calibrated checkers — micro-sense and voice are still binary-gated and unmeasured.
 1c. **Ground truth can be corrupted by a human.** Already happened once, in the reference canon and
    in this document's own §4 example. The rule in §4.1 is the mitigation; nothing enforces it
    mechanically yet.
@@ -436,6 +454,15 @@ Each phase is independently testable and leaves the system runnable.
    Micro-Sense *checking*, not paragraph *pre-planning* (avoids a novel-length outline).
 4. **Convergence tuning:** the caps in §6.5 need empirical tuning — too tight quarantines good units,
    too loose burns tokens. Calibrate during P5.
+5. **Reconcile is paraphrase-sensitive.** Extracted facts are compared to canon after normalising
+   lowercase and whitespace only, so a known fact restated in other words is flagged as a
+   contradiction. Mitigated by the extractor prompt (do not restate known facts), not enforced.
+6. **Retrospective events land last.** A timeline event promoted at reconcile is always appended
+   after everything already there, whatever `when` it claims; a chapter that reveals a past event
+   puts it at the end of the timeline in canon order.
+7. **Knowledge is write-once.** Reconcile extracts no changes to who knows what, so the knowledge
+   table is whatever stage 2 wrote (including any `since: "ch2"` it scheduled); a shift the prose
+   itself introduces never reaches canon, and later slices are written as if it had not happened.
 
 ---
 

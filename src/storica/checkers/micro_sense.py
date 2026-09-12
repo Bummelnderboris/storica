@@ -1,8 +1,8 @@
 """
 The Micro-Sense checker (DESIGN §6, failure class #3: *locally fluent but nonsensical*).
 
-The other two prose readers ask whether the unit agrees with canon and whether it sounds like the
-author. This one asks the question neither of them can: **does this paragraph mean anything?**
+The other conformance readers ask whether the unit agrees with canon and whether it sounds like
+the author. This one asks the question neither of them can: **does this paragraph mean anything?**
 Prose can contradict nothing, sound exactly like Dürrenmatt, and still be a sequence of well-formed
 sentences describing an event that could not happen, made of details nobody ever decided on. That is
 what v1 shipped whenever the critic's weighted average cleared the gate (F8) — a competent draft

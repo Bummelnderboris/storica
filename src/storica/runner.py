@@ -40,6 +40,7 @@ from .pipeline import (
     spec_chapter,
 )
 from .reports import QuarantineLog, write_run_report
+from .stages import GateFailed
 from .trace import Tracer
 
 PathLike = Union[str, Path]
@@ -80,7 +81,10 @@ class RunResult:
 
     @property
     def is_done(self) -> bool:
-        """A book is finished only when nothing was quarantined and the audit passed (§6.5)."""
+        """
+        A book is finished when it was assembled, nothing is quarantined, and the final audit
+        passed — or was deliberately skipped (`audit=False` leaves `audit_decision` empty).
+        """
         return (
             self.novel_path is not None
             and not self.quarantined
@@ -101,6 +105,7 @@ async def run_novel(
     trace: bool = True,
     n_candidates: int = 1,
     samples: int = 3,
+    retry_quarantined: bool = False,
 ) -> RunResult:
     """
     Run the whole pipeline for one novel, skipping any stage whose artifact already exists.
@@ -108,6 +113,14 @@ async def run_novel(
     The creator touches the front door only (D3): a brief in `00_input/`. Everything after that —
     conception, cast, arc, specs, prose, reconciliation, adjudication, assembly, audit — happens
     without a pause, and every decision it made is on disk afterwards.
+
+    A quarantined chapter stays quarantined on later runs — otherwise every resume would burn the
+    repair budget again on the same unit. `retry_quarantined` releases them first, which is how a
+    person re-tries a chapter with a larger `max_repairs`.
+
+    Stages 1–3 have no unit to quarantine: if canon or the arc cannot pass its gate, `GateFailed`
+    propagates and the run stops with the issues attached. From stage 4 on, every failure is
+    contained at chapter scale: a spec or reconcile that fails its gate quarantines the chapter.
     """
     novel_dir = Path(novel_dir)
     reports_dir = novel_dir / REPORTS_DIR
@@ -129,6 +142,9 @@ async def run_novel(
 
     arc = load_macro_arc(novel_dir / PLAN_DIR)
     quarantine = QuarantineLog(reports_dir)
+    if retry_quarantined:
+        for unit in quarantine.units():
+            quarantine.release(unit, "released for a re-attempt (--retry-quarantined)")
 
     for chapter in range(1, arc.chapter_count + 1):
         unit = f"ch{chapter:02d}"
@@ -138,10 +154,14 @@ async def run_novel(
         # Stage 4 — the spec, elaborated just-in-time from canon as it stands NOW, so it inherits
         # everything the previous chapters reconciled.
         if chapter not in specced_chapters(novel_dir / PLAN_DIR):
-            await spec_chapter(
-                novel_dir=novel_dir, authors_root=authors_root, chapter=chapter, llm=llm,
-                check_intent=check_intent, max_repairs=max_repairs, trace=trace,
-            )
+            try:
+                await spec_chapter(
+                    novel_dir=novel_dir, authors_root=authors_root, chapter=chapter, llm=llm,
+                    check_intent=check_intent, max_repairs=max_repairs, trace=trace,
+                )
+            except GateFailed as failed:
+                quarantine.add(unit, "chapter spec gate failed", [str(i) for i in failed.issues])
+                continue
 
         # Stage 5 — prose.
         if chapter not in drafted_chapters(novel_dir / DRAFTS_DIR):
@@ -155,9 +175,15 @@ async def run_novel(
 
         # Stage 6 — reconcile the draft back into canon.
         if reconcile and chapter not in state.reconciled:
-            await reconcile_chapter_into_canon(
-                novel_dir=novel_dir, chapter=chapter, llm=llm, trace=trace
-            )
+            try:
+                await reconcile_chapter_into_canon(
+                    novel_dir=novel_dir, chapter=chapter, llm=llm, trace=trace
+                )
+            except GateFailed as failed:
+                quarantine.add(unit, "reconcile gate failed", [str(i) for i in failed.issues])
+                continue
+            if quarantine.is_quarantined(unit):
+                continue  # a ruling required a canon amendment; the chapter waits for a human
             state.reconciled.append(chapter)
             state.save(reports_dir)
 

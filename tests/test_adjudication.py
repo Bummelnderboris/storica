@@ -1,7 +1,7 @@
 """
 Tests for P5's escalation machinery: the decision log, quarantine, and the adjudicator.
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 The properties under test are the ones that make unattended operation safe (DESIGN §6.5):
@@ -265,3 +265,29 @@ def test_run_report_is_written(tmp_path):
     path = write_run_report(tmp_path, {"chapters": 3, "quarantined": []})
     payload = json.loads(path.read_text())
     assert payload["chapters"] == 3 and "at" in payload
+
+
+def test_a_quarantine_can_be_released_and_the_record_survives(tmp_path):
+    """Append-only: a release is a new line, and the reason the unit was dropped is never lost."""
+    log = QuarantineLog(tmp_path / "05_reports")
+    log.add("ch01", "prose repair budget exhausted", ["micro_sense: an ungrounded date"])
+    assert log.is_quarantined("ch01")
+
+    log.release("ch01", "released for a re-attempt (--retry-quarantined)")
+
+    assert not log.is_quarantined("ch01") and log.units() == []
+    records = log.records()
+    assert len(records) == 2 and records[0].issues == ["micro_sense: an ungrounded date"]
+    assert records[1].released
+
+    # a second quarantine after a release counts again, and only once
+    log.add("ch01", "still broken", [])
+    assert log.units() == ["ch01"]
+
+
+def test_quarantine_records_written_before_release_existed_still_load(tmp_path):
+    reports = tmp_path / "05_reports"
+    reports.mkdir()
+    (reports / "quarantine.jsonl").write_text(
+        '{"unit":"ch01","reason":"r","issues":[],"at":"2026-08-11T00:00:00+00:00"}\n', encoding="utf-8")
+    assert QuarantineLog(reports).is_quarantined("ch01")

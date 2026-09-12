@@ -16,7 +16,10 @@ A novel references an author by id; nothing here is novel-specific.
 - `question_lines.md` + `profile.yaml` feed **Stage 1 Conception** — the author is a *generative
   driver*: their obsessions shape *which story gets told*, not just its style.
 - `nudges.md` + `profile.yaml.critique_rubric` feed the **Author-Voice checker** (§6).
-- `examples/` ground both generation and checking with concrete, annotated exemplars.
+- `examples/` are **not read by the pipeline today**. `authors.py` loads `profile.yaml`
+  (`metadata.name`, `metadata.primary_language`, `philosophy.worldview`, `central_obsession`) plus
+  `question_lines.md`, `nudges.md` and `impression.md`, and nothing else. The examples are kept for
+  the human writing a profile, and for a future exemplar-grounded voice checker.
 
 > This library is the single source for author assets. The v2 pipeline reads it directly
 > (`--authors` defaults here); the v1 copies under `legacy/backend/authors/profiles/` are archived

@@ -1,7 +1,7 @@
 """
 Tests for P6: assembly and the Final Auditor.
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 Offline: the auditor is driven by `FakeStructuredLLM` with a pre-built `Verdict`, so what is under
@@ -214,14 +214,26 @@ def test_audit_ledger_is_silent_on_a_clean_ledger(canon):
 
 
 def test_audit_ledger_finds_an_open_promise(canon):
+    """Planned to be kept in ch3, never was: the book failed to deliver, so it blocks."""
     canon.promises[0].status = PromiseStatus.OPEN
-    canon.promises[0].kept_ch = None
+    canon.promises[0].kept_ch = 3
 
     issues = audit_ledger(canon)
 
     assert [i.code for i in issues] == ["audit.promise_open"]
     assert issues[0].severity == Severity.BLOCKING
     assert issues[0].ref == "berta_question"
+
+
+def test_audit_ledger_only_warns_on_a_promise_planned_as_unresolved(canon):
+    """`kept_ch: 0` in the arc means "deliberately left open" — a judgement call, not a failure."""
+    canon.promises[0].status = PromiseStatus.OPEN
+    canon.promises[0].kept_ch = None
+
+    issues = audit_ledger(canon)
+
+    assert [i.code for i in issues] == ["audit.promise_unresolved"]
+    assert issues[0].severity == Severity.WARNING
 
 
 def test_audit_ledger_finds_a_motif_that_was_planted_and_never_paid_off(canon):

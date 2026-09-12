@@ -1,8 +1,8 @@
 """
 Prove the Anthropic adapter works, for about a tenth of a cent.
 
-`AnthropicStructuredLLM` is the only module in this repository that has never executed. Every one
-of the 280 tests runs against `FakeStructuredLLM` or `ReplayLLM`, which is what makes them fast and
+`AnthropicStructuredLLM` is the only module in this repository that has never executed. Every test
+in the suite runs against `FakeStructuredLLM` or `ReplayLLM`, which is what makes them fast and
 free — and also means the live path is the one thing they cannot vouch for. A whole book is an
 expensive way to discover that `messages.parse` moved.
 

@@ -1,7 +1,7 @@
 """
 Tests for the v2 stages (P2: Conception + structured world/cast).
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 No network: every stage is driven by `FakeStructuredLLM` with pre-built schema instances, so what
@@ -179,6 +179,16 @@ def test_draft_to_canon_merges_brief_constraints(brief):
     assert canon.constraints.chapter_count == 5
     # the brief's forbidden list is ground truth and survives alongside the author's
     assert canon.constraints.forbidden == ["sentimental redemption", "justice triumphs"]
+
+
+def test_the_brief_outranks_the_draft_on_language_and_chapter_count(brief):
+    """Ground truth is the brief; a model that answers in the wrong language does not get a vote."""
+    draft = _good_draft().model_copy(update={
+        "constraints": ConstraintsDraft(language="en", forbidden=[], chapter_count=9)})
+
+    canon = draft_to_canon(draft, premise=Premise(), author_id="duerrenmatt", brief=brief)
+
+    assert canon.constraints.language == "de" and canon.constraints.chapter_count == 5
 
 
 def test_draft_to_canon_keeps_unresolvable_reference_for_the_validator(brief):

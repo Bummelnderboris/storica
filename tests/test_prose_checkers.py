@@ -1,7 +1,7 @@
 """
 Tests for the prose checkers (P4/P5: micro-sense, author-voice, canon-consistency).
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 No network: every checker is driven by `FakeStructuredLLM` with a pre-built `Verdict`, so what is

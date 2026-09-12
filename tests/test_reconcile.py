@@ -1,7 +1,7 @@
 """
-Tests for stage 6 — Reconcile (`src/storica/stages/reconcile.py`).
+Tests for stage 6 — Reconcile (`src/storica/stages/reconcile/`).
 
-Run from the backend/ directory:
+Run from the repo root:
     .venv/bin/python -m pytest tests/ -q
 
 Offline: the extraction call is served by `FakeStructuredLLM`, so what is under test is our
