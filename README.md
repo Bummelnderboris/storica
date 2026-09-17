@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 305 tests passing. Never yet run end-to-end against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 327 tests passing. Never yet run end-to-end against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -120,7 +120,7 @@ return `PASS`, `REVISE` (with located issues) or `ESCALATE`.
 | Checker | Asks | Runs on |
 |---|---|---|
 | **Canon-consistency** | Does this contradict a canonical fact, relationship or timeline entry? | prose (plans are gated by schema validation plus Intent) |
-| **Intent** | Does this advance the beats it was *assigned*? Does it keep its promises? | plans and prose |
+| **Intent** | Does this advance the beats it was *assigned*? Does it keep its promises? | the arc, each chapter spec, and each assembled chapter — **advisory** on prose |
 | **Micro-sense** | Paragraph by paragraph: are details grounded, does the situation cohere, is the language load-bearing? | prose |
 | **Author-voice** | Is this the author, and inside the forbidden list? | prose |
 | **Vitality** | Is this *alive*? Does it explain its own gestures, announce its emotions, restate the outline? | prose |
@@ -145,6 +145,24 @@ produces. Vitality can only fail a unit for being *safe*, and its fixes are alwa
 that explains the gesture, the adjective that tells you how to feel. It never asks for more material,
 because "add tension" just produces longer dead prose.
 
+**Lens, trigger, authority.** A reader used to weld three unrelated decisions into one class. They
+are separate now: the **lens** is the questions and the stance — the checker class itself; the
+**trigger** is the scope it fires on (every unit, scenes only, assembled chapters only) plus whether
+it is sampled; the **authority** is what it may do about what it finds — `ESCALATE` (may block and
+may reach the adjudicator), `BLOCK` (may block, but an escalation is capped into a blocking issue,
+because a reader that has never seen immutable ground truth should not stop a run), or `ADVISE`
+(findings are recorded as warnings and block nothing). One `ReaderSpec` row binds the three plus a
+note saying why; the shipped gate is the `PROSE_GATE` table in
+[`src/storica/checkers/registry.py`](src/storica/checkers/registry.py). A lens can now be pointed at
+a new seam without being rewritten — Intent is one lens reading the arc, each chapter spec and each
+assembled chapter, which closes the gap that no reader ever judged whether a chapter *delivered* its
+assigned beats. It advises rather than blocks there because it has never been calibrated, and
+vitality is the standing lesson about what an uncalibrated binary gate does to a book; promoting it
+after calibration is a one-word change to its row. Scope is also a cost lever: an out-of-scope unit
+costs no model call, so five readers add roughly one call per *chapter*-level pass, not one per
+scene. [`docs/agents.md`](docs/agents.md) is the full roster — every agent, what triggers it, what it
+reads, and what it may do.
+
 ### When something can't be repaired locally
 
 `ESCALATE` fires when a unit contradicts canon, canon contradicts itself, or an assigned beat is
@@ -162,6 +180,14 @@ unsatisfiable. The run does not pause. Instead:
 3. If repair budget runs out anyway, the chapter is **quarantined** — logged, and excluded from
    `novel.md` rather than shipped broken. A chapter spec or reconcile that cannot pass its gate is
    quarantined the same way instead of crashing the run.
+
+**Planning escalations are adjudicated too.** The macro arc and each chapter spec are now wrapped the
+way prose has always been: an Intent escalation goes to the adjudicator, the ruling is logged and
+binds the re-attempt, and guidance accumulates across rulings so a second escalation does not make
+the stage forget the first. A ruling that would amend canon stops the stage instead — canon is never
+rewritten to settle a planning conflict. When the escalation budget runs out, the stage fails its own
+gate and the caller contains it: a chapter-spec escalation quarantines that chapter, a macro-arc one
+stops the run with `[failed]` and exit 1. Both were uncaught tracebacks before.
 
 Quarantine is not permanent. `storica run --retry-quarantined` releases every quarantined chapter
 (the release is appended to `quarantine.jsonl`; the original record stays) and attempts it again,
@@ -201,14 +227,15 @@ storica/
 │   │   └── reconcile/         schema · prompts · promote · ledger
 │   ├── checkers/          base (the one shared call), prose_base (the shared prose gate) +
 │   │                      canon_consistency, intent, micro_sense, voice, vitality, auditor,
-│   │                      consensus, defaults
+│   │                      consensus, defaults, and registry.py — the gate as policy:
+│   │                      lens × trigger × authority, in one readable table
 │   ├── adjudicator.py     binding rulings against frozen ground truth
 │   ├── reports.py         decision log, quarantine log, run report
 │   ├── assembly.py        chapters → novel.md, excluding quarantined units
 │   ├── trace.py           every filled prompt and artifact, to 04_trace/
 │   ├── llm.py             the only place the Anthropic SDK is touched; model aliases
 │   └── drivers/replay.py  run the real prompts with no API key
-├── tests/                 305 tests
+├── tests/                 327 tests
 │
 ├── authors/               author library, shared across novels — see authors/README.md
 │   ├── duerrenmatt/
@@ -224,6 +251,7 @@ storica/
 │                       next_call.sh         — prints the next pending replay call (run from repo root)
 ├── calibration/           its results and FINDINGS.md
 ├── .claude/skills/write-novel/   the /write-novel skill: drive a run on a subscription
+├── docs/agents.md         every agent: family, what fires it, what it reads, what it may do
 ├── docs/p6-handoff.md     the prompt for a fresh session to continue P6
 ├── docs/proving-the-concept.md   what the replay method does and does not prove
 ├── docs/archive/          point-in-time v1 documents, not maintained
@@ -268,7 +296,7 @@ The author is a **generative driver, not a paint job**: their question-lines fee
 ## Development
 
 ```bash
-.venv/bin/python -m pytest -q      # 305 tests, a few seconds, no API key, no network
+.venv/bin/python -m pytest -q      # 327 tests, a few seconds, no API key, no network
 ```
 
 Model aliases (`opus`, `sonnet`, `haiku`) resolve to current model IDs in exactly one place —

@@ -106,14 +106,30 @@ def _new_issues(base: List[Issue], current: List[Issue]) -> List[Issue]:
     return [i for i in current if _key(i) not in seen]
 
 
-def _draft_prompt(canon: StoryModel, brief: Brief, author: AuthorModel) -> str:
+def _ruling_block(guidance: str) -> str:
+    """
+    A binding ruling, carried into a re-attempt.
+
+    Empty guidance must leave the prompt **byte-identical** to the un-adjudicated one: the replay
+    driver keys its cache on the exact prompt, so a stray newline here would orphan every answer a
+    part-finished run has already recorded.
+    """
+    if not guidance.strip():
+        return ""
+    return (
+        "\n\n# Binding ruling (already adjudicated against immutable ground truth — obey, do not "
+        f"re-open)\n{guidance}"
+    )
+
+
+def _draft_prompt(canon: StoryModel, brief: Brief, author: AuthorModel, guidance: str = "") -> str:
     chapters = canon.constraints.chapter_count
     target = f"exactly {chapters} chapters" if chapters else "as many chapters as the story needs (8-15 is typical)"
     return f"""{canon_slice(canon)}
 
 {author.conception_block()}
 
-{brief.prompt_block()}
+{brief.prompt_block()}{_ruling_block(guidance)}
 
 ## Task
 Plan the macro arc of this novel in {target}.
@@ -165,6 +181,7 @@ async def build_macro_arc(
     max_repairs: int = 2,
     strict: bool = True,
     max_tokens: int = 20000,
+    guidance: str = "",
 ) -> MacroArcResult:
     """Run stage 3. Returns the arc plus the canon with its ledger promoted (uncommitted)."""
     tracer = tracer or Tracer(None)
@@ -186,7 +203,7 @@ async def build_macro_arc(
         llm=llm,
         schema=MacroArcDraft,
         system=SYSTEM,
-        prompt=_draft_prompt(canon, brief, author),
+        prompt=_draft_prompt(canon, brief, author, guidance),
         repair_prompt=_repair_prompt,
         evaluate=evaluate,
         stage="macro_arc",

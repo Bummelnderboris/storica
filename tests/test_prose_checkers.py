@@ -449,3 +449,36 @@ def test_writer_and_readers_are_handed_the_same_slice(canon, spec):
     scene = spec.scenes[0]
     assert reader.scene_slice(canon, spec, scene) == _scene_slice(spec, canon, scene) == unit_slice(canon, spec, scene)
     assert reader.scene_slice(canon, spec, None) == _chapter_slice(spec, canon) == unit_slice(canon, spec)
+
+
+# --------------------------------------------------------------------------------------------
+# Intent: one lens, three seams — the arc, the spec, and the chapter that came out
+# --------------------------------------------------------------------------------------------
+
+def test_intent_reads_prose_against_the_assignment_its_spec_gave_it(canon, spec, author):
+    from storica.checkers import IntentChecker
+
+    llm = FakeStructuredLLM(responses=[_verdict(Decision.PASS)])
+    _run(IntentChecker(llm), canon=canon, spec=spec, author=author)
+    prompt = llm.calls[0].prompt
+
+    assert spec.purpose in prompt                                   # what must be different after
+    assert "stettler:knows" in prompt                               # the exit state it must reach
+    assert "set up formula_echo" in prompt                          # the ledger it must deliver
+    assert "make promise berta_question" in prompt
+    assert "Stettler lies to the one man he has never lied to." in prompt   # each scene's turn
+    assert "b1" in prompt                                           # beats, by id, as everywhere
+
+
+def test_intent_on_prose_stays_out_of_the_other_readers_lanes():
+    from storica.checkers.intent import PROSE_RUBRIC
+
+    lowered = PROSE_RUBRIC.lower()
+    assert "you are not the other readers" in lowered
+    assert "voice" in lowered and "canon" in lowered   # named as explicitly not its business
+
+
+def test_intent_satisfies_the_prose_checker_protocol():
+    from storica.checkers import IntentChecker, ProseChecker
+
+    assert isinstance(IntentChecker(FakeStructuredLLM()), ProseChecker)

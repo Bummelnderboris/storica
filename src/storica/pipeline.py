@@ -21,7 +21,7 @@ from .authors import load_author
 from .brief import load_brief
 from .canon import Issue, Severity, StoryModel, chapter_unit, commit_canon, load_canon, save_canon
 from .chapter import ChapterOutcome, attempt_chapter
-from .checkers import IntentChecker, ProseChecker, default_prose_checkers
+from .checkers import Escalation, IntentChecker, ProseChecker, default_prose_checkers
 from .drafts import load_chapter_draft, load_chapter_draft_if_present, save_chapter_draft
 from .llm import StructuredLLM, stage_model
 from .plan import (
@@ -32,10 +32,12 @@ from .plan import (
     save_chapter_spec,
     save_macro_arc,
 )
-from .reports import DecisionLog, DecisionRecord, QuarantineLog, RulingKind
+from .reports import DecisionLog, DecisionRecord, QuarantineLog, RulingKind, binding_guidance
 from .stages import (
+    ChapterSpecGateFailed,
     Flag,
     FlagKind,
+    MacroArcGateFailed,
     ReconcileResult,
     build_chapter_spec,
     build_macro_arc,
@@ -59,6 +61,61 @@ REPORTS_DIR = "05_reports"
 
 def _tracer(novel_dir: Path, trace: bool) -> Tracer:
     return Tracer(novel_dir / TRACE_DIR if trace else None)
+
+
+async def _bound_by_rulings(
+    attempt,
+    *,
+    novel_dir: Path,
+    llm: StructuredLLM,
+    tracer: Tracer,
+    failure,
+    context: str,
+    max_escalations: int = 2,
+):
+    """
+    Run a planning stage, and adjudicate anything it escalates instead of letting it escape.
+
+    The prose loop has had this since the beginning (`chapter.attempt_chapter`); the planning
+    stages had not, so an Intent checker that found the arc or a spec unsatisfiable raised through
+    the runner and the CLI as a traceback — the one failure mode DESIGN §6.5 says cannot happen.
+    The shape is the same as the chapter loop's: rule, bind the retry, and fail as this stage's
+    own `GateFailed` once the budget is out, so the caller can contain it (a chapter is
+    quarantined; the arc stops the run with its issues).
+
+    Canon amendments are never applied automatically here either. That is the v1 ratchet, and a
+    planning conflict is exactly where it would start.
+    """
+    guidance = ""
+    for attempt_no in range(max_escalations + 1):
+        try:
+            return await attempt(guidance)
+        except Escalation as esc:
+            located = "; ".join(f"{i.unit}: {i.fix_hint}" for i in esc.verdict.issues) or "(none located)"
+            if attempt_no == max_escalations:
+                raise failure([Issue(
+                    "plan.escalated", Severity.BLOCKING,
+                    f"escalated {attempt_no + 1}x without resolution: {esc.conflict}", esc.unit,
+                )])
+            try:
+                record = await adjudicator_for(novel_dir, llm, tracer).rule(
+                    unit=esc.unit,
+                    conflict=esc.conflict,
+                    context=f"{context} — {esc.verdict.summary}\nissues: {located}",
+                )
+            except AdjudicationFailed as fail:
+                raise failure([Issue(
+                    "plan.adjudication_failed", Severity.BLOCKING,
+                    f"{fail.reason}: {esc.conflict}", esc.unit,
+                )])
+            if record.ruling.kind == RulingKind.AMEND_CANON:
+                raise failure([Issue(
+                    "plan.needs_canon_amendment", Severity.BLOCKING,
+                    f"ruling requires a canon amendment a human must apply: "
+                    f"{record.ruling.canon_amendment}", esc.unit,
+                )])
+            guidance = "\n".join(g for g in (guidance, binding_guidance(record.ruling)) if g)
+    raise failure([Issue("plan.escalated", Severity.BLOCKING, "escalation budget exhausted", "plan")])
 
 
 async def establish_canon(
@@ -122,15 +179,20 @@ async def plan_macro_arc(
     canon = load_canon(novel_dir / CANON_DIR)
     tracer = _tracer(novel_dir, trace)
 
-    result = await build_macro_arc(
-        canon=canon,
-        brief=brief,
-        author=author,
-        llm=llm,
-        tracer=tracer,
-        intent_checker=IntentChecker(llm, tracer=tracer) if check_intent else None,
-        model=model,
-        max_repairs=max_repairs,
+    result = await _bound_by_rulings(
+        lambda guidance: build_macro_arc(
+            canon=canon,
+            brief=brief,
+            author=author,
+            llm=llm,
+            tracer=tracer,
+            intent_checker=IntentChecker(llm, tracer=tracer) if check_intent else None,
+            model=model,
+            max_repairs=max_repairs,
+            guidance=guidance,
+        ),
+        novel_dir=novel_dir, llm=llm, tracer=tracer,
+        failure=MacroArcGateFailed, context="the macro arc",
     )
 
     commit_canon(result.canon, novel_dir / CANON_DIR)  # ledger is now canon
@@ -163,17 +225,22 @@ async def spec_chapter(
     previous = load_chapter_spec_if_present(novel_dir / PLAN_DIR, chapter - 1) if chapter > 1 else None
     tracer = _tracer(novel_dir, trace)
 
-    result = await build_chapter_spec(
-        chapter=chapter,
-        canon=canon,
-        arc=arc,
-        author=author,
-        llm=llm,
-        previous_spec=previous,
-        tracer=tracer,
-        intent_checker=IntentChecker(llm, tracer=tracer) if check_intent else None,
-        model=model,
-        max_repairs=max_repairs,
+    result = await _bound_by_rulings(
+        lambda guidance: build_chapter_spec(
+            chapter=chapter,
+            canon=canon,
+            arc=arc,
+            author=author,
+            llm=llm,
+            previous_spec=previous,
+            tracer=tracer,
+            intent_checker=IntentChecker(llm, tracer=tracer) if check_intent else None,
+            model=model,
+            max_repairs=max_repairs,
+            guidance=guidance,
+        ),
+        novel_dir=novel_dir, llm=llm, tracer=tracer,
+        failure=ChapterSpecGateFailed, context=f"the chapter {chapter} spec",
     )
 
     save_chapter_spec(result.spec, novel_dir / PLAN_DIR)

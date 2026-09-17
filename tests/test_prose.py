@@ -476,3 +476,28 @@ def test_each_repair_pass_is_its_own_draw(author):
     assert result.repairs == 2 and result.is_valid
     generates = [c for c in llm.calls if c.schema == "<text>"]
     assert [c.draw for c in generates] == [1, 1, 2]     # scene, repair 1, repair 2
+
+
+def test_the_shipped_gate_reads_each_scene_four_times_and_the_chapter_five(author):
+    """
+    The trigger, end to end: intent costs one call per chapter, not one per scene.
+
+    Four readers judge every scene; the fifth (intent) asks a question that only makes sense of a
+    whole chapter — whether the assignment was delivered — so it fires once, on the assembly.
+    """
+    from storica.checkers import default_prose_checkers
+    from storica.checkers.base import Verdict
+
+    llm = FakeStructuredLLM(
+        texts=[_prose("Erste"), _prose("Zweite")],
+        responses=[_verdict(Decision.PASS) for _ in range(20)],
+    )
+
+    result = _write(llm, author, checkers=default_prose_checkers(llm, samples=1))
+
+    judgements = [c for c in llm.calls if c.schema == Verdict.__name__]
+    intent_calls = [c for c in judgements if "You are not the other readers." in c.prompt]
+    assert result.is_valid
+    assert len(judgements) == 13, "4 readers x 2 scenes, then 5 readers on the assembled chapter"
+    assert len(intent_calls) == 1
+    assert "# The prose as written" in intent_calls[0].prompt

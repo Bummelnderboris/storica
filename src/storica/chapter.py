@@ -30,7 +30,7 @@ from .canon import StoryModel, chapter_unit
 from .checkers import Escalation, ProseChecker
 from .llm import StructuredLLM, stage_model
 from .plan import ChapterSpec, MacroArc
-from .reports import DecisionRecord, QuarantineLog, RulingKind
+from .reports import DecisionRecord, QuarantineLog, RulingKind, binding_guidance
 from .stages import ProseGateFailed, write_chapter
 from .trace import Tracer
 
@@ -128,7 +128,7 @@ async def attempt_chapter(
                 )
             # Every ruling so far binds the re-attempt, not only the latest one: a second
             # escalation must not make the chapter forget what the first one settled.
-            guidance = "\n".join(g for g in (guidance, record.ruling.instruction) if g)
+            guidance = "\n".join(g for g in (guidance, binding_guidance(record.ruling)) if g)
             continue
 
         outcome.draft = result.text

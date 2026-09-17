@@ -78,6 +78,22 @@ class Ruling(BaseModel):
     binding_summary: str = Field(description="One line stating what is now settled and may never be re-opened.")
 
 
+def binding_guidance(ruling: Ruling) -> str:
+    """
+    Everything a ruling obliges the next attempt to do.
+
+    A `spawn_specialist` ruling carries its work in `specialist_task`, and for a long time that
+    field was validated, logged, and then silently dropped on the floor — the retry saw only
+    `instruction`. There is no separate specialist agent in this pipeline; the sub-task rides into
+    the unit's own re-attempt instead, which is weaker than a dedicated agent but is not nothing,
+    and is honest about where the work happens.
+    """
+    parts = [ruling.instruction.strip()]
+    if ruling.kind == RulingKind.SPAWN_SPECIALIST and ruling.specialist_task.strip():
+        parts.append(f"Bounded sub-task from the ruling: {ruling.specialist_task.strip()}")
+    return "\n".join(p for p in parts if p)
+
+
 class DecisionRecord(BaseModel):
     """A ruling as stored: the conflict it settles, plus its identity."""
 

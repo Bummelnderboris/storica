@@ -105,18 +105,35 @@ Intended tension: {tension.tension if tension else '?'} ({tension.note if tensio
 {entry}"""
 
 
+def _ruling_block(guidance: str) -> str:
+    """
+    A binding ruling, carried into a re-attempt.
+
+    Empty guidance must leave the prompt **byte-identical** to the un-adjudicated one: the replay
+    driver keys its cache on the exact prompt, so a stray newline here would orphan every answer a
+    part-finished run has already recorded.
+    """
+    if not guidance.strip():
+        return ""
+    return (
+        "\n\n# Binding ruling (already adjudicated against immutable ground truth — obey, do not "
+        f"re-open)\n{guidance}"
+    )
+
+
 def _draft_prompt(
     chapter: int,
     canon: StoryModel,
     arc: MacroArc,
     author: AuthorModel,
     previous: Optional[ChapterSpec],
+    guidance: str = "",
 ) -> str:
     return f"""{canon_slice(canon)}
 
 {author.voice_block()}
 
-{chapter_assignment_block(chapter, canon, arc, previous)}
+{chapter_assignment_block(chapter, canon, arc, previous)}{_ruling_block(guidance)}
 
 ## Task
 Write the specification for chapter {chapter}.
@@ -172,6 +189,7 @@ async def build_chapter_spec(
     max_repairs: int = 2,
     strict: bool = True,
     max_tokens: int = 16000,
+    guidance: str = "",
 ) -> ChapterSpecResult:
     """Elaborate one chapter spec from canon + arc, gated and repaired."""
     tracer = tracer or Tracer(None)
@@ -196,7 +214,7 @@ async def build_chapter_spec(
         llm=llm,
         schema=ChapterSpec,
         system=SYSTEM,
-        prompt=_draft_prompt(chapter, canon, arc, author, previous_spec),
+        prompt=_draft_prompt(chapter, canon, arc, author, previous_spec, guidance),
         repair_prompt=_repair_prompt,
         evaluate=evaluate,
         stage=f"ch{chapter:02d}_spec",

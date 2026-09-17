@@ -470,3 +470,112 @@ def test_trace_and_reports_are_on_disk_after_a_chapter(novel):
     generations = [r for r in records if r["stage"].endswith("_prose")]
     assert generations and all(r["prompt"] and r["artifact"] for r in generations)
     assert any(r["stage"].endswith("_prose_assembled") and r["artifact"] for r in records)
+
+
+# --------------------------------------------------------------------------------------------
+# Planning escalations: adjudicated like any other, never a traceback
+# --------------------------------------------------------------------------------------------
+
+def _escalating_spec_run(novel: Path, llm) -> ChapterSpec:
+    from storica.pipeline import spec_chapter
+
+    return asyncio.run(spec_chapter(
+        novel_dir=novel, authors_root=AUTHORS_ROOT, chapter=1, llm=llm, max_repairs=0))
+
+
+def test_a_spec_escalation_is_adjudicated_and_the_ruling_binds_the_retry(novel):
+    """DESIGN §6.5 says no escalation is a pause. That was true of prose only until now."""
+    llm = FakeStructuredLLM(responses=[
+        _spec(1), _escalate("the arc assigns b1 to a chapter whose cast cannot carry it"),
+        _ruling(), _spec(1), _pass(),
+    ])
+
+    result = _escalating_spec_run(novel, llm)
+
+    assert result.chapter == 1
+    logged = DecisionLog(novel / "05_reports").records()
+    assert len(logged) == 1 and logged[0].unit == "ch01_spec"
+    retry = llm.calls[-2].prompt
+    assert "Binding ruling (already adjudicated" in retry
+    assert "Do not call him a notary." in retry
+
+
+def test_a_specialist_ruling_carries_its_sub_task_into_the_retry(novel):
+    """The sub-task used to be validated, logged, and then dropped on the floor."""
+    specialist = _ruling(RulingKind.SPAWN_SPECIALIST,
+                         specialist_task="Fix the timeline: date the fall before the certificate.")
+    llm = FakeStructuredLLM(responses=[
+        _spec(1), _escalate("the timeline is underspecified"), specialist, _spec(1), _pass(),
+    ])
+
+    _escalating_spec_run(novel, llm)
+
+    retry = llm.calls[-2].prompt
+    assert "Fix the timeline: date the fall before the certificate." in retry
+
+
+def test_an_unresolved_spec_escalation_fails_as_this_stages_gate_so_the_chapter_is_contained(novel):
+    from storica.stages import ChapterSpecGateFailed
+
+    llm = FakeStructuredLLM(responses=[
+        _spec(1), _escalate("conflict A"), _ruling(), _spec(1), _escalate("conflict B"),
+        _ruling(), _spec(1), _escalate("conflict C"),
+    ])
+
+    with pytest.raises(ChapterSpecGateFailed) as failure:
+        _escalating_spec_run(novel, llm)
+
+    assert any(i.code == "plan.escalated" for i in failure.value.issues)
+
+
+def test_a_planning_ruling_that_would_amend_canon_stops_instead_of_rewriting_canon(novel):
+    from storica.canon import load_canon
+    from storica.stages import ChapterSpecGateFailed
+
+    amend = _ruling(RulingKind.AMEND_CANON, canon_amendment="make Stettler a notary",
+                    ground_truth_violation="the brief calls him a notary")
+    llm = FakeStructuredLLM(responses=[_spec(1), _escalate("canon has the wrong profession"), amend])
+
+    with pytest.raises(ChapterSpecGateFailed) as failure:
+        _escalating_spec_run(novel, llm)
+
+    assert any(i.code == "plan.needs_canon_amendment" for i in failure.value.issues)
+    assert load_canon(novel / "01_canon").characters["stettler"].facts["profession"] == "Amtsarzt"
+
+
+def test_a_plan_prompt_is_unchanged_when_no_ruling_binds_it(novel):
+    """
+    The replay driver keys its cache on the exact prompt bytes.
+
+    A ruling block that rendered as an empty line rather than nothing would change every plan
+    prompt in the pipeline, orphaning every answer a part-finished run has already recorded — the
+    run would stop and ask for calls it had already paid for. So the empty case must contribute
+    literally nothing, and the block carries its own separation when there is something to say.
+    """
+    from storica.authors import load_author
+    from storica.brief import load_brief
+    from storica.stages.chapter_spec import _draft_prompt as spec_prompt
+    from storica.stages.chapter_spec import _ruling_block as spec_ruling
+    from storica.stages.macro_arc import _draft_prompt as arc_prompt
+    from storica.stages.macro_arc import _ruling_block as arc_ruling
+
+    brief = load_brief(novel / "00_input")
+    author = load_author("duerrenmatt", AUTHORS_ROOT)
+    canon, arc = _canon(), _arc()
+
+    for block in (arc_ruling, spec_ruling):
+        assert block("") == "" and block("   \n  ") == ""
+        assert block("Stettler is the Amtsarzt.").startswith("\n\n")
+
+    unbound_arc = arc_prompt(canon, brief, author)
+    unbound_spec = spec_prompt(1, canon, arc, author, None)
+    assert "Binding ruling" not in unbound_arc and "Binding ruling" not in unbound_spec
+    assert unbound_arc == arc_prompt(canon, brief, author, "")
+    assert unbound_spec == spec_prompt(1, canon, arc, author, None, "")
+
+    bound = spec_prompt(1, canon, arc, author, None, "Stettler is the Amtsarzt.")
+    assert "Binding ruling (already adjudicated" in bound
+    assert bound.replace(
+        "\n\n# Binding ruling (already adjudicated against immutable ground truth — obey, do not "
+        "re-open)\nStettler is the Amtsarzt.", ""
+    ) == unbound_spec, "a ruling inserts itself and changes nothing else"

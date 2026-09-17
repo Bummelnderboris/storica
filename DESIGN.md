@@ -234,7 +234,7 @@ if needed, trigger repair.
 | Checker | Question it answers | Fires on |
 |---|---|---|
 | **Canon-Consistency** | Does this unit contradict any canonical fact/relationship/timeline? (structured diff) | prose (5); plan units (3,4) are gated by schema validation plus Intent |
-| **Intent / Meaning** | Does this unit advance the arc-beats / keep the promises it was *assigned*? Does it earn its place? | plan units (3,4) and prose (5) |
+| **Intent / Meaning** | Does this unit advance the arc-beats / keep the promises it was *assigned*? Does it earn its place? | plan units (3,4) and the **assembled chapter** (5) — advisory on prose until calibrated |
 | **Micro-Sense** | Read paragraph-by-paragraph: are details grounded in canon, does the situation cohere, is the language load-bearing (not filler/hallucination)? | prose only (5) |
 | **Author-Voice** | Is this the author's voice + within `constraints.forbidden`? | prose only (5) |
 | **Vitality** | Is this *alive*? Does it explain its own gestures, announce its interiority, restate the outline? Would anyone be surprised by it? | prose only (5) |
@@ -267,6 +267,42 @@ The count answers only *how much* — a chapter with a few soft spots, or a chap
 throughout — and degree is what a count is for. The threshold is fitted to n=3 on one chapter of one
 restrained author, which is where the gap between *withholding* and *flat* is narrowest; expect to
 retune it.
+
+### Lens, trigger, authority
+
+The table above is a list of **lenses**, and the lens is the part worth writing carefully: the
+questions a reader asks and the stance it takes ("you did not write this; canon is truth"). It is not
+the same decision as *where* the reader fires, nor as *what it may do* about what it finds. Welding
+all three into one class had two costs: a lens could only ever be used at the seam it was written
+for, and its power was invisible — you had to read the class to find out whether its verdict could
+stop a book.
+
+They are three knobs now, bound by one `ReaderSpec` row in `src/storica/checkers/registry.py`:
+
+- **lens** — the checker class.
+- **trigger** — `Scope.UNIT` (every scene *and* the assembled chapter), `Scope.SCENE`,
+  `Scope.CHAPTER`; plus whether the reader is sampled *k* times (§6.1).
+- **authority** — `ESCALATE` (may block a unit and may reach the adjudicator), `BLOCK` (may block,
+  but an escalation is capped into a blocking issue, because a reader that has not been shown the
+  immutable ground truth should not be able to stop the run), `ADVISE` (findings are demoted to
+  warnings and recorded — never blocks, never escalates).
+
+The shipped gate, in order, with the reason each row is set the way it is:
+
+| Reader | Trigger | Authority | Why |
+|---|---|---|---|
+| **canon_consistency** | every unit, sampled | escalate | the only reader whose blocking rate was measured (C4) |
+| **micro_sense** | every unit | escalate | uncalibrated — §10 risk 1b, a known risk rather than an endorsement |
+| **voice** | every unit | escalate | uncalibrated — §10 risk 1b |
+| **vitality** | every unit | escalate | gates on issue *density*, not presence (C6) |
+| **intent** | assembled chapters only | **advise** | beats are a chapter-scale question; uncalibrated, so it records and does not block |
+
+Two consequences. A lens is reusable at any seam, so Intent is now one lens reading the arc, each
+chapter spec, **and** the prose those plans produced — which closes the gap that no reader ever
+judged whether a chapter *delivered* its assigned beats; before, that was only inspected after the
+fact by reconcile's ledger extraction. And scope is a cost lever as well as a policy one: an
+out-of-scope unit costs no model call at all, so the gate carries five readers while adding roughly
+one call per chapter-level pass rather than one per scene.
 
 ### Triggers — designed to avoid the F8 failure
 
@@ -345,6 +381,16 @@ internally inconsistent, or an assigned beat is unsatisfiable. Instead of pausin
    ruling's instruction; *amend canon* quarantines the chapter and commits nothing to canon.
 3. The spawned work runs the normal write→check cycle; if *it* escalates, it inherits the decision log,
    so each round strictly reduces open conflicts.
+
+**Plans escalate by the same path.** `pipeline._bound_by_rulings` wraps the macro-arc and
+chapter-spec stages exactly as `chapter.attempt_chapter` has always wrapped prose: an Intent
+escalation is adjudicated, the binding ruling is logged, and the stage is re-attempted bound by it,
+with guidance accumulating across rulings so a second escalation does not make the stage forget the
+first. A ruling that would amend canon stops the stage rather than applying it — a planning conflict
+is exactly where the v1 ratchet would start. On an exhausted budget the stage raises its own
+`GateFailed` so the caller can contain it: a chapter spec quarantines its chapter, the macro arc
+stops the run. Until this existed both escaped as tracebacks, contradicting this section's central
+claim that no escalation is a pause.
 
 **Safety rails that make unattended operation safe:**
 - **Immutable ground truth**: the brief and the Phase-2 canon are frozen at creation; nothing
@@ -444,6 +490,9 @@ Each phase is independently testable and leaves the system runnable.
 1b. ~~**The gate is non-deterministic.**~~ Measured and handled: majority-of-3 sampling (§6.1).
    Residual: only canon-consistency is sampled; it and vitality (`calibration/FINDINGS.md` C4, C6)
    are the only calibrated checkers — micro-sense and voice are still binary-gated and unmeasured.
+   Intent now reads prose as well, and is equally unmeasured, so it carries `ADVISE` authority: it
+   records every finding and blocks nothing (§6). That micro-sense and voice keep full authority
+   while uncalibrated is the inconsistency to resolve — by measuring them, not by demoting them.
 1c. **Ground truth can be corrupted by a human.** Already happened once, in the reference canon and
    in this document's own §4 example. The rule in §4.1 is the mitigation; nothing enforces it
    mechanically yet.
@@ -463,6 +512,12 @@ Each phase is independently testable and leaves the system runnable.
 7. **Knowledge is write-once.** Reconcile extracts no changes to who knows what, so the knowledge
    table is whatever stage 2 wrote (including any `since: "ch2"` it scheduled); a shift the prose
    itself introduces never reaches canon, and later slices are written as if it had not happened.
+8. **There is no separate specialist agent.** A `spawn_specialist` ruling emits a real sub-task, and
+   `reports.binding_guidance()` carries it — with the ruling's instruction — into the unit's own
+   re-attempt, in the chapter loop and the planning loop alike. For a long time the sub-task was
+   validated, logged and then dropped, so this is the fix; but the work still happens inside the
+   retry of the unit that failed, not in the dedicated fresh agent §6.5 describes. Weaker, and worth
+   closing.
 
 ---
 

@@ -265,4 +265,4 @@ def test_vitality_fix_hints_are_subtractive_by_contract():
 def test_vitality_is_in_the_default_prose_checkers():
     from storica.pipeline import default_prose_checkers
     names = [c.name for c in default_prose_checkers(FakeStructuredLLM())]
-    assert names == ["canon_consistency", "micro_sense", "voice", "vitality"]
+    assert names == ["canon_consistency", "micro_sense", "voice", "vitality", "intent"]
