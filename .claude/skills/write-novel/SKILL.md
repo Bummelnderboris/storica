@@ -65,15 +65,29 @@ Repeat until done:
 | `3` | A recorded answer does not fit its schema | Delete the named response file, then re-dispatch that call with the validation error appended to the subagent's prompt |
 | other | A real bug | Stop. Report the traceback verbatim. Do not try to patch around it |
 
-**3. Read the two paths from the output.** Exit 2 prints:
+**3. Read the pending calls from the output.** Exit 2 prints the first call, then every call this
+run is waiting on:
 
 ```
 [paused] awaiting response for '<stage>' [<key>]
   read:  <REQUEST_PATH>
   write: <RESPONSE_PATH>
+...
+[pending] 3 call(s) awaiting an answer in this run:
+  - model=claude-opus-5 read=<REQUEST_PATH> write=<RESPONSE_PATH>
+  - model=claude-opus-5 read=<REQUEST_PATH> write=<RESPONSE_PATH>
+  - model=claude-opus-5 read=<REQUEST_PATH> write=<RESPONSE_PATH>
 ```
 
-**4. Pick the model.** This is the only inspection of the request file you may do:
+Several calls are pending at once wherever the pipeline fans out: *k* prose candidates, *k*
+consensus draws of canon-consistency, and the three independent scene readers (micro-sense, voice,
+vitality). Answer **every** `[pending]` line before re-running, and dispatch them **in parallel** —
+one fresh subagent per line, all in one message. They are independent calls; answering them one
+stop at a time only multiplies the wall-clock. Ignore request files that are not in the `[pending]`
+list: they belong to earlier runs and may never be asked again.
+
+**4. Pick the model.** Each `[pending]` line names it (`model=`); for the single `[paused]` call,
+this is the only inspection of the request file you may do:
 
 ```bash
 grep '^- model:' <REQUEST_PATH>
@@ -82,8 +96,8 @@ grep '^- model:' <REQUEST_PATH>
 `claude-opus-5` → dispatch with `model: "opus"`. `claude-sonnet-5` → `model: "sonnet"`. Matching
 the model keeps the run faithful to what the API path would do.
 
-**5. Dispatch one fresh subagent** (`subagent_type: "general-purpose"`, `model` as above) with
-exactly this prompt and nothing added:
+**5. Dispatch one fresh subagent per pending call** (`subagent_type: "general-purpose"`, `model` as
+above), all in parallel, each with exactly this prompt and nothing added:
 
 > You are a single stateless model call inside an automated pipeline. You are not an assistant and
 > there is no conversation.
@@ -108,7 +122,8 @@ exactly this prompt and nothing added:
 > Do not ask questions, do not explain yourself, and do not report back — writing the file is your
 > entire output. Answer in the language the prompt is written in.
 
-**6. Go back to step 1.** The answered call now replays from cache and the pipeline moves on.
+**6. When every dispatched subagent has finished, go back to step 1.** The answered calls now replay
+from cache and the pipeline moves on.
 
 A chapter that exhausts its repair budget, or fails its spec or reconcile gate, is **quarantined**,
 not a stop: the run continues with the next chapter and the reason lands in
@@ -118,10 +133,11 @@ is skipped on every later run unless the human asks for `--retry-quarantined` (u
 
 ## Pace and reporting
 
-A scene costs about ten calls at defaults, and a chapter has three to four scenes, so a 3-chapter
-novel is roughly 120–150 calls at defaults and 60–75 with `--checker-samples 1 --prose-candidates 1`;
-longer books scale from there. Work through them steadily without checking in — the run is meant to
-be unattended.
+A scene costs roughly ten calls at defaults (three candidates, a selection, three canon-consistency
+draws, three scene readers), plus two per repair round (the repair and one verification). The
+chapter adds canon-consistency and intent on the assembly, then reconcile. Because the fan-outs
+answer in parallel, a scene is about five *stops*, not ten. Work through them steadily without
+checking in — the run is meant to be unattended.
 
 Report only every ~10 calls, in one line: the stage names answered, the count so far, and anything
 quarantined. Do not summarise the story. Do not quote the prose. You have not read it and must not.

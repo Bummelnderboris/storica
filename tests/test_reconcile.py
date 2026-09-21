@@ -21,7 +21,10 @@ from typing import Sequence
 import pytest
 
 from storica.canon import (
+    Awareness,
     Character,
+    Knowing,
+    KnowledgeItem,
     CharacterRole,
     Constraints,
     Motif,
@@ -40,7 +43,9 @@ from storica.stages.reconcile import (
     ChapterExtraction,
     CharacterFactExtract,
     ContradictionExtract,
+    FactRelation,
     FlagKind,
+    KnowledgeShiftExtract,
     LedgerKind,
     LedgerObservation,
     PromotionKind,
@@ -117,6 +122,7 @@ def _extraction(
     world_facts: Sequence[WorldFactExtract] = (),
     timeline: Sequence[TimelineExtract] = (),
     contradictions: Sequence[ContradictionExtract] = (),
+    knowledge_shifts: Sequence = (),
     ledger: Sequence[LedgerObservation] = (),
 ) -> ChapterExtraction:
     return ChapterExtraction(
@@ -125,6 +131,7 @@ def _extraction(
         world_facts=list(world_facts),
         timeline=list(timeline),
         contradictions=list(contradictions),
+        knowledge_shifts=list(knowledge_shifts),
         ledger=list(ledger),
     )
 
@@ -153,7 +160,8 @@ def test_a_new_fact_about_an_existing_character_is_promoted():
     extraction = _extraction(character_facts=[
         CharacterFactExtract(
             character_id="stettler", surface_name="Stettler", key="Injury",
-            value="a scar across the left hand", evidence="die Narbe an der linken Hand",
+            value="a scar across the left hand", relation_to_canon=FactRelation.NEW,
+            evidence="die Narbe an der linken Hand",
         )
     ])
 
@@ -174,6 +182,7 @@ def test_a_fact_that_contradicts_canon_is_flagged_and_canon_is_unchanged():
         CharacterFactExtract(
             character_id="rutz", surface_name="Rutz", key="office",
             value="local creditor the dead man owed money",
+            relation_to_canon=FactRelation.CONTRADICTS,
             evidence="der Rutz, dem der Tote Geld geschuldet hatte",
         )
     ])
@@ -195,7 +204,8 @@ def test_a_fact_canon_already_states_is_ignored_not_duplicated():
     extraction = _extraction(character_facts=[
         CharacterFactExtract(
             character_id="stettler", surface_name="Dr. Konrad Stettler", key="profession",
-            value="Amtsarzt", evidence="der Amtsarzt unterschrieb",
+            value="Amtsarzt", relation_to_canon=FactRelation.RESTATES,
+            evidence="der Amtsarzt unterschrieb",
         )
     ])
 
@@ -264,6 +274,7 @@ def test_an_unknown_surface_name_is_flagged_as_drift():
     extraction = _extraction(character_facts=[
         CharacterFactExtract(
             character_id="rutz", surface_name="Vikar Brunner", key="age", value="sixty",
+            relation_to_canon=FactRelation.NEW,
             evidence="Vikar Brunner, sechzig",
         )
     ])
@@ -279,7 +290,8 @@ def test_a_fact_attributed_to_an_unknown_character_is_flagged_not_invented():
     extraction = _extraction(character_facts=[
         CharacterFactExtract(
             character_id="der_wirt", surface_name="der Wirt", key="profession",
-            value="innkeeper", evidence="der Wirt goss ein",
+            value="innkeeper", relation_to_canon=FactRelation.NEW,
+            evidence="der Wirt goss ein",
         )
     ])
 
@@ -297,11 +309,12 @@ def test_new_world_facts_and_timeline_events_are_promoted_with_normalised_ids():
     canon = _canon()
     extraction = _extraction(
         world_facts=[WorldFactExtract(
-            key="Location: Chrachen", value="gorge south of the village", evidence="der Chrachen"
+            key="Location: Chrachen", value="gorge south of the village", relation_to_canon=FactRelation.NEW,
+            evidence="der Chrachen"
         )],
         timeline=[TimelineExtract(
             id="Ch3 Confession", when="ch3 night", event="Rutz hears Stettler's confession",
-            involves=["Pfarrer Johannes Rutz", "stettler"], evidence="im Beichtstuhl",
+            involves=["Pfarrer Johannes Rutz", "stettler"], after_event_id="", evidence="im Beichtstuhl",
         )],
     )
 
@@ -320,7 +333,8 @@ def test_an_event_already_on_the_timeline_is_not_appended_twice():
     """v1 appended timeline entries with no dedup at all, inflating every prompt after (F7)."""
     canon = _canon()
     extraction = _extraction(timeline=[TimelineExtract(
-        id="ch3_recall", when="20y prior", event="Klara Vogel dies", involves=["stettler"], evidence="x"
+        id="ch3_recall", when="20y prior", event="Klara Vogel dies", involves=["stettler"],
+        after_event_id="", evidence="x"
     )])
 
     result, _ = _run(extraction, canon, _spec())
@@ -332,7 +346,8 @@ def test_an_event_already_on_the_timeline_is_not_appended_twice():
 def test_an_event_with_a_dangling_reference_is_flagged_not_promoted():
     canon = _canon()
     extraction = _extraction(timeline=[TimelineExtract(
-        id="ch3_meeting", when="ch3", event="Someone new arrives", involves=["der_wirt"], evidence="x"
+        id="ch3_meeting", when="ch3", event="Someone new arrives", involves=["der_wirt"],
+        after_event_id="", evidence="x"
     )])
 
     result, _ = _run(extraction, canon, _spec())
@@ -461,3 +476,100 @@ def test_the_extraction_prompt_is_grounded_in_the_slice_and_names_the_ids_under_
     # and the instruction that keeps prose from becoming truth
     assert "Do NOT resolve it" in call.prompt
     assert "CANON IS TRUTH" in (call.system or "")
+
+
+# --------------------------------------------------------------------------------------------
+# DESIGN §10 risks 5–7: paraphrase, story order, knowledge that moves
+# --------------------------------------------------------------------------------------------
+
+def test_a_restatement_in_other_words_is_not_sent_to_adjudication():
+    """Risk 5: 'district medical officer' for canon's 'Amtsarzt' is a paraphrase, not a change."""
+    canon = _canon()
+    extraction = _extraction(character_facts=[CharacterFactExtract(
+        character_id="stettler", surface_name="Stettler", key="profession",
+        value="the district's medical officer", relation_to_canon=FactRelation.RESTATES,
+        evidence="als Amtsarzt des Bezirks",
+    )])
+
+    result, _ = _run(extraction, canon, _spec())
+
+    assert result.canon.characters["stettler"].facts["profession"] == "Amtsarzt"   # canon's wording
+    flag = _only(result.flagged)
+    assert flag.kind is FlagKind.RESTATED
+
+
+def test_a_fact_called_new_whose_key_canon_already_fills_is_still_a_contradiction():
+    """The model decides paraphrase; code stays the conservative backstop."""
+    canon = _canon()
+    extraction = _extraction(character_facts=[CharacterFactExtract(
+        character_id="rutz", surface_name="Rutz", key="office", value="Notar",
+        relation_to_canon=FactRelation.NEW, evidence="der Notar Rutz",
+    )])
+
+    result, _ = _run(extraction, canon, _spec())
+
+    assert _only(result.flagged).kind is FlagKind.CONTRADICTION
+    assert result.canon.characters["rutz"].facts["office"] == "village priest"
+
+
+def test_a_revealed_past_event_is_placed_in_story_order_not_at_the_end():
+    """Risk 6: a chapter that reveals something from twenty years ago must not sort it after last night."""
+    canon = _canon()
+    canon.timeline.append(TimelineEvent(id="t2", when="ch1 night", event="the car goes off the road",
+                                        involves=["stettler"], order=2))
+    extraction = _extraction(timeline=[TimelineExtract(
+        id="t1b", when="20y prior, the day after", event="Stettler signs the false certificate",
+        involves=["stettler"], after_event_id="t1", evidence="am Tag danach",
+    )])
+
+    result, _ = _run(extraction, canon, _spec())
+
+    assert [e.id for e in result.canon.timeline] == ["t1", "t1b", "t2"]
+    assert [e.order for e in result.canon.timeline] == [1, 2, 3]
+    assert result.is_valid
+
+
+def _with_knowledge(*holders: Knowing) -> StoryModel:
+    canon = _canon()
+    canon.knowledge = [KnowledgeItem(id="k_forgery", fact="Stettler forged the certificate.",
+                                     concerns=["stettler"], holders=list(holders))]
+    return canon
+
+
+def _shift(awareness: Awareness, character_id: str = "rutz") -> KnowledgeShiftExtract:
+    return KnowledgeShiftExtract(knowledge_id="k_forgery", character_id=character_id,
+                                 awareness=awareness, instead="", evidence="Rutz sah ihn an")
+
+
+def test_a_character_who_learns_on_the_page_is_recorded_from_this_chapter():
+    """Risk 7: the table was write-once, so every later slice wrote Rutz as if he had not learned it."""
+    canon = _with_knowledge(Knowing(character_id="stettler", awareness=Awareness.KNOWS, since="t1"))
+    result, _ = _run(_extraction(knowledge_shifts=[_shift(Awareness.SUSPECTS)]), canon, _spec())
+
+    holder = next(h for h in result.canon.knowledge[0].holders if h.character_id == "rutz")
+    assert holder.awareness is Awareness.SUSPECTS and holder.since == "ch3"
+    assert _only(result.promoted).kind is PromotionKind.KNOWLEDGE
+    assert result.flagged == []
+
+
+def test_knowledge_does_not_run_backwards():
+    canon = _with_knowledge(Knowing(character_id="rutz", awareness=Awareness.KNOWS, since="ch1"))
+    result, _ = _run(_extraction(knowledge_shifts=[_shift(Awareness.SUSPECTS)]), canon, _spec())
+
+    assert _only(result.flagged).kind is FlagKind.CONTRADICTION
+    assert result.canon.knowledge[0].holders[0].awareness is Awareness.KNOWS
+
+
+def test_a_shift_the_plan_scheduled_for_later_arriving_early_is_flagged():
+    canon = _with_knowledge(Knowing(character_id="rutz", awareness=Awareness.SUSPECTS, since="ch5"))
+    result, _ = _run(_extraction(knowledge_shifts=[_shift(Awareness.SUSPECTS)]), canon, _spec())
+
+    flag = _only(result.flagged)
+    assert flag.kind is FlagKind.CONTRADICTION and "ch5" in flag.reason
+    assert result.canon.knowledge[0].holders[0].since == "ch5"      # the schedule stands
+
+
+def test_the_extractor_sees_knowledge_as_of_its_chapter():
+    canon = _with_knowledge(Knowing(character_id="rutz", awareness=Awareness.SUSPECTS, since="ch5"))
+    _, llm = _run(_extraction(), canon, _spec())
+    assert "rutz: unaware in this chapter (becomes 'suspects' in ch5 — not yet)" in llm.calls[0].prompt

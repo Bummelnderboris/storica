@@ -1,0 +1,98 @@
+{
+  "decision": "revise",
+  "summary": "The chapter enacts the correct bureaucratic closure and filing of Aebischer beside Vogel, but at nearly every turn it announces feelings, names motives, and spells out symbolic and thematic meaning that Dürrenmatt would leave to the arrangement of facts, so as written it does not earn its place in this voice.",
+  "issues": [
+    {
+      "unit": "denn er wusste, dass dieser Augenblick über alles entscheiden würde",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the 'denn er wusste...' clause; keep only the physical action of taking the pen."
+    },
+    {
+      "unit": "Mit dieser Unterschrift besiegelte er nicht nur den Tod Aebischers",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Delete the sentence explaining what the signature means; let the act of signing beside Feuz's underlined name stand alone."
+    },
+    {
+      "unit": "ging, zufrieden mit sich und seiner Arbeit",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "steer-away: Erklärende Psychologie / Motivanalyse",
+      "fix_hint": "Cut 'zufrieden mit sich und seiner Arbeit'; end on 'Er zog den Mantel an und ging.'"
+    },
+    {
+      "unit": "wirkte sehr traurig und sehr müde",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "steer-away: Sentimentale Gefühlsbeschreibung.",
+      "fix_hint": "Cut the adjective pair; replace with one concrete, procedural observation (e.g. what she is wearing or holding)."
+    },
+    {
+      "unit": "Sie las es nicht, weil sie ihm vertraute",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "steer-away: Erklärende Psychologie / Motivanalyse",
+      "fix_hint": "Cut the 'weil'-clause; state only that she did not read it."
+    },
+    {
+      "unit": "die sich mit dem Schicksal abgefunden hatte und keine Kraft mehr besass",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the clause explaining her resignation; let 'Es war keine Frage' stand as the whole sentence."
+    },
+    {
+      "unit": "Es war die Lüge seines Lebens, und sie ging ihm überraschend leicht",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "steer TOWARD: Ironie ausschließlich aus der Anordnung der Fakten, nie aus Erzählerkommentar.",
+      "fix_hint": "Cut the narrator's assessment of the lie; end the beat on the bare word 'Ja.'"
+    },
+    {
+      "unit": "Es war ein Nicken, das bedeutete: ich weiss es",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the gloss on the nod; leave the nod unexplained and let Rutz simply turn toward the church."
+    },
+    {
+      "unit": "Die Ordnung, an die Stettler zeitlebens geglaubt hatte, war am Ende das",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut this sentence entirely; the two file covers side by side and the closed drawer already carry the point."
+    },
+    {
+      "unit": "zwischen ihnen stand alles, was nie gesagt worden war: die alte",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the list of unspoken things; keep only the exchanged look and 'Kalt heute.'"
+    },
+    {
+      "unit": "Es war das Bild seines ganzen Lebens: zwei Tote, zwei Akten",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the narrator's naming of the image's meaning and 'er erkannte darin sein eigenes Urteil'; let the two visible covers speak without comment."
+    },
+    {
+      "unit": "Er blieb bis zum Abend im Amtszimmer und dachte über alles nach",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "steer-away: Erklärende Psychologie / Motivanalyse",
+      "fix_hint": "Replace announced brooding with one concrete, external detail of the room or the hour passing."
+    },
+    {
+      "unit": "Der Vormittag war kalt und trostlos, und das Licht im Amtszimmer war",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "steer-away: Lyrische Naturbeschreibung ohne ironischen Unterton; Adjektivhäufung.",
+      "fix_hint": "Drop 'trostlos' and the mood-matching clause; open on the report already lying on the desk instead."
+    }
+  ],
+  "conflict": ""
+}

@@ -4,57 +4,35 @@ Paste the block below into a **new** Claude Code session in this repo.
 
 ## The run is already part-done — it resumes, it does not restart
 
-State as of the handoff (52 requests, 51 responses in `06_session/`): **canon v2 established and
-validated** (4 characters, 5 relationships, 7 timeline events, 3 knowledge items, 0 issues),
-**macro arc committed** (3 acts, 3 turning points, 8 beats, 2 motifs, 4 promises), **chapter 1
-specced — four scenes — and passed its Intent check**, scenes 1–3 drafted with selection on (three
-candidates each; scene 1 needed two repairs and passed), and **chapter 1 quarantined** on
-2026-08-11: scene 3 spent its two repairs on one micro-sense issue, an ungrounded date (*"Am elften
-März"*) the timeline does not fix, and scene 4 was never drafted. `05_reports/quarantine.jsonl`
-holds the record; `03_drafts/`, `decisions.jsonl` and `state.json` do not exist yet — drafted prose
-lives only in `04_trace/*.json` until a chapter passes. The next pending call is the **chapter 2
-spec** (`06_session/requests/03605b6b645af714.request.md`, sonnet).
+**Canon v2 is established and validated** (4 characters, 5 relationships, 7 timeline events,
+3 knowledge items), the **macro arc is committed** (3 acts, 3 turning points, 8 beats, 2 motifs,
+4 promises) and **chapter 1 is specced** (four scenes, passed its Intent check). All of that is on
+disk and is not asked again.
 
-Every answered call is cached in `06_session/`, so `storica run` replays the lot in seconds and stops
-at the first unanswered call. Do not delete that directory. The cached verdicts were produced before
-commit `affe38b` fixed the consensus draw; request hashes were kept stable, so the run resumes at
-the same call.
+Chapter 1's first attempt was **quarantined on 2026-08-11**, and the trace showed the cause was the
+gate rather than the prose (`calibration/FINDINGS.md` C7): the repair loop re-read the scene in full
+after every repair and got a different question each time, and micro-sense held the writer to a
+stricter invention rule than the writer had been given. The rework of 2026-09-21 fixed both
+(DESIGN §5.2, §6.2) and released the chapter. Because the writer's and the readers' prompts changed,
+the cached answers for chapter 1's prose no longer match any request: chapter 1 is written afresh,
+from the same spec, under the new gate. Everything cached before it still replays.
 
-## After a quarantine: two ways forward
+Every answered call is cached in `06_session/`, so `storica run` replays the lot and stops at the
+first unanswered call. Do not delete that directory. Request files that are not listed under
+`[pending]` in the run's output are left over from earlier runs and will not be asked again.
 
-A quarantined chapter is skipped on every later run unless it is released. Either:
+## Pace
 
-1. **Continue as-is.** Answer the chapter 2 spec and carry on; chapter 1 stays out of `novel.md`,
-   and the run still measures everything downstream.
-2. **Re-try chapter 1** with `--retry-quarantined --max-repairs 4`. The release is appended to
-   `quarantine.jsonl` (the original record stays) and the chapter is attempted again. Under replay
-   the cached candidates, selection and repair 1 replay from cache; repair 2 onward (each repair
-   pass now has its own cache slot) and its
-   checks need new answers. Use the flag on that run only — once released, the chapter is a normal
-   chapter again.
+One subagent round-trip took 1–25 minutes in the first attempt. What has changed since:
 
-## Pace: pick a config before you start
+- **Fan-outs are answered in parallel.** The run prints every call it is waiting on (`[pending]`);
+  the three prose candidates, the three canon-consistency draws and the three scene readers each
+  arrive together. A scene at defaults is ~10 calls but ~5 stops.
+- **A repair round is two calls** (repair + verification), not five to seven, and it converges.
 
-Measured on this run, one subagent round-trip takes **1–25 minutes** (the tail is long and
-unpredictable). Per scene the shipped defaults cost ~10 calls; chapter 1 alone has four scenes, so
-expect ~12 scenes, plus chapter-level checks, specs, reconciles and the audit. That is roughly
-120–150 calls at defaults — many hours; 51 calls bought one quarantined chapter.
-
-| config | calls/scene | what it still tests | what it gives up |
-|---|---|---|---|
-| defaults | ~10 | everything | finishing this decade |
-| `--checker-samples 1` | ~8 | selection, all four checkers | majority sampling (C4) |
-| `--checker-samples 1 --prose-candidates 1` | ~5 | all four checkers, the whole spine | selection (C6/§5.1) |
-| `--retry-quarantined --max-repairs 4` | + ~2 per extra repair | whether the repair loop converges given room | nothing; add to any row |
-
-**Recommended for a first complete book: `--checker-samples 1 --prose-candidates 1`**, then re-run at
-defaults once it has finished once. Both dropped mechanisms are unit-tested and were watched working
-live on this run (three drafts at 937/871/739 words, selector correctly declining the longest).
-
-One caveat if you drop `--prose-candidates` to 1: scenes 1–3 have three drafts each already cached,
-and a single-candidate run replays **draft A**, not the draft the selector chose. Their text will
-change. Nothing is corrupted; the selection is simply discarded. Use the same flags on **every**
-subsequent run or scenes will keep flipping between the two behaviours.
+Defaults (`--prose-candidates 3 --checker-samples 3 --max-repairs 3`) are the recommended config
+now. `--prose-candidates 1 --checker-samples 1` remains the cheap option; if you use it, use it on
+**every** run, or cached scenes will flip between the two behaviours.
 
 ## Why a fresh session
 
@@ -77,7 +55,8 @@ are fresh contexts, and a checker that remembers writing the prose will defend i
 Start with:
   .venv/bin/storica status novels/der-chrachen-v2
 
-Then loop: run the CLI, read which call is pending, dispatch one fresh subagent per call, repeat.
+Then loop: run the CLI, read every call listed under [pending], dispatch one fresh subagent per
+call — in parallel — and repeat once they have all finished.
   .venv/bin/storica run novels/der-chrachen-v2 --driver replay
 
 Exit codes: 0 = done, 1 = canon or the macro arc failed its gate ([failed], with the issues) or the
@@ -87,12 +66,12 @@ real bug, stop and report the traceback. A chapter that fails is quarantined, no
 05_reports/quarantine.jsonl grows, say so in the next report and keep going. Do not pass
 --retry-quarantined unless I tell you to.
 
-Dispatch each subagent on the model the request names (grep '^- model:' on the request file — that
-is the only part of a request file you may look at). Report every ~10 calls in one line: stage names
+Dispatch each subagent on the model its [pending] line names (model=claude-opus-5 -> opus,
+model=claude-sonnet-5 -> sonnet). You never need to open a request file. Report every ~10 calls in one line: stage names
 answered, count so far, anything quarantined. Do not summarise the story and do not quote the prose.
 
 Cost note: prose defaults to 3 candidate drafts per scene plus a selection call. If you want a
-cheaper first pass, add --prose-candidates 1 --checker-samples 1 to every run command, but say so in
+cheaper pass, add --prose-candidates 1 --checker-samples 1 to every run command, but say so in
 your final report, because both change what the run tests.
 
 When it finishes, report: chapters written, anything quarantined and why (05_reports/quarantine.jsonl),
@@ -122,12 +101,12 @@ Two failure signatures to look for, in this order:
 
 1. **Nothing ever blocked.** The gate is not working, however good the book turns out.
 2. **Almost everything blocked, especially on micro-sense or voice.** This is
-   [C6](../calibration/FINDINGS.md) recurring. Vitality had exactly this defect — every individual
-   verdict defensible, the gate firing on every chapter regardless — and it was only caught by
-   testing the *gate* rather than the judgements. Micro-sense and voice are still binary-gated and
-   have never been calibrated, so they are the two most likely to carry the same flaw. If the repair
-   count per chapter is high and the repairs are not obviously improving anything, suspect this
-   before suspecting the prose.
+   [C6/C7](../calibration/FINDINGS.md) recurring. Chapter 1's first attempt was exactly this, and
+   the rework addressed its two causes; micro-sense and voice have now had a floor test (C8), but on
+   one chapter of one author. If the repair count per chapter is high and the repairs are not
+   obviously improving anything, suspect the gate before suspecting the prose — and read the
+   `repair_verify_*` records in `04_trace/`: they say, per pinned issue, whether the repair
+   resolved it.
 
 A run that reveals either of those is a successful run. The book is the deliverable; the reports are
 the measurement.

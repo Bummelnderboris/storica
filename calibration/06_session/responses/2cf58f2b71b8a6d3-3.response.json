@@ -1,0 +1,35 @@
+{
+  "decision": "revise",
+  "summary": "The scene lands the double closing (Aebischer signed off, Vogel file re-buried) in concrete procedure and objects, but a named clerk canon has no record of, an impossible hallway hand-back, a dialogue scene that dissolves into pure atmosphere, and a flat self-contradiction about the afternoon each undercut a paragraph that otherwise earns its place.",
+  "issues": [
+    {
+      "unit": "P5: \"Gemeindeschreiber Anton Hürlimann, der am Fenster saß\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Leave the clerk unnamed (\"der Gemeindeschreiber am Fenster\") instead of giving him a name canon does not have."
+    },
+    {
+      "unit": "P8: \"Vom Flur aus reichte Feuz ihm die Mappe noch einmal über den Schreibtisch\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this paragraph: Feuz already sealed the report into the folder and left in P6-P7, and handing it back over the desk from the hallway is not physically possible."
+    },
+    {
+      "unit": "P11: \"Die Spannung im Raum wuchs.\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this paragraph; it names a conversation and a feeling instead of showing either, and P10 into P12 already carries the beat without it."
+    },
+    {
+      "unit": "P15: \"Gleich nach Mittag hatte er das Amtszimmer verlassen\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this sentence; it directly contradicts the paragraph's first sentence, which has him staying in the Amtszimmer until evening."
+    }
+  ],
+  "conflict": ""
+}

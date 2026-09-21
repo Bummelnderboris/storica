@@ -229,3 +229,37 @@ def test_draft_to_canon_carries_knowledge_and_resolves_names_to_ids():
     assert item.id == "k_forgery"               # slugified like every other id
     assert item.holders[0].awareness == Awareness.KNOWS
     assert item.holders[0].since == "t1"
+
+
+# --------------------------------------------------------------------------------------------
+# The slice as of a chapter: a scheduled shift is not yet a held fact
+# --------------------------------------------------------------------------------------------
+
+def _scheduled() -> StoryModel:
+    return _canon(knowledge=[_forgery([
+        Knowing(character_id="stettler", awareness=Awareness.KNOWS, since="t1"),
+        Knowing(character_id="berta", awareness=Awareness.SUSPECTS, since="ch2"),
+    ])])
+
+
+def test_a_shift_scheduled_for_a_later_chapter_is_rendered_as_the_ignorance_it_still_is():
+    """Chapter 1's writer was told 'berta: suspects (since ch2)' — a suspicion she did not hold yet."""
+    text = canon_slice(_scheduled(), character_ids=["stettler", "berta"], as_of_chapter=1)
+    assert "berta: unaware in this chapter (becomes 'suspects' in ch2 — not yet)" in text
+    assert "stettler: knows (since t1)" in text
+
+
+def test_a_shift_due_in_this_chapter_is_an_event_the_page_must_deliver():
+    text = canon_slice(_scheduled(), character_ids=["berta"], as_of_chapter=2)
+    assert "berta: unaware as this chapter opens; becomes 'suspects' DURING it" in text
+
+
+def test_after_its_chapter_a_shift_is_simply_held():
+    text = canon_slice(_scheduled(), character_ids=["berta"], as_of_chapter=3)
+    assert "berta: suspects (since ch2)" in text
+
+
+def test_without_a_chapter_the_whole_schedule_is_shown():
+    """Planning stages see the book's schedule, not one chapter's moment in it."""
+    text = canon_slice(_scheduled(), character_ids=["berta"])
+    assert "berta: suspects (since ch2)" in text

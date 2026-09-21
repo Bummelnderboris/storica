@@ -1,0 +1,77 @@
+{
+  "decision": "revise",
+  "summary": "The scene lands every canonical beat -- the co-signing, Feuz's warning, Berta's lie, the filing of Aebischer beside Vogel -- but repeatedly explains feelings, gestures, and their own meaning instead of stating facts and letting the arrangement carry the irony, which is exactly what the forbidden list and this author's hard nos rule out.",
+  "issues": [
+    {
+      "unit": "denn er wusste, dass dieser Augenblick über alles entscheiden würde",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the 'denn er wusste...' clause; keep only the action of taking the pen."
+    },
+    {
+      "unit": "Sie las es nicht, weil sie ihm vertraute.",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut 'weil sie ihm vertraute'; state only that she did not read it."
+    },
+    {
+      "unit": "Es war ein Nicken, das bedeutete: ich weiss es",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Delete the gloss on the nod; let the nod and Rutz's silence stand without translation."
+    },
+    {
+      "unit": "die sich mit dem Schicksal abgefunden hatte",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the narrator's diagnosis of Berta's resignation; leave her line to stand alone."
+    },
+    {
+      "unit": "wirkte sehr traurig und sehr müde",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "steer away: Sentimentale Gefühlsbeschreibung / Adjektivhäufung",
+      "fix_hint": "Cut 'sehr traurig und sehr müde'; replace with one concrete, unadorned detail."
+    },
+    {
+      "unit": "ging, zufrieden mit sich und seiner Arbeit",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut 'zufrieden mit sich und seiner Arbeit'; end the beat on the act of leaving."
+    },
+    {
+      "unit": "sie ging ihm überraschend leicht über die Lippen",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the comment on how easily the lie came; let 'Ja' stand alone."
+    },
+    {
+      "unit": "das Gefängnis geworden, in dem er sich selbst eingeschlossen hatte",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the explicit naming of order as prison; close on the locked cabinet and let that image carry it."
+    },
+    {
+      "unit": "So endete es: nicht mit einem Geständnis, sondern mit einer Ablage",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "steer toward: Offene, unbequeme Enden -- eine Pointe, kein Abschluss.",
+      "fix_hint": "Cut the summarizing frame and end on the locked-cabinet image itself, without announcing what it means."
+    },
+    {
+      "unit": "und dachte über alles nach, was geschehen war",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Replace announced interiority with a laconic, concrete detail; a reader of this author would not recognize this flat summary."
+    }
+  ],
+  "conflict": ""
+}

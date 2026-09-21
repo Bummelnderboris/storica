@@ -4,7 +4,8 @@ The Micro-Sense checker (DESIGN §6, failure class #3: *locally fluent but nonse
 The other conformance readers ask whether the unit agrees with canon and whether it sounds like
 the author. This one asks the question neither of them can: **does this paragraph mean anything?**
 Prose can contradict nothing, sound exactly like Dürrenmatt, and still be a sequence of well-formed
-sentences describing an event that could not happen, made of details nobody ever decided on. That is
+sentences describing an event that could not happen, or an abstraction standing where the event
+should be. That is
 what v1 shipped whenever the critic's weighted average cleared the gate (F8) — a competent draft
 was never read closely enough for anyone to notice that a paragraph was hollow.
 
@@ -14,6 +15,11 @@ rewriting the unit, and a rewrite is exactly how the F12 corruption amplifier st
 
 Voice belongs to `AuthorVoiceChecker`, contradiction belongs to `CanonConsistencyChecker`. This one
 stays on grounding, coherence and load-bearing language.
+
+"Grounding" is the writer's invention policy (`canon/invention.py`), read byte-for-byte from the same
+constant the writer is given. This reader used to call every unglossed date a hallucination while
+the writer was told to invent texture; one chapter was quarantined in that gap (FINDINGS C7). A
+specific the policy permits is not an issue at all — reconcile records it into canon.
 """
 
 from __future__ import annotations
@@ -23,7 +29,7 @@ from typing import List, Optional
 
 from ..authors import AuthorModel
 from ..llm import stage_model
-from ..canon import StoryModel
+from ..canon import INVENTION_POLICY, StoryModel
 from ..plan import ChapterSpec, SceneSpec
 from .base import Verdict
 from .prose_base import ProseCheckerBase, unit_label
@@ -48,10 +54,17 @@ Your subject is the sentence and the paragraph: is it grounded, does it cohere, 
 
 MICRO_RUBRIC = """Read the unit one numbered paragraph at a time. For each paragraph, in this order:
 
-1. **Is every concrete detail grounded?** Names, professions, objects, places, distances, dates,
-   procedures, weather, who owns what, who knows what — each must come from the canon slice or
-   follow plainly from it. A specific detail that has no canon basis is a hallucination: the writer
-   made it up to fill the sentence, and the next chapter will be built on it. Flag it and quote it.
+1. **Does any detail break the invention policy above?** The writer was given the same policy and
+   told to use its freedom. A date, an hour, a street, an object, a procedure, an unnamed clerk —
+   canon being silent about it is NOT a finding: that is the writer doing the job, and reconcile
+   records it into canon once the chapter passes. What IS a finding: a NAMED person canon does not
+   have, a relationship canon does not record, a character acting on knowledge the table does not
+   give them, or a detail that settles one of the story's open questions (the nature of a secret,
+   the answer to a promise). Quote it and name what it takes from canon.
+   Two things are NOT yours here. Whether the prose contradicts a canon fact is the canon-consistency
+   reader's question — it is sampled three times for exactly that — so do not report it. And what a
+   character SAYS is characterization, not the text asserting a fact: a character may misremember,
+   hedge, exaggerate or lie. Judge what the narration establishes, not what people claim.
 2. **Does the situation actually work?** Walk the physical logic: where each body is, what each hand
    is holding, what can be seen and heard from where, how long a thing takes. Then the social logic:
    what this character would plausibly say to *this* person, in this place, given what they know.
@@ -76,14 +89,17 @@ How to report:
 - `fix_hint`: the smallest edit — "cut this sentence", "replace the age with the canon fact",
   "state what he actually said". Never "rewrite the paragraph".
 
-Blocking vs warning — be concrete, not squeamish:
-- BLOCKING: an invented detail the scene leans on (an object, a fact, a person, a place that canon
-  does not have); a situation whose physical or social logic cannot happen as written; the scene's
-  own event replaced by an abstraction of it; a paragraph whose sentences contradict each other.
+Blocking vs warning. The test for BLOCKING is one question: **would a careful reader stop, confused
+or misled, at this exact place?** If yes, block. If they would read on, it is at most a warning.
+- BLOCKING: a breach of the MAY NOT list above; a situation whose physical or social logic cannot
+  happen as written; the scene's own event replaced by an abstraction of it; a paragraph whose
+  sentences contradict each other; a sentence a reader cannot parse.
 - WARNING: a single filler sentence in a paragraph that otherwise works; a slack transition; a
-  flourish you would cut but that costs the reader nothing; an unglossed detail that is consistent
-  with canon but that canon never mentions.
-- Not an issue at all: a choice you would have made differently. You are not the writer."""
+  flourish you would cut but that costs the reader nothing.
+- Not an issue at all: an invented specific the policy permits; a choice you would have made
+  differently. You are not the writer.
+Apply the test the same way every time. The same span must get the same severity from any reader
+who reads it — a severity that depends on the reading is a gate that cannot converge."""
 
 
 def _numbered_paragraphs(prose: str) -> str:
@@ -154,6 +170,8 @@ class MicroSenseChecker(ProseCheckerBase):
 
 # The prose, paragraph by paragraph
 {_numbered_paragraphs(prose)}
+
+{INVENTION_POLICY}
 
 {MICRO_RUBRIC}"""
         return await self.check(prompt=prompt, unit=unit, draw=draw)

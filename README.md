@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 327 tests passing. Never yet run end-to-end against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 356 tests passing. Never yet run end-to-end against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -56,7 +56,7 @@ The three commands are all there are:
 | `status <dir>` | Canon version, chapters specced/drafted, anything quarantined |
 
 Useful flags: `--no-checkers` (structure only, no LLM judgement — fast and cheap), `--no-audit`
-(skip the whole-book final read), `--max-repairs N` (default 2), `--retry-quarantined` (release
+(skip the whole-book final read), `--max-repairs N` (default 3), `--retry-quarantined` (release
 every quarantined chapter and attempt it again — without it, a quarantined chapter is skipped on
 every later run).
 
@@ -90,7 +90,7 @@ Each one reads canon, writes canon or plan, and is gated by the checker layer.
 | 2 | **World & cast** | premise, brief | characters, relationships, world facts, timeline, constraints | Sonnet |
 | 3 | **Macro arc** | full canon | `macro_arc.json` — acts, turning points, arc beats, the motif/promise schedule | Sonnet |
 | 4 | **Chapter spec** | canon + arc | `chNN.spec.json` — beats to advance, setups to plant, payoffs to deliver, entry/exit state | Sonnet |
-| 5 | **Prose** | spec + **full canon slice** | *k* drafts per scene → select the most alive → `03_drafts/chNN.md` | Opus |
+| 5 | **Prose** | spec + **full canon slice** + the author's craft + the chapter so far | *k* drafts per scene → select the most alive → `03_drafts/chNN.md` | Opus |
 | 6 | **Reconcile** | draft + canon | extracts facts from the draft, validates them, promotes or flags; updates the ledger | Sonnet |
 
 Stage 4 runs **just in time**, one chapter at a time, immediately before that chapter is written —
@@ -102,6 +102,14 @@ identical prompt and one cheap call picks the most alive; only the winner enters
 Repair is a regression-to-the-mean engine — every iteration moves a draft toward the rubric and away
 from whatever was surprising in it — so the variance is better spent choosing than sanding. Cost is
 *k* generate calls plus **one** judgement, not *k* gates. Use `--prose-candidates 1` to turn it off.
+
+The writer is told **what it may invent** — one rule, shared word for word with the micro-sense
+reader ([`canon/invention.py`](src/storica/canon/invention.py)). Texture, minor specifics (a date,
+an hour, a street), procedure and unnamed walk-ons are its to imagine, and reconcile records them into
+canon so later chapters are held to them; named people, relationships, who knows what and the
+story's open questions are not. It also gets the author's full craft (sentence patterns, register,
+dialogue, register samples — not just the no-list), the whole chapter written so far, and a private
+"picture the scene first" step before drafting.
 
 ### Knowledge state
 
@@ -121,9 +129,10 @@ return `PASS`, `REVISE` (with located issues) or `ESCALATE`.
 |---|---|---|
 | **Canon-consistency** | Does this contradict a canonical fact, relationship or timeline entry? | prose (plans are gated by schema validation plus Intent) |
 | **Intent** | Does this advance the beats it was *assigned*? Does it keep its promises? | the arc, each chapter spec, and each assembled chapter — **advisory** on prose |
-| **Micro-sense** | Paragraph by paragraph: are details grounded, does the situation cohere, is the language load-bearing? | prose |
-| **Author-voice** | Is this the author, and inside the forbidden list? | prose |
-| **Vitality** | Is this *alive*? Does it explain its own gestures, announce its emotions, restate the outline? | prose |
+| **Micro-sense** | Paragraph by paragraph: does a detail breach the invention policy, does the situation cohere, is the language load-bearing? | prose scenes |
+| **Author-voice** | Is this the author, and inside the forbidden list? | prose scenes |
+| **Vitality** | Is this *alive*? Does it explain its own gestures, announce its emotions, restate the outline? | prose scenes |
+| **Repair verifier** | After a repair: were the pinned issues fixed, and did the edit break anything where it edited? | each repair round |
 | **Final auditor** | One fresh reader on the whole assembled book | once, at the end |
 
 There is deliberately **no single averaged score**. v1 gated on a weighted mean of 7.0, which a
@@ -132,11 +141,20 @@ Here any checker raising a blocking issue triggers repair, and checkers run on t
 meaningful unit so a problem is localised rather than averaged away. Cheap structural checks run
 before expensive LLM ones.
 
+**A unit is judged in full once; repairs are verified, not re-judged.** The blocking issues of that
+one full read are pinned, and after each repair a fresh verifier checks only those pins, against a
+diff of what the repair changed. Re-running every reader after every repair looked rigorous and could
+not converge: each fresh read is a new draw that asks a new question, which is exactly how P6's first
+chapter died (`calibration/FINDINGS.md` C7). A repair round now costs two calls, and the open list
+can only shrink.
+
 **Canon-consistency is sampled three times and blocks on a majority**, because a single LLM verdict
 flags clean prose about 20% of the time. Majority decides; once blocked, repair sees the union of
 everything all three draws found. See the calibration below. It also runs first and
 **short-circuits**: if it blocks, micro-sense, voice and vitality are not spent on that draft — they
-read the repaired text instead.
+read the repaired text instead. When it passes, those three run concurrently, on scenes only: their
+questions are local, and asking them again of the assembled chapter was a second draw on sentences
+they had already passed.
 
 **Vitality is the odd one out, on purpose.** The other four are conformance checks, so a chapter that
 matches canon, hits its beats and sounds like the author passes the whole gate no matter how inert it
@@ -159,8 +177,7 @@ assembled chapter, which closes the gap that no reader ever judged whether a cha
 assigned beats. It advises rather than blocks there because it has never been calibrated, and
 vitality is the standing lesson about what an uncalibrated binary gate does to a book; promoting it
 after calibration is a one-word change to its row. Scope is also a cost lever: an out-of-scope unit
-costs no model call, so five readers add roughly one call per *chapter*-level pass, not one per
-scene. [`docs/agents.md`](docs/agents.md) is the full roster — every agent, what triggers it, what it
+costs no model call, so the assembled chapter is read by two readers, not five. [`docs/agents.md`](docs/agents.md) is the full roster — every agent, what triggers it, what it
 reads, and what it may do.
 
 ### When something can't be repaired locally
@@ -198,6 +215,17 @@ and exits 1, as does a model refusal (`[refused]`).
 This is the direct answer to v1's worst failure: an agent told to reconcile a contradiction invented
 a bridging fact, and the invention became canon. Repair here can only resolve *toward* something
 frozen, so it has nothing to invent with.
+
+### What reconcile carries forward
+
+After a chapter passes, reconcile extracts what the prose established and promotes it into canon, so
+the next chapter is written against it. The extractor classifies each fact as new, a restatement or
+a contradiction (only a reader can tell a paraphrase from a change — restatements are recorded, never
+adjudicated); places each event in *story* order, so a past event the chapter reveals does not sort
+after last night; and records **knowledge shifts** — a character who learns or starts to suspect
+something on the page holds it from that chapter on. Knowledge only moves forward, and a shift the
+plan scheduled for a later chapter arriving early is flagged. The slice every agent reads renders
+knowledge *as of the chapter being written*.
 
 ---
 
@@ -359,35 +387,29 @@ It is set up and ready to run:
   not prove, the contamination trap that would silently invalidate it, and the scorecard for judging
   the result against the v1 findings.
 
-Run it with `/write-novel novels/der-chrachen-v2`. Chapter 1's spec has four scenes and a scene
-costs about ten calls at defaults, so expect roughly 120–150 model calls for three chapters at
-defaults, and 60–75 with `--checker-samples 1 --prose-candidates 1`.
+Run it with `/write-novel novels/der-chrachen-v2`. A scene at defaults is about ten calls, but the
+fan-outs (three candidates, three canon-consistency draws, three scene readers) are answered in
+parallel, so it is about five stops; a repair round adds two calls.
 
 ### How far the run has got, and what it has already shown
 
-51 calls answered. Canon v2 established and validated, macro arc committed, chapter 1 specced (four
-scenes) and past its Intent check, and scenes 1–3 drafted with selection on — then **chapter 1 was
-quarantined** on scene 3, scene 4 never drafted, which is the first thing this pipeline has ever
-proved in anger:
+Canon v2 is established and validated, the macro arc committed, chapter 1 specced (four scenes) and
+past its Intent check. The **first attempt at chapter 1 was quarantined** on scene 3 — and reading
+the trace showed that the gate, not the prose, was at fault (`calibration/FINDINGS.md` C7):
 
 - **Selection works and is cheap.** Three drafts of scene 1 at 937 / 871 / 739 words; the selector
   declined the longest. One call, and the spread was real.
-- **The repair loop is the expensive part, not selection** — and it did not converge. Scene 1 went
-  through two repairs and passed. On scene 3, micro-sense found an ungrounded date (*"Am elften
-  März"*, against a timeline that fixes no exact day), two repair passes failed to remove it, and
-  the budget ran out.
-- **So the chapter was excluded rather than shipped.** `05_reports/quarantine.jsonl` names the unit,
-  the reason and the exact issue. That is the designed behaviour, on a real failure, unattended.
-  The drafted prose lives only inside `04_trace/*.json` until a chapter passes, so there is no
-  `03_drafts/` yet.
+- **The repair loop did not converge, by construction.** Every repair was followed by a full fresh
+  re-read of the scene, and every fresh read asked a different question — the date *"Am elften März"*
+  was a warning in read 1 (so repair never saw it), unmentioned in read 2, blocking in read 3.
+- **The reader was stricter than the writer's instructions.** The writer was told to invent texture;
+  micro-sense called any unglossed specific a hallucination.
 
-The open question it raises is convergence economics, not correctness: two repairs was not enough
-for a small, local, precisely-stated fix. The next pending call is the chapter 2 spec
-(`06_session/requests/03605b6b645af714.request.md`, sonnet); the run can continue past the
-quarantine as it stands, or re-try chapter 1 with `--retry-quarantined --max-repairs 4`, which is
-the first dial to turn — `--max-repairs` alone does nothing for a chapter already quarantined. The
-cached verdicts predate the fix to the consensus draw (commit `affe38b`); request hashes were kept
-stable, so the run resumes at the same call.
+The rework of 2026-09-21 fixed both (pinned issues verified per repair; one invention policy shared
+by writer and reader), gave the writer the author's full craft and the whole chapter so far, closed
+the three reconcile gaps (paraphrase, story order, knowledge that moves), and calibrated micro-sense
+and voice (C8). Chapter 1 was released and is re-attempted from the same spec under the new gate;
+everything before it replays from cache.
 
 ### What the calibration found first
 
@@ -420,10 +442,20 @@ test costing about ten calls instead of a whole book. Full write-up in
 - **Two of the original findings were artefacts.** At n=1 an unlucky draw is indistinguishable from a
   real miss; resampling overturned both. Worth knowing before trusting any single verdict here.
 
-Known open questions, in `DESIGN.md` §10: **micro-sense and voice are still uncalibrated, and both are
-binary-gated — the exact design that failed for vitality**; every planted error tested was a *fact*
-changing, not a contradiction of tone or motive; the vitality threshold is fitted to one chapter of
-one author; convergence caps need tuning; cost per book versus v1 is unmeasured.
+- **P6's first chapter was killed by the gate, not the prose (C7).** Each repair was followed by a
+  full fresh re-read, and each re-read asked a different question: a date was a warning in read 1,
+  ignored in read 2, blocking in read 3. And micro-sense held the writer to a stricter rule about
+  invented detail than the writer had been given. Fixed by pinning issues and verifying repairs
+  against them, and by one invention policy shared by writer and reader.
+- **Micro-sense and voice now pass their floor test (C8).** Neither blocked the clean control chapter
+  in any of three draws; both blocked the broken version every time; micro-sense caught the planted
+  breaches (a named stranger, an impossible hand-over, an abstraction, a self-contradiction) and
+  blocked none of the twelve permitted specifics, dates included. Reproduce with
+  `.venv/bin/python tools/calibrate_readers.py`.
+
+Known open questions, in `DESIGN.md` §10: every planted error tested was a *fact* changing, not a
+contradiction of tone or motive; every calibration is n=3–5 on one chapter of one author; the repair
+verifier and intent-on-prose are unmeasured; cost per book versus v1 is unmeasured.
 
 ---
 

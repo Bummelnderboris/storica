@@ -1,0 +1,126 @@
+{
+  "decision": "revise",
+  "summary": "The chapter carries the required beats (co-signing, Berta's closing lie, the two files shelved together) but is repeatedly told rather than protocolled, so it does not yet earn its place in Dürrenmatt's voice.",
+  "issues": [
+    {
+      "unit": "Der Vormittag war kalt und trostlos, und das Licht",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "nudge: Lyrische Naturbeschreibung ohne ironischen Unterton; Adjektivhäufung.",
+      "fix_hint": "Cut the mood-pathetic-fallacy simile ('so grau wie die Stimmung'); state cold and grey as bare fact, no comparison to feeling."
+    },
+    {
+      "unit": "Er spürte eine tiefe Unruhe in sich aufsteigen, und sein Herz schlug",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the named emotion and physiological reason; show only the external action of the hand over the paper."
+    },
+    {
+      "unit": "Es war eine Warnung, auch wenn sie nicht als solche ausgesprochen wurde",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Delete the gloss naming it a warning and Stettler's understanding of it; let Feuz's line stand unexplained."
+    },
+    {
+      "unit": "Mit dieser Unterschrift besiegelte er nicht nur den Tod Aebischers",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the sentence explaining what the signature seals; end the beat at 'Dann unterschrieb er.'"
+    },
+    {
+      "unit": "ging, zufrieden mit sich und seiner Arbeit",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the stated satisfaction; end on 'Er zog den Mantel an und ging.'"
+    },
+    {
+      "unit": "wirkte sehr traurig und sehr müde",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "nudge: Sentimentale Gefühlsbeschreibung.",
+      "fix_hint": "Replace the adjective pair with one concrete external detail (the dark dress, a gesture) and drop the stated feeling."
+    },
+    {
+      "unit": "Sie las es nicht, weil sie ihm vertraute.",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "State only that she does not read it; cut the 'weil'-clause giving her reason."
+    },
+    {
+      "unit": "die sich mit dem Schicksal abgefunden hatte und keine Kraft mehr besass",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the interpretive clause; let 'Es war keine Frage, sondern die Feststellung' stand alone."
+    },
+    {
+      "unit": "Er blieb bis zum Abend im Amtszimmer und dachte über alles nach",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the announced rumination; cut straight to the external fact ('Auf der Strasse war es kalt geworden.')."
+    },
+    {
+      "unit": "und zwischen ihnen stand alles, was nie gesagt worden war",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the inventory of unspoken history; let the silent look and the next exchanged lines carry it."
+    },
+    {
+      "unit": "Es war ein Nicken, das bedeutete: ich weiss es",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the gloss on the nod; leave only 'Rutz nickte' and his turning toward the church."
+    },
+    {
+      "unit": "Jeder ging seinen Weg, wie sie es von nun an immer",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the stated future/meaning of the parting; end on the two men walking in opposite directions."
+    },
+    {
+      "unit": "Es war das Bild seines ganzen Lebens: zwei Tote, zwei Akten",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the naming of the image's meaning ('das Bild seines ganzen Lebens'); show the two folders side by side and stop there."
+    },
+    {
+      "unit": "Er sah es, und er erkannte darin sein eigenes Urteil.",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut this sentence entirely; the two folders and his subsequent act of hiding them already carry the judgment."
+    },
+    {
+      "unit": "Die Ordnung, an die Stettler zeitlebens geglaubt hatte, war am Ende",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut this sentence restating the chapter's thesis; move directly from the locked cabinet to the closing aphorism."
+    },
+    {
+      "unit": "So endete es: nicht mit einem Geständnis, sondern mit einer Ablage.",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "nudge: Kurze, aphoristische Sentenzen mit paradoxer Pointe.",
+      "fix_hint": "Keep only this pointe as the chapter's last line and cut the explanatory sentences that follow it."
+    },
+    {
+      "unit": "eine Hand, die beide Male dieselbe Formulierung geschrieben hatte",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "impression: depth comes from contradiction, not explanation; the horror is stated, never wept over.",
+      "fix_hint": "State the shared formula and the two folders as bare fact and stop; do not have the narrator name what the coincidence means."
+    }
+  ],
+  "conflict": ""
+}

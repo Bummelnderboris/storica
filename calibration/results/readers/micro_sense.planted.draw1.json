@@ -1,0 +1,35 @@
+{
+  "decision": "revise",
+  "summary": "The scene lands its two closing procedural strokes and the load-bearing image of the two file covers side by side, but a named walk-on with no canon entry, an impossible hand-off through a doorway, a paragraph that abstracts away its own event, and a self-contradicting timeline sentence keep it from working as written.",
+  "issues": [
+    {
+      "unit": "P5: \"Gemeindeschreiber Anton Hürlimann, der am Fenster saß\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Drop the name; keep him unnamed as 'der Gemeindeschreiber am Fenster'."
+    },
+    {
+      "unit": "P8: \"Vom Flur aus reichte Feuz ihm die Mappe noch einmal über den\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this sentence: Feuz already put on his coat and left in P7, so he cannot reach the folder back over the desk from the hallway."
+    },
+    {
+      "unit": "P11: \"Die Spannung im Raum wuchs.\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this sentence and the one before it; give the actual words Berta and Stettler exchanged about the dead man instead of naming the tension and the fact that they spoke."
+    },
+    {
+      "unit": "P15: \"Gleich nach Mittag hatte er das Amtszimmer verlassen und war nicht zurückgekehrt.\"",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this sentence; it directly contradicts 'Er blieb bis zum Abend im Amtszimmer' in the same paragraph and also undercuts Berta's afternoon visit in P9."
+    }
+  ],
+  "conflict": ""
+}

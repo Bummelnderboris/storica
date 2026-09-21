@@ -35,7 +35,8 @@ from ...authors import AuthorModel
 from ...canon import Issue, StoryModel, blocking, chapter_unit
 from ...checkers.base import Decision, Escalation
 from ...checkers.prose_base import ProseChecker
-from ...llm import StructuredLLM, stage_model
+from ...checkers.verifier import RepairVerifier
+from ...llm import StructuredLLM, gather_draws, stage_model
 from ...plan import ChapterSpec, MacroArc, SceneSpec
 from ...trace import Tracer
 from ..gate import GateFailed
@@ -49,7 +50,6 @@ from .prompts import (
     _repair_prompt,
     _scene_prompt,
     _scene_slice,
-    _tail,
     scene_assignment_block,
 )
 from .quality import _deterministic_issues, _repair_loop, _split_scenes, assemble_chapter
@@ -109,6 +109,7 @@ async def write_chapter(
     guidance: str = "",
     n_candidates: int = 1,
     selection_model: str = stage_model("selection"),
+    verifier: Optional[RepairVerifier] = None,
 ) -> ProseResult:
     """
     Write one chapter, scene by scene, grounded in canon and checked at both scales.
@@ -120,42 +121,68 @@ async def write_chapter(
     `guidance` carries a binding ruling from adjudication (§6.5) into a re-attempt: when a first
     attempt escalated and the adjudicator ruled, the ruling rides into every scene prompt so the
     re-write is bound by it rather than re-discovering the same conflict.
+
+    `verifier` makes the repair loop converge: each unit is read in full once, its blocking issues
+    are pinned, and each repair is checked against the pins alone (`checkers/verifier.py`). Without
+    one, every repair round re-runs the full gate.
     """
     tracer = tracer or Tracer(None)
     language = _language(canon)
     unit_prefix = chapter_unit(spec.chapter)
+
+    async def judge(checker: ProseChecker, text: str, scene: Optional[SceneSpec]):
+        return checker, await checker.check_prose(
+            prose=text, canon=canon, spec=spec, author=author, scene=scene
+        )
 
     def evaluator(unit: str, scene: Optional[SceneSpec]) -> Callable[[str], Awaitable[List[Issue]]]:
         async def evaluate(text: str) -> List[Issue]:
             issues = _deterministic_issues(text, unit, min_scene_chars)
             if issues:
                 return issues  # a stub is not worth a checker call
-            for checker in checkers:
-                verdict = await checker.check_prose(
-                    prose=text, canon=canon, spec=spec, author=author, scene=scene
-                )
-                if verdict.decision == Decision.ESCALATE:
-                    raise Escalation(unit, verdict.conflict, verdict)
-                issues += verdict.to_issues(checker.name)
-                if checker.name == CANON_CONSISTENCY and blocking(issues):
-                    # A contradiction makes the other judgements moot (checkers/defaults.py): no
-                    # point paying to polish the texture of a paragraph that says the wrong man
-                    # signed the certificate. The rest run on the repaired text.
+            first = [c for c in checkers if c.name == CANON_CONSISTENCY]
+            rest = [c for c in checkers if c.name != CANON_CONSISTENCY]
+            # Canon-consistency first, alone: a contradiction makes the other judgements moot (no
+            # point paying to polish the texture of a paragraph that says the wrong man signed the
+            # certificate), and the rest run on the repaired text. The others are independent
+            # readers of the same text, so they run concurrently — under the replay driver that
+            # also means one stop asks all of them at once.
+            for batch in (first, rest):
+                if not batch:
+                    continue
+                for checker, verdict in await gather_draws(judge(c, text, scene) for c in batch):
+                    if verdict.decision == Decision.ESCALATE:
+                        raise Escalation(unit, verdict.conflict, verdict)
+                    issues += verdict.to_issues(checker.name)
+                if blocking(issues):
                     break
             return issues
         return evaluate
 
+    def verification(unit: str, canon_block: str):
+        if verifier is None:
+            return None
+
+        async def verify(before: str, after: str, pinned: List[Issue], round_: int):
+            stub = _deterministic_issues(after, unit, min_scene_chars)
+            if stub:
+                return stub
+            return await verifier.verify(
+                unit=unit, before=before, after=after, pinned=pinned,
+                canon_block=canon_block, draw=round_,
+            )
+        return verify
+
     scenes: List[str] = []
     issues: List[Issue] = []
     repairs = 0
-    tail = previous_tail
-    previous_is_chapter = True
 
     for index, scene in enumerate(spec.scenes, start=1):
         unit = f"{unit_prefix}_{scene.id}"
         prompt = _scene_prompt(
-            spec=spec, canon=canon, arc=arc, author=author, scene=scene,
-            index=index, previous_tail=tail, previous_is_chapter=previous_is_chapter,
+            spec=spec, canon=canon, arc=arc, author=author, scene=scene, index=index,
+            previous_chapter_tail=previous_tail,
+            chapter_so_far=f"\n\n{SCENE_DIVIDER}\n\n".join(scenes),
             guidance=guidance,
         )
         if n_candidates > 1:
@@ -175,20 +202,22 @@ async def write_chapter(
             text = await llm.generate(prompt=prompt, system=SYSTEM, model=model, max_tokens=max_tokens)
         tracer.record(f"{unit}_prose", prompt=prompt, system=SYSTEM, model=model, artifact=text)
 
+        scene_block = _scene_slice(spec, canon, scene)
         text, scene_issues, scene_repairs = await _repair_loop(
             stage=f"{unit}_prose",
             unit=f"scene {scene.id}",
             text=text,
             evaluate=evaluator(unit, scene),
-            repair_prompt=lambda current, flagged, _s=scene, _p=prompt: _repair_prompt(
+            repair_prompt=lambda current, flagged, _s=scene, _p=prompt, _b=scene_block: _repair_prompt(
                 unit=f"scene {_s.id}",
                 current=current,
                 issues=flagged,
-                canon_block=_scene_slice(spec, canon, _s),
+                canon_block=_b,
                 language=language,
                 regenerate_prompt=_p,
             ),
             llm=llm, model=model, max_tokens=max_tokens, tracer=tracer, max_repairs=max_repairs,
+            verify=verification(unit, scene_block),
         )
 
         repairs += scene_repairs
@@ -197,8 +226,6 @@ async def write_chapter(
             raise ProseGateFailed(blocking(issues))
 
         scenes.append(text.strip())
-        tail = _tail(text)
-        previous_is_chapter = False
 
     chapter_text = assemble_chapter(spec.title, scenes)
     tracer.record(
@@ -211,6 +238,7 @@ async def write_chapter(
 
     # Some failures only exist at chapter scale — an image used twice, a turn that lands in two
     # scenes, a chapter that adds up to less than its parts. The scene pass cannot see them.
+    chapter_block = _chapter_slice(spec, canon)
     chapter_text, chapter_issues, chapter_repairs = await _repair_loop(
         stage=f"{unit_prefix}_prose",
         unit=f"chapter {spec.chapter}",
@@ -220,11 +248,12 @@ async def write_chapter(
             unit=f"chapter {spec.chapter}",
             current=current,
             issues=flagged,
-            canon_block=_chapter_slice(spec, canon),
+            canon_block=chapter_block,
             language=language,
             regenerate_prompt="",
         ),
         llm=llm, model=model, max_tokens=max_tokens, tracer=tracer, max_repairs=max_repairs,
+        verify=verification(unit_prefix, chapter_block),
     )
 
     repairs += chapter_repairs

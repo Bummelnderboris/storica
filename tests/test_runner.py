@@ -115,6 +115,7 @@ def _spec() -> ChapterSpec:
 def _extraction() -> ChapterExtraction:
     return ChapterExtraction(
         character_facts=[], aliases=[], world_facts=[], timeline=[], contradictions=[],
+        knowledge_shifts=[],
         ledger=[
             LedgerObservation(id="formula_echo", kind=LedgerKind.MOTIF_SETUP, landed=True, evidence="x"),
             LedgerObservation(id="formula_echo", kind=LedgerKind.MOTIF_PAYOFF, landed=True, evidence="x"),

@@ -25,9 +25,9 @@ one — that is a contradiction for you to REPORT, never a correction for you to
 facts for you to merge into a convenient third one ("he is a priest AND a creditor"). Inventing that
 bridging fact is the single failure this pipeline exists to prevent.
 
-You report four things: facts the prose adds that canon does not have, names the prose used for
-canon characters, facts the prose contradicts, and whether each setup, payoff and promise this
-chapter was assigned actually landed in the text."""
+You report five things: facts the prose adds that canon does not have, names the prose used for
+canon characters, facts the prose contradicts, shifts in who knows what, and whether each setup,
+payoff and promise this chapter was assigned actually landed in the text."""
 
 
 def reconcile_assignment_block(chapter: int, canon: StoryModel, spec: ChapterSpec) -> str:
@@ -63,7 +63,7 @@ def _extraction_prompt(chapter: int, draft_text: str, canon: StoryModel, spec: C
     motif_ids = list(dict.fromkeys([*spec.setups, *spec.payoffs]))
     promise_ids = list(dict.fromkeys([*spec.promises_made, *spec.promises_kept]))
 
-    return f"""{canon_slice(canon, character_ids=cids, motif_ids=motif_ids, promise_ids=promise_ids)}
+    return f"""{canon_slice(canon, character_ids=cids, motif_ids=motif_ids, promise_ids=promise_ids, as_of_chapter=chapter)}
 
 # Ids under review in chapter {chapter}
 - characters: {', '.join(cids) or '(none)'}
@@ -89,8 +89,18 @@ Rules:
 - Anything the draft says that the slice says otherwise about goes in `contradictions` — including
   a role, a relationship, a date, or a cause of death. Do NOT resolve it. Do NOT choose a winner.
   Do NOT invent a fact under which both could be true. Canon is ground truth; the draft is a draft.
-- A fact the slice already states is NOT a contradiction. Do NOT report it again, and do NOT
-  report it reworded: a restatement in different words is indistinguishable from a changed fact
-  and would be flagged as a contradiction. Report only what is new or what disagrees.
+- For every fact, say how it stands to the slice in `relation_to_canon`: 'new' when the slice says
+  nothing about it, 'restates_canon' when the slice already says it — in whatever words — and
+  'contradicts_canon' when the slice says otherwise. Only you can tell a paraphrase from a change;
+  judge it, do not leave it to string comparison. Prefer not to report restatements at all.
+- The draft will contain specifics canon never decided — a date, a street, an object, how an office
+  works. That is the writer's job, not a fault: report them as 'new' facts so later chapters are
+  held to them.
+- Timeline: `after_event_id` places each event in STORY time. An event the chapter reveals from
+  the past goes directly after the last canon event that precedes it; only what happens in the
+  chapter's own present is left empty (it goes last).
+- Knowledge: report in `knowledge_shifts` every moment the draft shows a character coming to know,
+  suspect or wrongly believe a fact from the knowledge table — only shifts that HAPPEN in this
+  chapter. A character who already holds what the table grants them is not a shift.
 - For the ledger: `landed` is about the page, not the plan. If the chapter was told to pay a motif
   off and the payoff is not in the text, say landed=false and name what is missing."""

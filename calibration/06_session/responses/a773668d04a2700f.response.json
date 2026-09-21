@@ -1,0 +1,56 @@
+{
+  "decision": "revise",
+  "summary": "The scene keeps every canonical fact but repeatedly explains what Stettler, Berta, and Rutz feel or mean in narrator commentary instead of leaving it to the arrangement of facts, so it does not yet read as Dürrenmatt.",
+  "issues": [
+    {
+      "unit": "denn er wusste, dass dieser Augenblick über alles entscheiden würde",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the 'denn er wusste...' clause; keep only the physical action of taking up the pen."
+    },
+    {
+      "unit": "Sie las es nicht, weil sie ihm vertraute.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut 'weil sie ihm vertraute'; state only that she did not read it."
+    },
+    {
+      "unit": "wirkte sehr traurig und sehr müde",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "steer away: Sentimentale Gefühlsbeschreibung; wenig Adjektive",
+      "fix_hint": "Drop 'sehr traurig und sehr müde'; give one exact physical detail instead of naming her feeling."
+    },
+    {
+      "unit": "die sich mit dem Schicksal abgefunden hatte und keine Kraft mehr besass",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "steer away: Erklärende Psychologie / Motivanalyse",
+      "fix_hint": "Cut the resignation clause; let 'Es war keine Frage, sondern die Feststellung' stand without the gloss."
+    },
+    {
+      "unit": "besiegelte er nicht nur den Tod Aebischers, sondern auch seine eigene Schuld",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "steer toward: Ironie ausschliesslich aus der Anordnung der Fakten, nie aus Erzählerkommentar",
+      "fix_hint": "Cut the 'besiegelte...Schuld' gloss; let the signature under Feuz's double-underlined name stand without comment."
+    },
+    {
+      "unit": "das Gefängnis geworden, in dem er sich selbst eingeschlossen hatte",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "steer toward: das Ende ist eine Pointe, kein Abschluss/Zusammenfassung",
+      "fix_hint": "Cut the prison-metaphor gloss and the 'Gerechtigkeit gab es...' generalization that follows it; end on the turned key and the ordered files."
+    },
+    {
+      "unit": "ich weiss es, und ich werde nichts sagen",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "steer away: Erklärende Psychologie (drift) — Rutz 'accuses through silence'",
+      "fix_hint": "Cut the spelled-out meaning of the nod; let the nod itself carry it."
+    }
+  ],
+  "conflict": ""
+}

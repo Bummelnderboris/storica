@@ -1,0 +1,35 @@
+{
+  "decision": "revise",
+  "summary": "The chapter's two closing rituals (the co-signing and the archive scene) are mostly concrete and load-bearing, but a named walk-on the scene isn't entitled to, a hallway hand-off that ignores Feuz's exit, a dialogue reduced to pure abstraction, and a paragraph that contradicts itself about how long Stettler stayed all need fixing before this passes.",
+  "issues": [
+    {
+      "unit": "P5: \"Gemeindeschreiber Anton Hürlimann, der am Fenster saß\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the name and title; refer to him only as 'der Schreiber am Fenster' if a walk-on is needed at all, or cut the clause."
+    },
+    {
+      "unit": "P8: \"reichte Feuz ihm die Mappe noch einmal über den Schreibtisch\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Move this second-signature beat before P7 (before Feuz puts on his coat and leaves), or cut it — as written, Feuz already left and cannot reach the desk from the hallway."
+    },
+    {
+      "unit": "P11: \"Die Spannung im Raum wuchs\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Replace the paragraph with what Berta and Stettler actually said to each other; delete the summary sentence."
+    },
+    {
+      "unit": "P15: \"Gleich nach Mittag hatte er das Amtszimmer verlassen\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this sentence — it directly contradicts 'Er blieb bis zum Abend im Amtszimmer' earlier in the same paragraph."
+    }
+  ],
+  "conflict": ""
+}

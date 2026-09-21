@@ -132,10 +132,7 @@ class AuthorVoiceChecker(ProseCheckerBase):
 
 {_constraints_block(canon)}
 
-{author.voice_block()}
-
-# What it feels like to read {author.name}
-{author.impression}
+{author.writer_block()}
 
 {header}
 

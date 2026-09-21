@@ -1,0 +1,63 @@
+{
+  "decision": "revise",
+  "summary": "Chapter 3 stages the required beats — the co-signature, Berta's flat lie, the filing of Aebischer beside Vogel — but the prose keeps stopping to spell out what a gesture, a nod, or a signature means, tripping the brief's forbidden explanatory-psychology line again and again even though the bureaucratic register and the closing aphorism still show the author underneath.",
+  "issues": [
+    {
+      "unit": "denn er wusste, dass dieser Augenblick über alles entscheiden würde",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the causal clause naming what he knew; keep only the hand over the paper."
+    },
+    {
+      "unit": "Mit dieser Unterschrift besiegelte er nicht nur den Tod Aebischers",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Delete the narrator's gloss on what the signature means; let the signing beside Feuz's double-underlined name stand alone."
+    },
+    {
+      "unit": "wirkte sehr traurig und sehr müde",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "steer away: Sentimentale Gefühlsbeschreibung / Adjektivhäufung",
+      "fix_hint": "Replace the two feeling-adjectives with one concrete observed detail instead of naming her emotion."
+    },
+    {
+      "unit": "keine Kraft mehr besass, es infrage zu stellen",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the clause explaining her resignation; let 'Es war keine Frage' stand without the reason attached."
+    },
+    {
+      "unit": "dachte über alles nach, was geschehen war",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "steer toward: Lakonische Feststellungen des Entsetzlichen (missing)",
+      "fix_hint": "Cut the vague summary of thinking; replace with one concrete action or observed detail."
+    },
+    {
+      "unit": "Es war ein Nicken, das bedeutete: ich weiss es, und ich werde nichts sagen",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the spelled-out translation of the nod; let 'Rutz nickte' stand undecoded."
+    },
+    {
+      "unit": "er erkannte darin sein eigenes Urteil",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut the stated realization; leave the two file covers side by side to carry it."
+    },
+    {
+      "unit": "war am Ende das Gefängnis geworden, in dem er sich",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "forbidden: explanatory psychology",
+      "fix_hint": "Cut this explanatory sentence; let the locked cabinet and the closing aphorism about the files carry the meaning."
+    }
+  ],
+  "conflict": ""
+}

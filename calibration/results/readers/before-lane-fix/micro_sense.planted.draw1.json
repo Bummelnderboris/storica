@@ -1,0 +1,35 @@
+{
+  "decision": "revise",
+  "summary": "The chapter closes both cases in a grounded, cold procedural rhythm, but an invented named clerk, a physically impossible re-handoff of the report, one paragraph that abstracts the event instead of showing it, and a self-contradicting sentence about when Stettler left the office each break the unit as written.",
+  "issues": [
+    {
+      "unit": "P5: \"Gemeindeschreiber Anton Hürlimann, der am Fenster saß\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the name 'Anton Hürlimann'; either leave the clerk unnamed or cut him — canon and the scene's present list (stettler, feuz, berta, rutz) do not have this person."
+    },
+    {
+      "unit": "P8: \"reichte Feuz ihm die Mappe noch einmal über den Schreibtisch\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this paragraph or move the second signature before P7, where Feuz puts on his coat and leaves — as written he hands the folder back across the desk from the hallway after already departing."
+    },
+    {
+      "unit": "P11: \"Die Spannung im Raum wuchs\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Replace the paragraph with what Berta and Stettler actually said; state the specific exchange instead of naming the room's tension."
+    },
+    {
+      "unit": "P15: \"hatte er das Amtszimmer verlassen und war nicht zurückgekehrt\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this sentence; it directly contradicts the paragraph's first sentence, 'Er blieb bis zum Abend im Amtszimmer.'"
+    }
+  ],
+  "conflict": ""
+}

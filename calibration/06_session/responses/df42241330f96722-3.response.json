@@ -1,0 +1,49 @@
+{
+  "decision": "revise",
+  "summary": "Chapter 3 closes both cases in concrete, procedural beats (the report, Berta's flat confirmation, Rutz's wordless nod, the two files side by side) but is undercut by an invented named clerk, a paragraph that abstracts its own scene instead of showing it, and a paragraph whose two sentences flatly contradict each other.",
+  "issues": [
+    {
+      "unit": "P5: \"Gemeindeschreiber Anton Hürlimann, der am Fenster saß, trug die Unterschrift\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the name; refer to him unnamed, e.g. \"der Schreiber am Fenster trug die Unterschrift ins Register ein\" — canon has no such person and the scene's present-list does not include him."
+    },
+    {
+      "unit": "P11: \"über alles, was zwischen ihnen stand. Die Spannung im Raum wuchs.\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Replace with what was actually said and the concrete signs of tension (a gesture, a pause, a specific line); as written the sentence names a feeling instead of showing the scene that would produce it."
+    },
+    {
+      "unit": "P15: \"Gleich nach Mittag hatte er das Amtszimmer verlassen und war nicht zurückgekehrt.\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this sentence — it directly contradicts the paragraph's own first sentence, \"Er blieb bis zum Abend im Amtszimmer.\""
+    },
+    {
+      "unit": "P8: \"Vom Flur aus reichte Feuz ihm die Mappe noch einmal über den\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Clarify Feuz's position — he was just said to have put on his coat and left; state whether he is back at the desk or still framed in the doorway so the handoff over the desk is physically legible."
+    },
+    {
+      "unit": "P22: \"Zwei Finger breit lag zwischen ihnen.\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Match this gap to P21's \"wenige Fächer neben einem anderen\" — either make the slots plainly adjacent in P21 or widen the gap described here, so the two distances describe the same shelf."
+    },
+    {
+      "unit": "P25: \"Der Fall Aebischer war abgeschlossen, wie der Fall Vogel abgeschlossen war\"",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut this closing sentence — the closed, filed, locked state was already shown concretely in P20–P24; this only restates it in the abstract."
+    }
+  ],
+  "conflict": ""
+}

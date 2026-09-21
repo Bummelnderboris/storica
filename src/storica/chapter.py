@@ -27,7 +27,7 @@ from typing import List, Optional, Sequence
 from .adjudicator import AdjudicationFailed, Adjudicator
 from .authors import AuthorModel
 from .canon import StoryModel, chapter_unit
-from .checkers import Escalation, ProseChecker
+from .checkers import Escalation, ProseChecker, RepairVerifier
 from .llm import StructuredLLM, stage_model
 from .plan import ChapterSpec, MacroArc
 from .reports import DecisionRecord, QuarantineLog, RulingKind, binding_guidance
@@ -68,6 +68,7 @@ async def attempt_chapter(
     max_escalations: int = 2,
     model: str = stage_model("prose"),
     n_candidates: int = 1,
+    verifier: Optional[RepairVerifier] = None,
 ) -> ChapterOutcome:
     """
     Write one chapter and survive what goes wrong with it.
@@ -99,6 +100,7 @@ async def attempt_chapter(
                 max_repairs=max_repairs,
                 guidance=guidance,
                 n_candidates=n_candidates,
+                verifier=verifier,
             )
         except ProseGateFailed as failed:
             return quarantined("prose repair budget exhausted", [str(i) for i in failed.issues])

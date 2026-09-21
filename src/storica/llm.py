@@ -66,6 +66,7 @@ STAGE_MODELS: Dict[str, str] = {
     "micro_sense": "sonnet",
     "voice": "sonnet",
     "vitality": "sonnet",
+    "repair_verifier": "sonnet",
 }
 
 

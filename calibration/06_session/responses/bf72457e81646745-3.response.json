@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The chapter closes both cases through dry bureaucratic ritual and files the Aebischer record beside the twenty-year-old Vogel file in flat, ironic understatement, earning its place in the author's voice except for one brief slip into stated interior expectation.",
+  "issues": [
+    {
+      "unit": "ohne das Wort zu sprechen, das er erwartet hatte",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "Erklärende Psychologie / Motivanalyse (\"er tat es, weil er Angst hatte\"). Zeige Verhalten, nicht Motiv.",
+      "fix_hint": "Cut ', das er erwartet hatte' and end the sentence at 'ohne das Wort zu sprechen' — let the withheld gesture stand without naming what Stettler expected."
+    }
+  ],
+  "conflict": ""
+}

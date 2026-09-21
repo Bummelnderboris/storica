@@ -101,8 +101,11 @@ def test_run_returns_2_and_writes_a_request_when_it_needs_an_answer(tmp_path, ca
     out = capsys.readouterr().out
     assert "[paused]" in out
     requests = list((book / "06_session" / "requests").glob("*.request.md"))
-    assert len(requests) == 1
-    assert "## System prompt" in requests[0].read_text(encoding="utf-8")
+    # conception draws its candidates concurrently: every one of them is listed, with its model
+    assert f"[pending] {len(requests)} call(s)" in out
+    assert out.count("  - model=claude-") == len(requests)
+    assert "## System prompt" not in out         # the orchestrator is never shown a prompt
+    assert all("## System prompt" in r.read_text(encoding="utf-8") for r in requests)
 
 
 def test_run_returns_3_when_a_recorded_answer_does_not_fit_its_schema(tmp_path, capsys):
@@ -139,7 +142,7 @@ def test_the_defaults_that_decide_what_a_run_costs():
     assert args.driver == "replay", "the default must not spend money by accident"
     assert args.prose_candidates == 3
     assert args.checker_samples == 3
-    assert args.max_repairs == 2
+    assert args.max_repairs == 3
     assert args.no_audit is False and args.no_checkers is False
 
 

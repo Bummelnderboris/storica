@@ -82,6 +82,7 @@ class PendingRequest:
     stage: str
     request_path: Path
     response_path: Path
+    model: str = ""
 
 
 class ReplayLLM(StructuredLLM):
@@ -101,6 +102,12 @@ class ReplayLLM(StructuredLLM):
         self.stage_hint = stage_hint
         self.replayed = 0
         self.requested = 0
+        #: Every call this process asked for and could not answer, in the order they were raised.
+        #: A concurrent fan-out (k candidates, k consensus draws, the independent readers) stops on
+        #: its first `ResponseNeeded` but writes all of its requests — this is how a driver finds
+        #: the others, so it can answer them in parallel instead of one stop per call. Request files
+        #: left over from earlier runs are deliberately not included: they may never be asked again.
+        self.raised: List[PendingRequest] = []
         self.usage = Usage()  # a replayed call cost nothing; the counter exists so callers need not care
 
     # -- keying ---------------------------------------------------------------------------------
@@ -221,6 +228,7 @@ Write the prose to `{response_path.name}` as markdown. No commentary, no fences 
             key=key, stage=stage, model=model, system=system, prompt=prompt, schema=schema,
             request_path=request_path, response_path=response_path,
         )
+        self.raised.append(PendingRequest(key, stage, request_path, response_path, resolve_model(model)))
         raise ResponseNeeded(key, stage, request_path, response_path, is_text=False)
 
     async def generate(
@@ -248,6 +256,7 @@ Write the prose to `{response_path.name}` as markdown. No commentary, no fences 
             key=key, stage=stage, model=model, system=system, prompt=prompt, schema=None,
             request_path=request_path, response_path=response_path,
         )
+        self.raised.append(PendingRequest(key, stage, request_path, response_path, resolve_model(model)))
         raise ResponseNeeded(key, stage, request_path, response_path, is_text=True)
 
     # -- introspection ---------------------------------------------------------------------------

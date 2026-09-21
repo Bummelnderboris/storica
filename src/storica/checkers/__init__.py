@@ -17,6 +17,7 @@ from .registry import (
     ScopedProseChecker,
     build_prose_gate,
 )
+from .verifier import RepairCheck, RepairVerifier, changed_passages
 from .vitality import VitalityChecker
 from .voice import AuthorVoiceChecker
 
@@ -37,6 +38,8 @@ __all__ = [
     "MicroSenseChecker",         # micro-truth
     "AuthorVoiceChecker",        # voice + the brief's forbidden list
     "VitalityChecker",           # inertness — the only reader that fails prose for being safe
+    # the repair loop's convergence: pinned issues, verified against the diff
+    "RepairVerifier", "RepairCheck", "changed_passages",
     # the whole book, once, at the end
     "FinalAuditor", "audit_ledger",
 ]

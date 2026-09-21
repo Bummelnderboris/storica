@@ -180,7 +180,7 @@ class FakeProseChecker:
         self.units: List[Optional[str]] = []
         self.prose: List[str] = []
 
-    async def check_prose(self, *, prose, canon, spec, author, scene=None) -> Verdict:
+    async def check_prose(self, *, prose, canon, spec, author, scene=None, draw=1) -> Verdict:
         self.units.append(scene.id if scene is not None else None)
         self.prose.append(prose)
         return self.verdicts.pop(0) if self.verdicts else self.default
@@ -266,12 +266,15 @@ def test_scene_prompt_demands_the_novels_language(author):
     assert "German (Deutsch)" in llm.calls[0].prompt
 
 
-def test_second_scene_prompt_carries_the_first_scenes_tail(author):
-    llm = FakeStructuredLLM(texts=[_prose("Erste Szene"), _prose("Zweite Szene")])
+def test_second_scene_prompt_carries_the_whole_chapter_so_far(author):
+    """Not an 800-character tail: scene 2 must see everything scene 1 fixed, from its first line."""
+    first_scene = "Der erste Satz der ersten Szene. " + _prose("Erste Szene")
+    llm = FakeStructuredLLM(texts=[first_scene, _prose("Zweite Szene")])
     _write(llm, author)
 
     second = llm.calls[1].prompt
-    assert "the end of the previous scene" in second
+    assert "this chapter so far" in second
+    assert "Der erste Satz der ersten Szene." in second
     assert "bis sie nichts mehr bedeutete." in second
 
 
@@ -478,12 +481,12 @@ def test_each_repair_pass_is_its_own_draw(author):
     assert [c.draw for c in generates] == [1, 1, 2]     # scene, repair 1, repair 2
 
 
-def test_the_shipped_gate_reads_each_scene_four_times_and_the_chapter_five(author):
+def test_the_shipped_gate_reads_each_scene_four_times_and_the_chapter_twice(author):
     """
-    The trigger, end to end: intent costs one call per chapter, not one per scene.
-
-    Four readers judge every scene; the fifth (intent) asks a question that only makes sense of a
-    whole chapter — whether the assignment was delivered — so it fires once, on the assembly.
+    The trigger, end to end. Four readers judge every scene. On the assembled chapter only the two
+    chapter-scale questions are asked: a contradiction between scenes (canon-consistency) and
+    whether the assignment was delivered (intent). Re-asking the local readers there was a second
+    fresh draw on text they had already passed (C7).
     """
     from storica.checkers import default_prose_checkers
     from storica.checkers.base import Verdict
@@ -498,6 +501,46 @@ def test_the_shipped_gate_reads_each_scene_four_times_and_the_chapter_five(autho
     judgements = [c for c in llm.calls if c.schema == Verdict.__name__]
     intent_calls = [c for c in judgements if "You are not the other readers." in c.prompt]
     assert result.is_valid
-    assert len(judgements) == 13, "4 readers x 2 scenes, then 5 readers on the assembled chapter"
+    assert len(judgements) == 10, "4 readers x 2 scenes, then canon + intent on the assembled chapter"
     assert len(intent_calls) == 1
     assert "# The prose as written" in intent_calls[0].prompt
+
+
+# --------------------------------------------------------------------------------------------
+# What the writer knows about the craft (not only what it must avoid)
+# --------------------------------------------------------------------------------------------
+
+def test_the_writer_sees_the_author_s_craft_not_only_the_no_list(author):
+    """The judges were shown the impression; the maker had ~200 words of nudges. Now it has both."""
+    llm = FakeStructuredLLM(texts=[_prose("a"), _prose("b")])
+    _write(llm, author)
+    prompt = llm.calls[0].prompt
+
+    assert "Steer AWAY" in prompt                                     # the nudges are still there
+    assert "## Dialogue" in prompt and "Dialoge sind Duelle" in prompt  # profile: dialogue style
+    assert "## Register samples" in prompt and "Never copy a sentence" in prompt
+    assert "What it feels like to read Friedrich Dürrenmatt" in prompt
+
+
+def test_the_writer_pictures_the_scene_before_drafting_it(author):
+    llm = FakeStructuredLLM(texts=[_prose("a"), _prose("b")])
+    _write(llm, author)
+    prompt = llm.calls[0].prompt
+    assert "Before you write — privately, and never on the page" in prompt
+    assert "what will they not say" in prompt
+
+
+def test_the_writer_is_told_what_it_may_invent(author):
+    from storica.canon import INVENTION_POLICY
+    from storica.stages.prose import SYSTEM as WRITER_SYSTEM
+
+    assert INVENTION_POLICY in WRITER_SYSTEM
+    assert "a date, an hour, a distance" in WRITER_SYSTEM
+    assert "never invent a fact about a person, a place, a time" not in WRITER_SYSTEM
+
+
+@pytest.mark.parametrize("author_id", ["duerrenmatt", "hemingway"])
+def test_every_shipped_author_renders_a_writer_block(author_id):
+    block = load_author(author_id, AUTHORS_ROOT).writer_block()
+    assert block.startswith("# Writing as ")
+    assert "## Sentences" in block and "(none recorded)" not in block.split("## Register samples")[0]

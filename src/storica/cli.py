@@ -122,6 +122,14 @@ def cmd_run(args: argparse.Namespace) -> int:
     except ResponseNeeded as pause:
         # Not a failure: the replay driver has run out of recorded answers.
         print(f"\n[paused] {pause}\n")
+        raised = getattr(llm, "raised", [])
+        if raised:
+            # Every call this run is waiting on, one per line, so a driver can answer them in
+            # parallel. Model and paths only — never the prompt (see the write-novel skill).
+            print(f"[pending] {len(raised)} call(s) awaiting an answer in this run:")
+            for r in raised:
+                print(f"  - model={r.model} read={r.request_path} write={r.response_path}")
+            print()
         return 2
     except MalformedResponse as bad:
         # A recorded answer does not fit its schema. Also not a crash — the answer needs
@@ -212,7 +220,11 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("novel_dir")
     run.add_argument("--driver", default="replay", choices=["replay", "anthropic"])
     run.add_argument("--authors", default=str(DEFAULT_AUTHORS))
-    run.add_argument("--max-repairs", type=int, default=2, dest="max_repairs")
+    run.add_argument(
+        "--max-repairs", type=int, default=3, dest="max_repairs",
+        help="repair rounds per unit. Each round is one repair plus one verification call against "
+             "the pinned issues, so the budget converges rather than re-rolling (FINDINGS C7).",
+    )
     run.add_argument(
         "--prose-candidates", type=int, default=3, dest="prose_candidates",
         help="drafts to generate per scene before selecting the most alive one (1 = no selection). "

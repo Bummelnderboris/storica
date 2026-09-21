@@ -13,9 +13,10 @@ from `StoryModel`, so nothing is re-interpreted on the way.
 
 from __future__ import annotations
 
+import re
 from typing import TYPE_CHECKING, Iterable, List, Optional
 
-from .model import StoryModel
+from .model import Knowing, StoryModel
 
 if TYPE_CHECKING:  # plan imports canon; keep this a type-only edge
     from ..plan import ChapterSpec, SceneSpec
@@ -23,6 +24,36 @@ if TYPE_CHECKING:  # plan imports canon; keep this a type-only edge
 
 def _fmt_facts(facts: dict, indent: str = "    ") -> str:
     return "\n".join(f"{indent}- {k}: {v}" for k, v in facts.items()) or f"{indent}- (none recorded)"
+
+
+def _due_chapter(since: str) -> Optional[int]:
+    """The chapter a `since` token names ('ch2' -> 2), or None for a timeline id or nothing."""
+    match = re.fullmatch(r"\s*ch0*(\d+)\s*", since or "")
+    return int(match.group(1)) if match else None
+
+
+def _holding(cid: str, h: Knowing, as_of_chapter: Optional[int]) -> str:
+    """
+    One character's line against one fact, *as of the chapter being written*.
+
+    Stage 2 schedules knowledge shifts ahead of time (`since: "ch2"`). Rendered flat, chapter 1's
+    writer read "berta: suspects (since ch2)" — a suspicion the character does not yet hold, stated
+    in the one table the writer is told is binding. So a shift that lies in the future is rendered as
+    the ignorance it still is, and a shift due in this very chapter is rendered as an event the page
+    has to deliver.
+    """
+    instead = f" — holds instead: {h.instead}" if h.instead else ""
+    due = _due_chapter(h.since)
+    if as_of_chapter is not None and due is not None:
+        if due > as_of_chapter:
+            return f"  - {cid}: unaware in this chapter (becomes '{h.awareness.value}' in ch{due} — not yet)"
+        if due == as_of_chapter:
+            return (
+                f"  - {cid}: unaware as this chapter opens; becomes '{h.awareness.value}' DURING it"
+                f"{instead} — the shift must happen on the page"
+            )
+    since = f" (since {h.since})" if h.since else ""
+    return f"  - {cid}: {h.awareness.value}{since}{instead}"
 
 
 def canon_slice(
@@ -33,12 +64,14 @@ def canon_slice(
     promise_ids: Optional[Iterable[str]] = None,
     include_timeline: bool = True,
     include_premise: bool = True,
+    as_of_chapter: Optional[int] = None,
 ) -> str:
     """
     Render the canon slice for the given ids. `None` means *everything* of that kind.
 
     Unknown ids are reported inline rather than skipped — an agent must never silently receive a
-    slice that is missing something it was told to use.
+    slice that is missing something it was told to use. `as_of_chapter` renders the knowledge table
+    as it stands in that chapter rather than as scheduled for the whole book.
     """
     cids: List[str] = list(character_ids) if character_ids is not None else list(model.characters)
     known = [c for c in cids if c in model.characters]
@@ -124,9 +157,7 @@ def canon_slice(
                 if h is None:
                     parts.append(f"  - {cid}: unaware")
                     continue
-                since = f" (since {h.since})" if h.since else ""
-                instead = f" — holds instead: {h.instead}" if h.instead else ""
-                parts.append(f"  - {cid}: {h.awareness.value}{since}{instead}")
+                parts.append(_holding(cid, h, as_of_chapter))
             offstage = [h.character_id for h in k.holders if h.character_id not in in_slice]
             if offstage:
                 parts.append(f"  - (not in this unit: {', '.join(offstage)})")
@@ -170,4 +201,5 @@ def unit_slice(model: StoryModel, spec: "ChapterSpec", scene: Optional["SceneSpe
         character_ids=scene.character_ids if scene is not None else spec.present_character_ids,
         motif_ids=[*spec.setups, *spec.payoffs],
         promise_ids=[*spec.promises_made, *spec.promises_kept],
+        as_of_chapter=spec.chapter,
     )

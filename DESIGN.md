@@ -193,7 +193,7 @@ Each stage **reads canon, writes canon (or plan), and is gated by the verificati
 | 2 | **World & cast → canon** | premise, input, author | `canon.characters/relationships/world_facts/timeline/constraints` — **structured, validated**; the brief outranks the model on `language` and `chapter_count` | Sonnet |
 | 3 | **Macro-arc** | full canon | `02_plan/macro_arc.json` — acts, turning points, per-character arc beats, **motif/promise schedule**, tension curve (all by ID) | Sonnet |
 | 4 | **Chapter spec (JIT)** | full canon + macro_arc | `chapters/chNN.spec.json` — purpose, arc-beats-to-advance (IDs), setups/payoffs (IDs), entry/exit state, POV | Sonnet |
-| 5 | **Prose** | chapter spec + **full canon slice** | `03_drafts/chNN.md` — *k* drafts per scene, then select (§5.1) | Opus |
+| 5 | **Prose** | chapter spec + **full canon slice** + the author's craft + the chapter so far | `03_drafts/chNN.md` — *k* drafts per scene, then select (§5.1) | Opus |
 | 6 | **Reconcile** | draft + canon | extract new facts → validate → **promote or flag**; update motif/promise status | Sonnet |
 
 Conception (1) and world/cast (2) **replace** the v1 prose-based topic/thesis/character phases: same
@@ -221,6 +221,30 @@ than between imaginations.
 Repair is kept for what it is genuinely good at: factual contradiction, where conformance *is* the
 goal. `--prose-candidates 1` disables selection for a cheap run.
 
+### 5.2 What the writer is given, and what it may invent
+
+The writer is the one agent the book's quality actually depends on, and for a long time it was the
+least informed agent in the building. Three things it now gets that it did not:
+
+- **The author's craft, not only the no-list** (`AuthorModel.writer_block()`): sentence patterns,
+  register, dialogue, openings and endings, register samples, and the impression — the material the
+  voice and vitality readers judge it against. It used to get ~200 words of steer-toward/away while
+  its judges were shown more of the author than it was.
+- **The whole chapter so far.** Scene *n* sees every earlier scene of its chapter in full, not an
+  800-character tail — without it scene 3 could not know what was said in scene 1. The previous
+  chapter still arrives as a tail plus reconciled canon.
+- **A private imagining step** before drafting: where everyone is, what each wants from the other and
+  will not say, the one particular thing the reader will remember, where exactly the turn lands. The
+  answers are not written down; the prose carries them. (On the API path Opus 5 thinks by default,
+  so this is where that thinking is pointed.)
+
+And one rule, shared byte-for-byte with the micro-sense reader (`canon/invention.py`): **what prose
+may invent.** Texture, minor specifics (a date, an hour, a street, a file number), procedure and
+unnamed walk-ons are the writer's to imagine, and reconcile records them into canon so later chapters
+are held to them. Named people, relationships, who knows what, and the story's open questions are
+not. The old rule — "invent texture, never a fact about a person, a place, a time or an event" —
+drew no line, and the reader drew a stricter one than the writer was given (calibration C7).
+
 ---
 
 ## 6. The verification & repair layer (the "roving fresh agents")
@@ -235,9 +259,10 @@ if needed, trigger repair.
 |---|---|---|
 | **Canon-Consistency** | Does this unit contradict any canonical fact/relationship/timeline? (structured diff) | prose (5); plan units (3,4) are gated by schema validation plus Intent |
 | **Intent / Meaning** | Does this unit advance the arc-beats / keep the promises it was *assigned*? Does it earn its place? | plan units (3,4) and the **assembled chapter** (5) — advisory on prose until calibrated |
-| **Micro-Sense** | Read paragraph-by-paragraph: are details grounded in canon, does the situation cohere, is the language load-bearing (not filler/hallucination)? | prose only (5) |
-| **Author-Voice** | Is this the author's voice + within `constraints.forbidden`? | prose only (5) |
-| **Vitality** | Is this *alive*? Does it explain its own gestures, announce its interiority, restate the outline? Would anyone be surprised by it? | prose only (5) |
+| **Micro-Sense** | Read paragraph-by-paragraph: does any detail breach the invention policy, does the situation cohere, is the language load-bearing? | prose scenes (5) |
+| **Author-Voice** | Is this the author's voice + within `constraints.forbidden`? | prose scenes (5) |
+| **Vitality** | Is this *alive*? Does it explain its own gestures, announce its interiority, restate the outline? Would anyone be surprised by it? | prose scenes (5) |
+| **Repair verifier** | Were the pinned issues resolved, and did the edit break anything where it edited? | after each prose repair (§6.2) |
 
 **Vitality is deliberately handed a thin slice** — premise and constraints, no character facts, no
 timeline. Given the full canon it will drift into checking consistency, because that is the more
@@ -291,11 +316,17 @@ The shipped gate, in order, with the reason each row is set the way it is:
 
 | Reader | Trigger | Authority | Why |
 |---|---|---|---|
-| **canon_consistency** | every unit, sampled | escalate | the only reader whose blocking rate was measured (C4) |
-| **micro_sense** | every unit | escalate | uncalibrated — §10 risk 1b, a known risk rather than an endorsement |
-| **voice** | every unit | escalate | uncalibrated — §10 risk 1b |
-| **vitality** | every unit | escalate | gates on issue *density*, not presence (C6) |
+| **canon_consistency** | every unit, sampled | escalate | measured (C4); reads the chapter too, because a contradiction *between* scenes exists only there |
+| **micro_sense** | scenes only | escalate | paragraph-local by definition; shares the writer's invention policy (C7); calibrated in C8 |
+| **voice** | scenes only | escalate | judged sentence by sentence; calibrated in C8 |
+| **vitality** | scenes only | escalate | gates on issue *density*, not presence (C6) |
 | **intent** | assembled chapters only | **advise** | beats are a chapter-scale question; uncalibrated, so it records and does not block |
+
+Why the three local readers no longer read the assembled chapter: a scene pass has already asked
+their questions of every sentence in it, so the chapter pass bought nothing but a second fresh draw
+on the same text — and a fresh draw re-rolls the verdict (C7). A chapter could pass every scene and
+then fail on a sentence it had already passed. The chapter-scale questions belong to the two readers
+that still fire there.
 
 Two consequences. A lens is reusable at any seam, so Intent is now one lens reading the arc, each
 chapter spec, **and** the prose those plans produced — which closes the gap that no reader ever
@@ -355,8 +386,27 @@ slice** it must respect, its rubric, and an authority to return:
 
 ### Repair
 
-- `REVISE` → a repair agent gets the issues + canon + unit, fixes **only** the flagged spans, re-checks
-  (bounded to N iterations). Repair is grounded in canon, so it cannot invent bridging facts.
+- `REVISE` → a repair agent gets the issues + canon + unit, fixes **only** the flagged spans, and the
+  fix is verified (§6.2), bounded to N rounds (`--max-repairs`, default 3). Repair is grounded in
+  canon, so it cannot invent bridging facts.
+
+### 6.2 Convergence: read once, pin, verify
+
+A unit is read by the full gate **exactly once**. Its blocking issues are **pinned**, and every repair
+after that is judged by one fresh **repair verifier** against the pins alone: was each resolved, and
+did the edit itself break something — in the passages it changed, and only there (the verifier is
+shown a paragraph diff, never the unchanged text).
+
+The loop used to re-run the whole gate after every repair, which sounds rigorous and is the
+opposite: a fresh reader is a new draw, a new draw finds new issues, and the target moved every
+round. P6's chapter 1 died of exactly that (C7) — three reads of one scene, three different blocking
+questions, none asked twice. With pins, the open list can only shrink or be replaced by damage the
+repair demonstrably did, so a budget converges; and a round costs two calls (repair + verify)
+instead of five to seven.
+
+The fallback is honest: if a repair rewrote most of the unit instead of editing spans, there is no
+small diff to verify, and the new text is read by the full gate again. Warnings from the one full
+read are carried to the result unchanged and never drive a repair.
 
 This is v1's critic/guardian, re-conceived: **many small, canon-armed, fresh readers with teeth**,
 instead of one averaged score and a bible that ratchets in whatever the prose said.
@@ -422,6 +472,10 @@ The specific machinery that keeps a paragraph tied to the whole:
 3. **Up (feedback):** if the writer *couldn't* hit an assigned beat, that is a signal the **plan is
    wrong**, not a silent miss — it kicks back to Stage 4/3 to revise the plan (and canon if needed).
    Plan and draft co-evolve under validation, instead of the draft silently diverging from the plan.
+4. **Up (enrichment):** what the prose legitimately invented (§5.2) — a date, a place, a procedure,
+   a shift in who knows what — is extracted by reconcile and promoted into canon, placed in story
+   order, so the next chapter is written against it. The extractor judges whether a fact is new, a
+   restatement or a contradiction, because only a reader can tell a paraphrase from a change.
 
 This two-way loop is what a pure "freeze the outline then write" waterfall lacks — and it's why the
 design is top-down *control* with bottom-up *enrichment under validation*, not a one-shot cascade.
@@ -462,9 +516,10 @@ rework of the agent layer + the state substrate, which is exactly where v1 inten
 - **P6 — Assembly + eval.** Re-run *Der Chrachen* end-to-end; compare coherence/meaning/micro-truth
   against the v1 capture to prove the redesign. **Underway** in `novels/der-chrachen-v2/`: canon,
   macro arc and the chapter 1 spec passed; chapter 1 was quarantined when scene 3 exhausted two
-  repairs on a micro-sense issue — an ungrounded date the timeline does not fix. Selection was
-  cheap and worked; the repair loop is the expensive part, and two repairs was not enough for a
-  small, precisely-located fix. Convergence tuning (risk 4) is the live question, not correctness.
+  repairs on a micro-sense issue — an unglossed date. The trace showed the cause was the gate, not
+  the prose (C7): each full re-read re-rolled the question, and the reader held the writer to a
+  stricter invention rule than the writer had been given. Fixed by §5.2 and §6.2; chapter 1 is
+  released and re-attempted under the new gate.
 
 Each phase is independently testable and leaves the system runnable.
 
@@ -487,12 +542,11 @@ Each phase is independently testable and leaves the system runnable.
    binding/logged rulings (no oscillation), convergence caps with quarantine, and the Final Auditor.
    *(The "plausible-but-flat story" that used to sit here has been promoted out of the risk list: it
    is failure class four in §2, with selection and the Vitality checker against it.)*
-1b. ~~**The gate is non-deterministic.**~~ Measured and handled: majority-of-3 sampling (§6.1).
-   Residual: only canon-consistency is sampled; it and vitality (`calibration/FINDINGS.md` C4, C6)
-   are the only calibrated checkers — micro-sense and voice are still binary-gated and unmeasured.
-   Intent now reads prose as well, and is equally unmeasured, so it carries `ADVISE` authority: it
-   records every finding and blocks nothing (§6). That micro-sense and voice keep full authority
-   while uncalibrated is the inconsistency to resolve — by measuring them, not by demoting them.
+1b. ~~**The gate is non-deterministic.**~~ Measured and handled: majority-of-3 sampling (§6.1),
+   and repair verified against pinned issues rather than re-rolled (§6.2). Micro-sense and voice
+   were floor-tested in C8 on the same clean control as C3/C6. Residual: the repair verifier is
+   itself a single unsampled judgement; intent on prose is unmeasured and so only advises; C8 is
+   n=3 on one chapter of one author.
 1c. **Ground truth can be corrupted by a human.** Already happened once, in the reference canon and
    in this document's own §4 example. The rule in §4.1 is the mitigation; nothing enforces it
    mechanically yet.
@@ -501,23 +555,32 @@ Each phase is independently testable and leaves the system runnable.
    measure against the per-book economics question.
 3. **Where "paragraph arcs" stop:** scene-level planning by default; paragraph granularity lives in
    Micro-Sense *checking*, not paragraph *pre-planning* (avoids a novel-length outline).
-4. **Convergence tuning:** the caps in §6.5 need empirical tuning — too tight quarantines good units,
-   too loose burns tokens. Calibrate during P5.
-5. **Reconcile is paraphrase-sensitive.** Extracted facts are compared to canon after normalising
-   lowercase and whitespace only, so a known fact restated in other words is flagged as a
-   contradiction. Mitigated by the extractor prompt (do not restate known facts), not enforced.
-6. **Retrospective events land last.** A timeline event promoted at reconcile is always appended
-   after everything already there, whatever `when` it claims; a chapter that reveals a past event
-   puts it at the end of the timeline in canon order.
-7. **Knowledge is write-once.** Reconcile extracts no changes to who knows what, so the knowledge
-   table is whatever stage 2 wrote (including any `since: "ch2"` it scheduled); a shift the prose
-   itself introduces never reaches canon, and later slices are written as if it had not happened.
+4. ~~**Convergence tuning.**~~ The loop now converges by construction (§6.2); the cap (default 3
+   rounds, two calls each) bounds cost rather than papering over a moving target. Still worth
+   measuring on a finished book: how many rounds units actually need.
+5. ~~**Reconcile is paraphrase-sensitive.**~~ The extractor now classifies each fact as new,
+   restatement or contradiction (`FactRelation`); a restatement is recorded (`RESTATED`) and never
+   adjudicated. Code keeps the conservative backstop: a fact called new whose key canon already
+   fills differently is still a contradiction.
+6. ~~**Retrospective events land last.**~~ Each extracted event names the canon event it follows in
+   story time (`after_event_id`) and is inserted there; `order` is renumbered.
+7. ~~**Knowledge is write-once.**~~ Reconcile extracts knowledge shifts the page delivers and
+   records them `since: chN`. Knowledge only moves forward: a regression, or a shift the plan
+   scheduled for a later chapter arriving early, is a contradiction for adjudication. The slice now
+   renders knowledge *as of the chapter being written*, so a shift scheduled for ch2 reads as the
+   ignorance it still is in ch1 — before this, chapter 1's writer was shown "suspects (since ch2)".
 8. **There is no separate specialist agent.** A `spawn_specialist` ruling emits a real sub-task, and
    `reports.binding_guidance()` carries it — with the ruling's instruction — into the unit's own
    re-attempt, in the chapter loop and the planning loop alike. For a long time the sub-task was
    validated, logged and then dropped, so this is the fix; but the work still happens inside the
    retry of the unit that failed, not in the dedicated fresh agent §6.5 describes. Weaker, and worth
    closing.
+9. **Canon grows with the prose.** The invention policy (§5.2) means reconcile promotes more
+   specifics, and every slice carries them. For three chapters this is noise; for thirty the slice
+   will need a relevance filter (world facts are currently rendered in full to every unit).
+10. **Refusals stop the run.** On the API path a `stop_reason: "refusal"` raises and ends the run
+   (exit 1). Opus 5 supports server-side refusal fallbacks; not wired, because the live path has
+   never run and a fallback to a different model would change what the run measures.
 
 ---
 

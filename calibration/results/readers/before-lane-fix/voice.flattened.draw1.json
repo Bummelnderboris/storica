@@ -1,0 +1,84 @@
+{
+  "decision": "revise",
+  "summary": "The scene delivers every required beat — co-signing, the Vogel confrontation, Berta's lie, Rutz's silence, the filing-away — but almost every turn is drained by an explained gesture, an announced feeling, or a summarizing line that tells the reader the meaning Dürrenmatt would have left as a bare fact.",
+  "issues": [
+    {
+      "unit": "Er spürte eine tiefe Unruhe in sich aufsteigen, und sein Herz schlug",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "explanatory psychology",
+      "fix_hint": "Cut the named feeling and physiological tell; keep only the external action (he takes the pen, a pause, he signs)."
+    },
+    {
+      "unit": "Es war ein Nicken, das bedeutete: ich weiss es",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "Erklärende Psychologie / Motivanalyse (...). Zeige Verhalten, nicht Motiv.",
+      "fix_hint": "Cut the gloss after 'Rutz nickte.' Leave the nod unexplained; let the next paragraph's action carry it."
+    },
+    {
+      "unit": "Mit dieser Unterschrift besiegelte er nicht nur den Tod Aebischers",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "explanatory psychology",
+      "fix_hint": "Delete the sentence; the signature and the underlined name beneath it already state the fact without narrating its significance."
+    },
+    {
+      "unit": "Sie las es nicht, weil sie ihm vertraute",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "explanatory psychology",
+      "fix_hint": "Cut 'weil sie ihm vertraute' and stop at 'Sie las es nicht.' — the unread document is the fact; the motive is the forbidden gloss."
+    },
+    {
+      "unit": "wirkte sehr traurig und sehr müde",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "Sentimentale Gefühlsbeschreibung.",
+      "fix_hint": "Replace the adjective pair with one concrete, sachlich observed detail (what she does with her hands, how she stands) and drop the feeling-words."
+    },
+    {
+      "unit": "Es war die Lüge seines Lebens, und sie ging ihm überraschend leicht",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "explanatory psychology",
+      "fix_hint": "Cut the summarizing clause; end the beat at '\"Ja\", sagte Stettler.' and let the next line's action stand for the ease."
+    },
+    {
+      "unit": "Er blieb bis zum Abend im Amtszimmer und dachte über alles nach",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "explanatory psychology",
+      "fix_hint": "Cut 'und dachte über alles nach'; a transition line needs only the fact of the wait, not announced interiority."
+    },
+    {
+      "unit": "Es war das Bild seines ganzen Lebens: zwei Tote, zwei Akten",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "explanatory psychology",
+      "fix_hint": "Cut from 'Es war das Bild...' through 'sein eigenes Urteil.'; the two file covers standing side by side is the image — stating what it means and that he 'recognized' it kills the irony."
+    },
+    {
+      "unit": "So endete es: nicht mit einem Geständnis, sondern mit einer Ablage",
+      "kind": "voice",
+      "severity": "blocking",
+      "canon_ref": "Das Ende ist eine Pointe—kein Abschluss, sondern eine Öffnung ins Absurde.",
+      "fix_hint": "Cut the entire closing paragraph after 'Er schloss den Schrank und drehte den Schlüssel im Schloss.'; end there, or on one unexplained laconic fact, not a stated moral."
+    },
+    {
+      "unit": "Der Vormittag war kalt und trostlos, und das Licht",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "Wenig Adjektive, keine Sentimentalität. Präzision als stilistisches Prinzip.",
+      "fix_hint": "Replace the mood-adjective pair and the simile with one specific, dry observation (an object, a sound) that carries the cold without naming a mood."
+    },
+    {
+      "unit": "Jeder ging seinen Weg, wie sie es von nun an immer tun würden",
+      "kind": "voice",
+      "severity": "warning",
+      "canon_ref": "Depth comes from contradiction, not explanation. Lakonische Feststellungen des Entsetzlichen.",
+      "fix_hint": "Cut the 'von nun an immer' clause; a reader who knows this author would not recognize the habit of stating a scene's future meaning outright — end on the two men parting, unglossed."
+    }
+  ],
+  "conflict": ""
+}

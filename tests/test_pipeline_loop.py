@@ -58,6 +58,7 @@ from storica.plan import (
 )
 from storica.reports import DecisionLog, QuarantineLog, Ruling, RulingKind
 from storica.stages.reconcile import (
+    FactRelation,
     CharacterFactExtract,
     AliasExtract,
     ChapterExtraction,
@@ -305,6 +306,7 @@ def test_exhausted_repair_budget_quarantines_with_the_issues_recorded(novel):
 def _extraction(**over) -> ChapterExtraction:
     base = dict(
         character_facts=[], aliases=[], world_facts=[], timeline=[], contradictions=[],
+        knowledge_shifts=[],
         ledger=[
             LedgerObservation(id="formula_echo", kind=LedgerKind.MOTIF_SETUP, landed=True,
                               evidence="the phrase recurs"),
@@ -384,7 +386,8 @@ def test_an_amend_canon_ruling_at_reconcile_quarantines_and_commits_nothing(nove
     _drafted(novel)
     extraction = _extraction(
         character_facts=[CharacterFactExtract(character_id="stettler", surface_name="Stettler",
-                                              key="habit", value="counts the steps", evidence="x")],
+                                              key="habit", value="counts the steps",
+                                              relation_to_canon=FactRelation.NEW, evidence="x")],
         contradictions=[ContradictionExtract(
             canon_ref="stettler", canon_says="profession: Amtsarzt",
             prose_says="Notar", evidence="der Notar Stettler")],

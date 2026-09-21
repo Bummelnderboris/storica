@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The scene protocols the closing-of-the-case and the filing of the two dossiers with flat, bureaucratic precision and a genuinely Duerrenmatt-grade closing image, but one clause slips from showing behavior into naming an expectation Stettler carries.",
+  "issues": [
+    {
+      "unit": "ohne das Wort zu sprechen, das er erwartet hatte",
+      "kind": "micro-sense",
+      "severity": "warning",
+      "canon_ref": "Erklaerende Psychologie / Motivanalyse (\"er tat es, weil er Angst hatte\"). Zeige Verhalten, nicht Motiv.",
+      "fix_hint": "Cut \"das er erwartet hatte\" and end the sentence on the withheld gesture and word themselves, without naming what Stettler expected."
+    }
+  ],
+  "conflict": ""
+}

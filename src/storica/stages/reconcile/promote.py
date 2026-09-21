@@ -15,8 +15,26 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from ...canon import StoryModel, TimelineEvent, norm, slug
-from .schema import ChapterExtraction, Flag, FlagKind, Promotion, PromotionKind
+from ...canon import Awareness, Knowing, StoryModel, TimelineEvent, norm, slug
+from ...canon.slice import _due_chapter
+from .schema import ChapterExtraction, FactRelation, Flag, FlagKind, Promotion, PromotionKind
+
+
+def _classify(current: Optional[str], value: str, relation: FactRelation) -> str:
+    """
+    'promote' | 'ignore' | 'restated' | 'contradiction' for one extracted fact against canon.
+
+    The extractor's judgement decides the paraphrase question (only a reader can tell a restatement
+    from a change); code keeps the conservative backstop — an extractor that calls a fact new while
+    canon already fills that key with something else has found a contradiction, whatever it says.
+    """
+    if relation is FactRelation.CONTRADICTS:
+        return "contradiction"
+    if current is None:
+        return "promote" if relation is FactRelation.NEW else "ignore"
+    if norm(current) == norm(value):
+        return "ignore"
+    return "restated" if relation is FactRelation.RESTATES else "contradiction"
 
 def _resolve_character(canon: StoryModel, ref: str, surface_name: str = "") -> Optional[str]:
     """
@@ -101,7 +119,8 @@ def _promote_character_facts(
         key = slug(f.key)
         if key and f.value.strip():
             current = canon.characters[cid].facts.get(key)
-            if current is None:
+            verdict = _classify(current, f.value, f.relation_to_canon)
+            if verdict == "promote":
                 canon.characters[cid].facts[key] = f.value.strip()
                 promoted.append(Promotion(
                     kind=PromotionKind.CHARACTER_FACT,
@@ -109,13 +128,22 @@ def _promote_character_facts(
                     value=f.value.strip(),
                     evidence=f.evidence,
                 ))
-            elif norm(current) != norm(f.value):
+            elif verdict == "restated":
+                flagged.append(Flag(
+                    kind=FlagKind.RESTATED,
+                    ref=f"{cid}.{key}",
+                    reason=f"the draft restates '{key}' for '{cid}' in other words — canon's wording stands",
+                    canon_says=current or "",
+                    prose_says=f.value.strip(),
+                    evidence=f.evidence,
+                ))
+            elif verdict == "contradiction":
                 # Canon wins by construction. We record the disagreement and change nothing.
                 flagged.append(Flag(
                     kind=FlagKind.CONTRADICTION,
                     ref=f"{cid}.{key}",
                     reason=f"the draft states a different '{key}' for '{cid}' than canon does",
-                    canon_says=current,
+                    canon_says=current or "",
                     prose_says=f.value.strip(),
                     evidence=f.evidence,
                 ))
@@ -161,17 +189,27 @@ def _promote_world_facts(
         if not key or not w.value.strip():
             continue
         current = canon.world_facts.get(key)
-        if current is None:
+        verdict = _classify(current, w.value, w.relation_to_canon)
+        if verdict == "promote":
             canon.world_facts[key] = w.value.strip()
             promoted.append(Promotion(
                 kind=PromotionKind.WORLD_FACT, ref=f"world:{key}", value=w.value.strip(), evidence=w.evidence
             ))
-        elif norm(current) != norm(w.value):
+        elif verdict == "restated":
+            flagged.append(Flag(
+                kind=FlagKind.RESTATED,
+                ref=f"world:{key}",
+                reason=f"the draft restates '{key}' in other words — canon's wording stands",
+                canon_says=current or "",
+                prose_says=w.value.strip(),
+                evidence=w.evidence,
+            ))
+        elif verdict == "contradiction":
             flagged.append(Flag(
                 kind=FlagKind.CONTRADICTION,
                 ref=f"world:{key}",
                 reason=f"the draft states a different '{key}' than canon does",
-                canon_says=current,
+                canon_says=current or "",
                 prose_says=w.value.strip(),
                 evidence=w.evidence,
             ))
@@ -185,15 +223,19 @@ def _promote_timeline(
     flagged: List[Flag],
 ) -> None:
     """
-    Append events, deduplicated by text and by id.
+    Place events in story order, deduplicated by text and by id.
 
     v1 `list.append()`ed timeline entries with no dedup at all, so the same event accumulated once
     per chapter and inflated every prompt downstream (F7). An event we cannot fully resolve is
     dropped and flagged rather than promoted with a dangling reference — a broken canon is worse
     than a missing entry.
+
+    An event lands where the extractor says it belongs in *story* time (`after_event_id`), not at
+    the end: a chapter that reveals something from twenty years ago must not leave it sorted after
+    last night (DESIGN §10 risk 6). An unknown anchor falls back to the end, which is where the
+    chapter's own present goes anyway.
     """
     known_events = {norm(ev.event): ev.id for ev in canon.timeline}
-    next_order = max((ev.order or 0 for ev in canon.timeline), default=0)
 
     for i, t in enumerate(extraction.timeline):
         if not t.event.strip():
@@ -225,15 +267,114 @@ def _promote_timeline(
             ))
             continue
 
-        next_order += 1
         known_events[norm(t.event)] = tid
-        canon.timeline.append(TimelineEvent(
+        _place(canon, TimelineEvent(
             id=tid,
             when=t.when.strip() or f"ch{chapter}",
             event=t.event.strip(),
             involves=[r for _, r in refs if r is not None],
-            order=next_order,
-        ))
+        ), after=slug(t.after_event_id) if t.after_event_id.strip() else "")
         promoted.append(Promotion(
             kind=PromotionKind.TIMELINE, ref=tid, value=t.event.strip(), evidence=t.evidence
+        ))
+
+
+def _place(canon: StoryModel, event: TimelineEvent, *, after: str) -> None:
+    """Insert `event` after the event `after` in story order, then renumber `order` to match."""
+    ordered = sorted(
+        canon.timeline, key=lambda e: (e.order is None, e.order if e.order is not None else 0)
+    )
+    anchor = next((i for i, e in enumerate(ordered) if e.id == after), None) if after else None
+    ordered.insert(len(ordered) if anchor is None else anchor + 1, event)
+    for n, e in enumerate(ordered, start=1):
+        e.order = n
+    canon.timeline[:] = ordered
+
+
+_RANK = {
+    Awareness.UNAWARE: 0,
+    Awareness.BELIEVES_FALSE: 1,
+    Awareness.SUSPECTS: 1,
+    Awareness.KNOWS: 2,
+}
+
+
+def _promote_knowledge(
+    canon: StoryModel,
+    extraction: ChapterExtraction,
+    chapter: int,
+    promoted: List[Promotion],
+    flagged: List[Flag],
+) -> None:
+    """
+    Carry who-knows-what forward from the page (DESIGN §10 risk 7).
+
+    Stage 2 wrote the knowledge table once, and nothing after it could change: a character who
+    learned the secret in chapter 2 was still `unaware` in every slice written for chapter 3. Now a
+    shift the prose delivers is recorded with `since: chN`.
+
+    Knowledge only moves forward. A character who knew something cannot un-know it, so a shift that
+    lowers awareness is a contradiction for adjudication, not an update. A shift the plan scheduled
+    for a *later* chapter arriving early is also flagged: the chapter took a later chapter's turn.
+    """
+    items = {k.id: k for k in canon.knowledge}
+    for s in extraction.knowledge_shifts:
+        item = items.get(s.knowledge_id.strip())
+        cid = _resolve_character(canon, s.character_id)
+        if item is None or cid is None:
+            flagged.append(Flag(
+                kind=FlagKind.UNRESOLVED_REFERENCE,
+                ref=s.knowledge_id or s.character_id,
+                reason=f"knowledge shift for '{s.character_id}' on '{s.knowledge_id}' names an id "
+                       f"canon does not have — not promoted",
+                prose_says=s.awareness.value,
+                evidence=s.evidence,
+            ))
+            continue
+
+        holder = next((h for h in item.holders if h.character_id == cid), None)
+        due = _due_chapter(holder.since) if holder is not None else None
+        # What they hold as this chapter stands: a shift scheduled for a later chapter has not
+        # happened yet, so until then they are unaware (the slice renders it the same way).
+        before = (
+            Awareness.UNAWARE if holder is None or (due is not None and due > chapter)
+            else holder.awareness
+        )
+        if s.awareness == before:
+            continue                                   # consistent — canon already has it
+
+        if due is not None and due > chapter:
+            flagged.append(Flag(
+                kind=FlagKind.CONTRADICTION,
+                ref=f"knowledge:{item.id}:{cid}",
+                reason=f"'{cid}' becomes '{s.awareness.value}' on '{item.id}' in ch{chapter}, but the "
+                       f"plan schedules that shift for ch{due}",
+                canon_says=f"unaware until ch{due}",
+                prose_says=f"{s.awareness.value} in ch{chapter}",
+                evidence=s.evidence,
+            ))
+            continue
+        if _RANK[s.awareness] < _RANK[before]:
+            flagged.append(Flag(
+                kind=FlagKind.CONTRADICTION,
+                ref=f"knowledge:{item.id}:{cid}",
+                reason=f"the draft lowers '{cid}' from '{before.value}' to '{s.awareness.value}' on "
+                       f"'{item.id}' — knowledge does not run backwards",
+                canon_says=before.value,
+                prose_says=s.awareness.value,
+                evidence=s.evidence,
+            ))
+            continue
+
+        if holder is None:
+            holder = Knowing(character_id=cid)
+            item.holders.append(holder)
+        holder.awareness = s.awareness
+        holder.since = f"ch{chapter}"
+        holder.instead = s.instead.strip() if s.awareness == Awareness.BELIEVES_FALSE else ""
+        promoted.append(Promotion(
+            kind=PromotionKind.KNOWLEDGE,
+            ref=f"knowledge:{item.id}:{cid}",
+            value=f"{before.value} -> {s.awareness.value}",
+            evidence=s.evidence,
         ))

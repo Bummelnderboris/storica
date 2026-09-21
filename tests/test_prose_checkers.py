@@ -306,16 +306,31 @@ def test_micro_sense_asks_for_paragraph_judgement_and_quoted_spans(canon, spec, 
     assert "pinned to a paragraph and a quoted span" in system
 
 
-def test_micro_sense_targets_hallucination_filler_and_broken_situations(canon, spec, author):
+def test_micro_sense_targets_invention_breaches_filler_and_broken_situations(canon, spec, author):
     llm = FakeStructuredLLM(responses=[_verdict()])
     _run(MicroSenseChecker(llm), canon=canon, spec=spec, author=author)
     prompt = llm.calls[0].prompt
 
-    assert "hallucination" in prompt
+    assert "MAY NOT be invented" in prompt       # the writer's own policy, not a stricter one
     assert "physical logic" in prompt and "social logic" in prompt
     assert "could be deleted with nothing lost" in prompt
     assert "Abstraction\n   standing in for the concrete event" in prompt
     assert "does not proceed" in prompt          # sentences that do not follow from each other
+
+
+def test_micro_sense_and_the_writer_share_one_invention_policy(canon, spec, author):
+    """
+    C7: the writer was told to invent texture, the reader treated every unglossed date as a
+    hallucination, and a chapter died in the gap. One policy, byte-identical in both prompts.
+    """
+    from storica.canon import INVENTION_POLICY
+    from storica.stages.prose import SYSTEM as WRITER_SYSTEM
+
+    llm = FakeStructuredLLM(responses=[_verdict()])
+    _run(MicroSenseChecker(llm), canon=canon, spec=spec, author=author)
+    assert INVENTION_POLICY in llm.calls[0].prompt
+    assert INVENTION_POLICY in WRITER_SYSTEM
+    assert "canon being silent about it is NOT a finding" in llm.calls[0].prompt
 
 
 def test_micro_sense_stays_out_of_voice_and_plot(canon, spec, author):

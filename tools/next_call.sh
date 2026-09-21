@@ -34,6 +34,8 @@ case "$CODE" in
     echo "KIND=$KIND"
     echo "REQ=$ROOT/$REQ"
     echo "RESP=$ROOT/$RESP"
+    # every call this run is waiting on (fan-outs raise several at once) — answer them in parallel
+    grep -E '^  - model=' "$OUT" | sed 's/^  - /PENDING /'
     echo "STATUS=needs_answer"
     ;;
   3)

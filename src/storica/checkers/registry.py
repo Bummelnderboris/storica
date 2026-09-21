@@ -18,10 +18,16 @@ The table is policy, so it is argued for here rather than guessed:
 
 - **canon-consistency** is sampled and carries full authority. It is the only reader whose blocking
   rate was measured (calibration C4), and the one whose mistakes cost most in both directions.
-- **micro-sense** and **voice** carry full authority but are *not* calibrated. That is a known risk
-  (DESIGN §10), not an endorsement.
-- **vitality** carries full authority but gates on density rather than presence, which is its own
-  form of restraint (calibration C6).
+- **micro-sense**, **voice** and **vitality** read **scenes only**. Their questions are local — is
+  this paragraph grounded, is this sentence the author's, is this page alive — and a scene-level
+  pass has already asked them of every sentence in the chapter. Asking again of the assembled
+  chapter bought nothing but a second fresh draw on the same text, and a fresh draw re-rolls the
+  verdict (calibration C7): it is how one chapter could pass every scene and then fail on a
+  sentence it had already passed. The chapter-scale questions — a contradiction *between* scenes,
+  whether the assignment was delivered — belong to canon-consistency and intent.
+- **micro-sense** and **voice** block. Micro-sense's rubric now shares one invention policy with
+  the writer (`canon/invention.py`), and both were calibrated on a clean control and a planted
+  fixture (C8). **vitality** blocks on density rather than presence (C6).
 - **intent** on prose is new and uncalibrated, so it *advises*: every finding is recorded, nothing
   is blocked. Vitality is the precedent — it would have flattened the book if it had been given
   teeth before anyone measured it. Promote this row to `Authority.BLOCK` once calibrated.
@@ -179,19 +185,23 @@ PROSE_GATE: Sequence[ReaderSpec] = (
     ReaderSpec(
         lens=lambda llm, tracer: CanonConsistencyChecker(llm, tracer=tracer),
         sampled=True,
-        note="the measured reader (C4): a single draw flags clean prose ~20% of the time",
+        note="the measured reader (C4): a single draw flags clean prose ~20% of the time; reads the "
+             "chapter too, because a contradiction between two scenes exists only there",
     ),
     ReaderSpec(
         lens=lambda llm, tracer: MicroSenseChecker(llm, tracer=tracer),
-        note="uncalibrated and binary-gated — DESIGN §10 risk 1c",
+        scope=Scope.SCENE,
+        note="paragraph-local by definition; shares the writer's invention policy (C7, C8)",
     ),
     ReaderSpec(
         lens=lambda llm, tracer: AuthorVoiceChecker(llm, tracer=tracer),
-        note="uncalibrated and binary-gated — DESIGN §10 risk 1c",
+        scope=Scope.SCENE,
+        note="judged sentence by sentence; a chapter re-read is a re-roll, not a new question (C7, C8)",
     ),
     ReaderSpec(
         lens=lambda llm, tracer: VitalityChecker(llm, tracer=tracer),
-        note="gates on issue density, not presence (C6)",
+        scope=Scope.SCENE,
+        note="gates on issue density, not presence (C6); scene-local like the two above",
     ),
     ReaderSpec(
         lens=lambda llm, tracer: IntentChecker(llm, tracer=tracer),

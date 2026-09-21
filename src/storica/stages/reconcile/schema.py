@@ -19,7 +19,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ...canon import Issue, StoryModel, blocking
+from ...canon import Awareness, Issue, StoryModel, blocking
 from ..gate import GateFailed
 
 class LedgerKind(str, Enum):
@@ -27,6 +27,22 @@ class LedgerKind(str, Enum):
     MOTIF_PAYOFF = "motif_payoff"
     PROMISE_MADE = "promise_made"
     PROMISE_KEPT = "promise_kept"
+
+
+class FactRelation(str, Enum):
+    """
+    How an extracted fact stands to canon — judged by the extractor, who can read a paraphrase.
+
+    Deciding this in code by string comparison (after lowercasing) flagged every restatement in
+    other words as a contradiction and sent it to the adjudicator (DESIGN §10 risk 5). The model is
+    the only party that can tell "Amtsarzt" from "the district's medical officer"; code stays the
+    conservative backstop — a fact the model calls new but whose key canon already fills with
+    something else is still a contradiction.
+    """
+
+    NEW = "new"                      # canon has nothing on this
+    RESTATES = "restates_canon"      # canon already says this, in whatever words
+    CONTRADICTS = "contradicts_canon"  # canon says otherwise
 
 
 class CharacterFactExtract(BaseModel):
@@ -39,6 +55,10 @@ class CharacterFactExtract(BaseModel):
     )
     key: str = Field(description="Short snake_case fact key, e.g. 'profession', 'secret', 'injury'.")
     value: str = Field(description="The fact as the prose states it, flatly. No hedging, no prose flourish.")
+    relation_to_canon: FactRelation = Field(
+        description="'new' if the slice says nothing about this; 'restates_canon' if the slice "
+        "already says this, even in other words; 'contradicts_canon' if the slice says otherwise."
+    )
     evidence: str = Field(description="The short phrase from the draft that carries it.")
 
 
@@ -55,6 +75,9 @@ class WorldFactExtract(BaseModel):
 
     key: str = Field(description="Short snake_case key, e.g. 'era', 'location:chrachen', 'institution:amt'.")
     value: str = Field(description="The fact about the world as the prose states it.")
+    relation_to_canon: FactRelation = Field(
+        description="'new', 'restates_canon' (even in other words) or 'contradicts_canon'."
+    )
     evidence: str = Field(description="The short phrase from the draft that carries it.")
 
 
@@ -65,7 +88,26 @@ class TimelineExtract(BaseModel):
     when: str = Field(description="Free-text time token, e.g. 'ch3 night', 'the morning after'.")
     event: str = Field(description="What happened, factually. One sentence.")
     involves: List[str] = Field(description="Canon character ids involved. Ids, never names.")
+    after_event_id: str = Field(
+        description="Where it belongs in STORY time: the id of the canon timeline event it directly "
+        "follows. A past event the chapter reveals goes after the last event that precedes it, "
+        "not at the end. Empty if it happens in the chapter's own present."
+    )
     evidence: str = Field(description="The short phrase from the draft that carries it.")
+
+
+class KnowledgeShiftExtract(BaseModel):
+    """A character's relation to a known fact changing ON THE PAGE in this chapter."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    knowledge_id: str = Field(description="The knowledge id from the slice's knowledge table.")
+    character_id: str = Field(description="The canon character id whose awareness changes.")
+    awareness: Awareness = Field(
+        description="What they hold at the END of the chapter: 'suspects', 'knows' or 'believes_false'."
+    )
+    instead: str = Field(description="Only for believes_false: the wrong version they now hold. Empty otherwise.")
+    evidence: str = Field(description="The short phrase from the draft where the shift happens.")
 
 
 class ContradictionExtract(BaseModel):
@@ -111,6 +153,11 @@ class ChapterExtraction(BaseModel):
         description="Everything in the draft that disagrees with the canon slice. REPORT them; do "
         "not resolve them, do not pick a winner, do not invent a fact that makes both true."
     )
+    knowledge_shifts: List[KnowledgeShiftExtract] = Field(
+        description="Every change the draft shows in who knows, suspects or wrongly believes a fact "
+        "from the knowledge table — only shifts that HAPPEN in this chapter, not states canon "
+        "already records."
+    )
     ledger: List[LedgerObservation] = Field(
         description="Exactly one observation per assigned setup, payoff, promise-made and "
         "promise-kept listed in the assignment block."
@@ -126,6 +173,7 @@ class PromotionKind(str, Enum):
     ALIAS = "alias"
     WORLD_FACT = "world_fact"
     TIMELINE = "timeline"
+    KNOWLEDGE = "knowledge"
 
 
 class FlagKind(str, Enum):
@@ -137,6 +185,7 @@ class FlagKind(str, Enum):
     LEDGER_UNKNOWN = "ledger_unknown"            # the spec assigned an id the ledger does not contain
     LEDGER_MISSING = "ledger_missing"            # assigned setup/payoff/promise never landed in the prose
     LEDGER_ORDER = "ledger_order"                # payoff before setup / kept before made
+    RESTATED = "restated"                        # canon's fact said in other words — canon's wording stands
 
 
 @dataclass

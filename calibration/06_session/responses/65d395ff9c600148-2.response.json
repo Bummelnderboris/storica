@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The chapter grounds nearly every beat in canon facts and character traits with concrete, load-bearing physical detail, but Feuz's line softens the reused death-certificate formula to merely similar when canon states it is identical across both cases.",
+  "issues": [
+    {
+      "unit": "P4: \"Fast dieselbe Formulierung.\"",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "formula",
+      "fix_hint": "Cut \"Fast\" so Feuz states the formula is the same, not almost the same — canon records it as identical across both cases, and the scene's force depends on that identity, not a resemblance."
+    }
+  ],
+  "conflict": ""
+}

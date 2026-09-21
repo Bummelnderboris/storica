@@ -185,7 +185,17 @@ def test_only_the_measured_reader_is_sampled():
     assert len(sampled) == 1
     gate = build_prose_gate(FakeStructuredLLM(), samples=3)
     assert type(gate[0]).__name__ == "ConsensusProseChecker"
-    assert [type(r).__name__ for r in gate[1:4]] == ["MicroSenseChecker", "AuthorVoiceChecker", "VitalityChecker"]
+    assert [type(r.inner).__name__ for r in gate[1:4]] == ["MicroSenseChecker", "AuthorVoiceChecker", "VitalityChecker"]
+
+
+def test_the_local_readers_read_scenes_only():
+    """Micro-sense, voice and vitality ask local questions; a chapter re-read is a re-roll (C7)."""
+    scoped = {
+        spec.lens(FakeStructuredLLM(), None).name: spec.scope
+        for spec in PROSE_GATE
+    }
+    assert scoped["micro_sense"] is scoped["voice"] is scoped["vitality"] is Scope.SCENE
+    assert scoped["canon_consistency"] is Scope.UNIT
 
 
 def test_checker_samples_1_turns_sampling_off_without_changing_the_readers():

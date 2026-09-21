@@ -21,7 +21,13 @@ from .authors import load_author
 from .brief import load_brief
 from .canon import Issue, Severity, StoryModel, chapter_unit, commit_canon, load_canon, save_canon
 from .chapter import ChapterOutcome, attempt_chapter
-from .checkers import Escalation, IntentChecker, ProseChecker, default_prose_checkers
+from .checkers import (
+    Escalation,
+    IntentChecker,
+    ProseChecker,
+    RepairVerifier,
+    default_prose_checkers,
+)
 from .drafts import load_chapter_draft, load_chapter_draft_if_present, save_chapter_draft
 from .llm import StructuredLLM, stage_model
 from .plan import (
@@ -277,12 +283,17 @@ async def draft_chapter(
     trace: bool = True,
     n_candidates: int = 1,
     samples: int = 3,
+    verify_repairs: Optional[bool] = None,
 ) -> ChapterOutcome:
     """
     Run stage 5 for one chapter: load its inputs, attempt it, persist the draft if it survived.
 
     The attempt loop itself — escalate, adjudicate, retry, quarantine — is `chapter.attempt_chapter`.
     This function is the disk around it.
+
+    `verify_repairs` pins each unit's issues after one full read and verifies repairs against the
+    pins (`checkers/verifier.py`). It defaults to on for the shipped gate and off for a caller that
+    supplies its own readers, which is also what an empty gate (`--no-checkers`) needs.
     """
     novel_dir = Path(novel_dir)
     brief = load_brief(novel_dir / INPUT_DIR)
@@ -295,6 +306,8 @@ async def draft_chapter(
 
     tracer = Tracer(novel_dir / TRACE_DIR if trace else None)
     previous_draft = load_chapter_draft_if_present(novel_dir / DRAFTS_DIR, chapter - 1)
+    if verify_repairs is None:
+        verify_repairs = checkers is None
 
     outcome = await attempt_chapter(
         chapter=chapter,
@@ -317,6 +330,7 @@ async def draft_chapter(
         max_escalations=max_escalations,
         model=model,
         n_candidates=n_candidates,
+        verifier=RepairVerifier(llm, tracer=tracer) if verify_repairs else None,
     )
 
     if outcome.draft is not None:

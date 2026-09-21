@@ -26,13 +26,14 @@ a slice.
 | **World & cast** | maker | stage 2, once | premise, brief, author | writes characters, relationships, world facts, timeline, knowledge, constraints | sonnet |
 | **Macro arc** | maker | stage 3, once | full canon | writes `02_plan/macro_arc.json` | sonnet |
 | **Chapter spec** | maker | stage 4, just in time, one chapter ahead of the prose | canon *as it now stands*, the arc, the previous spec | writes `chNN.spec.json` | sonnet |
-| **Prose** | maker | stage 5, once per scene — *k* times with `--prose-candidates k` | the scene's assignment + `canon_slice` for exactly what it touches | writes the scene | opus |
-| **Repair** | maker (the prose agent) | any blocking issue, and any `correct_the_unit` ruling against a saved draft | the current text, the located issues, the same canon slice | rewrites only the named spans; may invent nothing | opus |
-| **Reconcile** | extractor | stage 6, after a chapter passes its gate | the draft, the spec, the canon slice | proposes facts and ledger outcomes; promote / ignore / **flag** | sonnet |
+| **Prose** | maker | stage 5, once per scene — *k* times with `--prose-candidates k` | the scene's assignment, `canon_slice` for exactly what it touches (knowledge as of this chapter), the author's craft (`writer_block`), the invention policy, and the chapter so far | writes the scene | opus |
+| **Repair** | maker (the prose agent) | any pinned blocking issue, and any `correct_the_unit` ruling against a saved draft | the current text, the pinned issues, the same canon slice | rewrites only the named spans; may invent nothing | opus |
+| **Repair verifier** | judge | after each prose repair round | the pinned issues + a paragraph diff of what the repair changed + the canon slice — never the unchanged text | resolved/unresolved per pin, plus damage the edit did; cannot raise anything else | sonnet |
+| **Reconcile** | extractor | stage 6, after a chapter passes its gate | the draft, the spec, the canon slice | proposes facts (classified new / restatement / contradiction), timeline events in story order, knowledge shifts, and ledger outcomes; promote / ignore / **flag** | sonnet |
 | **canon_consistency** | judge | every scene and the assembled chapter; sampled *k* times (`--checker-samples`) | the unit + its canon slice | escalate | sonnet |
-| **micro_sense** | judge | every scene and the assembled chapter | the unit + its canon slice | escalate | sonnet |
-| **voice** | judge | every scene and the assembled chapter | the unit + the author profile and the brief's forbidden list | escalate | sonnet |
-| **vitality** | judge | every scene and the assembled chapter | the unit + a deliberately **thin** slice (premise, constraints) | escalate; blocks on issue *density*, not presence | sonnet |
+| **micro_sense** | judge | every **scene** | the unit + its canon slice + the invention policy the writer was given | escalate | sonnet |
+| **voice** | judge | every **scene** | the unit + the same author craft block the writer had + the brief's forbidden list | escalate | sonnet |
+| **vitality** | judge | every **scene** | the unit + a deliberately **thin** slice (premise, constraints) | escalate; blocks on issue *density*, not presence | sonnet |
 | **intent** | judge | the macro arc (3), each chapter spec (4), each **assembled chapter** (5) — never a scene | the unit + the assignment it was given + canon slice | escalate on plans; **advise** on prose | sonnet |
 | **Selector** | judge | per scene, when `--prose-candidates > 1` | the *k* drafts and nothing else — no canon, no rubric of correctness | picks one; returns no verdict and cannot block | sonnet |
 | **Final auditor** | judge | once, after assembly (`--no-audit` skips it) | the whole novel, canon, the arc, and `audit_ledger`'s findings | pass / revise / escalate on the book | opus |
@@ -59,9 +60,17 @@ The graph is one-directional and deliberately amnesiac.
   it never judges its own work.
 - Only the judges' **issue list** flows back, into a repair. Nothing else crosses: no judge sees
   another judge's verdict, and no two agents converse.
+- **A unit is judged in full once.** Its blocking issues are pinned; after each repair the repair
+  verifier checks the pins against a diff, and nothing else. Re-running the full gate re-rolled the
+  question every round and never converged (`calibration/FINDINGS.md` C7). Only a repair that
+  rewrote the unit instead of editing it is read in full again.
+- **The judges and the maker share their rules.** The writer and micro-sense read one invention
+  policy (`canon/invention.py`); the writer and voice read one author block. A judge that holds the
+  maker to a rule the maker was never shown is a gate that fails good work.
 - **canon_consistency runs first and short-circuits.** When it blocks, micro_sense, voice, vitality
   and intent are not spent on that draft — they read the repaired text instead. A contradiction makes
-  every other judgement moot.
+  every other judgement moot. When it passes, the remaining readers run **concurrently**; under the
+  replay driver that means one stop asks all of them at once.
 - A judge that thinks *canon* is wrong does not tell the maker. It escalates to the arbiter, which is
   the only agent holding immutable ground truth. This is the F11 rule in structural form: nothing
   downstream may resolve a contradiction by inventing a bridging fact.

@@ -43,6 +43,7 @@ from .ledger import _update_ledger
 from .promote import (
     _promote_aliases,
     _promote_character_facts,
+    _promote_knowledge,
     _promote_timeline,
     _promote_world_facts,
 )
@@ -52,6 +53,8 @@ from .schema import (
     ChapterExtraction,
     CharacterFactExtract,
     ContradictionExtract,
+    FactRelation,
+    KnowledgeShiftExtract,
     Flag,
     FlagKind,
     LedgerKind,
@@ -72,6 +75,7 @@ __all__ = [
     # extraction schema
     "ChapterExtraction", "CharacterFactExtract", "AliasExtract", "WorldFactExtract",
     "TimelineExtract", "ContradictionExtract", "LedgerObservation", "LedgerKind",
+    "FactRelation", "KnowledgeShiftExtract",
     # outcomes
     "ReconcileResult", "ReconcileFailed", "Promotion", "PromotionKind",
     "Flag", "FlagKind", "LedgerUpdate",
@@ -114,6 +118,7 @@ async def reconcile_chapter(
     _promote_character_facts(working, extraction, promoted, flagged)
     _promote_world_facts(working, extraction, promoted, flagged)
     _promote_timeline(working, extraction, chapter, promoted, flagged)
+    _promote_knowledge(working, extraction, chapter, promoted, flagged)
 
     for c in extraction.contradictions:
         flagged.append(Flag(

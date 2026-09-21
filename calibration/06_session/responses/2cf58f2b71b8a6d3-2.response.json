@@ -1,0 +1,42 @@
+{
+  "decision": "revise",
+  "summary": "The unit stages the report co-signing, Berta collecting the death certificate, and Stettler filing the Aebischer record beside the Vogel file in the Eichenschrank, but it invents a named clerk canon does not have, breaks the physical logic of a document hand-off, replaces the Stettler-Berta exchange with pure abstraction, and contradicts itself about whether Stettler stayed in the office that afternoon.",
+  "issues": [
+    {
+      "unit": "P5: \"Gemeindeschreiber Anton Hürlimann, der am Fenster saß\"",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Drop the name and title; call him 'der Gemeindeschreiber' or 'der Schreiber am Fenster' instead of introducing a named person canon does not have, and who is also not in the unit's present list."
+    },
+    {
+      "unit": "P8: \"Vom Flur aus reichte Feuz ihm die Mappe\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this paragraph, or restage it: Feuz already put his coat on and left through the door in P7, so he cannot simultaneously be 'vom Flur aus' and reach 'über den Schreibtisch' — have him hand over the second page before he puts the coat on, not after."
+    },
+    {
+      "unit": "P11: \"Die Spannung im Raum wuchs\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Replace the paragraph with what was actually said about the dead man; cut 'Die Spannung im Raum wuchs' — it names a feeling instead of showing the exchange that would produce it."
+    },
+    {
+      "unit": "P15: \"Gleich nach Mittag hatte er das Amtszimmer verlassen und war nicht zurückgekehrt\"",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut this sentence — it directly contradicts the preceding 'Er blieb bis zum Abend im Amtszimmer', and the paragraph then has him ordering the room and locking the drawer in an office it just said he had left and not returned to."
+    },
+    {
+      "unit": "P4: \"Fast dieselbe Formulierung\"",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "world_fact:formula",
+      "fix_hint": "Change 'Fast dieselbe Formulierung' to 'Dieselbe Formulierung' (or equivalent) to match the canon fact that the certificate formula is identical across both cases, not merely similar."
+    }
+  ],
+  "conflict": ""
+}

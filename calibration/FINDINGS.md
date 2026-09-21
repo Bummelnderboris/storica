@@ -190,6 +190,77 @@ dullness a generator actually produces. And the threshold is fitted to n=3 on on
 author — a restrained author, where the gap between "withholding" and "flat" is narrowest. Expect to
 retune it, and expect a human reading a real run to be the only real test.
 
+## C7 — P6 chapter 1 was quarantined by the gate, not by the prose · **critical, fixed**
+
+The first live chapter of P6 was quarantined on 2026-08-11: scene 3 spent its two repairs on one
+micro-sense issue, an unglossed date (*"Am elften März"*). Read in the trace (`novels/der-chrachen-v2/
+04_trace/045`–`054`), the three micro-sense readings of that scene say:
+
+| read | blocking | the date |
+|---|---|---|
+| 1 (the draft) | — (two warnings: a dosage, the date) | **warning** |
+| 2 (after repair 1) | the dosage | not mentioned; new warnings on a road bend and an hour |
+| 3 (after repair 2) | **the date** | **blocking** |
+
+Repair only ever sees blocking issues, so it never touched the date; read 3, a fresh draw, promoted
+it. Each round the reader asked a different question, and no budget converges against that. Two
+causes, both structural:
+
+1. **Every repair was followed by a full fresh re-read.** A fresh reader is a new draw; a new draw
+   re-rolls both *which* spans it objects to and *how hard*. C4 measured this for canon-consistency
+   (20% blocking on clean text per draw) and fixed it with majority sampling — but the repair loop
+   still re-drew every reader every round, which re-introduced the noise at the one point where it
+   costs a chapter.
+2. **The reader held the writer to a rule the writer was never given.** The writer was told to
+   "invent texture freely, invent facts never" with no line between them; micro-sense was told that
+   *any* concrete detail without canon basis — dates, distances, procedures — is a hallucination.
+   So the writer did its job (a specific date is texture) and the reader failed it for that.
+
+**Fixed.** (a) Read once, pin, verify: the gate reads a unit in full once; its blocking issues are
+pinned; each repair is judged by a repair verifier against the pins and a paragraph diff only
+(DESIGN §6.2). (b) One invention policy (`canon/invention.py`), byte-identical in the writer's system
+prompt and the micro-sense prompt: texture, minor specifics, procedure and unnamed walk-ons are
+permitted and recorded by reconcile; named people, relationships, knowledge and the story's open
+questions are not. (c) Micro-sense, voice and vitality read scenes only — their chapter pass was a
+second draw on sentences they had already passed. (d) Micro-sense's severity is one test: *would a
+careful reader stop here, confused or misled?*
+
+**The lesson, generalised:** a gate is a function of its readers *and* of how often it asks them.
+Every re-ask is a draw. Calibrating a reader's verdict (C4, C6) is not enough if the loop around it
+re-draws until something blocks.
+
+## C8 — Micro-sense and voice, floor-tested · **good, one lane fix**
+
+Run: `.venv/bin/python tools/calibrate_readers.py` (results in `results/readers/`). Same control as
+C3/C6 — v1's chapter 3, canon-correct — judged as one scene, three draws per case.
+
+For micro-sense, a fixture (`fixtures/ch03_micro_planted.md`) plants four real breaches — a **named**
+stranger, a physically impossible hand-over, an abstraction standing in for the event, a paragraph
+that contradicts itself — and adds four specifics the invention policy **permits**: a date, an hour, a
+street, a file number. The permitted four are the C7 test.
+
+| reader / case | blocking issues per draw | gate fired |
+|---|---|---|
+| micro-sense / control | 0, 0, 0 | **0/3** |
+| micro-sense / planted | 4, 4, 3 | 3/3 — breaches caught 3/3, 2/3, 3/3, 3/3; permitted specifics blocked **0/12** |
+| voice / control | 0, 0, 0 | **0/3** |
+| voice / flattened (C6 fixture) | 6, 8, 6 | 3/3 |
+
+**The lane fix that got it there.** The first round (kept in `results/readers/before-lane-fix/`)
+blocked the control in 1/3 draws: micro-sense objected that a character *says* the old wording was
+"fast dieselbe" while canon records it as identical. That is two lanes away from its job — a canon
+contradiction is canon-consistency's, sampled three times for exactly that, and what a character
+*says* is characterization, not the text asserting a fact. The rubric now says both. The one planted
+breach missed once (the impossible hand-over, filed as a warning in draw 3) is the case where a
+careful reader could read the staging charitably; the gate still fired on that draw.
+
+**The date is no longer an issue.** 0/12 on permitted specifics, including *"es war der elfte März"*
+— the exact kind of detail that quarantined P6's chapter 1.
+
+**Caveats.** n=3 on one chapter of one restrained author; the fixtures are built from the rubrics
+(floor tests, like C6). Voice's first round — on a prompt that still carried nudges.md's quotations of
+v1 prose — separated equally well (0,0,0 vs 9,11,15). The real test is still a human reading a book.
+
 ## What this changes
 
 | Finding | Action |
@@ -200,6 +271,8 @@ retune it, and expect a human reading a real run to be the only real test.
 | C4 | **Done.** Majority-of-3 sampling on canon-consistency (`--checker-samples`), majority decides / union reports. |
 | C5 | Split/merge identity axis added. Recall is better than first reported; the "miss" was a bad roll. |
 | C6 | **Done.** Vitality gates on density (>=8 per 1000 words and >=3 issues), not on presence. Binary blocking would have flattened every chapter. |
+| C7 | **Done.** Repairs verified against pinned issues (one full read per unit); one shared invention policy; local readers scene-only. |
+| C8 | **Done.** Micro-sense and voice floor-tested: 0/3 on the clean control, 3/3 on broken text, 0/12 on permitted specifics. Micro-sense's lane narrowed (no canon contradictions, dialogue is characterization). |
 
 The headline: the checker layer is worth keeping, and **the data it was tested against was the
 broken part** — both the reference canon (C1) and, twice, this document's own answer key (C1, C5).
@@ -210,9 +283,8 @@ That is a much better thing to learn from twenty calls than from a finished book
 - **Recall is measured on five errors in one chapter of one book.** Every planted error here is a
   *fact* changing. Nothing tests whether the checker catches a contradiction of tone, motive, or
   implication — and those are likelier failure modes now that facts are structured.
-- **Micro-sense and voice are still unmeasured.** Vitality has now had a floor test (C6); those two
-  have had nothing. Both are binary-gated, which is exactly the design that failed in C6 — worth
-  checking whether they too fire on good prose before trusting them.
+- ~~**Micro-sense and voice are still unmeasured.**~~ Floor-tested in C8. Still unmeasured: the
+  repair verifier (§6.2) and intent on prose (advisory, so it cannot block).
 - **The control is one clean chapter.** A 20% false-positive rate estimated from 5 draws of 1 chapter
   has a wide interval; if it is really 35%, majority-of-3 costs ~28% and the rule needs revisiting.
 - **Sampling was measured on a chapter-level check.** Scene-level checks see less context and may be
