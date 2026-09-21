@@ -1,0 +1,663 @@
+# Der Totenschein
+
+Anton Kalt fuhr um zwanzig nach zehn Uhr abends an der Sust unterhalb der Passhöhe vorbei, ohne anzuhalten. Der Wirt, der eben die Läden schloss, sah die Scheinwerfer, zwei gelbe Flecken im Schneetreiben, und sagte später aus, er habe dem Wagen nachgerufen, was man einem Wagen eben nachruft, und der Wagen habe nicht geantwortet. Das war die letzte Aussage über Anton Kalt, die ein Lebender machen konnte, und sie betraf einen Opel.
+
+Der Opel war vierzehn Jahre alt, hatte einem Viehhändler in Brig gehört und war für Kalt zu teuer gewesen. Er hatte ihn trotzdem gekauft, im Sommer, weil ein Kleinbauer in Chrachen, der ein Auto besitzt, im Dorf ein anderer Mensch ist als einer, der keines besitzt, auch wenn er dieselben vier Kühe hat. Die Scheibenwischer gingen nur auf der Fahrerseite. Die Heizung roch nach verbranntem Gummi und wärmte nicht. Auf dem Beifahrersitz lagen ein Sack Kunstdünger, bezahlt, ein Paket Stumpen, angebrochen, und eine Quittung der Landwirtschaftlichen Genossenschaft über einen Kälberstrick, den er vergessen hatte mitzunehmen.
+
+Es schneite seit dem Nachmittag. Um vier hatte es noch geheissen, das komme erst morgen; um sechs, es komme heute, aber nicht viel; um acht hatte niemand mehr etwas gesagt, weil es gekommen war. Kalt war trotzdem losgefahren. Er fuhr die Strasse seit achtundfünfzig Jahren, die ersten vierzig zu Fuss, und er war der Ansicht, dass eine Strasse, die man kennt, einem nichts antun könne. Die Ansicht war falsch, aber sie hatte sich achtundfünfzig Jahre lang bewährt, und länger bewährt sich keine Ansicht.
+
+Nach der Passhöhe ging es abwärts. Die Schneestangen am Strassenrand, schwarz und rot gestrichen, standen im Abstand von zwanzig Metern und zeigten an, wo die Strasse aufhörte und das übrige begann. Kalt zählte sie nicht. Er rauchte. Er hielt das Steuer mit beiden Händen und den Stumpen zwischen den Zähnen, und die Asche fiel ihm auf den Mantel, und er liess sie liegen. Im Licht der Scheinwerfer fiel der Schnee nicht, er kam entgegen, waagrecht, in Schwärmen, als habe das Tal beschlossen, dem Wagen alles entgegenzuwerfen, was es besass, und besässe nichts anderes.
+
+Er dachte an den Dünger. Er dachte an die Kuh, die seit Dienstag nicht recht frass. Er dachte, dass er den Kälberstrick vergessen hatte. An anderes dachte er nicht, oder nicht in dieser Nacht. Er wusste seit zwanzig Jahren etwas, das ausser ihm nur noch ein einziger Mensch wusste, und er hatte sich angewöhnt, es so zu wissen, wie man weiss, wo im Stall ein Brett locker ist: man tritt nicht darauf, und man redet nicht davon, und nach einer Weile gehört es zum Stall. Man hatte ihn nie danach gefragt. Er hatte es nie gesagt. Zwanzig Jahre Schweigen sind, von aussen betrachtet, nicht von zwanzig Jahren Vergessen zu unterscheiden, und Kalt hatte nie jemanden gehabt, der ihn von innen betrachtete.
+
+Bei der sechsten Kehre unter der Passhöhe, dort, wo die Strasse über eine gemauerte Rinne führt und im Sommer ein Bach darunter durchläuft, lag Eis unter dem Schnee. Das Eis lag dort jeden Winter. Kalt wusste das. Er bremste, wie man auf Eis nicht bremsen soll, weil in diesem Augenblick — und das ist der einzige Augenblick der ganzen Geschichte, in dem Anton Kalt eine Entscheidung traf — ein Tier über die Strasse lief, ein Fuchs oder ein Hase oder gar nichts, ein dunkler Fleck im Licht, den er für ein Tier hielt. Der Opel drehte sich langsam, beinahe höflich, um ein Viertel, dann um die Hälfte, und die Scheinwerfer strichen über die Schneestangen, eine, zwei, drei, wie ein Finger, der etwas nachzählt, und dann über nichts mehr.
+
+Der Wagen verliess die Strasse zwischen der siebten und der achten Stange. Er überschlug sich einmal auf dem Hang, schlug mit dem Dach gegen einen Felsblock und blieb vierzig Meter unterhalb der Strasse auf der Seite liegen, mit einem Rad in der Luft, das sich noch eine Weile drehte. Die Fahrertür war aufgesprungen. Kalt lag drei Meter neben dem Wagen im Schnee, auf dem Rücken, den linken Arm unter sich. Der Stumpen lag neben ihm und glühte noch. Der Sack Dünger war geplatzt, und der Dünger lag auf dem Schnee, grau auf weiss, und sah aus wie Asche, die man ausgestreut hat, und war doch nur Dünger.
+
+Er lebte noch einige Minuten. Was er in diesen Minuten dachte, ist nicht bekannt, und es ist nicht anzunehmen, dass es etwas Wichtiges war. Menschen, die im Schnee sterben, denken selten an das, was andere an ihrer Stelle gedacht hätten. Er versuchte einmal, den Arm unter dem Körper hervorzuziehen, und es gelang ihm nicht. Dann versuchte er es nicht mehr.
+
+Der Scheinwerfer auf der oberen Seite des Wagens brannte noch bis gegen Mitternacht und beleuchtete einen Ausschnitt des Hangs, in dem es schneite, sonst nichts. Dann wurde die Batterie schwach, und das Licht wurde gelb, dann braun, dann war es aus. Um diese Zeit war Anton Kalt, achtundfünfzig Jahre alt, Kleinbauer in Chrachen, vormals Sanitätsgehilfe, bereits tot, und mit ihm war etwas gestorben, das niemand vermissen würde, weil niemand wusste, dass es gelebt hatte — ausser einem, und der schlief in dieser Stunde im Dorf unten und würde es erst erfahren, wenn man ihm die Leiche brachte.
+
+Es schneite weiter. Der Schnee deckte den Dünger zu, dann den Stumpen, dann die Spuren am Hang, dann die offene Wagentür und schliesslich das Gesicht. Er tat es gründlich und ohne Absicht, wie eine Behörde.
+
+* * *
+
+Man brachte ihn um halb sechs Uhr morgens, auf einem Holzschlitten, mit dem man sonst Mist führte. Der Wegknecht hatte den Wagen gefunden, weil er mit dem Pfadschlitten und zwei Pferden die Kehren hinauf wollte und bei der sechsten nicht weiterkam, nicht wegen des Opels, sondern wegen des Schnees; den Opel hatte er nur gesehen, weil er abstieg, um zu wässern, und dabei den Hang hinunterschaute. So wurde Anton Kalt gefunden: durch einen Mann, der austreten musste. Es gibt würdigere Arten, gefunden zu werden, aber keine zuverlässigere.
+
+Doktor Stettler öffnete selbst. Er trug den Mantel über dem Nachthemd und hatte die Schuhe nicht gebunden. Der Wegknecht und ein Bursche, den er mitgebracht hatte, trugen den Toten durch den Gang in die Praxis und legten ihn auf den Untersuchungstisch, auf dasselbe Wachstuch, auf dem am Vortag eine Bäuerin mit einem vereiterten Daumen gesessen hatte. Der Tote war steif und passte nicht recht auf den Tisch; der linke Arm stand vom Körper ab, wie er unter dem Körper gelegen hatte, und liess sich nicht anlegen. Der Bursche versuchte es zweimal. Dann sagte der Wegknecht, er solle es lassen, das sei jetzt Sache des Doktors.
+
+«Oben bei der Rinne», sagte der Wegknecht. «Wie jedes Jahr einer.»
+
+«Letztes Jahr war es keiner.»
+
+«Dann eben zwei dieses Jahr.» Er wischte sich den Schnee von der Mütze auf den Boden. «Der Pass geht zu. Ich komme nicht mehr hinauf. Ich hab's dem Posthalter gesagt, er soll telefonieren, aber die Leitung ist seit drei Uhr tot.»
+
+Stettler nickte. Er zog die Lampe über den Tisch herunter, eine Zuglampe mit grünem Emailschirm, die an einer Kette mit einem Gegengewicht aus Blei hing, und das Gegengewicht stieg, als die Lampe sank, bis beide auf halber Höhe stehen blieben, im Gleichgewicht, wie es sich für eine Praxis gehört. Dann schickte er die beiden hinaus. Sie gingen gern. In der Küche stand noch Kaffee vom Vorabend, kalt; er sagte ihnen, sie sollten ihn wärmen, und sie wärmten ihn, und er hörte sie durch die Wand reden, über die Pferde.
+
+Er sah das Gesicht erst, als er den Schnee davon abgewischt hatte, mit einem Tupfer, dann mit der flachen Hand, weil die Tupfer zu klein waren. Er hatte gewusst, wer es war. Der Wegknecht hatte den Namen an der Tür gesagt, zusammen mit dem Wort Rinne und dem Wort Opel, in dieser Reihenfolge, und Stettler hatte den Namen gehört, wie man in einer Aufzählung ein Wort hört, das man kennt. Nun sah er es. Das ist etwas anderes. Er hatte in seinem Leben etwa vierhundert Totenscheine ausgestellt, in Chrachen stirbt man nicht häufig, aber gründlich, und er hatte gelernt, dass man einen Toten zuerst untersucht und dann erkennt, weil es umgekehrt die Untersuchung verdirbt. Diesmal ging es umgekehrt.
+
+Er untersuchte trotzdem. Er tat es so, wie es vorgeschrieben ist, von oben nach unten. Schädel: Platzwunde über dem rechten Scheitelbein, sechs Zentimeter, kaum Blut, das Blut war gefroren. Pupillen weit, lichtstarr. Halswirbelsäule ohne Befund, soweit sich an einem gefrorenen Hals ein Befund erheben lässt. Brustkorb: links eingedrückt, drei, vier Rippen, der Arm darunter zweifach gebrochen, einmal am Oberarm, einmal über dem Handgelenk. Keine Totenflecken auf dem Rücken, wo man sie erwartet hätte, sondern auf der linken Seite; er hatte also nicht lange auf dem Rücken gelegen, oder er hatte gelegen und war dann gewendet worden, vom Wegknecht, beim Aufladen. Tod durch Einwirkung stumpfer Gewalt auf den Brustkorb, begünstigt durch Unterkühlung. Zeitpunkt: vor Mitternacht. Er hätte es in einer Minute aufschreiben können, und in der Minute hätte er nicht zu lügen brauchen, denn es war wahr.
+
+Er zog dem Toten den Mantel aus, soweit sich ein Mantel von einem Mann ausziehen lässt, der den Arm nicht mehr hergibt. Auf dem Mantel lag Asche. Er leerte die Taschen auf das Tablett, auf dem sonst die Instrumente lagen, und legte die Gegenstände nebeneinander, wie er es jedesmal tat, weil die Hinterbliebenen jedesmal danach fragten und jedesmal etwas vermissten. Ein Taschenmesser mit Hirschhorngriff. Ein Portemonnaie mit elf Franken und vierzig Rappen. Ein Stumpen, zerbrochen. Ein Bleistift. Ein Zettel mit einer Zahl, 14.50, ohne Angabe, wofür. Ein Schlüsselbund, sechs Schlüssel, davon einer zu gross für jede Tür im Dorf. Ein Taschentuch, gebraucht.
+
+Er zählte die Gegenstände zweimal. Es waren beide Male sieben. Dann tastete er das Futter des Mantels ab, die Innentasche, den Saum, wo sich zuweilen etwas verfängt, und fand einen Knopf, der nicht zu diesem Mantel gehörte. Er legte ihn als achten Gegenstand dazu.
+
+Dass er etwas suchte, gestand er sich in diesem Augenblick nicht ein, und es wäre auch sinnlos gewesen, denn was er suchte, trägt niemand zwanzig Jahre lang im Mantel mit sich herum, schon gar nicht auf den Pass, um Dünger zu holen. Es war ein Blatt Papier. Ein Krankenblatt, vorgedruckt, mit dem Kopf des damaligen Bezirksspitals, das es nicht mehr gibt, und darauf, in Stettlers Handschrift von damals, die eine andere war, eine Eintragung, die er zwei Tage später in den Akten durch eine andere Eintragung ersetzt hatte. Die zweite Eintragung war sauber, vollständig und falsch, und sie lag seither im Archiv, wo sie niemand las, weil sie in Ordnung war. Die erste hatte er nicht vernichten können, weil er sie nicht mehr hatte. Kalt hatte sie. Kalt hatte sie an sich genommen, am Abend nach der Sache, ohne ein Wort, und am folgenden Morgen hatte er den Dienst quittiert und war in das Dorf seines Vaters zurückgegangen, zu den Kühen, und hatte in zwanzig Jahren nichts verlangt, nichts angedeutet und nichts zurückgegeben. Sie hatten sich gegrüsst, auf der Strasse, am Viehmarkt, nach der Messe. Stettler hatte ihm zweimal einen Bruch gerichtet und einmal einen Abszess geöffnet und dafür eine Rechnung geschrieben, und Kalt hatte die Rechnung bezahlt. Mehr war zwischen ihnen nicht gewesen. Es war, im Rückblick, eine der korrektesten Beziehungen seines Lebens.
+
+Ob Kalt das Blatt noch besass, wusste Stettler nicht. Ob er es verbrannt, verlegt, in eine Bibel gelegt, einem Notar gegeben oder als Unterlage für einen Rahmstuhl benutzt hatte, wusste er ebenfalls nicht. Er hatte nie gefragt. Man fragt einen Mann nicht nach einem Papier, von dem man hofft, dass er es vergessen hat, denn die Frage allein erinnert ihn daran.
+
+Er sah auf die acht Gegenstände. Er sah auf den Toten. Das Gesicht hatte, wie die Gesichter der Erfrorenen oft, einen Ausdruck, den man für Geduld halten konnte, wenn man wollte; Stettler wollte nicht und hielt ihn für das, was er war, eine Kontraktion der Kaumuskulatur.
+
+Dann ging er zum Schrank, in dem die Formulare lagen, und nahm einen Totenschein heraus. Es waren noch zweiunddreissig. Er hatte sie im Oktober nachbestellt und dabei gedacht, das reiche bis zum Frühjahr, auch bei einem schlechten Winter. Er setzte sich an den Schreibtisch, der in der Praxis stand, schräg zum Fenster, damit das Licht von links kam, und schraubte den Füllfederhalter auf.
+
+Name: Kalt. Vorname: Anton. Geboren: er schlug im Kirchenbuchauszug nach, den er für jede Familie im Dorf in einer Kartei führte, und schrieb das Datum ab. Wohnhaft: Chrachen. Ort des Todes: Passstrasse, sechste Kehre unterhalb der Passhöhe, Gemeindegebiet Chrachen. Zeit des Todes: in der Nacht, vor Mitternacht, nicht genauer bestimmbar. Er schrieb, wie er immer schrieb, in einer kleinen, gleichmässigen Schrift, die der Bezirk einmal in einem Rundschreiben als vorbildlich lesbar erwähnt hatte, ohne seinen Namen zu nennen. Todesursache, unmittelbare: Thoraxtrauma durch Verkehrsunfall. Todesursache, begünstigende: Unterkühlung. Er las es. Es war richtig. Es war das Richtigste, was er seit zwanzig Jahren auf ein Formular geschrieben hatte, und es hätte genügt. Das Formular hatte keine weitere Rubrik, die ihn zu etwas verpflichtete.
+
+Es hatte noch eine, die ihn zu nichts verpflichtete. Sie hiess Bemerkungen, stand unten, über der Unterschrift, bot Platz für drei Zeilen und war in vierhundert Totenscheinen leer geblieben, bis auf einen, bei dem er vermerkt hatte, dass die Verstorbene zeitlebens darauf bestanden habe, hundert Jahre alt zu sein, während das Kirchenbuch siebenundneunzig angab.
+
+Draussen wurde es nicht hell. Es wurde grau, was in Chrachen im Dezember dasselbe ist. In der Küche lachte der Bursche über etwas, das der Wegknecht gesagt hatte, und der Wegknecht sagte, er solle still sein, es liege einer nebenan. Stettler hörte es und hörte, dass es still wurde, und in dieser Stille, die ihm nicht galt, sondern dem Toten, und die er dennoch für sich in Anspruch nahm, weil sonst niemand da war, der sie hätte in Anspruch nehmen können, setzte er die Feder auf die erste der drei Zeilen.
+
+Er schrieb: Der Unterzeichnete erklärt hiermit amtlich, dass der Verstorbene der einzige Zeuge
+
+Da sah er, dass die Schrift nicht mehr gleichmässig war. Das Z von Zeuge stand schief, und der Querstrich des t in «amtlich» war doppelt geraten, wie bei einem, der friert. Er fror nicht; der Ofen brannte. Er legte die Feder hin, sah die rechte Hand an, die er einundsechzig Jahre lang zu allem benutzt hatte, zum Nähen, zum Schreiben, zum Unterschreiben, und die bis vor einer Minute ruhig gewesen war, auch vorhin, am Schädel des Toten, auch vor zwanzig Jahren, bei der zweiten Eintragung. Sie zitterte leicht. Nicht sehr. Ein Fremder hätte es nicht bemerkt, und ein Fremder war nicht da.
+
+Er nahm die Feder wieder auf. Er schrieb weiter, langsamer, und die Buchstaben wurden nicht besser, aber sie wurden lesbar, und auf die Lesbarkeit kommt es bei einem Formular an, nicht auf die Schönheit. Die drei Zeilen reichten nicht. Er schrieb über den Rand hinaus, dann auf die Rückseite, die nicht zum Beschreiben bestimmt war, denn es war nicht vorgesehen, dass ein Totenschein etwas über den Arzt enthält.
+
+* * *
+
+Um Viertel vor sieben war die Rückseite zu zwei Dritteln beschrieben. Er las nicht nach, was er geschrieben hatte. Er wusste aus Erfahrung, dass man einen Befund, den man zweimal liest, beim zweiten Mal zu verbessern beginnt, und er wollte nichts verbessern; das hatte er schon einmal getan, gründlich. Er setzte Ort und Datum darunter und dann die Unterschrift.
+
+Die Unterschrift misslang. Sie war lesbar, und sie war seine, aber sie sah aus wie die Unterschrift eines Mannes, der die Unterschrift des Doktor Stettler nachzumachen versucht und dabei nicht ganz sicher ist, ob man ihm zusieht. Er betrachtete sie eine Weile. Dann nahm er den Stempel aus der Schublade, hauchte ihn an, weil das Kissen seit dem Sommer eingetrocknet war, und drückte ihn neben den Namen. Amtsarzt Chrachen. Der Stempel war deutlich. Der Stempel zitterte nicht. Er war, soweit Stettler sehen konnte, das einzige auf dem Blatt, das ohne Vorbehalt beglaubigte, was darüber stand.
+
+Um halb acht kam der Untersuchungsrichter. Der Posthalter hatte, da das Telefon nicht ging, seinen Buben durch den Schnee zu ihm geschickt, und der Bube hatte an die Tür geklopft und gesagt, beim Doktor liege der Kalt, tot, und dann gewartet, ob es dafür einen Batzen gebe. Es gab keinen. Rieder erschien mit einer Aktenmappe, in Galoschen, die er über Halbschuhe gezogen hatte, und in einem Mantel, der für das Unterland gekauft worden war. Der Schnee stand ihm bis an die Knie der Hosen. Er klopfte ihn im Gang ab, sorgfältig, erst das eine Bein, dann das andere, und nahm den Hut erst ab, als er schon in der Praxis stand, und dann hielt er ihn in der Hand und wusste nicht, wohin damit.
+
+«Herr Doktor.»
+
+«Herr Rieder.»
+
+Er befragte zuerst den Wegknecht, in der Küchentür, stehend, und schrieb die Antworten in ein Heft mit Wachstuchdeckel: die Zeit, die Kehre, die Stange, das Austreten, das er mit «beim Absteigen» wiedergab. Dann entliess er die beiden mit dem Bescheid, man werde sie noch einvernehmen, und sie gingen, als hätte man ihnen etwas Unangenehmes versprochen. Dann trat er an den Tisch. Er trat nicht nahe heran. Er hielt zu dem Toten den Abstand, den man zu einem Hund hält, von dem man nicht weiss, ob er schläft.
+
+«Ich muss eine Legalinspektion machen», sagte er. «Es ist meine erste hier.»
+
+«Es ist nicht viel zu inspizieren.»
+
+«Es ist trotzdem vorgeschrieben.»
+
+Stettler diktierte ihm den Befund. Er diktierte ihn so, wie er ihn eine Stunde zuvor erhoben hatte, von oben nach unten, Scheitelbein, Pupillen, Rippen, Arm, und Rieder schrieb mit, fragte bei «lichtstarr» nach der Schreibweise und bei «stumpfe Gewalt», ob man nicht besser «Aufprall» sage, weil das für einen Laien verständlicher sei. Stettler sagte, der Bericht sei nicht für Laien. Rieder schrieb «stumpfe Gewalt». Dann zählte er die Gegenstände auf dem Tablett und schrieb sie ab, in derselben Reihenfolge, das Messer, das Portemonnaie mit dem Betrag, den er nachzählte, den Stumpen, den Bleistift, den Zettel mit der Zahl, die Schlüssel, das Taschentuch, den Knopf.
+
+«Acht», sagte er. «Fehlt etwas?»
+
+Stettler sah auf das Tablett.
+
+«Das weiss ich nicht», sagte er.
+
+Rieder schrieb: Vollständigkeit vom Amtsarzt nicht feststellbar. Es war ein richtiger Satz, und er würde später in den Akten stehen, zwischen dem Knopf und der Unterschrift, und niemand würde ihn lesen, weil er in Ordnung war.
+
+«Dann brauche ich noch den Totenschein», sagte Rieder. «Eine Abschrift genügt. Das Original geht an das Zivilstandsamt.»
+
+Stettler nahm das Blatt vom Schreibtisch und gab es ihm. Rieder las die Vorderseite, nickte bei der Todesursache, nickte bei der Zeit und sagte: «Das ist in Ordnung.» Dann sah er, dass die Bemerkungen über den Rand liefen, und drehte das Blatt um.
+
+Er las lange. Er las, wie ein Mann liest, der gelernt hat, dass jedes Wort in einem amtlichen Schriftstück etwas bedeuten kann, und der zum ersten Mal auf ein Schriftstück stösst, in dem jedes Wort etwas bedeutet. Einmal hob er den Kopf und sah zum Tisch hinüber, auf das Gesicht unter der Lampe, und dann las er weiter. Am Ende las er alles noch einmal, von vorn, die drei Zeilen und den Rand und die Rückseite, und Stettler, der am Fenster stand, dachte, dass das richtig sei, dass einer es zweimal lese, wenn es der, der es geschrieben hatte, nicht einmal gelesen hatte. Der Ofen tickte. In der Küche war es still.
+
+«Was ist das?», sagte Rieder.
+
+«Eine Selbstanzeige.»
+
+«Auf einem Totenschein.»
+
+«Es war das Formular, das ich zur Hand hatte.»
+
+«Das Formular ist dafür nicht vorgesehen.»
+
+«Nein.»
+
+«Die Rubrik Bemerkungen», sagte Rieder, «ist für Bemerkungen zum Todesfall.»
+
+«Es ist eine Bemerkung zum Todesfall.»
+
+Rieder legte das Blatt auf den Schreibtisch, mit der Rückseite nach oben, und legte die flache Hand darauf, als könne es sonst wegfliegen, obwohl das Fenster geschlossen war. Den Hut hielt er immer noch in der anderen.
+
+«Der Verstorbene», sagte er, «war damals —»
+
+«Sanitätsgehilfe. Es steht da.»
+
+«Und er war der einzige, der —»
+
+«Ja.»
+
+«Und er ist seit heute nacht tot.»
+
+«Seit gestern abend. Vor Mitternacht.»
+
+Rieder setzte sich. Er setzte sich auf den Stuhl, auf dem die Patienten sassen, wenn sie sich die Hemden aufknöpften, und legte endlich den Hut auf das Knie. Er war neunundzwanzig Jahre alt, er war seit elf Wochen im Tal, und er hatte in diesen elf Wochen zwei Viehdiebstähle, eine Ehrverletzung unter Nachbarn und einen Zaun untersucht, der auf dem falschen Grundstück stand. Das Gesetz, das er studiert hatte, war vollständig, er hatte es geprüft, es gab darin für jeden Fall einen Artikel. Er suchte nun nach dem Artikel für einen Mann, der ein Verbrechen gesteht, dessen einziger Zeuge unter der Lampe liegt und dessen einzige Urkunde ein Formular ist, das der Täter selbst hat ausfüllen müssen, weil kein anderer es ausfüllen darf. Er fand keinen. Es war nicht so, dass der Artikel fehlte. Es waren zu viele, und sie widersprachen einander nicht, sondern sie schwiegen gleichzeitig.
+
+«Herr Doktor», sagte er, «Sie wissen, dass niemand das bestätigen kann.»
+
+«Ich bestätige es.»
+
+«Sie sind der Beschuldigte.»
+
+«Ich bin auch der Amtsarzt. Das Dokument ist amtlich.»
+
+«Man kann nicht gegen sich selbst beurkunden.»
+
+«Es gibt in diesem Tal niemand anders, der beurkunden kann.»
+
+«Dann ist es eine Urkunde ohne Beweiskraft.»
+
+«Dann ist es ein Geständnis mit Stempel», sagte Stettler. «Das ist mehr, als die meisten haben.»
+
+Rieder schlug das Heft wieder auf, blätterte an der Legalinspektion vorbei auf eine leere Seite und schraubte den Füllhalter auf. Er schrieb den Kopf: Ort, Zeit, Anwesende. Die Anwesenden waren zwei, und einer davon war er selbst. Dann hielt er inne.
+
+«Ich muss nach den Beweggründen fragen. Warum jetzt?»
+
+«Das ist keine Frage, die in ein Protokoll gehört.»
+
+«Doch. Sie gehört unter Beweggründe.»
+
+«Dann schreiben Sie: keine Angabe.»
+
+Rieder schrieb: keine Angabe. Er schrieb es klein. Dann nahm er den Totenschein wieder auf, drehte ihn, verglich die Vorderseite mit der Rückseite, hielt ihn schräg unter die Lampe, und Stettler sah, dass er die Schrift verglich, die gleichmässige oben und die andere darunter.
+
+«Das ist nicht dieselbe Schrift.»
+
+«Es ist dieselbe Hand.»
+
+«Das mag sein. Ich muss Sie trotzdem bitten, in meiner Gegenwart zu unterzeichnen. Nicht den Totenschein. Die Übergabe.» Er drehte das Heft um und schob es über den Schreibtisch. Er hatte geschrieben: Der Amtsarzt übergibt dem Unterzeichneten ein beidseitig beschriebenes Formular (Totenschein Kalt, Anton) und erklärt, die Eintragungen unter «Bemerkungen» und auf der Rückseite seien von ihm eigenhändig verfasst und als Selbstanzeige zu verstehen.
+
+Stettler las es. Es war richtig. Es war, was die Sache betraf, sogar genauer als das, was er selbst geschrieben hatte, denn es enthielt nichts als die Tatsache, dass es existierte. Er nahm den Füllhalter des Richters, der leichter war als sein eigener, und unterschrieb. Die Hand zitterte. Rieder sah nicht auf das Gesicht, sondern auf die Feder, wie man bei einer Injektion auf die Nadel sieht und nicht auf den Patienten, und als die Unterschrift fertig war, nahm er das Heft zurück, sah die Unterschrift an und verglich sie mit der auf der Rückseite des Totenscheins. Sie glichen einander. Sie glichen beide nicht dem Doktor Stettler, aber sie glichen einander, und darauf kam es an.
+
+Rieder unterschrieb darunter. Er schrieb die Uhrzeit dazu, sieben Uhr zweiundfünfzig, und das Wort «Entgegengenommen», und unterstrich es, einmal, mit dem Lineal, das auf dem Schreibtisch lag, weil er es ohne Lineal nicht gerade gebracht hätte.
+
+Dann sassen sie eine Weile. Draussen fiel der Schnee jetzt dichter als in der Nacht, grosse, nasse Flocken, die am Fenster kleben blieben und langsam abwärts rutschten, eine nach der anderen, wie Akten, die in einem Fach nach unten sinken, weil oben neue hinzukommen. Unter der Lampe lag Anton Kalt, den Arm vom Körper gestreckt, und bezeugte nichts.
+
+«Ich werde es der Bezirksbehörde melden», sagte Rieder. «Heute noch.»
+
+«Die Leitung ist tot.»
+
+«Dann mit der Post.»
+
+«Der Wegknecht sagt, der Pass geht zu.»
+
+«Dann, sobald er offen ist.» Rieder stand auf, setzte den Hut auf, nahm ihn wieder ab, weil er noch im Haus war. «Bis dahin nehme ich das Original in Verwahrung. Sie bekommen eine Bestätigung.»
+
+Er riss eine Seite aus dem Heft, eine leere, von hinten, und schrieb darauf: Empfangen von Dr. K. Stettler, Amtsarzt, ein Totenschein, beidseitig beschrieben, zur weiteren Veranlassung. Datum, Zeit, Unterschrift. Dann faltete er den Totenschein einmal, der Länge nach, und schob ihn in die Aktenmappe, zwischen das Formular der Legalinspektion und ein Brot, das ihm die Käserin in Zeitungspapier gewickelt hatte, weil sie gehört hatte, er müsse zu einem Toten, und man wisse nie, wie lang so etwas dauere.
+
+Stettler nahm die Bestätigung und las sie. Er faltete sie zweimal und steckte sie in die Brusttasche seines Mantels, den er noch immer über dem Nachthemd trug. Es war das erste Schriftstück, das er in dieser Sache in zwanzig Jahren erhalten hatte, und es war, wie alle Quittungen, ein Beweis dafür, dass etwas den Besitzer gewechselt hatte, nicht dafür, dass es angekommen war.
+
+* * *
+
+Das Amtszimmer des Untersuchungsrichters lag im ersten Stock des Gemeindehauses, über dem Postbüro und neben dem Raum, in dem der Gemeinderat einmal im Monat tagte und in der übrigen Zeit die Feuerwehr ihre Schläuche trocknete. Es hatte ein Fenster, einen Schreibtisch, einen Aktenschrank mit einem Schloss, zu dem es zwei Schlüssel gab, von denen einer seit dem Vorgänger verschollen war, und einen Ofen, der am Morgen geheizt werden musste, wenn er am Nachmittag warm sein sollte. Rieder hatte ihn am Morgen nicht geheizt. Er war um sieben geweckt worden, zu einem Toten.
+
+Er stellte die Aktenmappe auf den Schreibtisch, zog die Galoschen aus und stellte sie neben die Tür, auf eine Zeitung, damit der Schnee, der daran hing, nicht auf die Dielen tropfte. Dann heizte er ein. Er tat es mit derselben Sorgfalt, mit der er die Hosen abgeklopft hatte: Papier, dann Späne, dann zwei Scheiter, kreuzweise, dann das Streichholz. Das Feuer ging beim zweiten Streichholz an. Er wartete, bis es brannte, und schloss die Ofentür, und erst dann öffnete er die Mappe.
+
+Er nahm das Brot heraus und legte es auf das Fensterbrett. Er nahm das Formular der Legalinspektion heraus und legte es links auf den Schreibtisch. Dann nahm er den Totenschein heraus, faltete ihn auf und legte ihn in die Mitte, mit der Vorderseite nach oben, weil das die Seite war, die das Formular für die Vorderseite hielt. Das Papier war vom Brot ein wenig fettig geworden, an einer Ecke, wo es gelegen hatte. Er versuchte den Fleck mit dem Taschentuch wegzureiben, und der Fleck wurde grösser.
+
+Die Meldung war einfach. Er hatte in elf Wochen vier Meldungen an die Bezirksbehörde geschrieben, und alle vier hatten mit demselben Satz begonnen, den er im Praktikum gelernt hatte und für den besten Satz hielt, den die Verwaltung besass: Der Unterzeichnete beehrt sich, Ihnen zur Kenntnis zu bringen. Er spannte einen Bogen und zwei Durchschläge in die Maschine, eine Hermes, die dem Kanton gehörte und deren Buchstabe e seit dem Vorgänger ein wenig über der Zeile stand, und schrieb den Kopf, das Datum und den Satz. Dann schrieb er: Betreff.
+
+Beim Betreff blieb er stehen.
+
+Er schrieb: Tödlicher Verkehrsunfall Kalt, Anton, Passstrasse. Das war richtig. Aber es betraf nicht die Sache, oder nur den kleineren Teil davon, und ein Betreff, der den kleineren Teil einer Sache nennt, ist, wie er im Praktikum ebenfalls gelernt hatte, schlimmer als gar keiner, weil er die Akte in das falsche Fach bringt, wo sie dann richtig liegt. Er zog den Bogen heraus und spannte einen neuen ein. Er schrieb: Selbstanzeige Dr. K. Stettler, Amtsarzt. Das war ebenfalls richtig. Aber es stand nichts darin von dem Toten, und ohne den Toten war die Selbstanzeige eine Geschichte von vor zwanzig Jahren, die man ablegen konnte, und mit dem Toten war sie eine Geschichte von heute nacht, die man nicht ablegen konnte und nicht beweisen. Er zog auch diesen Bogen heraus.
+
+Beim dritten Mal schrieb er beides, durch ein Semikolon getrennt, und das Semikolon sah auf dem Papier aus wie eine Verlegenheit. Er liess es stehen.
+
+Dann schrieb er die Meldung. Er schrieb sie in zweiundzwanzig Minuten und ohne einen Fehler, und er schrieb nichts, was nicht da war: Ort, Zeit, Auffindung, Befund, Gegenstände, Totenschein. Den Wortlaut der Rückseite schrieb er ab, vollständig, mit der Orthographie des Doktors, auch dort, wo die Schrift so unsicher geworden war, dass er zwei Wörter unter der Lupe lesen musste, die er aus der Schublade nahm und die sonst für Grundbuchpläne bestimmt war. Er setzte keine Anführungszeichen, sondern schrieb: folgt wörtlich. Am Schluss schrieb er, er ersuche um Weisung über das weitere Vorgehen, insbesondere über die Frage der Zuständigkeit, da der Anzeigende zugleich die einzige im Tal zur Ausstellung von Totenscheinen befugte Person sei, und über die Frage des Beweiswerts einer Urkunde, die der Beschuldigte in amtlicher Eigenschaft über sich selbst ausgestellt habe. Er las den Satz zweimal. Er war lang, aber es fehlte nichts darin, ausser einer Antwort, und die zu geben war nicht seine Sache. Das war das Beruhigende an einer Meldung: sie verlangte nur, dass man eine Frage richtig stellte.
+
+Er unterschrieb, trennte die Durchschläge ab, legte einen in die neue Akte, die er anlegte und mit dem Datum und dem Namen Kalt beschriftete, und nach einigem Zögern darunter mit dem Namen Stettler, kleiner, und den anderen in die Schublade. Das Original faltete er in drei Teile und steckte es in einen Umschlag mit dem Aufdruck des Kantons. Er schrieb die Adresse. Er klebte eine Marke darauf, obwohl amtliche Post portofrei war, weil er nicht sicher war, ob der Posthalter das wusste.
+
+Blieb der Totenschein.
+
+Das Original gehörte dem Zivilstandsamt. So stand es im Reglement, und so hatte er es dem Doktor gesagt. Das Zivilstandsamt von Chrachen war ein Schrank im Nebenzimmer, zwischen den Feuerwehrschläuchen, und der Zivilstandsbeamte war der Gemeindeschreiber, der den Toten nicht eintragen und die Beerdigung nicht bewilligen konnte, solange er den Schein nicht hatte. Die Beweismittel aber gehörten dem Untersuchungsrichter. Es war dasselbe Blatt. Rieder dachte eine Weile darüber nach, welches der beiden Reglemente das ältere sei, und kam zu keinem Ergebnis, denn sie waren im selben Jahr erlassen worden.
+
+Er spannte ein Formular Totenschein in die Maschine — es lagen im Schrank sechs, für den Fall, dass der Amtsarzt verhindert sei, was nie vorkam — und fertigte eine Abschrift der Vorderseite. Name, Vorname, Geboren, Wohnhaft, Ort des Todes, Zeit des Todes, Todesursache, unmittelbare, Todesursache, begünstigende. Bei den Bemerkungen hielt er inne. Er hätte einen Strich machen können. Der Strich wäre falsch gewesen. Er hätte den Wortlaut abschreiben können, und dann hätte der Gemeindeschreiber ihn gelesen, und mit ihm, noch vor dem Mittagessen, das Dorf. Er schrieb: Siehe Original, in Verwahrung des Untersuchungsrichters. Dann setzte er darunter: Für die Richtigkeit der Abschrift, und seinen Namen, und es war das erste Mal, dass er einen Totenschein unterschrieb, und er tat es für einen Mann, der noch lebte und der den Toten nicht umgebracht hatte, sondern nur überlebt.
+
+Er schloss das Original in den Aktenschrank. Er drehte den Schlüssel zweimal, zog am Griff, drehte den Schlüssel ein drittes Mal, obwohl das Schloss nur zwei Umdrehungen hatte, und steckte ihn in die Westentasche.
+
+Dann nahm er den Umschlag und ging hinunter.
+
+Das Postbüro war ein Schalter mit einem Gitter, einer Waage und einem Kalender der Eidgenössischen Versicherungsgesellschaft, auf dem noch der November aufgeschlagen war. Der Posthalter sass hinter dem Gitter und klebte einen Zettel auf ein Stück Karton. Er hatte die Brille auf die Stirn geschoben, weil er mit der Brille nicht kleben konnte, und ohne Brille nicht lesen, was er klebte.
+
+«Für die Bezirksbehörde», sagte Rieder. «Eingeschrieben.»
+
+Der Posthalter nahm den Umschlag, wog ihn, obwohl nichts daran zu wiegen war, stempelte ihn, trug ihn in das Buch ein, schrieb die Nummer auf einen Abschnitt und schob den Abschnitt durch das Gitter. Dann legte er den Umschlag in einen Sack, der an einem Haken neben dem Schalter hing. Der Sack war leer gewesen. Jetzt lag ein Umschlag darin.
+
+«Wann geht er?»
+
+«Wenn das Postauto kommt.»
+
+«Wann kommt das Postauto?»
+
+Der Posthalter drehte den Karton um. Er hatte darauf geklebt, in Druckbuchstaben, mit Tinte nachgezogen: Pass gesperrt. Postverkehr eingestellt bis auf weiteres. Die Postverwaltung.
+
+«Die Postverwaltung», sagte Rieder, «ist in der Stadt.»
+
+«Ja. Aber der Zettel ist von mir. Einer muss ihn schreiben.» Der Posthalter hängte den Karton an das Gitter, mit einer Schnur, sodass er sich ein wenig drehte. «Der Wegknecht ist bis zur sechsten Kehre gekommen, und jetzt ist es oben ganz zu. Oberhalb der Rinne ist eine Laue heruntergekommen, heute früh, über die Strasse. Das Postauto steht auf der anderen Seite in der Garage. Das Telefon ist tot, der Telegraph hängt am gleichen Draht.»
+
+«Und zu Fuss?»
+
+«Zu Fuss», sagte der Posthalter, «geht man im Winter nicht über den Pass. Man geht darunter.»
+
+«Wie lange?»
+
+«Letztes Jahr neun Tage. Neunundvierzig vier Wochen. Einmal, sagt mein Vater, bis Lichtmess.» Er zog die Brille wieder auf die Nase. «Es ist aber ordnungsgemäss aufgegeben, Herr Richter. Es hat seine Nummer. Es geht nicht verloren. Es geht nur nicht weg.»
+
+Rieder sah auf den Sack am Haken. Er dachte daran, den Brief zurückzufordern, und wusste nicht, zu welchem Zweck; ein Brief, der nicht abgehen kann, ist im Postsack so gut aufgehoben wie in der Schublade, und im Postsack ist er wenigstens abgesandt. Er steckte den Abschnitt ein und ging wieder hinauf.
+
+Im Amtszimmer war es inzwischen warm geworden. Das Fenster war beschlagen, und er wischte mit dem Ärmel ein Viereck frei. Man sah das Dach der Käserei, den Brunnen, der unter einer Haube aus Schnee weiterlief, und dahinter den Hang, an dem die Strasse hinaufging, von der man nichts mehr sah als die Stangen, und von den Stangen nur die roten Spitzen, und über der vierten Kehre auch diese nicht mehr.
+
+Er setzte sich an den Schreibtisch und nahm das Strafprozessgesetz aus dem Regal, die Ausgabe mit dem grünen Rücken und den Randbemerkungen des Vorgängers, die er bisher für überflüssig gehalten hatte. Er suchte, was ein Untersuchungsrichter zu tun hat, wenn er die Weisung, um die er ersucht, nicht erhalten kann. Er fand es in Artikel achtundvierzig, Absatz zwei. Ist die vorgesetzte Behörde nicht rechtzeitig erreichbar, so trifft der Untersuchungsrichter die erforderlichen Verfügungen selbständig und in eigener Verantwortung. Daneben, am Rand, stand in Bleistift, in der Schrift des Vorgängers: Kommt nicht vor.
+
+Er las den Absatz dreimal. Dann legte er einen Streifen Papier als Zeichen hinein und schloss das Buch.
+
+Es war halb zehn. Im Dorf gab es von nun an einen Amtsarzt, der gestanden hatte, einen Toten, der es hätte bezeugen können, einen Gemeindeschreiber, der auf eine Abschrift wartete, einen Posthalter, der einen Umschlag mit einer Nummer bewachte, und einen Untersuchungsrichter, neunundzwanzig Jahre alt, der als einziger von allen wusste, was in dem Umschlag stand, und dem das Gesetz für diesen Fall die Verantwortung übertrug, weil die Leute, denen sie gehörte, auf der anderen Seite des Schnees sassen. Er nahm das Brot vom Fensterbrett, wickelte es aus der Zeitung und ass es, weil er seit dem Vorabend nichts gegessen hatte. Es war gut. Die Käserin hatte recht gehabt: man wisse nie, wie lange so etwas dauere.
+
+Dann zog er den Schlüssel aus der Westentasche, legte ihn vor sich auf die Schreibunterlage und sah ihn an. Er hätte ihn gern jemandem gegeben.
+
+---
+
+# Formgründe
+
+Rosa Kalt kam am Morgen des zweiten Tages, kurz nach acht, und sie kam nicht als Patientin, was sie dadurch bewies, dass sie im Wartezimmer an drei Hustenden vorbeiging, ohne sich zu setzen. Sie trug den schwarzen Mantel, den man in Chrachen für Beerdigungen besass und für nichts sonst, und darunter eine Schürze, weil zwischen einem Todesfall und einer Beerdigung die Kühe trotzdem gemolken werden. Sie klopfte nicht. Sie stellte eine Tasche aus Wachstuch auf den Stuhl, der für die Patienten bestimmt war, und blieb selbst stehen.
+
+«Der Schreiner sagt, bis Donnerstag», sagte sie. «Der Pfarrer sagt, Freitag um zehn, wenn der Totengräber durchkommt. Er hat schon angefangen. Er macht ein Feuer auf dem Platz, damit der Boden auftaut. Das gibt einen Sarg und ein Loch. Fehlt noch das Papier.»
+
+Stettler sass am Schreibtisch. Vor ihm lag das Formular, das der Kanton für diesen Zweck drucken liess, ein Auszug für das Zivilstandsamt, grau, mit sieben Rubriken und einer achten für Bemerkungen, die in zwanzig Jahren selten jemand benutzt hatte. Er hatte etwa vierhundert solche Auszüge geschrieben. Dieser war der erste, für den ihm das Original nicht mehr zur Verfügung stand. Das Original lag nicht mehr im Haus.
+
+«Das Papier ist ausgestellt», sagte er.
+
+«Dann muss es auf die Gemeinde. Der Schreiber sagt, ohne Eintrag kein Erbschein, und ohne Erbschein kann ich die Kuh nicht verkaufen, die er einem Nachbarn versprochen hat. Anton hat sie ihm versprochen, nicht ich. Aber versprochen ist versprochen, auch wenn einer tot ist.»
+
+«Gewiss.»
+
+«Also.»
+
+Er tauchte die Feder ein. Im Wartezimmer hustete jemand, dann ein anderer, als hätten sie sich abgesprochen. Er schrieb in die erste Rubrik: Kalt, Anton. Das K geriet ihm breiter als sonst, der untere Bogen setzte zweimal an. Es war die Schrift, die ein Bezirksrundschreiben einmal als vorbildlich bezeichnet hatte, und sie war es noch, nur zitterte sie jetzt, wie ein Beamter zittert, der die Vorschrift genau kennt und trotzdem den Stempel schief aufsetzt. Rosa Kalt sah auf seine Hand.
+
+«Sie sind müde, Herr Doktor. Halb Chrachen hat die Grippe. Die Frau vom Posthalter liegt, der Bub vom Wegknecht liegt. Der Wegknecht selber liegt nicht, der hustet nur und schaufelt.» Sie zählte es auf wie Posten auf einer Rechnung. «Sie sollten sich hinlegen. Aber erst das Papier.»
+
+Er schrieb das Geburtsdatum, den Wohnort, den Zivilstand: verheiratet. Er schrieb den Todestag und, bei der Stunde, vor Mitternacht, genauer liess es sich nicht sagen, und genauer verlangte es das Formular nicht. Er schrieb die Todesursache: stumpfes Thoraxtrauma, verschlimmert durch Unterkühlung. Er schrieb den Ort: Passstrasse. Die Rubriken waren für Menschen entworfen worden, die auf eine einzige Weise sterben. Sie fragten nach dem Wie und dem Wo, und Anton Kalt hatte beides ordnungsgemäss geliefert.
+
+Dann kam die achte Rubrik.
+
+Rosa Kalt hatte inzwischen die Tasche geöffnet. Sie nahm ein Portemonnaie heraus, ein altes, das mit einem Gummiband zusammengehalten wurde, und zählte Münzen auf die Tischkante, neben das Formular.
+
+«Was macht das?»
+
+«Nichts.»
+
+«Anton hat immer bezahlt. Den Bruch zweimal, den Abszess einmal. Er hat gesagt, beim Doktor bleibt man nichts schuldig.» Sie schob die Münzen näher. «Ich will auch nichts schuldig bleiben. Nicht jetzt.»
+
+Die Gebührenordnung sah für den Totenschein einen Betrag vor, und Stettler kannte ihn, wie er alles kannte, was in einer Ordnung stand. Er nannte ihn. Sie zählte ihn ab, genau, und nahm das Überzählige zurück. Er schrieb eine Quittung, mit derselben Hand, die nun auch beim Wort «dankend» zitterte. Es war die einzige Quittung seiner Laufbahn, die er für die Beurkundung seines eigenen Geständnisses ausstellte, und sie unterschied sich von den anderen durch nichts als durch die Schrift.
+
+«Und da unten?» Sie zeigte mit dem Finger auf die leere Rubrik. «Muss da noch etwas hin?»
+
+Er sah sie an. Sie war vierundfünfzig Jahre alt, sie hatte zwei Nächte nicht geschlafen, weil ein Toter mehr Arbeit macht als ein Lebender, und sie wollte am Freitag um zehn einen Sarg in ein aufgetautes Loch stellen und am Montag eine Kuh verkaufen. Es gab keinen Grund, ihr das zu verweigern. Es gab nur einen, es ihr zu erschweren.
+
+«Auf dem Original», sagte er, «steht mehr, als drauf muss.»
+
+«Macht das etwas?»
+
+«Es ändert nichts an der Todesursache.»
+
+«Dann ist es gut.» Sie nickte, als habe er ihr eine Bestätigung gegeben und nicht eine Frage gestellt. «Anton hat nie von früher erzählt. Er hat gesagt, was vorbei ist, kostet nichts mehr. Das Einzige, was er je umsonst hergegeben hat.»
+
+Stettler wartete. Er wartete darauf, dass sie fragen würde, was mehr darauf stehe, und hatte für diesen Fall einen Satz bereit, einen genauen, nüchternen Satz, den er in der Nacht zweimal formuliert und einmal verworfen hatte. Sie fragte nicht. Sie band das Portemonnaie wieder mit dem Gummiband zu. Draussen fiel eine Schaufel Schnee vom Dach und schlug vor dem Fenster auf, mit dem Geräusch eines Sacks, den man abstellt.
+
+Er schrieb in die achte Rubrik: Siehe Rückseite des Originals. Das war wahr, es war vorschriftsgemäss, und der Gemeindeschreiber würde es in das Register übertragen, Wort für Wort, und niemand würde je die Rückseite des Originals sehen, weil das Original nicht zum Zivilstandsamt gehörte, sondern woandershin, wohin es vorerst nicht gelangte. Er unterschrieb. Die Unterschrift zitterte. Er stempelte. Der Stempel zitterte nicht, er war aus Gummi.
+
+«Ich bringe es selber hinüber», sagte Rosa Kalt. «Dann hat der Schreiber es heute noch. Er sitzt ja gleich neben den Schläuchen.»
+
+Neben den Schläuchen, über der Post, sass auch Rieder. Seit Stettler ihm dort die Übergabe unterschrieben hatte, war aus dem Gemeindehaus nichts gekommen, keine Vorladung, kein Siegel an der Tür zum Nebenraum, keine Anweisung, wie mit dem Auszug zu verfahren sei, den er eben schrieb. Der Pass war zu, und ein geschlossener Pass erklärte vieles. Er erklärte nicht, weshalb man ihn weiterschreiben liess, als sei nichts eingegangen. Zum ersten Mal fragte sich Stettler, ob das Original dort oben auf den Pass wartete oder auf etwas anderes.
+
+Er blies über die Tinte und reichte ihr das Blatt. Sie las es nicht. Sie faltete es zweimal, legte es in die Wachstuchtasche zwischen das Portemonnaie und ein Paar Wollsocken, die sie für die Beerdigung stopfen wollte, und schloss die Tasche.
+
+«Freitag um zehn», sagte sie. «Sie kommen doch? Es wäre gut, wenn der Doktor käme. Die Leute sehen das.»
+
+«Ich komme.»
+
+«Wenn die Grippe Sie lässt.»
+
+«Wenn die Grippe mich lässt.»
+
+Sie gab ihm die Hand, und er gab ihr seine, und sie hielt sie einen Augenblick länger, weil sie das Zittern bemerkte und es für Anteilnahme nahm. Dann ging sie hinaus, durch das Wartezimmer, an den Hustenden vorbei, und er hörte, wie einer von ihnen aufstand und ihr den Stuhl anbot, als wäre sie hier die Kranke, und wie sie ablehnte.
+
+Stettler blieb sitzen. Auf der Tischkante lagen keine Münzen mehr, nur die Durchschrift der Quittung. Hinter der Tür zum Nebenraum lag Anton Kalt, der nichts schuldig geblieben war, auf zwei zusammengeschobenen Tischen und wartete auf den Schreiner. Im Wartezimmer hustete es. Er rief den Nächsten herein. Es war der Wegknecht, und er hatte Fieber.
+
+* * *
+
+Der Wegknecht hatte achtunddreissig acht und die Überzeugung, keine Grippe zu haben. Er sass auf dem Stuhl, auf dem eben noch die Wachstuchtasche gestanden hatte, die Mütze mit beiden Händen auf den Knien, und sah dem Thermometer zu, als handle es sich um einen Zeugen, dem man nicht traut. Stettler schlug das Quecksilber herunter. Es war die einzige Verrichtung seines Berufs, bei der ein Zittern nicht schadete, und er führte sie gründlicher aus als nötig.
+
+«Ich hab ihn gefunden», sagte der Wegknecht, «und jetzt hab ich das.»
+
+«Tote stecken nicht an.»
+
+«Dann war es der Schlitten. Auf dem Schlitten ist schon mancher Mist gefahren.» Er hustete in die Mütze. «Ich muss hinauf. Wenn ich nicht schaufle, schaufelt keiner, und wenn keiner schaufelt, kommt der Pfarrer am Freitag nicht zum Grab.»
+
+Stettler verschrieb ihm drei Tage Bett und wusste, dass es einer sein würde. Er schrieb das Rezept, und das R setzte zweimal an, wie am Morgen das K. Der Wegknecht faltete den Zettel, ohne ihn zu lesen, und steckte ihn in die Mütze, wo er seine Papiere aufbewahrte, zwischen Kopf und Filz, an der wärmsten Stelle, die er besass.
+
+Auf dem Schreibtisch lag, aufgeschlagen neben der Durchschrift der Quittung, die Agenda des laufenden Jahres, ein Geschenk der Apotheke im Unterland, auf jeder Seite unten ein Inserat für ein Abführmittel. Unter dem Datum stand in Stettlers Schrift, um sechs Uhr früh geschrieben, bei Lampenlicht: Rieder. 9 Uhr. Es war die einzige Eintragung des Tages. Die Grippe trug er nicht ein; die Grippe kam ohne Termin.
+
+Um neun Uhr öffnete er die Tür zum Warteraum.
+
+Es sassen dort sieben Personen, und zwei standen, weil es nur sieben Stühle gab. Die Stühle waren vor elf Jahren von der Gemeinde angeschafft worden, nach einer Berechnung, die von der mittleren Zahl der Patienten an einem Wintervormittag ausging, und die Berechnung war richtig gewesen, elf Jahre lang. Es roch nach nasser Wolle, nach Stall und nach dem Holz, das jemand ungefragt in den Ofen gelegt hatte. Auf dem Fensterbrett lag ein Stück Speck in Zeitungspapier.
+
+«Ich bin in einer halben Stunde zurück», sagte Stettler. Er hatte den Mantel schon vom Haken genommen.
+
+Niemand widersprach. Das war das Schlimme. Eine Frau mit einem Kind auf dem Schoss sah auf den Mantel, dann auf das Kind, dessen Wangen die Farbe hatten, die Stettler seit vierzig Jahren kannte und nie gemocht hatte. Ein Alter aus dem Oberdorf nickte, als habe man ihm eine Verspätung des Postautos mitgeteilt, gegen die sich nichts machen lässt. Die beiden Stehenden rückten zur Seite, um ihm den Weg zur Haustür frei zu machen. Man liess ihn gehen, mit jener Höflichkeit, die einen am sichersten festhält.
+
+Er hängte den Mantel wieder an den Haken. «Das Kind zuerst», sagte er.
+
+Das Kind hatte neununddreissig vier. Er horchte es ab, die Mutter hielt ihm das Hemd hoch, und das Hörrohr lag kalt auf der kleinen Brust und bebte leicht, sodass der Bub kicherte, weil es kitzelte. Es war das erste Mal, dass sein Zittern jemanden zum Lachen brachte, und die Mutter lachte mit, erleichtert, als sei ein Arzt, der zittert, ein Arzt, der mitleidet. Er verschrieb Wickel und Lindenblütentee und, für die Nacht, ein Pulver, das er selbst abwog. Die Waage zeigte das Zittern genauer als jede Schrift. Er nahm von dem Pulver wieder etwas weg, dann legte er wieder etwas dazu, bis die Zunge der Waage aufhörte, ihm zu widersprechen.
+
+Nach dem Kind kam die Magd vom Sternen, nach der Magd der Alte aus dem Oberdorf, der keine Grippe hatte, sondern das Herz, das er seit Jahren hatte, und der nur gekommen war, weil jetzt alle kamen. Nach dem Alten kam ein Knecht mit einem Beil im Fuss, der sich dafür entschuldigte, dass sein Unglück nicht in die Jahreszeit passte. Stettler nähte. Er brauchte für die vier Stiche so lange wie früher für zwölf, und der Knecht sah dabei an die Decke und sagte, man spüre gar nichts, was nicht stimmte.
+
+Um elf Uhr standen im Warteraum vier Personen, obwohl nur noch sechs sassen. Jemand hatte den Speck vom Fensterbrett genommen und auf den Aktenschrank gelegt, damit er nicht in der Ofenwärme schwitze, und neben den Speck waren zwölf Eier gekommen, in einem Hut, und ein Glas Honig ohne Etikett. Um zwölf Uhr kam eine Bäuerin mit einem Topf Gerstensuppe, stellte ihn auf den Ofen und sagte zu den Wartenden, nicht zu ihm, der Doktor müsse etwas essen, sonst liege er am Ende auch noch, und was dann. Die Wartenden stimmten ihr zu. Man sprach über ihn in der dritten Person, in seinem eigenen Warteraum, wie über ein Gemeindegut, eine Brunnenleitung oder den Schneepflug, den man schonen muss, weil es keinen zweiten gibt.
+
+Er ass die Suppe im Stehen, an der Tür zum Sprechzimmer. Der Löffel zitterte auf dem Weg zum Mund, und etwas Suppe fiel auf den Kittel. Die Bäuerin nahm ihm den Teller ab, hielt ihn selbst, eine Handbreit unter seinem Kinn, und er ass weiter, weil es unhöflicher gewesen wäre, aufzuhören. Die Wartenden sahen zu. Niemand lachte. Ein Mann, der sich einen Löffel hinhalten lässt, ist in einem Dorf entweder ein Kind, ein Greis oder unentbehrlich.
+
+«Gestern Nacht beim Toten gewacht», sagte die Bäuerin zu den anderen, «und heute das ganze Dorf. Der hält mehr aus als wir alle.»
+
+«Wenn der Doktor umfällt», sagte der Alte aus dem Oberdorf, der noch nicht gegangen war, «wer schreibt dann ihm den Schein?»
+
+Man fand die Frage gut und lachte jetzt doch. Die Frage war auch gut. Sie war im Kanton nicht geregelt.
+
+Am Nachmittag kamen die, die am Vormittag geschickt worden waren, um auszurichten, dass andere nicht kommen konnten. Die Frau vom Posthalter liege schlechter. Beim Sigrist lägen jetzt drei. Im Oberdorf huste ein Säugling so, dass die Grossmutter den Pfarrer holen wolle, und die Mutter wolle den Doktor, und man wisse nicht, wer zuerst gefragt werden solle. Stettler schrieb Namen auf einen Zettel, den er an den Türrahmen heftete, eine Liste für die Besuche am Abend, und die Liste wuchs, während er schrieb, und die Namen am unteren Ende waren unleserlicher als die oben, sodass eine Frau aus dem Warteraum anbot, sie für ihn weiterzuführen. Sie hatte eine Schulschrift, rund und fehlerlos. Er gab ihr den Bleistift. Von da an führte das Dorf seine Liste.
+
+Er ging am Abend die Liste ab, sieben Häuser, mit der Tasche und der Laterne, und kam gegen neun zurück. Im Warteraum brannte noch das Licht. Man hatte es für ihn brennen lassen. Die Stühle waren leer und standen nicht mehr in der Reihe, sondern im Halbkreis um den Ofen, so wie die Leute sie verlassen hatten, und das Feuer war nachgelegt worden, von jemandem, der gewusst hatte, wann er zurückkommen würde. Auf dem Aktenschrank lagen der Speck, die Eier im Hut, der Honig, ein Laib Brot, ein Paar gestrickte Pulswärmer und eine Flasche Kirsch, die keiner gebracht haben wollte und die darum von allen war. Er zählte die Gaben, wie Rosa Kalt am Morgen die Krankheiten gezählt hatte, und kam auf mehr, als er in einer Woche verdiente, und auf nichts davon hatte er eine Quittung ausgestellt.
+
+Durch das Fenster sah man über den Platz auf das Gemeindehaus. Der Totengräber hatte sein Feuer abgedeckt, es glomm unter einem Blech. Über der Post, im ersten Stock, neben dem Raum mit den Schläuchen, war ein Fenster erleuchtet.
+
+Stettler setzte sich auf einen der Stühle im Halbkreis. Er nahm die Agenda auf die Knie. Unter dem Datum stand noch immer: Rieder. 9 Uhr. Er zog einen Strich durch die Zeile, und der Strich wurde keine Gerade, sondern eine Linie, wie ein Fiebermesser sie aufzeichnet, und er schrieb dieselben Worte auf die nächste Seite, über das Inserat für das Abführmittel. Zwischen den beiden Seiten lag der Zettel, den ein Bub aus dem Gemeindehaus am Nachmittag in den Warteraum gebracht hatte, zweimal gefaltet wie ein Rezept und mit Rieders Unterschrift: Die Bezirksbehörde sei nicht erreichbar; nach Art. 48 Abs. 2 habe der Untersuchungsrichter in diesem Fall selbständig und in eigener Verantwortung zu entscheiden, und bevor er entscheide, seien die Formalitäten zu prüfen. Er bitte den Herrn Doktor, sich bis dahin zu gedulden. Es war dieselbe Eintragung. Sie war nur einen Tag älter geworden, ohne dass sie deshalb gealtert wäre. So vertagt man nichts; man trägt es nur weiter, und wer genug trägt, merkt nicht mehr, dass er es nicht abgibt.
+
+Er klappte die Agenda zu und sah wieder hinüber. Er hätte jetzt gehen können. Der Platz war hundert Schritte breit, und der Wegknecht, mit achtunddreissig acht, hatte ihn am Mittag trotzdem geräumt. Er blieb sitzen. Nach einer Weile ging oben über der Post das Licht aus.
+
+Man hatte dort also ebenfalls bis in die Nacht gearbeitet. Stettler fragte sich, ob an seinem Papier, oder ob es dort drüben in einer Schublade lag, die man nicht aufzog, weil ein Artikel erlaubte, sie geschlossen zu lassen, und ob man ihn um Geduld bat, weil man selbst noch nicht wusste, was man mit ihm tun sollte, oder weil man es schon wusste.
+
+* * *
+
+Am nächsten Morgen, um neun Uhr, stieg er die Treppe des Gemeindehauses hinauf. Im Treppenhaus hingen die Schläuche der Feuerwehr, fünf Stück, der Länge nach über ein Gestänge gelegt, und tropften in eine Blechwanne. Man hatte sie im Oktober nach der letzten Übung aufgehängt, und da im Winter in Chrachen nichts trocknet, hingen sie noch, vollkommen nass, zur Bekämpfung von Bränden, von denen es in diesem Winter einen einzigen gegeben hatte, den des Totengräbers, und der war erwünscht. Die Tür zum Zivilstandsamt stand halb offen. Der Schrank dahinter war verschlossen, der Stuhl davor leer, und auf dem Stuhl lag ein Kissen, das die Form des Gemeindeschreibers bewahrt hatte.
+
+An der Tür daneben war eine Karte befestigt, mit der Maschine geschrieben: P. Rieder, Untersuchungsrichter. Darunter, von Hand und älter, der Name des Vorgängers, mit einem einzigen sauberen Strich durchgestrichen. Stettler klopfte.
+
+«Herein.»
+
+Rieder sass im Mantel am Schreibtisch. Der Ofen war klein und für einen Beamten berechnet, der sich viel bewegt. Auf dem Tisch lagen vier Aktendeckel, ordentlich gestapelt und beschriftet, zwei Viehdiebstähle, eine Ehrverletzung unter Nachbarn und ein Gartenzaun, der auf dem falschen Grundstück stand, und daneben, allein, das Strafprozessgesetz des Kantons in grünem Leinen. Ein fünfter Aktendeckel war nicht zu sehen. Rieder stand auf, bot den Stuhl an und setzte sich erst, als Stettler sass.
+
+«Sie haben meinen Zettel erhalten.»
+
+«Ich habe ihn erhalten.»
+
+«Dann wissen Sie, dass ich Sie um Geduld gebeten habe.»
+
+«Ich bin gekommen, um zu fragen, wie weit die Formalitäten sind.»
+
+«Sie sind in Prüfung.» Rieder hustete, kurz, in die Faust, und entschuldigte sich dafür, als sei der Husten eine Unhöflichkeit gegenüber dem Verfahren. «Ich kann Ihnen sagen, welche.»
+
+Er zählte sie auf, ohne nachzusehen. Erstens: Ob eine Erklärung, die auf der Rückseite und am Rand eines amtlichen Totenscheins niedergelegt sei, als Strafanzeige zu behandeln sei, als Aussage oder als Bestandteil einer Urkunde; das Gesetz kenne die Selbstanzeige nur im Steuerrecht, und dort sei sie erwünscht. Zweitens: Wem das Original gehöre, dem Untersuchungsrichter, dem Zivilstandsamt oder dem Kanton, der das Formular gedruckt habe. Drittens: Ob der Totenschein durch die Beschriftung seiner Rückseite ungültig geworden sei; in diesem Fall sei Anton Kalt amtlich nicht verstorben, was der Gemeindeschreiber gestern allerdings bereits anders eingetragen habe. Viertens: Der Gemeindeschreiber habe gestern Abend bei ihm angeklopft, einen Auszug in der Hand, in dessen achter Rubrik auf die Rückseite des Originals verwiesen werde, und gefragt, wo diese Rückseite sei.
+
+«Was haben Sie ihm gesagt?»
+
+«Dass sie sich in einem hängigen Verfahren befinde. Er hat das notiert. Er notiert alles.» Rieder legte die Hände flach auf das grüne Leinen. «Ich kann ihm die Rückseite nicht zeigen, ohne eine Anzeige Dritten zugänglich zu machen. Ich kann sie ihm nicht vorenthalten, ohne ein Register unvollständig zu lassen. Beides ist eine Amtspflichtverletzung. Ich prüfe, welche die geringere ist.»
+
+«Artikel achtundvierzig», sagte Stettler.
+
+Rieder schlug das Gesetz auf. Er brauchte nicht zu suchen; zwischen den Seiten steckte ein Lesezeichen, ein gelber Zettel mit dem Stempel der Post Chrachen, die Quittung für einen eingeschriebenen Brief an die Bezirksbehörde. Er drehte das Buch um und schob es über den Tisch. Neben dem zweiten Absatz stand, mit Bleistift, in einer alten, zuverlässigen Hand: Kommt nicht vor.
+
+«Mein Vorgänger war einunddreissig Jahre im Amt.»
+
+«Und jetzt kommt es vor.»
+
+«Jetzt kommt es vor.» Rieder zog das Buch zurück. «Der Artikel sagt, dass ich selbständig und in eigener Verantwortung zu entscheiden habe, wenn die obere Behörde nicht rechtzeitig erreichbar ist. Er sagt nicht, was rechtzeitig ist. Eine Frist, die das Gesetz nicht setzt, kann ich nicht versäumen.»
+
+«Sie könnten mich vorladen.»
+
+«Sie sind hier.»
+
+«Sie könnten mich vernehmen. Zu Protokoll.»
+
+«Sie haben bereits alles geschrieben. Ein Protokoll würde es nur wiederholen, in einer schlechteren Schrift.» Rieder sah auf Stettlers Hand, die den Hut hielt, und sah wieder weg. «Ich könnte Sie vorsorglich in Ihrem Amt einstellen.»
+
+Er sagte es ohne Nachdruck, wie man einen weiteren Posten nennt, und stand auf und trat ans Fenster. Stettler blieb sitzen, aber er sah, was Rieder sah, denn das Fenster lag so, dass man es vom Stuhl aus sehen musste: den Platz, das abgedeckte Feuer unter dem Blech und drüben, vor der Tür der Praxis, fünf Leute im Schnee, die nicht mehr in den Warteraum passten. Einer von ihnen trug ein Kind auf dem Arm. Eine Frau klopfte die Füsse gegeneinander.
+
+«Das wäre eine Massnahme», sagte Rieder zum Fenster. «Eine Massnahme bedarf einer Begründung, die vor der Bezirksbehörde Bestand hat. Ich kenne die Bezirksbehörde noch nicht gut genug, um zu wissen, was vor ihr Bestand hat.» Er wandte sich um. «Wünschen Sie, dass ich es tue?»
+
+Stettler antwortete nicht sofort. Er hatte sich in der Nacht einen Satz für diesen Fall zurechtgelegt, einen genauen, der mit den Worten begann: Ich verlange. Drüben öffnete sich die Tür der Praxis, jemand schaute heraus, auf den Platz, zum Gemeindehaus hinauf, und schloss die Tür wieder. Der Satz war noch da. Er war nur nicht mehr anzuwenden, wie eine Vorschrift, deren Voraussetzungen entfallen sind.
+
+«Ich wünsche, dass die Ordnung ihren Gang geht», sagte er.
+
+«Das wünsche ich auch.» Rieder setzte sich wieder. «Sie geht ihn. Im Winter ist der Weg nur länger.»
+
+Er zog die oberste Schublade auf, um ein Formular für eine Aktennotiz herauszunehmen. Die Schublade war nicht verschlossen. Sie enthielt, zuoberst, das Original, und da Stettler sich, als sie aufging, über die Tischkante vorgebeugt hatte, erkannte er seine eigene Rückseite, die Schrift der Nacht, die noch nicht gezittert hatte, und darunter, etwas verrutscht, ein mit der Maschine geschriebenes Blatt. Es trug die Überschrift Verfügung gemäss Art. 48 Abs. 2 StPO und darunter, auf der dritten Zeile, seinen Namen, vollständig, mit dem Titel. Das Datum war ausgelassen, die Zeile für die Unterschrift leer. Rieder nahm das Formular, das darunter lag, und schob die Schublade zu, nicht schnell, nicht langsam, in der Geschwindigkeit, mit der man eine Schublade zuschiebt.
+
+«Sie haben es schon geschrieben», sagte Stettler.
+
+«Ich habe einen Entwurf geschrieben.» Rieder spannte das Formular nicht in die Maschine, er schrieb von Hand. «Ein Entwurf ist keine Entscheidung. Er ist die Form, in der man eine Entscheidung aufbewahrt, bis man sie treffen darf.»
+
+«Darf oder muss?»
+
+«Bis die Form es zulässt.» Rieder schrieb weiter. «Sobald die Formalitäten geprüft sind, geht die Meldung hinaus, mit dem Original, eingeschrieben. Zu gegebener Zeit. Darauf haben Sie mein Wort, und Sie werden es gleich auch schriftlich haben.»
+
+Er drehte das Blatt und las vor, was er geschrieben hatte: Der Beschuldigte erkundigte sich heute, 9 Uhr 10, nach dem Stand des Verfahrens. Es wurde ihm eröffnet, dass die Formalitäten gemäss Art. 48 Abs. 2 in Prüfung stehen und die Meldung an die Bezirksbehörde zu gegebener Zeit erfolgt. Der Beschuldigte erhob keine Einwendungen.
+
+«Ich habe keine Einwendungen erhoben», sagte Stettler.
+
+«Nein.»
+
+Es war eine Feststellung. Rieder reichte ihm die Feder. Stettler legte den Hut auf die Knie und unterschrieb, und die Unterschrift wurde breit und setzte am S zweimal an, wie das K auf dem Auszug für Rosa Kalt und das R auf dem Rezept des Wegknechts. Rieder löschte sie mit einem Löschblatt, auf dem sich schon andere Unterschriften spiegelverkehrt abgedruckt hatten, die eines Viehhändlers, die eines Nachbarn, der einen Zaun versetzen sollte, und seit zwei Tagen zweimal die seine. Dann legte er die Notiz nicht in die Schublade, sondern in das Gesetz, zum gelben Zettel, auf die Seite mit dem Bleistift.
+
+«Sie sollten etwas gegen den Husten nehmen», sagte Stettler an der Tür.
+
+«Es ist nichts.»
+
+«Das sagt man im Oberdorf auch.»
+
+Rieder lächelte, zum ersten Mal an diesem Morgen, und hustete dabei. «Ich weiss, wo ich Sie finde, Herr Doktor.»
+
+Im Treppenhaus tropften die Schläuche. Die Wanne war beinahe voll, und niemand war da, der sie leerte, weil der Gemeindeschreiber noch nicht gekommen war. Unten in der Post war der Schalter geöffnet und nicht besetzt. In der Ecke beim Ofen lag der Postsack, plombiert, prall, mit einem Anhänger, auf dem Unterland stand, und auf dem Postsack sass ein unbekannter Knecht, der auf den Posthalter wartete, und hatte die Füsse hochgelegt, weil der Boden kalt war. Stettler ging an ihm vorbei. Irgendwo in diesem Sack, unter den Füssen des Knechts, lag der Brief, dessen Quittung oben als Lesezeichen diente, und er fragte sich, zum ersten Mal ohne sich die Frage verbieten zu können, ob Rieder den Sack für verschlossen hielt oder ob ihm das bloss recht war.
+
+Er überquerte den Platz. Die Leute vor der Praxis traten zur Seite. An den Türrahmen war noch immer die Liste für die Besuche geheftet, die Frau mit der Schulschrift hatte sie über Nacht nicht abgenommen, und in ihrer runden, fehlerlosen Schrift stand dort jetzt, als letzter Eintrag, unter dem Säugling im Oberdorf und dem Sigrist: Gemeindehaus, erster Stock, der Herr Richter. Husten.
+
+Stettler hängte den Mantel an den Haken und rief den Nächsten herein.
+
+---
+
+# Der offene Pass
+
+Am dreiundzwanzigsten Tag kam der Föhn, am vierundzwanzigsten die Schneefräse vom Unterland herauf, am fünfundzwanzigsten, kurz nach acht Uhr, der Postschlitten. Man hörte ihn früher, als man ihn sah: ein Rasseln hinter der Kirche, dann das Schnauben zweier Pferde, dann den Posthalter, der seit drei Wochen niemanden mehr angeschrien hatte und es jetzt nachholte. Das Dorf stand auf dem Platz, als sei ein Zirkus angekommen. Es war aber nur die Post.
+
+Stettler wurde um halb neun ins Gemeindehaus gebeten. Ein Knabe brachte den Zettel, er war mit Bleistift geschrieben und trug oben rechts die Uhrzeit, 8.21, als handle es sich um einen Befund.
+
+Im Treppenhaus tropften die Schläuche. Sie tropften jetzt auch von aussen, denn das Dach über dem Trockenraum war undicht, und das Schmelzwasser lief an den Schläuchen entlang, als wollten sie endlich doch noch ihren Zweck erfüllen. Die Wanne darunter war übergelaufen. Jemand hatte ein Brett darüber gelegt, damit man trockenen Fusses zur Tür des Untersuchungsrichters gelangte, und das Brett schwamm.
+
+Rieder stand am Fenster. Er hatte den Mantel an, obwohl der Ofen brannte, und auf dem Tisch lagen, in einer Ordnung, die Stettler an ein Operationsbesteck erinnerte, folgende Gegenstände: ein grosser brauner Umschlag, ein kleinerer weisser, eine Stange roter Siegellack, eine Kerze, ein Petschaft mit dem Kantonswappen, das Strafprozessgesetz, aufgeschlagen, ein Löschblatt, zwei Federhalter, und in der Mitte, auf einem Bogen Aktenpapier wie auf einem Tuch, der Totenschein des Anton Kalt, mit der Rückseite nach oben.
+
+«Der Pass ist offen», sagte Rieder.
+
+«Ich habe den Schlitten gehört.»
+
+«Er fährt um elf wieder hinunter. Der Posthalter sagt, um elf. Er sagte gestern auch, heute, und es stimmte.» Rieder hustete, kurz, in die Faust. «Setzen Sie sich, Herr Doktor. Es dauert nicht lange. Es hat lange gedauert, aber es dauert nicht lange.»
+
+Stettler setzte sich. Er legte die Hände auf die Knie, die linke auf die rechte.
+
+Rieder setzte sich nicht. Er nahm einen Bogen vom Stapel neben dem Gesetzbuch, vier Seiten, eng beschrieben, in einer Schrift, die sich Mühe gab, nicht jung auszusehen.
+
+«Mein Begleitbericht. Ich lese Ihnen den Schluss vor, den Anfang kennen Sie, der Anfang ist der Unfall.» Er las, ohne die Stimme zu heben, so wie man ein Rezept vorliest: «Der Unterzeichnete hat die Selbstanzeige am Morgen des Unfalltages um sieben Uhr zweiundfünfzig entgegengenommen und quittiert. Eine Weiterleitung war infolge der Sperrung des Passes nicht möglich. Der Unterzeichnete hat in der Zwischenzeit gemäss Artikel achtundvierzig Absatz zwei geprüft: erstens, ob eine auf die Rückseite einer amtlichen Urkunde gesetzte Erklärung als Anzeige im Sinne des Gesetzes gelten kann; zweitens, ob der Aussteller einer Urkunde zugleich deren Beschuldigter sein darf; drittens, ob die Verjährung eingetreten ist; viertens, welche Beweismittel zur Verfügung stehen. Zu eins: ja, unter Vorbehalt. Zu zwei: das Gesetz sieht den Fall nicht vor. Zu drei: der Unterzeichnete überlässt die Frage der übergeordneten Behörde. Zu vier: keine. Der einzige Zeuge, Anton Kalt, ist verstorben; den Tod hat der Beschuldigte selbst beurkundet. Der Beschuldigte hat während der ganzen Dauer der Prüfung keine Einwendungen erhoben, siehe Aktennotiz vom dritten Tag, gegengezeichnet.» Er legte den Bogen hin. «Dann die Unterschrift. Dann das Datum. Das Datum habe ich heute morgen eingesetzt.»
+
+«Und die Verfügung?»
+
+«Welche Verfügung?»
+
+«Die in der Schublade lag.»
+
+Rieder zog die Schublade auf, als habe er nur darauf gewartet, dass jemand danach fragte. Der Entwurf lag noch da, ohne Datum, ohne Unterschrift. Er nahm ihn heraus, betrachtete ihn wie einen Brief, den man aus Höflichkeit nicht wegwirft, und legte ihn zurück.
+
+«Die brauche ich nicht mehr. Die Behörde ist erreichbar. Artikel achtundvierzig gilt nur, solange sie es nicht ist.» Er blätterte im Gesetzbuch zurück, bis zu der Seite, auf der am Rand in Bleistift *Kommt nicht vor* stand. «Mein Vorgänger hatte recht. Es ist nicht vorgekommen. Ich habe nichts entschieden.»
+
+Draussen schlug eine Dachlawine auf den Platz. Man hörte Kinder lachen, dann die Stimme des Posthalters, dann nichts.
+
+«Es fehlt noch eines», sagte Rieder. «Das Original geht hinunter. Das Zivilstandsamt behält den Auszug, gut, aber im Auszug steht in der achten Rubrik: siehe Rückseite des Originals. Und das Original ist dann nicht mehr hier. Also muss hier eine Abschrift bleiben, beglaubigt, sonst verweist der Auszug auf nichts.» Er schob einen zweiten Bogen über den Tisch, auf dem, von Rieders Hand kopiert, Wort für Wort stand, was Stettler in jener Nacht auf die Rückseite und an den Rand geschrieben hatte. Darunter eine Zeile: *Für die Richtigkeit der Abschrift.* Daneben eine zweite: *Der Aussteller.*
+
+«Ich soll beglaubigen, dass ich es geschrieben habe.»
+
+«Dass die Abschrift mit dem übereinstimmt, was Sie geschrieben haben. Das ist nicht dasselbe. Das eine ist ein Geständnis, das andere ist eine Formalität.» Rieder reichte ihm einen der Federhalter. «Lesen Sie es zuerst. Ich habe Kommata gesetzt, wo Sie keine gesetzt haben. Ich habe sie mit Bleistift eingeklammert.»
+
+Stettler las. Es war sein Text, und es war nicht sein Text; er war sauberer geworden, lesbarer, er hätte in jedem Rundschreiben stehen können. Die Kommata in Klammern standen darin wie kleine Einwendungen, die niemand erhoben hatte. Er las den Namen des Patienten, das Jahr, die Dosis, das Wort *vertuscht*, das Rieder unterstrichen hatte, weil es im Original unterstrichen war. Es hatte in jener Nacht zwei Minuten gedauert, es aufzuschreiben. Es hatte Rieder, der Tinte nach zu schliessen, einen Abend gekostet, es abzuschreiben.
+
+«Es stimmt», sagte Stettler.
+
+«Dann unterschreiben Sie.»
+
+Er tauchte die Feder ein. Die rechte Hand, die über zwanzig Jahre lang ungefähr vierhundert Totenscheine ausgestellt hatte, eine Hand, deren gleichmässige Schrift ein Bezirksrundschreiben einst als vorbildlich bezeichnet hatte, setzte an und blieb über dem Papier stehen, und die Feder zitterte so, dass ein Tropfen auf die Zeile *Der Aussteller* fiel, bevor ein einziger Buchstabe dort stand. Rieder legte wortlos das Löschblatt daneben. Stettler hielt das rechte Handgelenk mit der linken Hand fest, wie er es bei Kindern tat, denen er eine Spritze gab, und schrieb. *Dr. K. Stettler.* Das K war ein Haken, das S ein Riss, der Rest eine Linie, die sich nicht entscheiden konnte, ob sie steigen oder fallen wollte. Es sah aus wie die Unterschrift eines sehr alten Mannes oder eines sehr kleinen Kindes. Es sah nicht aus wie die Unterschrift eines Schuldigen, denn wie die aussieht, weiss niemand.
+
+Rieder löschte ab, sorgfältig, zweimal. Dann hielt er das Blatt gegen das Fenster.
+
+«Man kann es lesen», sagte er. «Wenn man weiss, was dasteht.»
+
+Er faltete den Totenschein nicht, er legte ihn flach in den weissen Umschlag, der genau dafür gemacht schien, und den weissen Umschlag mit dem Begleitbericht in den braunen. Er zündete die Kerze an. Der Siegellack tropfte, roch nach Weihnachten und Kanzlei, und Rieder drückte das Petschaft hinein und zählte leise bis fünf, bevor er es abhob. Das Wappen war schief geraten. Er betrachtete es eine Weile und liess es so.
+
+«Herr Rieder», sagte Stettler. «Der Brief, der am ersten Tag in den Postsack ging.»
+
+«Die Meldung. Ja.»
+
+«Stand darin, was ich geschrieben habe?»
+
+«Es stand darin, dass Anton Kalt tödlich verunglückt ist, dass der Amtsarzt den Tod festgestellt hat und dass ein Schriftstück vorliegt, dessen Würdigung ich mir vorbehalte.» Rieder blies die Kerze aus. «Der Sack ist heute um neun hinuntergegangen, mit dem ersten Schlitten. Die Meldung wird drei Stunden vor dem Geständnis in der Bezirksstadt sein. Man wird dort also zuerst lesen, dass ein Mann erfroren ist, und erst nachher, dass Sie ihn überlebt haben.»
+
+«Sie hätten das Original damals mitgeben können. Am ersten Tag. Der Sack stand zwölf Tage unten beim Ofen, plombiert oder nicht.»
+
+Rieder hustete wieder, diesmal länger, und wartete, bis es vorbei war.
+
+«Ich hätte», sagte er. «Ich habe es nicht getan. Ich habe vier Fragen geprüft, und jede Frage hat drei Tage gebraucht, und nach zwölf Tagen waren alle vier geprüft, und das Ergebnis der Prüfung war, dass es gleichgültig ist, wann ich es schicke. Ein Geständnis ohne Zeugen, Herr Doktor, ist eine Behauptung über sich selbst. Die Behörde wird sie ablegen, nicht aus Nachsicht, sondern aus Mangel an Gegenstand. Hätte ich sie am ersten Tag geschickt, hätte man sie am dritten abgelegt. Jetzt legt man sie am achtundzwanzigsten ab. Ich habe Ihnen fünfundzwanzig Tage verschafft, in denen Sie angeklagt waren. Mehr konnte ich nicht tun. Mehr sieht das Gesetz nicht vor.»
+
+«Sie haben es gewusst.»
+
+«Ich habe es geprüft», sagte Rieder. «Das ist bei uns dasselbe.»
+
+Er schrieb die Adresse auf den braunen Umschlag, *An das Bezirksamt, zu Handen des Herrn Präsidenten, persönlich*, unterstrich *persönlich*, besann sich, und strich den Strich wieder durch. Dann nahm er den Umschlag unter den Arm und hielt Stettler die Tür auf, als sei dieser der Beamte und er der Bote.
+
+Sie gingen zusammen die Treppe hinunter, über das schwimmende Brett. In der Post stand der Posthalter hinter dem Schalter und wog Pakete, ein Knecht trug sie hinaus zum Schlitten, draussen dampften die Pferde. Rieder legte den Umschlag auf die Waage. Der Posthalter las die Adresse, nickte, stempelte, schrieb die Quittung aus, eingeschrieben, einundneunzig Rappen, und reichte sie über den Schalter, und Rieder reichte sie an Stettler weiter, ohne nachzudenken, aus reiner Gewohnheit, denn er hatte in den letzten drei Wochen alles, was Stettler betraf, zuerst Stettler gezeigt.
+
+Stettler nahm die Quittung. Sie war klein, gelb, und noch warm vom Stempelkissen.
+
+«Behalten Sie sie», sagte Rieder. «Ich habe eine Abschrift.»
+
+Der Posthalter warf den Umschlag in den neuen Sack, zu den Paketen, zu einem Brief an eine Versandhandlung in Zürich, zu den Bestellungen für Saatgut. Draussen rief jemand nach dem Doktor. Es war eine Frau aus dem Oberdorf, das Kind habe kein Fieber mehr, sie wolle es nur gesagt haben. Stettler steckte die Quittung in die Manteltasche, zu dem Stethoskop, und ging hinaus in das tropfende, glänzende, zum ersten Mal seit Wochen wieder erreichbare Dorf, in dem es niemanden gab, der ihn nicht grüsste.
+
+* * *
+
+Rosa Kalt hatte ihn für zwei Uhr bestellt, nicht als Arzt, sondern, wie sie sagte, als Mann, der lesen kann. Der Gemeindeschreiber lag mit neununddreissig Grad im Bett, das hatte Stettler ihm am Vormittag selbst bescheinigt, und die Bank im Unterland wollte die Papiere sehen. Es gab im Dorf zwei Leute, die mit Papieren umgehen konnten. Der eine hatte Fieber. Der andere war Stettler.
+
+Das Haus der Kalts lag am oberen Ende der Gasse, dort, wo die Gasse aufhört, eine zu sein. Vor der Tür stand noch der Mistschlitten, auf dem man Kalt an jenem Morgen hinuntergebracht hatte; jemand hatte ihn zurückgebracht und sauber gemacht, und nun lehnte er an der Wand wie ein Möbel, das niemand mehr ins Haus tragen will. Das Schmelzwasser lief unter ihm hindurch.
+
+In der Stube war geheizt. Auf dem Tisch lag ein Wachstuch mit Kirschen, auf dem Wachstuch eine Zigarrenkiste, eine Blechdose, die einmal Ovomaltine enthalten hatte, ein Sparheft, ein Kalender der Viehversicherung von neunzehnhundertvierundfünfzig und ein Paar Wollhandschuhe, von denen niemand wusste, warum sie dazugehörten.
+
+«Das ist alles», sagte Rosa Kalt. «Was oben ist, sind Kleider. Die Kleider bekommt die Kirche. Es geht um die Bank.»
+
+Sie hatte den Mantel ausgezogen und die Schürze angezogen, als handle es sich um eine Arbeit, bei der man schmutzig wird. Stettler setzte sich. Er nahm das Sparheft, schlug es auf, las die letzte Zeile, dreitausendzweihundertvierzehn Franken und fünfzig, und las sie ihr vor.
+
+«Das weiss ich», sagte sie. «Das weiss ich seit Jahren. Er hat es mir jeden Silvester gezeigt. Die Bank will einen Schein, dass er tot ist.»
+
+«Den hat das Zivilstandsamt.»
+
+«Den Auszug. Die Bank will den Auszug beglaubigt, und der Gemeindeschreiber hat Fieber, und Sie haben ihn ja ausgestellt, Herr Doktor, da können Sie doch auch sagen, dass er stimmt.»
+
+«Das kann ich nicht. Ich bin nicht das Zivilstandsamt.»
+
+«Aber Sie wissen, dass er stimmt.»
+
+Stettler legte das Sparheft hin. «Ja», sagte er. «Das weiss ich.»
+
+Sie nickte, als sei damit etwas erledigt, und schob ihm die Zigarrenkiste hin.
+
+Die Zigarrenkiste enthielt Quittungen. Anton Kalt hatte, das stellte sich nach wenigen Minuten heraus, nichts weggeworfen, was einen Stempel trug. Da lagen, gebündelt mit einem Einmachgummi, die Quittungen der Viehversicherung seit neunzehnhundertsechsunddreissig, die Steuerzettel der Gemeinde, eine Rechnung des Hufschmieds über das Beschlagen eines Pferdes, das Kalt, soweit Stettler wusste, nie besessen hatte, die Garantiekarte für ein Radio, der Kaufvertrag für das Auto, gebraucht, aus zweiter Hand, eintausendvierhundert Franken, bar. Stettler nahm jedes Blatt einzeln heraus, las es, legte es mit der Schrift nach unten auf den Tisch. Er las langsamer, als nötig gewesen wäre. Er las die Rückseiten.
+
+«Sie sind gründlich», sagte Rosa Kalt.
+
+«Man muss wissen, was da ist.»
+
+«Da ist, was da ist. Anton hat gesagt, Vergangenes kostet nichts mehr. Er hat es aber trotzdem aufgehoben. Er war so.»
+
+Unter den Steuerzetteln lagen drei Blätter, zusammengeheftet, in einer Schrift, die Stettler kannte. Es waren seine eigenen Rechnungen. *Reposition einer Leistenhernie, Hausbesuch, Nachtzuschlag.* *Reposition einer Leistenhernie, Praxis.* *Inzision eines Abszesses am linken Unterarm, Verband, Nachkontrolle.* Jede mit Datum, jede mit Betrag, jede mit dem Vermerk *Betrag dankend erhalten* und der Unterschrift, die ein Bezirksrundschreiben einst als vorbildlich bezeichnet hatte. Es war die ganze Korrespondenz zwischen den beiden Männern, die in zwanzig Jahren stattgefunden hatte. Sie bestand aus achtundvierzig Franken und fünfzig Rappen, und sie war beglichen.
+
+Stettler hielt die Blätter länger, als man Rechnungen hält.
+
+«Die sind bezahlt», sagte Rosa Kalt. «Er hat immer bezahlt. Er hat gesagt, beim Doktor muss man bezahlen, sonst kommt er nicht mehr.»
+
+«Er hat bezahlt», sagte Stettler.
+
+Er legte sie zu den anderen, mit der Schrift nach unten.
+
+Die Ovomaltinedose enthielt Knöpfe, zwei Schlüssel, deren Schlösser niemand mehr kannte, einen Rosenkranz ohne Kreuz, einen Militärschuh-Nagel und ein Foto von einem Mann mit Schnurrbart vor einer Heubühne. «Sein Vater», sagte Rosa Kalt, ohne hinzusehen. Stettler drehte das Foto um. Auf der Rückseite stand nichts.
+
+«Gibt es noch etwas?», fragte er. «Einen Koffer. Eine Schublade. Papiere von früher. Von vor der Ehe.»
+
+«Von vor der Ehe?» Sie sah ihn an, zum ersten Mal an diesem Nachmittag mit etwas wie Aufmerksamkeit. «Was soll es denn von vor der Ehe geben?»
+
+«Für die Bank», sagte Stettler. «Manchmal will die Bank alles.»
+
+Das leuchtete ihr ein. Die Bank wollte immer alles. Sie ging voraus, die Stiege hinauf, in die Kammer, in der es nach Kampfer und nach kaltem Tabak roch. Unter dem Bett stand ein Holzkoffer mit Eisenecken, ein Militärkoffer, auf dem mit Schablone ein Name stand, derselbe Name, der auf dem Totenschein stand. Sie zog ihn hervor, stellte ihn aufs Bett und öffnete ihn, ohne zu zögern, wie man einen Schrank öffnet, in dem man weiss, was ist.
+
+Es war ein Hemd darin. Ein Paar Gamaschen. Ein Dienstbüchlein, in dem, in der Handschrift verschiedener Feldweibel, verzeichnet stand, dass Anton Kalt zu verschiedenen Zeiten eingerückt und entlassen worden war, ohne Bemerkungen. Ein Bündel Briefe, von Rosa selbst, aus der Zeit vor der Ehe, mit einer Schnur zusammengebunden, die sie errötend wegnahm und in die Schürzentasche steckte. Unten, auf dem Boden des Koffers, war Zeitungspapier ausgelegt, damit das Holz nicht an die Wäsche kam. Stettler hob das Zeitungspapier an. Darunter war das Holz.
+
+Er hob es trotzdem ganz heraus. Es war der Anzeiger des Bezirks, eine Ausgabe vom Frühjahr vor zwanzig Jahren, und auf der obersten Seite, zwischen einer Viehschau und einem Todesfall, stand die Anzeige einer Heilanstalt, die einen Sanitätsgehilfen suchte, Eintritt sofort. Er faltete die Zeitung wieder zusammen. Die rechte Hand tat es mit ihm, aber mit Verspätung, so dass das Papier knisterte wie in einem Wind, den es in der Kammer nicht gab.
+
+«Das ist alt», sagte Rosa Kalt. «Das kann weg.»
+
+«Ja.»
+
+«Ist Ihnen kalt, Herr Doktor? Oben ist nicht geheizt.»
+
+«Nein.»
+
+Er sah noch den Schrank durch, mit ihrer Erlaubnis, die sie gab, ohne zu fragen, wozu: die Kleider, die an die Kirche gehen würden, die Taschen der Kleider, in denen er eine Streichholzschachtel fand, einen Zettel mit einer Zahl, die sich als Telefonnummer des Garagisten im Unterland erwies, und drei Rappen. Er sah hinter den Schrank. Er hob, als Rosa Kalt einen Augenblick hinunterging, um nach dem Ofen zu sehen, die Matratze an. Unter der Matratze war der Lattenrost, unter dem Lattenrost der Boden, und im Boden war kein loses Brett. Er klopfte an zweien, um sicher zu sein. Sie klangen wie Bretter.
+
+Als er herunterkam, hatte sie die Quittungen wieder in die Zigarrenkiste gelegt, sauber, in der Reihenfolge, in der sie gelegen hatten, nur seine drei Rechnungen lagen noch auf dem Wachstuch.
+
+«Die brauche ich nicht», sagte sie. «Die Bank will nur, was offen ist. Die sind ja erledigt.»
+
+Sie öffnete die Ofentür, nahm die drei Blätter, und bevor Stettler etwas sagen konnte — er hätte nicht gewusst, was —, lagen sie in der Glut. Die Heftklammer blieb übrig. Sie wurde erst rot, dann grau.
+
+«So», sagte Rosa Kalt. «Jetzt ist aufgeräumt.»
+
+Sie brachte ihn zur Tür. Draussen tropfte es von allen Dächern, und aus einem Fenster gegenüber rief jemand, ob der Doktor gleich noch vorbeikommen könne, die Grossmutter huste wieder. Rosa Kalt reichte ihm die Hand.
+
+«Am Freitag um zehn kommen Sie doch», sagte sie. «Der Pfarrer hat gesagt, der Boden war gerade weich genug. Das hätte Anton gewollt. Er hat immer gesagt, der Doktor sei der einzige im Dorf, der wisse, was er an ihm habe.»
+
+«Ich komme», sagte Stettler.
+
+Er ging die Gasse hinunter, am Mistschlitten vorbei, und zählte, ohne es zu wollen, wie er es bei jedem Befund tat, was er gesehen hatte: eine Zigarrenkiste, eine Blechdose, einen Koffer, einen Schrank, eine Matratze, zwei Bretter, einen Ofen. Es war vollständig. Es fehlte nichts. Es war nichts da.
+
+* * *
+
+Am Freitag um zehn wurde Anton Kalt begraben. Der Boden war, wie der Pfarrer gesagt hatte, gerade weich genug, das heisst, die zwei Knechte, die das Grab aushoben, hatten nur die obersten vierzig Zentimeter mit dem Pickel lösen müssen, den Rest mit der Schaufel. Stettler stand in der zweiten Reihe, hinter Rosa Kalt, die sich zweimal nach ihm umdrehte, nicht aus Trauer, sondern wie man sich nach einem Zeugen umdreht, dessen Anwesenheit im Protokoll vermerkt werden soll. Der Pfarrer sprach von einem arbeitsamen Leben und einem unerwarteten Tod. Beides stimmte. Nachher, im Wirtshaus, gab man dem Doktor den Platz am Ofen und einen Teller, den er nicht bestellt hatte.
+
+In der Praxis wurde es von da an leerer. Das Wartezimmer, in dem drei Wochen lang die Leute auf den Stühlen, auf den Fensterbänken und zuletzt auf dem Boden gesessen hatten, war am Montag noch halb voll, am Mittwoch zu einem Drittel, am Samstag sass nur noch ein Knecht darin, der keine Beschwerden hatte, sondern einen Speck brachte, von seiner Meisterin, für die Nächte im Januar. Stettler legte den Speck zu den übrigen Gaben in die Speisekammer, wo sich seit der Grippe angesammelt hatte, was ein Dorf einem Mann schenkt, von dem es abhängt: vier Speckseiten, zwei Laibe Käse, eine Flasche Kirsch, drei Dutzend Eier, von denen er die Hälfte nicht mehr essen konnte, ein Paar gestrickte Pulswärmer und ein Glas Honig mit einem Zettel, *Für den Hals vom Herr Doktor*, obwohl ihm am Hals nichts fehlte.
+
+Die Post kam jetzt jeden Tag, um halb zehn, mit dem Postauto, das wieder fuhr, als sei es nie ausgeblieben. Stettler hatte sich angewöhnt, sie selbst am Briefkasten abzuholen, vor der Sprechstunde, und die Umschläge auf dem Schreibtisch nach Absendern zu ordnen, die amtlichen nach oben. Es waren wenige amtliche. Eine Mahnung der kantonalen Apothekerkammer wegen einer Bestellung vom November. Ein Prospekt für ein Blutdruckmessgerät aus Basel. Am achtundzwanzigsten Tag nichts. Am neunundzwanzigsten nichts. Am dreissigsten die Rechnung für die Schneefräse, die nicht an ihn gerichtet war, sondern an die Gemeinde, und die der Briefträger ihm nur gab, weil der Gemeindeschreiber noch immer Fieber hatte.
+
+Er rechnete. Rieder hatte gesagt, man lege es am achtundzwanzigsten ab. Eine Ablage wird nicht mitgeteilt. Das wusste er; er hatte in über zwanzig Jahren selbst genug abgelegt, und nie hatte er jemandem geschrieben, dass er es getan habe. Man wird an einem bestimmten Tag verurteilt, um eine bestimmte Uhrzeit, von einem bestimmten Menschen. Freigesprochen wird man, wenn niemand es ausspricht, an keinem Tag, oder an allen.
+
+Am fünfunddreissigsten Tag kam ein grauer Umschlag vom Sanitätsdepartement. Stettler öffnete ihn mit dem Brieföffner, den er sonst nie benutzte. Es war ein Rundschreiben an sämtliche Amtsärzte des Kantons, vervielfältigt, mit einem Formular: *Meldung über die Grippeerkrankungen im Winter, zuhanden der Statistik*. Anzahl der Erkrankten. Anzahl der Hospitalisierten. Anzahl der Todesfälle infolge Grippe. Anzahl der Todesfälle anderer Ursache im Berichtszeitraum. Bemerkungen.
+
+Er füllte es aus, noch am selben Abend, weil man ein Formular nicht liegen lässt. Er hatte die Zahlen im Kopf, er hatte sie jeden Abend im Kopf gehabt. Erkrankte: hundertachtundsiebzig. Hospitalisiert: keiner, da der Pass geschlossen. Todesfälle infolge Grippe: keiner. Todesfälle anderer Ursache: einer. Er hielt das rechte Handgelenk mit der linken Hand, wie im Gemeindehaus, und die Ziffer 1 geriet ihm gerade. Dann kam die Rubrik *Bemerkungen*. Sie war drei Zeilen breit. Er sah sie eine Weile an. Dann schrieb er: *Keine.* Es war, soweit die Statistik es betraf, die Wahrheit.
+
+Dann nahm er einen Bogen von dem guten Papier, das er für Gutachten brauchte, und schrieb die Sache ab. Er hatte kein Original und keine Abschrift, er hatte nur, was er in jener Nacht geschrieben und im Gemeindehaus gelesen hatte, und das genügte. Er schrieb den Namen des Patienten, das Jahr, die Dosis, das Wort *vertuscht*, und er unterstrich es. Er schrieb langsam. Das Blatt füllte sich mit einer Schrift, die kein Rundschreiben mehr als vorbildlich bezeichnet hätte. An den Stellen, wo Rieder Kommata gesetzt und mit Bleistift eingeklammert hatte, setzte Stettler Kommata. Ohne Klammern. Es war lesbarer so.
+
+Er brauchte für eine Seite, für die er in jener Nacht zwei Minuten gebraucht hatte, eine Stunde und zehn Minuten. Er sah auf die Uhr, bevor er begann, und nachher, aus Gewohnheit, wie man den Beginn und das Ende einer Narkose festhält.
+
+Unter den Text schrieb er: *Abschrift. Das Original ging am fünfundzwanzigsten Tag nach dem Unfall mit dem Bericht des Untersuchungsrichters an das Bezirksamt. Eine Antwort ist nicht eingegangen.* Er überlegte, ob er ein Datum dazusetzen solle, und setzte es. Er unterschrieb nicht. Es gab niemanden, dem gegenüber eine Unterschrift etwas bedeutet hätte, und die Hand war müde.
+
+Im Nebenzimmer, das früher das Labor gewesen war und jetzt die Ablage war, stand der Schrank mit den Doppeln. Die Kantonsverordnung verlangte, dass der Aussteller eines Totenscheins einen Durchschlag während zehn Jahren aufbewahre; Stettler bewahrte sie seit dreiundzwanzig Jahren auf, weil ihm nie jemand gesagt hatte, dass er die älteren wegwerfen dürfe. Sie lagen in grauen Kartonschachteln, eine für jedes Jahr, beschriftet mit Jahreszahl und Stückzahl, und auf dem Schrank lag das Verzeichnis, ein Wachstuchheft mit laufenden Nummern, in das er jeden Tod eingetragen hatte, den er beurkundet hatte, Nummer, Datum, Name, Ursache, Bemerkungen. Die letzte Schachtel war die dünnste. Sie enthielt, zuoberst, den Durchschlag des Totenscheins von Anton Kalt: Vorderseite, stumpfes Thoraxtrauma, Unterkühlung, Tod vor Mitternacht. Die Rückseite des Durchschlags war leer. Das Kohlepapier hatte in jener Nacht nur die Vorderseite gekannt.
+
+Er legte die Abschrift hinter den Durchschlag. Das Krankenblatt legte er nicht dazu; es hatte sich in Kalts Nachlass nicht gefunden, und es würde sich nicht mehr finden. So lagen die Papiere in der Reihenfolge, in der sie entstanden waren. Das war die einzige Ordnung, die ihm einfiel und die niemand anfechten konnte.
+
+Dann schlug er das Verzeichnis auf. Die letzte Eintragung trug die Nummer dreihundertsiebenundneunzig. *Kalt, Anton. Verkehrsunfall, Passstrasse.* In der Spalte *Bemerkungen* stand nichts. Er hatte in jener Nacht keine Zeit gehabt, und nachher hatte er es nicht gekonnt. Jetzt tauchte er die Feder ein, hielt das Handgelenk und schrieb in die Spalte, klein, damit es hineinpasste: *s. Rückseite d. Orig. — Orig. b. Bezirksamt — Abschr. beiliegend — erledigt.*
+
+Das letzte Wort war ihm aus der Feder gekommen, bevor er es gedacht hatte. Es war das Wort, das er zwanzig Jahre lang am Ende jeder Zeile geschrieben hatte, bei der nichts mehr zu tun war. Er betrachtete es. Er strich es nicht durch. Er löschte es ab, zweimal, wie Rieder es getan hatte, und klappte das Heft zu.
+
+Auf dem Deckel der Schachtel stand, mit Bleistift, die Stückzahl des laufenden Jahres. Er änderte sie nicht. Eine Abschrift ist kein Totenschein. Er setzte den Deckel auf, schob die Schachtel an ihren Platz, neben die dreiundzwanzig anderen, und drehte den Schlüssel im Schrank, den er seit Jahren nicht mehr gedreht hatte, weil es im Dorf niemanden gab, der die Toten eines anderen lesen wollte.
+
+Im Flur stand noch die Mappe. Er hatte sie in der Unfallnacht, nach dem Gang zum Gemeindehaus, gepackt und neben die Tür gestellt, dorthin, wo man sie greift, wenn man abgeholt wird: zwei Hemden, ein Nachthemd, das Rasierzeug, eine Zahnbürste in einem Etui, ein Paar Wollsocken und das Neue Testament, das er seit der Konfirmation nicht mehr aufgeschlagen hatte. Die Patienten hatten in den Wochen der Grippe ihre nassen Mützen darauf gelegt, und einmal hatte ein Kind darauf gesessen, weil kein Stuhl mehr frei war. Er trug sie jetzt ins Schlafzimmer und packte sie aus, in der umgekehrten Reihenfolge, in der er sie gepackt hatte. Die Zahnbürste stellte er ins Glas zurück, neben die andere, die er sich in der dritten Woche beim Krämer gekauft hatte, weil er die erste nicht aus der Mappe nehmen wollte. Nun hatte er zwei. Er liess beide stehen.
+
+Am nächsten Morgen holte er die Post nicht am Briefkasten ab. Der Briefträger legte sie, als um zehn noch niemand gekommen war, auf den Tisch im Wartezimmer, zu den Kalenderblättern und den alten Heften des Nebelspalters, und dort blieb sie bis zum Mittag. Stettler öffnete zuerst die Tür zum Wartezimmer. Es wartete niemand. Draussen lief das Schmelzwasser die Gasse hinunter, und irgendwo schlug jemand einen Teppich aus, der seit dem Herbst nicht mehr draussen gewesen war.
+
+Von dem, was vor zwanzig Jahren geschehen war, gab es keinen Zeugen mehr und kein Blatt, ausser denen, die er selbst geschrieben hatte. Das Dorf war gesund. Auch der Doktor war gesund. Das hätte ihm jeder bescheinigt, und es gab im Tal nur einen, der es durfte.

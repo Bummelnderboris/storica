@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The scene closes the chapter with Stettler quietly filing his own copy of the confession among his roughly four hundred death certificates and arriving at his resigned realization of an unspoken acquittal, but it never delivers the Krankenblatt resolution the exit state requires for this unit.",
+  "issues": [
+    {
+      "unit": "Er legte die Abschrift hinter den Durchschlag und die Quittung",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "krankenblatt:status",
+      "fix_hint": "Add a beat in this filing scene where Stettler confirms the Krankenblatt was not found among Kalt's estate and is permanently lost, as the exit state requires its whereabouts to be finally settled by the close of this unit."
+    },
+    {
+      "unit": "Das Dorf war gesund. Auch der Doktor war gesund.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "k_beweis_verloren:status",
+      "fix_hint": "Once the Krankenblatt's fate is established, extend Stettler's closing reflection to note that no written proof of the old error survives either, so k_beweis_verloren reaches the 'endgültig bestätigt' state the exit requires instead of remaining where the entry state left it."
+    }
+  ],
+  "conflict": ""
+}

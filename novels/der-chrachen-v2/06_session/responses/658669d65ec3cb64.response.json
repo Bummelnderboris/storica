@@ -1,0 +1,30 @@
+{
+  "resolutions": [
+    {
+      "index": 1,
+      "resolved": true,
+      "note": "The Quittung and Stettler's private possession of it were cut entirely (Change 1, 3, 4); the copied note now says the original went to the Bezirksamt with Rieder's own report."
+    },
+    {
+      "index": 2,
+      "resolved": true,
+      "note": "The sentence describing the hand trembling while copying out the confession alone was cut outright (Change 1)."
+    },
+    {
+      "index": 3,
+      "resolved": true,
+      "note": "'geriet ihm trotzdem zu einem kleinen Blitz' was changed to 'geriet ihm gerade', showing the hand steady instead of shaking (Change 1)."
+    },
+    {
+      "index": 4,
+      "resolved": true,
+      "note": "A beat was added stating the Krankenblatt was not found among Kalt's estate and will not be found (Change 3)."
+    },
+    {
+      "index": 5,
+      "resolved": true,
+      "note": "The closing reflection now states no witness and no written page survives except what Stettler himself wrote (Change 5)."
+    }
+  ],
+  "introduced": []
+}

@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "Stettler's methodical, in-character search of Kalt's estate lands the Krankenblatt payoff cleanly, but the scene opens with the pass already declared open against the given entry state and closes with the burial still pending against the given exit state.",
+  "issues": [
+    {
+      "unit": "jetzt, da der Pass offen war",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "entry state: pass:status",
+      "fix_hint": "Cut the clause 'jetzt, da der Pass offen war' (and the framing that the bank wants papers because of it) — the entry state requires the pass to remain fully snowed in, unchanged since the chapter began, as this scene opens."
+    },
+    {
+      "unit": "«Am Freitag um zehn», sagte sie.",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "exit state: kalt:status",
+      "fix_hint": "Do not close the scene with the funeral still scheduled for a future Friday — the exit state requires kalt:status to already be 'Beerdigt' by the time this scene ends; set the visit after the burial or otherwise show it as already completed."
+    }
+  ],
+  "conflict": ""
+}

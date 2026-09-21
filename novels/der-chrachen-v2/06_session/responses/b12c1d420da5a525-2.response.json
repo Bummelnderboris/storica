@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "Stettler closes the chapter at the practice, filing his own copy of the confession among some four hundred death certificates and arriving at the realization that no verdict is coming, only a silent acquittal he will carry for life — but the scene twice shows the hand trembling visibly after the point canon fixes as its last visible occurrence.",
+  "issues": [
+    {
+      "unit": "die Ziffer 1 geriet ihm trotzdem zu einem kleinen Blitz",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "stettler:zitternde_hand",
+      "fix_hint": "Cut or de-visualize this tremor beat (e.g. have the hand hold steady here) — canon's exit state fixes the tremor's last visible occurrence at the countersigning of the Weiterleitung, referenced earlier in this same passage as 'wie im Gemeindehaus', so no later moment in this scene may show it visibly shaking again."
+    },
+    {
+      "unit": "Die Hand zitterte, sobald sie allein war",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "stettler:zitternde_hand",
+      "fix_hint": "Remove or mute the visible tremor while he writes the Abschrift — it comes after the Gemeindehaus/Weiterleitung episode already referenced in this scene, contradicting the canonical fact that that countersigning was the last time the tremor was visible."
+    }
+  ],
+  "conflict": ""
+}

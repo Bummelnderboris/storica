@@ -1,0 +1,14 @@
+{
+  "decision": "pass",
+  "summary": "Rieder endlich sendet Stettlers entwertetes Geständnis formgerecht an die Bezirksbehörde ab, während Stettlers zitternde Hand den Payoff liefert und Rieders eigene Worte die Verzögerung als absichtlich bestätigen — die Szene erfüllt ihren zugewiesenen Beat ohne Widerspruch zur Vorlage.",
+  "issues": [
+    {
+      "unit": "das Jahr, die Dosis, das Wort",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "stettler:secret",
+      "fix_hint": "none needed — canon only specifies a fatal treatment error and is silent on the mechanism, so a dosage detail is additive, not contradictory"
+    }
+  ],
+  "conflict": ""
+}

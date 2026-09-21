@@ -1,0 +1,20 @@
+{
+  "resolutions": [
+    {
+      "index": 1,
+      "resolved": true,
+      "note": "Die Phrase 'jetzt, da der Pass offen war' wurde gestrichen, sodass der Pass nicht mehr als offen behauptet wird."
+    },
+    {
+      "index": 2,
+      "resolved": true,
+      "note": "Die Zeile wurde von einer Einladung zu einem künftigen Termin in eine rückblickende Feststellung ('sind Sie gekommen', 'Das hätte Anton gewollt') umformuliert."
+    },
+    {
+      "index": 3,
+      "resolved": true,
+      "note": "Die Szene schliesst nun mit dem Freitagstermin als bereits vergangenem Ereignis statt als bevorstehendem Termin."
+    }
+  ],
+  "introduced": []
+}

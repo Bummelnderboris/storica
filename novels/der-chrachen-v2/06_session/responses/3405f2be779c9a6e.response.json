@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "Stettler durchsucht unter dem Vorwand der Bank-Formalitäten Kalts Nachlass und bestätigt das endgültige Verschwinden des Krankenblatts, doch die Szene öffnet mit einem bereits offenen Pass und schliesst vor der noch bevorstehenden Beerdigung, was der gegebenen Entry- und Exit-State widerspricht.",
+  "issues": [
+    {
+      "unit": "jetzt, da der Pass offen war",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "entry state: pass:status",
+      "fix_hint": "Streiche oder ändere die Passage so, dass der Pass zu Szenenbeginn weiterhin vollständig zugeschneit ist; gib der Bank einen anderen Grund, die Papiere jetzt zu wollen (z. B. allein das Fieber des Gemeindeschreibers)."
+    },
+    {
+      "unit": "Sie kommen doch, Herr Doktor? Anton hätte es gewollt.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "exit state: kalt:status",
+      "fix_hint": "Beerdigung muss beim Schliessen der Szene bereits stattgefunden haben; verlege den Besuch auf die Zeit nach der Beerdigung oder formuliere die Zeile rückblickend statt als Einladung zu einem noch bevorstehenden Freitagstermin."
+    }
+  ],
+  "conflict": ""
+}

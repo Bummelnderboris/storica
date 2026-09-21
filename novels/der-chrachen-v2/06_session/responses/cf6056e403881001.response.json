@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "Stettler methodically and plausibly searches every plausible hiding place in Kalt's estate down to the floorboards, earning the scene's payoff that the Krankenblatt is gone for good, but the closing exchange about the funeral breaks on a tense that contradicts the very reply it draws.",
+  "issues": [
+    {
+      "unit": "P39: \"Am Freitag um zehn sind Sie gekommen\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Change 'sind Sie gekommen' to a present/future form (e.g. 'kommen Sie doch am Freitag um zehn?') so it sets up an appointment rather than asserting it already happened — as written it reads as past tense, which contradicts Stettler's reply 'Ich komme' (P40), a promise about something still to come."
+    }
+  ],
+  "conflict": ""
+}

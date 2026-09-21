@@ -1,0 +1,296 @@
+{
+  "seq": 217,
+  "digest": "bde0ef6824370ca6",
+  "stage": "ch03_reconcile_decisions",
+  "model": "sonnet",
+  "note": "40 promoted, 0 flagged, 5 ledger updates",
+  "system": null,
+  "prompt": "",
+  "artifact": {
+    "promoted": [
+      {
+        "kind": "alias",
+        "ref": "alias:stettler",
+        "value": "dem Doktor",
+        "evidence": "Draussen rief jemand nach dem Doktor."
+      },
+      {
+        "kind": "alias",
+        "ref": "alias:stettler",
+        "value": "Dr. K. Stettler",
+        "evidence": "Dr. K. Stettler."
+      },
+      {
+        "kind": "alias",
+        "ref": "alias:stettler",
+        "value": "Der Aussteller",
+        "evidence": "Daneben eine zweite: Der Aussteller."
+      },
+      {
+        "kind": "alias",
+        "ref": "alias:rieder",
+        "value": "Der Unterzeichnete",
+        "evidence": "Der Unterzeichnete hat die Selbstanzeige am Morgen des Unfalltages um sieben Uhr zweiundfünfzig entgegengenommen und quittiert."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "stettler.archiving_habit",
+        "value": "Stettler bewahrt die Durchschläge seiner Totenscheine seit 23 Jahren auf, obwohl die Kantonsverordnung nur 10 Jahre vorschreibt.",
+        "evidence": "Stettler bewahrte sie seit dreiundzwanzig Jahren auf, weil ihm nie jemand gesagt hatte, dass er die älteren wegwerfen dürfe"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "stettler.kalt_billing_total",
+        "value": "Stettlers Rechnungen an Anton Kalt für zwei Hernien-Repositionen und eine Abszess-Inzision beliefen sich auf 48 Franken 50 und waren beglichen.",
+        "evidence": "Sie bestand aus achtundvierzig Franken und fünfzig Rappen, und sie war beglichen."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "stettler.notfalltasche",
+        "value": "Stettler hatte in der Unfallnacht eine Reisetasche (Hemden, Rasierzeug, Zahnbürste, Neues Testament) gepackt und neben die Tür gestellt, für den Fall, dass man ihn abholen würde; er packt sie erst am Ende des Kapitels wieder aus.",
+        "evidence": "gepackt und neben die Tür gestellt, dorthin, wo man sie greift, wenn man abgeholt wird"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.begleitbericht",
+        "value": "Rieder verfasst einen vierseitigen, eng beschriebenen Begleitbericht zu Stettlers Selbstanzeige.",
+        "evidence": "Mein Begleitbericht... vier Seiten, eng beschrieben"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.vier_fragen_art48_inhalt",
+        "value": "Rieder prüft vier Fragen nach Art. 48 Abs. 2: ob eine auf der Rückseite stehende Erklärung als Anzeige gilt; ob Aussteller und Beschuldigter identisch sein dürfen; ob Verjährung eingetreten ist; welche Beweismittel bestehen.",
+        "evidence": "erstens, ob eine auf die Rückseite einer amtlichen Urkunde gesetzte Erklärung als Anzeige im Sinne des Gesetzes gelten kann; zweitens, ob der Aussteller einer Urkunde zugleich deren Beschuldigter sein darf; drittens, ob die Verjährung eingetreten ist; viertens, welche Beweismittel zur Verfügung stehen"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.verjaehrung_offen",
+        "value": "Rieder lässt die Frage der Verjährung ausdrücklich offen und überlässt sie der übergeordneten Behörde.",
+        "evidence": "Zu drei: der Unterzeichnete überlässt die Frage der übergeordneten Behörde."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.verfuegung_nicht_verwendet",
+        "value": "Rieder verwendet den unterschriftslosen Verfügungsentwurf gegen Stettler nicht; er sagt, Art. 48 gelte nur, solange die Behörde unerreichbar sei, und er habe nichts entschieden.",
+        "evidence": "Die brauche ich nicht mehr. Die Behörde ist erreichbar. Artikel achtundvierzig gilt nur, solange sie es nicht ist... Ich habe nichts entschieden."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.bewusste_verzoegerung",
+        "value": "Rieder deutet an, die Prüfung bewusst über zwölf Tage gestreckt zu haben, und sagt, er habe Stettler damit 25 Tage verschafft, in denen dieser angeklagt war.",
+        "evidence": "Ich habe Ihnen fünfundzwanzig Tage verschafft, in denen Sie angeklagt waren."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.erste_meldung_inhalt",
+        "value": "Rieders erste Meldung vom Unfalltag besagte nur, dass Anton Kalt tödlich verunglückt ist, dass der Amtsarzt den Tod festgestellt hat und dass ein Schriftstück vorliegt, dessen Würdigung sich Rieder vorbehält — ohne den Inhalt von Stettlers Geständnis zu nennen.",
+        "evidence": "Es stand darin, dass Anton Kalt tödlich verunglückt ist, dass der Amtsarzt den Tod festgestellt hat und dass ein Schriftstück vorliegt, dessen Würdigung ich mir vorbehalte."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.gewohnheit_transparenz",
+        "value": "Rieder hat Stettler in den letzten drei Wochen gewohnheitsmässig alles, was ihn betraf, zuerst gezeigt.",
+        "evidence": "denn er hatte in den letzten drei Wochen alles, was Stettler betraf, zuerst Stettler gezeigt"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "kalt_witwe.sparheft_saldo",
+        "value": "Anton Kalts Sparheft weist einen Saldo von 3214 Franken 50 aus, den Rosa Kalt seit Jahren kennt.",
+        "evidence": "dreitausendzweihundertvierzehn Franken und fünfzig... «Das weiss ich seit Jahren. Er hat es mir jeden Silvester gezeigt.»"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "kalt_witwe.grund_der_bitte",
+        "value": "Rosa Kalt bittet Stettler, ihr als lesekundigem Mann bei den Nachlasspapieren zu helfen, weil der Gemeindeschreiber krank ist und die Bank Papiere sehen will.",
+        "evidence": "Rosa Kalt hatte ihn für zwei Uhr bestellt, nicht als Arzt, sondern, wie sie sagte, als Mann, der lesen kann."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "kalt_witwe.verbrennt_rechnungen",
+        "value": "Rosa Kalt verbrennt ungefragt Stettlers alte, beglichene Rechnungen an Anton, weil sie meint, Erledigtes brauche die Bank nicht.",
+        "evidence": "Sie öffnete die Ofentür, nahm die drei Blätter... lagen sie in der Glut."
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:isolation_ende",
+        "value": "Die winterliche Einschneiung des Tals dauert 25 Tage; sie endet mit Föhn (Tag 23), Schneefräse (Tag 24) und dem ersten Postschlitten (Tag 25).",
+        "evidence": "Am dreiundzwanzigsten Tag kam der Föhn, am vierundzwanzigsten die Schneefräse... am fünfundzwanzigsten... der Postschlitten."
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:buero_rieder_wasserschaden",
+        "value": "Das Dach über dem Trockenraum der Feuerwehrschläuche ist undicht; Schmelzwasser lässt eine Wanne überlaufen, ein schwimmendes Brett dient als Steg zu Rieders Bürotür.",
+        "evidence": "Die Wanne darunter war übergelaufen... das Brett schwamm."
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:gemeindeschreiber_krank",
+        "value": "Der Gemeindeschreiber liegt mit 39 Grad Fieber im Bett und kann die Bankpapiere nicht beglaubigen.",
+        "evidence": "Der Gemeindeschreiber lag mit neununddreissig Grad im Bett"
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:einschreibegebuehr",
+        "value": "Die Gebühr für die eingeschriebene Sendung von Rieders Umschlag an das Bezirksamt beträgt 91 Rappen.",
+        "evidence": "eingeschrieben, einundneunzig Rappen"
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:grippestatistik_meldeformular",
+        "value": "Das Sanitätsdepartement verschickt ein Rundschreiben mit Formular an alle Amtsärzte des Kantons zur Meldung der Grippeerkrankungen des Winters.",
+        "evidence": "ein Rundschreiben an sämtliche Amtsärzte des Kantons, vervielfältigt, mit einem Formular: Meldung über die Grippeerkrankungen im Winter, zuhanden der Statistik"
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:postsack_lagerzeit",
+        "value": "Der plombierte Postsack mit Rieders erster Meldung vom Unfalltag lag zwölf Tage unten beim Ofen, bevor er am Tag der Passöffnung mit dem ersten Schlitten abging.",
+        "evidence": "Der Sack stand zwölf Tage unten beim Ofen, plombiert oder nicht."
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:bezirksamt_adresse",
+        "value": "Rieders Umschlag mit Stettlers Geständnis geht 'An das Bezirksamt, zu Handen des Herrn Präsidenten, persönlich'.",
+        "evidence": "An das Bezirksamt, zu Handen des Herrn Präsidenten, persönlich"
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:grippezahlen_kapitel3",
+        "value": "Im Berichtszeitraum wurden 178 Grippeerkrankungen gezählt, keine Hospitalisierungen, keine Grippetoten, ein Todesfall anderer Ursache.",
+        "evidence": "Erkrankte: hundertachtundsiebzig. Hospitalisiert: keiner, da der Pass geschlossen. Todesfälle infolge Grippe: keiner. Todesfälle anderer Ursache: einer."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_pass_oeffnet",
+        "value": "Der erste Postschlitten seit der Einschneiung erreicht das Dorf; der Pass ist offen.",
+        "evidence": "am fünfundzwanzigsten, kurz nach acht Uhr, der Postschlitten"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_rieder_begleitbericht",
+        "value": "Rieder verliest Stettler seinen Begleitbericht zur Prüfung der Selbstanzeige nach Art. 48 Abs. 2 und erklärt, den Verfügungsentwurf gegen Stettler nicht verwendet zu haben.",
+        "evidence": "Mein Begleitbericht. Ich lese Ihnen den Schluss vor"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_stettler_beglaubigt_abschrift",
+        "value": "Stettler beglaubigt mit zitternder Hand eine Abschrift seines Geständnisses, die im Dorf verbleibt, während das Original an die Behörde geht.",
+        "evidence": "die Feder zitterte so, dass ein Tropfen auf die Zeile Der Aussteller fiel"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_versand_gestaendnis",
+        "value": "Rieder gibt den versiegelten Umschlag mit Stettlers Originalgeständnis eingeschrieben an das Bezirksamt zur Post; die zwölf Tage liegengebliebene erste Meldung geht am selben Tag mit dem ersten Schlitten ab.",
+        "evidence": "Rieder legte den Umschlag auf die Waage... eingeschrieben, einundneunzig Rappen"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_rosa_papiere_durchsicht",
+        "value": "Rosa Kalt bittet Stettler, Anton Kalts Nachlasspapiere für die Bank durchzusehen; Stettler sucht dabei verdeckt nach dem alten Krankenblatt, findet es aber nicht.",
+        "evidence": "Es war vollständig. Es fehlte nichts. Es war nichts da."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_rosa_verbrennt_rechnungen",
+        "value": "Rosa Kalt verbrennt ungefragt Stettlers alte, beglichene Rechnungen an Anton Kalt im Ofen.",
+        "evidence": "lagen sie in der Glut"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_beerdigung",
+        "value": "Anton Kalt wird begraben; Stettler steht in der zweiten Reihe hinter Rosa Kalt.",
+        "evidence": "Am Freitag um zehn wurde Anton Kalt begraben."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_praxis_leerung",
+        "value": "Stettlers Praxis leert sich zusehends, da die Grippewelle abklingt.",
+        "evidence": "In der Praxis wurde es von da an leerer."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_grippestatistik",
+        "value": "Stettler füllt das kantonale Grippestatistik-Formular aus und trägt unter Bemerkungen nur 'Keine' ein.",
+        "evidence": "Dann kam die Rubrik Bemerkungen... Dann schrieb er: Keine."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_stettler_privatabschrift",
+        "value": "Stettler fertigt aus dem Gedächtnis eine eigene, unsignierte Abschrift seines Geständnisses an und legt sie im Archiv hinter dem Durchschlag von Kalts Totenschein ab; das Krankenblatt legt er nicht dazu, da es sich nicht gefunden hat.",
+        "evidence": "Das Krankenblatt legte er nicht dazu; es hatte sich in Kalts Nachlass nicht gefunden, und es würde sich nicht mehr finden."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_mappe_ausgepackt",
+        "value": "Stettler packt die seit der Unfallnacht bereitstehende Reisetasche wieder aus.",
+        "evidence": "Er trug sie jetzt ins Schlafzimmer und packte sie aus"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_wartezimmer_leer",
+        "value": "Am folgenden Morgen wartet niemand mehr im Wartezimmer auf Stettler.",
+        "evidence": "Es wartete niemand."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_vier_fragen_pruefung",
+        "value": "Rieder prüft in den Tagen nach Stettlers Nachfrage die vier offenen Verfahrensfragen zu Art. 48 Abs. 2; jede Frage benötigt drei Tage.",
+        "evidence": "Ich habe vier Fragen geprüft, und jede Frage hat drei Tage gebraucht"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch03_zeitungsinserat_fund",
+        "value": "Unter Zeitungspapier in Kalts Militärkoffer liegt eine zwanzig Jahre alte Anzeige einer Heilanstalt, die einen Sanitätsgehilfen mit sofortigem Eintritt suchte.",
+        "evidence": "eine Ausgabe vom Frühjahr vor zwanzig Jahren... die Anzeige einer Heilanstalt, die einen Sanitätsgehilfen suchte, Eintritt sofort"
+      },
+      {
+        "kind": "knowledge",
+        "ref": "knowledge:k_selbstanzeige_verzoegert:stettler",
+        "value": "suspects -> knows",
+        "evidence": "«Sie haben es gewusst.» «Ich habe es geprüft», sagte Rieder. «Das ist bei uns dasselbe.»"
+      }
+    ],
+    "flagged": [],
+    "ledger_updates": [
+      {
+        "id": "zitternde_hand",
+        "kind": "motif",
+        "chapter": 3,
+        "from_status": "setup",
+        "to_status": "paid_off",
+        "note": "delivered in the prose"
+      },
+      {
+        "id": "krankenblatt",
+        "kind": "motif",
+        "chapter": 3,
+        "from_status": "setup",
+        "to_status": "paid_off",
+        "note": "delivered in the prose"
+      },
+      {
+        "id": "wird_selbstanzeige_verhandelt",
+        "kind": "promise",
+        "chapter": 3,
+        "from_status": "open",
+        "to_status": "kept",
+        "note": "kept on the page"
+      },
+      {
+        "id": "krankenblatt_taucht_auf",
+        "kind": "promise",
+        "chapter": 3,
+        "from_status": "open",
+        "to_status": "kept",
+        "note": "kept on the page"
+      },
+      {
+        "id": "rieders_weiterleitung",
+        "kind": "promise",
+        "chapter": 3,
+        "from_status": "open",
+        "to_status": "kept",
+        "note": "kept on the page"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "Stettler quietly closes his own file in the emptying practice as the pass reopens and no answer ever comes, landing the chapter's final beat, but the prose reassigns the forwarding act away from Rieder and misplaces where the hand-tremor last showed.",
+  "issues": [
+    {
+      "unit": "Danach holte er die Quittung aus der Manteltasche",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "rieder:weiterleitung_status",
+      "fix_hint": "Cut Stettler's personal possession of the registered-mail receipt for the confession; canon requires that Rieder, not Stettler, forwarded the original to the Bezirksbehörde together with his own procedurally-dressed cover report, so show or state Rieder's act instead of implying Stettler mailed or held proof of mailing it himself."
+    },
+    {
+      "unit": "Die Hand zitterte, sobald sie allein war",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "stettler:zitternde_hand",
+      "fix_hint": "Canon fixes the hand's last visible tremor to the moment Stettler countersigns Rieder's forwarding document; either depict that countersigning as the final instance or drop the later, more pronounced trembling shown here while he privately copies out the confession, so it doesn't post-date the canonical last occurrence."
+    }
+  ],
+  "conflict": ""
+}

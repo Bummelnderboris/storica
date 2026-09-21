@@ -1,0 +1,20 @@
+{
+  "seq": 214,
+  "digest": "49e5f557a01912c7",
+  "stage": "consensus_canon_consistency_ch03",
+  "model": "",
+  "note": "0/3 blocked",
+  "system": null,
+  "prompt": "",
+  "artifact": {
+    "samples": 3,
+    "threshold": 2,
+    "blocked": 0,
+    "escalated": 0,
+    "decisions": [
+      "pass",
+      "pass",
+      "pass"
+    ]
+  }
+}

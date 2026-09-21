@@ -1,0 +1,28 @@
+{
+  "decision": "revise",
+  "summary": "The scene enacts the chapter's turn through genuinely imagined, specific detail (two toothbrushes, the honey jar, the 397th entry), but repeatedly undercuts its own restraint by appending a terse explanatory or aphoristic sentence to actions that were already legible on their own.",
+  "issues": [
+    {
+      "unit": "nicht aus Trauer, sondern wie man sich nach einem Zeugen umdreht",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut from 'nicht aus Trauer' to the end of the sentence. Let 'die sich zweimal nach ihm umdrehte' stand without the narrator ruling out one reading and supplying another."
+    },
+    {
+      "unit": "Es war, soweit die Statistik es betraf, die Wahrheit.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Delete this sentence entirely. End the paragraph on 'Keine.' — the irony of the entry is already complete without the gloss."
+    },
+    {
+      "unit": "Freigesprochen wird man, wenn niemand es ausspricht",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut both sentences 'Man wird an einem bestimmten Tag verurteilt, um eine bestimmte Uhrzeit, von einem bestimmten Menschen.' and 'Freigesprochen wird man, wenn niemand es ausspricht, an keinem Tag, oder an allen.' This states the chapter's thesis outright before the filing scene is allowed to enact it; the realization should arrive through the archive and register scenes that follow, not be announced ahead of them."
+    }
+  ],
+  "conflict": ""
+}

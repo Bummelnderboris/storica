@@ -1,0 +1,35 @@
+{
+  "decision": "revise",
+  "summary": "Chapter 3 delivers both scheduled beats and all listed payoffs and promises through scenes that genuinely turn and that earn a real, ironic purpose, but it asserts a handful of exit-state changes and one character's presence without grounding them in any scene's action.",
+  "issues": [
+    {
+      "unit": "s2",
+      "kind": "coherence",
+      "severity": "warning",
+      "canon_ref": "kalt_witwe.arc",
+      "fix_hint": "Give kalt_witwe one concrete action in s2's intent (e.g. she points Stettler to a specific drawer or box, or asks him a question he deflects) so her presence does something beyond being searched around."
+    },
+    {
+      "unit": "exit_state.kalt:status",
+      "kind": "coherence",
+      "severity": "warning",
+      "canon_ref": "kalt_witwe.facts.funeral_plans",
+      "fix_hint": "No scene shows or references the burial happening; add a short clause to s2's intent noting the funeral already took place before the Nachlass is ordered."
+    },
+    {
+      "unit": "exit_state.dorf:abhaengigkeit_von_stettler",
+      "kind": "coherence",
+      "severity": "warning",
+      "canon_ref": "grippewelle",
+      "fix_hint": "The claim that the flu wave recedes and the village never learns of the confession is not shown in any scene; fold one observational line into s3 noting the quieting practice as the thaw sets in."
+    },
+    {
+      "unit": "entry_state.pass:status / exit_state.pass:status",
+      "kind": "coherence",
+      "severity": "warning",
+      "canon_ref": "isolation_passwinter",
+      "fix_hint": "The pass opening is the chapter's title premise but is only presupposed before s1 begins, never dramatized; add a brief opening beat to s1 (e.g. word arrives the road is clear) so the triggering event is earned on the page."
+    }
+  ],
+  "conflict": ""
+}
