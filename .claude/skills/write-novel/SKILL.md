@@ -120,7 +120,9 @@ above), all in parallel, each with exactly this prompt and nothing added:
 >   notes about your choices.
 >
 > Do not ask questions, do not explain yourself, and do not report back — writing the file is your
-> entire output. Answer in the language the prompt is written in.
+> entire output. Answer in the language the prompt is written in. When the file is written, your
+> final reply is the single word `done` — no summary of what you wrote, because whoever reads your
+> reply must not learn anything about the story.
 
 **6. When every dispatched subagent has finished, go back to step 1.** The answered calls now replay
 from cache and the pipeline moves on.

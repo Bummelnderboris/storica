@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "Kapitel 2 trägt alle drei zugewiesenen Beats über klar wendende Szenen und lässt die Selbstanzeige glaubwürdig aus dem Verfahren in den Alltag gleiten, ohne dass eine Entscheidung fiele — es verdient seinen Platz, aber zwei Exit-State-Behauptungen sind im Szenentext nicht explizit verankert.",
+  "issues": [
+    {
+      "unit": "s1",
+      "kind": "coherence",
+      "severity": "warning",
+      "canon_ref": "institution_zivilstandsamt_chrachen",
+      "fix_hint": "In s1's intent oder turn ergänzen, dass der Totenschein ans Zivilstandsamt Chrachen weitergereicht wird, damit der exit_state-Eintrag totenschein_kalt:status ('weitergereicht') tatsächlich von der Szene getragen wird und nicht nur im exit_state behauptet steht."
+    },
+    {
+      "unit": "s2",
+      "kind": "coherence",
+      "severity": "warning",
+      "canon_ref": "stettler:zitternde_hand",
+      "fix_hint": "In s2's intent oder turn ergänzen, dass sich das Zittern der rechten Hand während einer alltäglichen Verrichtung in der Praxis zeigt, damit die im exit_state behauptete Verstärkung (stettler:zitternde_hand) tatsächlich in der Szene gezeigt wird."
+    }
+  ],
+  "conflict": ""
+}

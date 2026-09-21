@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "Rieder verwandelt sich durch lauter genaue Verrichtungen vom routinierten Aktenversender zum einzigen Träger einer nicht abgehbaren Wahrheit, und fast die ganze Einheit trägt das durch erfundene, nicht austauschbare Details statt durch Behauptung - bis auf eine Stelle, wo der Text erklärt, was die vorangegangene Handlung bedeutet, statt sie stehenzulassen.",
+  "issues": [
+    {
+      "unit": "Das war das Beruhigende an einer Meldung",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Streiche den Satz 'Das war das Beruhigende an einer Meldung: sie verlangte nur, dass man eine Frage richtig stellte.' Der Absatz endet auf 'und die zu geben war nicht seine Sache.'"
+    }
+  ],
+  "conflict": ""
+}

@@ -1,0 +1,283 @@
+{
+  "seq": 111,
+  "digest": "d10c6a16402a4faa",
+  "stage": "ch01_reconcile_decisions",
+  "model": "sonnet",
+  "note": "19 promoted, 17 flagged, 2 ledger updates",
+  "system": null,
+  "prompt": "",
+  "artifact": {
+    "promoted": [
+      {
+        "kind": "alias",
+        "ref": "alias:stettler",
+        "value": "der Doktor",
+        "evidence": "das sei jetzt Sache des Doktors"
+      },
+      {
+        "kind": "alias",
+        "ref": "alias:stettler",
+        "value": "Herr Doktor",
+        "evidence": "«Herr Doktor.»"
+      },
+      {
+        "kind": "alias",
+        "ref": "alias:stettler",
+        "value": "Dr. K. Stettler, Amtsarzt",
+        "evidence": "Empfangen von Dr. K. Stettler, Amtsarzt"
+      },
+      {
+        "kind": "alias",
+        "ref": "alias:rieder",
+        "value": "Herr Richter",
+        "evidence": "Es hat seine Nummer... Herr Richter."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "stettler.career_totenscheine",
+        "value": "has issued about four hundred death certificates in his career",
+        "evidence": "etwa vierhundert Totenscheine ausgestellt"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "stettler.handwriting_reputation",
+        "value": "his even handwriting was once praised as exemplary in a district circular",
+        "evidence": "die der Bezirk einmal in einem Rundschreiben als vorbildlich lesbar erwähnt hatte"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "stettler.relationship_with_kalt",
+        "value": "treated Kalt medically over the years (set a hernia twice, lanced an abscess once) and billed him each time; Kalt paid",
+        "evidence": "hatte ihm zweimal einen Bruch gerichtet und einmal einen Abszess geöffnet"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "kalt.car",
+        "value": "bought a fourteen-year-old Opel that summer, previously owned by a cattle dealer in Brig, though it was too expensive for him",
+        "evidence": "Der Opel war vierzehn Jahre alt ... war für Kalt zu teuer gewesen."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.prior_caseload",
+        "value": "in eleven weeks has investigated two cattle thefts, one defamation between neighbors, and a boundary fence on the wrong property",
+        "evidence": "zwei Viehdiebstähle, eine Ehrverletzung unter Nachbarn und einen Zaun"
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:institution_untersuchungsrichter_buero",
+        "value": "Rieder's office sits on the first floor of the Gemeindehaus, above the post office, next to where the fire brigade dries its hoses",
+        "evidence": "im ersten Stock des Gemeindehauses, über dem Postbüro"
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:law_strafprozessgesetz_art48_abs2",
+        "value": "code of criminal procedure: if the superior authority is unreachable in time, the investigating magistrate must decide independently and on his own responsibility; his predecessor had pencilled 'Kommt nicht vor' beside the article",
+        "evidence": "Kommt nicht vor."
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:institution_zivilstandsamt_chrachen",
+        "value": "the civil registry office of Chrachen is a cabinet in the room next to the fire hoses, run by the Gemeindeschreiber",
+        "evidence": "ein Schrank im Nebenzimmer, zwischen den Feuerwehrschläuchen"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch01_kalt_absturz",
+        "value": "Kalt's car leaves the pass road at the sixth switchback after he brakes on ice to avoid an animal, and he dies of the crash.",
+        "evidence": "Der Wagen verliess die Strasse zwischen der siebten und der achten Stange."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch01_altfall_krankenblatt_entwendet",
+        "value": "Kalt takes the only hospital record proving Stettler's error, quits his post as medical orderly the next morning, and returns to his father's village.",
+        "evidence": "Kalt hatte sie an sich genommen, am Abend nach der Sache ... am folgenden Morgen hatte er den Dienst quittiert"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch01_fund_durch_wegknecht",
+        "value": "The Wegknecht finds Kalt's wrecked car while relieving himself, and Kalt's body is brought to Stettler on a manure sled.",
+        "evidence": "Man brachte ihn um halb sechs Uhr morgens, auf einem Holzschlitten"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch01_stettler_diagnose",
+        "value": "Stettler examines the body and determines death before midnight from blunt chest trauma aggravated by hypothermia.",
+        "evidence": "Tod durch Einwirkung stumpfer Gewalt auf den Brustkorb, begünstigt durch Unterkühlung."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch01_stettler_schreibt_selbstanzeige",
+        "value": "Stettler writes a confession about the old medical error onto the back and margin of Kalt's death certificate.",
+        "evidence": "Um Viertel vor sieben war die Rückseite zu zwei Dritteln beschrieben."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch01_rieder_entgegennahme",
+        "value": "Rieder reads the confession, has Stettler sign a separate written handover, and formally logs receipt of the document.",
+        "evidence": "sieben Uhr zweiundfünfzig, und das Wort «Entgegengenommen»"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch01_meldung_im_postsack",
+        "value": "Rieder writes a report to the district authority about Kalt's death and Stettler's confession and mails it registered, but the closed pass leaves it stranded in the mailbag.",
+        "evidence": "Es geht nicht verloren. Es geht nur nicht weg."
+      }
+    ],
+    "flagged": [
+      {
+        "kind": "restated",
+        "ref": "stettler.profession",
+        "reason": "the draft restates 'profession' for 'stettler' in other words — canon's wording stands",
+        "canon_says": "Amtsarzt des Dorfes Chrachen, seit über zwanzig Jahren einziger amtlich bestellter Arzt am Ort.",
+        "prose_says": "Amtsarzt of Chrachen, sole doctor entitled to certify deaths",
+        "evidence": "Amtsarzt Chrachen. Der Stempel war deutlich."
+      },
+      {
+        "kind": "restated",
+        "ref": "stettler.age",
+        "reason": "the draft restates 'age' for 'stettler' in other words — canon's wording stands",
+        "canon_says": "61 Jahre alt.",
+        "prose_says": "61 years old",
+        "evidence": "die er einundsechzig Jahre lang zu allem benutzt hatte"
+      },
+      {
+        "kind": "restated",
+        "ref": "stettler.physical_mark",
+        "reason": "the draft restates 'physical_mark' for 'stettler' in other words — canon's wording stands",
+        "canon_says": "Hat seit der Unfallnacht ein leichtes Zittern in der rechten, schreibenden Hand.",
+        "prose_says": "right writing hand trembles slightly, starting as he writes the truth on the death certificate",
+        "evidence": "Sie zitterte leicht. Nicht sehr."
+      },
+      {
+        "kind": "restated",
+        "ref": "stettler.secret",
+        "reason": "the draft restates 'secret' for 'stettler' in other words — canon's wording stands",
+        "canon_says": "Vertuschte vor zwanzig Jahren einen tödlichen Behandlungsfehler an einem Patienten in den amtlichen Unterlagen.",
+        "prose_says": "replaced the true record of a fatal medical error with a clean, false one twenty years ago",
+        "evidence": "Die zweite Eintragung war sauber, vollständig und falsch"
+      },
+      {
+        "kind": "restated",
+        "ref": "stettler.obligation",
+        "reason": "the draft restates 'obligation' for 'stettler' in other words — canon's wording stands",
+        "canon_says": "Ist als einziger Mediziner des Tals gesetzlich verpflichtet, jeden Totenschein im Dorf selbst auszustellen — auch den von Anton Kalt.",
+        "prose_says": "only person in the valley who may certify deaths, even his own case",
+        "evidence": "Es gibt in diesem Tal niemand anders, der beurkunden kann."
+      },
+      {
+        "kind": "restated",
+        "ref": "kalt.profession",
+        "reason": "the draft restates 'profession' for 'kalt' in other words — canon's wording stands",
+        "canon_says": "War zur Zeit des alten Vorfalls Sanitätsgehilfe, zuletzt Kleinbauer in Chrachen.",
+        "prose_says": "small farmer in Chrachen, formerly a medical orderly",
+        "evidence": "Kleinbauer in Chrachen, vormals Sanitätsgehilfe"
+      },
+      {
+        "kind": "restated",
+        "ref": "kalt.age",
+        "reason": "the draft restates 'age' for 'kalt' in other words — canon's wording stands",
+        "canon_says": "War 58 Jahre alt.",
+        "prose_says": "58 years old",
+        "evidence": "achtundfünfzig Jahre alt"
+      },
+      {
+        "kind": "restated",
+        "ref": "kalt.death",
+        "reason": "the draft restates 'death' for 'kalt' in other words — canon's wording stands",
+        "canon_says": "Stirbt in der Eröffnungsnacht des Romans bei einem Autounfall auf der verschneiten Passstrasse.",
+        "prose_says": "dies when his car leaves the snowbound pass road at the sixth switchback",
+        "evidence": "Der Wagen verliess die Strasse zwischen der siebten und der achten Stange."
+      },
+      {
+        "kind": "restated",
+        "ref": "kalt.secret_knowledge",
+        "reason": "the draft restates 'secret_knowledge' for 'kalt' in other words — canon's wording stands",
+        "canon_says": "War als Einziger unmittelbarer Zeuge von Stettlers tödlichem Behandlungsfehler vor zwanzig Jahren und schwieg seither darüber.",
+        "prose_says": "has silently held for twenty years the fact only one other person also knows",
+        "evidence": "Er wusste seit zwanzig Jahren etwas, das ausser ihm nur noch ein einziger Mensch wusste"
+      },
+      {
+        "kind": "restated",
+        "ref": "rieder.profession",
+        "reason": "the draft restates 'profession' for 'rieder' in other words — canon's wording stands",
+        "canon_says": "Junger Untersuchungsrichter, seit kurzem für das Tal von Chrachen zuständig.",
+        "prose_says": "young investigating magistrate, recently responsible for the valley",
+        "evidence": "Um halb acht kam der Untersuchungsrichter."
+      },
+      {
+        "kind": "restated",
+        "ref": "rieder.age",
+        "reason": "the draft restates 'age' for 'rieder' in other words — canon's wording stands",
+        "canon_says": "29 Jahre alt.",
+        "prose_says": "29 years old",
+        "evidence": "Er war neunundzwanzig Jahre alt"
+      },
+      {
+        "kind": "restated",
+        "ref": "rieder.status",
+        "reason": "the draft restates 'status' for 'rieder' in other words — canon's wording stands",
+        "canon_says": "Neu im Amt, ohne verwandtschaftliche oder freundschaftliche Bindungen im Dorf.",
+        "prose_says": "has been in the valley eleven weeks, with no ties there",
+        "evidence": "er war seit elf Wochen im Tal"
+      },
+      {
+        "kind": "restated",
+        "ref": "rieder.obligation",
+        "reason": "the draft restates 'obligation' for 'rieder' in other words — canon's wording stands",
+        "canon_says": "Ist durch den verschneiten Pass von der übergeordneten Behörde abgeschnitten und muss vorerst allein über Stettlers Geständnis entscheiden.",
+        "prose_says": "cut off from the district authority by the closed pass, must act independently and on his own responsibility",
+        "evidence": "trifft der Untersuchungsrichter die erforderlichen Verfügungen selbständig und in eigener Verantwortung"
+      },
+      {
+        "kind": "restated",
+        "ref": "world:location_chrachen",
+        "reason": "the draft restates 'location_chrachen' in other words — canon's wording stands",
+        "canon_says": "Das Dorf Chrachen: einziger Ort im Tal, erreichbar nur über einen einzigen Passweg.",
+        "prose_says": "the village is reachable only by the single pass road, now snowed shut",
+        "evidence": "Der Pass geht zu. Ich komme nicht mehr hinauf."
+      },
+      {
+        "kind": "restated",
+        "ref": "world:institution_amtsarzt_chrachen",
+        "reason": "the draft restates 'institution_amtsarzt_chrachen' in other words — canon's wording stands",
+        "canon_says": "Das Amt des Amtsarztes von Chrachen: es gibt nur einen amtlich bestellten Arzt im Dorf, und nur er darf Totenscheine ausstellen — auch dann, wenn er selbst Partei im Fall ist.",
+        "prose_says": "no one else in the valley may certify deaths besides Stettler, even though he is the accused",
+        "evidence": "Es gibt in diesem Tal niemand anders, der beurkunden kann."
+      },
+      {
+        "kind": "restated",
+        "ref": "world:isolation_passwinter",
+        "reason": "the draft restates 'isolation_passwinter' in other words — canon's wording stands",
+        "canon_says": "Der einzige Pass ins Tal ist im Winter tage- bis wochenlang durch Schnee blockiert; kein Schriftstück und keine Anweisung von aussen erreicht in dieser Zeit das Dorf.",
+        "prose_says": "pass fully snowed in, an avalanche came down above the Rinne, phone and telegraph dead, postal bus stranded; past closures lasted nine days, four weeks, or once until Candlemas",
+        "evidence": "Letztes Jahr neun Tage. Neunundvierzig vier Wochen. Einmal ... bis Lichtmess."
+      },
+      {
+        "kind": "restated",
+        "ref": "world:institution_aussenbehoerde",
+        "reason": "the draft restates 'institution_aussenbehoerde' in other words — canon's wording stands",
+        "canon_says": "Die dem Untersuchungsrichter Rieder übergeordnete Bezirksbehörde ausserhalb des Tals, die während der Einschneiung nicht erreichbar ist.",
+        "prose_says": "Rieder's registered report to the district authority cannot leave the valley; it is logged and numbered but stays in the mailbag",
+        "evidence": "Es geht nicht verloren. Es geht nur nicht weg."
+      }
+    ],
+    "ledger_updates": [
+      {
+        "id": "zitternde_hand",
+        "kind": "motif",
+        "chapter": 1,
+        "from_status": "planned",
+        "to_status": "setup",
+        "note": "planted in the prose"
+      },
+      {
+        "id": "krankenblatt",
+        "kind": "motif",
+        "chapter": 1,
+        "from_status": "planned",
+        "to_status": "setup",
+        "note": "planted in the prose"
+      }
+    ]
+  }
+}

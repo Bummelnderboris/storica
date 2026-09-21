@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The chapter delivers all three assigned beats through scenes that each turn state and together earn the purpose of letting the confession drain out of procedure and into routine, but the exit state overclaims a completed burial that no scene actually stages.",
+  "issues": [
+    {
+      "unit": "s1",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "kalt:status",
+      "fix_hint": "Exit_state kalt:status says Kalt is already 'beerdigt' (buried), but s1's turn only fixes a burial date ('Beerdigungstermin fixiert'). Either soften exit_state to 'Ein rascher, unauffälliger Beerdigungstermin ist fixiert' or add a line to s1 (or a time-skip note) showing the burial itself taking place before the chapter ends."
+    },
+    {
+      "unit": "s2",
+      "kind": "coherence",
+      "severity": "warning",
+      "canon_ref": "stettler:zitternde_hand",
+      "fix_hint": "Exit_state claims the trembling now 'shows up in everyday tasks in the practice', but s2's stated turn only covers a day of sick visits and a postponed errand, without naming the hand. Add one concrete beat to s2's turn (e.g. the hand shaking while he writes a chart or fills a syringe) so the claim is earned on the page."
+    }
+  ],
+  "conflict": ""
+}

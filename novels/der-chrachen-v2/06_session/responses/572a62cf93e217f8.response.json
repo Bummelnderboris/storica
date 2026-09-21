@@ -1,0 +1,68 @@
+{
+  "character_facts": [
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "profession", "value": "Amtsarzt of Chrachen, sole doctor entitled to certify deaths", "relation_to_canon": "restates_canon", "evidence": "Amtsarzt Chrachen. Der Stempel war deutlich."},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "age", "value": "61 years old", "relation_to_canon": "restates_canon", "evidence": "die er einundsechzig Jahre lang zu allem benutzt hatte"},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "physical_mark", "value": "right writing hand trembles slightly, starting as he writes the truth on the death certificate", "relation_to_canon": "restates_canon", "evidence": "Sie zitterte leicht. Nicht sehr."},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "secret", "value": "replaced the true record of a fatal medical error with a clean, false one twenty years ago", "relation_to_canon": "restates_canon", "evidence": "Die zweite Eintragung war sauber, vollständig und falsch"},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "obligation", "value": "only person in the valley who may certify deaths, even his own case", "relation_to_canon": "restates_canon", "evidence": "Es gibt in diesem Tal niemand anders, der beurkunden kann."},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "career_totenscheine", "value": "has issued about four hundred death certificates in his career", "relation_to_canon": "new", "evidence": "etwa vierhundert Totenscheine ausgestellt"},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "handwriting_reputation", "value": "his even handwriting was once praised as exemplary in a district circular", "relation_to_canon": "new", "evidence": "die der Bezirk einmal in einem Rundschreiben als vorbildlich lesbar erwähnt hatte"},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "relationship_with_kalt", "value": "treated Kalt medically over the years (set a hernia twice, lanced an abscess once) and billed him each time; Kalt paid", "relation_to_canon": "new", "evidence": "hatte ihm zweimal einen Bruch gerichtet und einmal einen Abszess geöffnet"},
+    {"character_id": "kalt", "surface_name": "Anton Kalt", "key": "profession", "value": "small farmer in Chrachen, formerly a medical orderly", "relation_to_canon": "restates_canon", "evidence": "Kleinbauer in Chrachen, vormals Sanitätsgehilfe"},
+    {"character_id": "kalt", "surface_name": "Anton Kalt", "key": "age", "value": "58 years old", "relation_to_canon": "restates_canon", "evidence": "achtundfünfzig Jahre alt"},
+    {"character_id": "kalt", "surface_name": "Kalt", "key": "death", "value": "dies when his car leaves the snowbound pass road at the sixth switchback", "relation_to_canon": "restates_canon", "evidence": "Der Wagen verliess die Strasse zwischen der siebten und der achten Stange."},
+    {"character_id": "kalt", "surface_name": "Kalt", "key": "secret_knowledge", "value": "has silently held for twenty years the fact only one other person also knows", "relation_to_canon": "restates_canon", "evidence": "Er wusste seit zwanzig Jahren etwas, das ausser ihm nur noch ein einziger Mensch wusste"},
+    {"character_id": "kalt", "surface_name": "Kalt", "key": "possession_krankenblatt", "value": "took the old hospital record proving Stettler's error the evening after the incident; whether he still has it is unknown, and it was not among the eight objects found on his body", "relation_to_canon": "restates_canon", "evidence": "Kalt hatte sie an sich genommen, am Abend nach der Sache, ohne ein Wort"},
+    {"character_id": "kalt", "surface_name": "Kalt", "key": "car", "value": "bought a fourteen-year-old Opel that summer, previously owned by a cattle dealer in Brig, though it was too expensive for him", "relation_to_canon": "new", "evidence": "Der Opel war vierzehn Jahre alt ... war für Kalt zu teuer gewesen."},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "profession", "value": "young investigating magistrate, recently responsible for the valley", "relation_to_canon": "restates_canon", "evidence": "Um halb acht kam der Untersuchungsrichter."},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "age", "value": "29 years old", "relation_to_canon": "restates_canon", "evidence": "Er war neunundzwanzig Jahre alt"},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "status", "value": "has been in the valley eleven weeks, with no ties there", "relation_to_canon": "restates_canon", "evidence": "er war seit elf Wochen im Tal"},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "obligation", "value": "cut off from the district authority by the closed pass, must act independently and on his own responsibility", "relation_to_canon": "restates_canon", "evidence": "trifft der Untersuchungsrichter die erforderlichen Verfügungen selbständig und in eigener Verantwortung"},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "prior_caseload", "value": "in eleven weeks has investigated two cattle thefts, one defamation between neighbors, and a boundary fence on the wrong property", "relation_to_canon": "new", "evidence": "zwei Viehdiebstähle, eine Ehrverletzung unter Nachbarn und einen Zaun"}
+  ],
+  "aliases": [
+    {"character_id": "kalt", "alias": "Anton Kalt", "evidence": "Anton Kalt fuhr um zwanzig nach zehn Uhr abends"},
+    {"character_id": "kalt", "alias": "Kalt", "evidence": "Kalt war trotzdem losgefahren."},
+    {"character_id": "kalt", "alias": "der Tote", "evidence": "Der Tote war steif und passte nicht recht auf den Tisch"},
+    {"character_id": "kalt", "alias": "der Verstorbene", "evidence": "«Der Verstorbene», sagte er, «war damals —»"},
+    {"character_id": "stettler", "alias": "Doktor Stettler", "evidence": "Doktor Stettler öffnete selbst."},
+    {"character_id": "stettler", "alias": "Stettler", "evidence": "Stettler diktierte ihm den Befund."},
+    {"character_id": "stettler", "alias": "der Doktor", "evidence": "das sei jetzt Sache des Doktors"},
+    {"character_id": "stettler", "alias": "Herr Doktor", "evidence": "«Herr Doktor.»"},
+    {"character_id": "stettler", "alias": "Dr. K. Stettler, Amtsarzt", "evidence": "Empfangen von Dr. K. Stettler, Amtsarzt"},
+    {"character_id": "rieder", "alias": "Rieder", "evidence": "Rieder erschien mit einer Aktenmappe"},
+    {"character_id": "rieder", "alias": "der Untersuchungsrichter", "evidence": "Um halb acht kam der Untersuchungsrichter."},
+    {"character_id": "rieder", "alias": "Herr Rieder", "evidence": "«Herr Rieder.»"},
+    {"character_id": "rieder", "alias": "Herr Richter", "evidence": "Es hat seine Nummer... Herr Richter."}
+  ],
+  "world_facts": [
+    {"key": "location:chrachen", "value": "the village is reachable only by the single pass road, now snowed shut", "relation_to_canon": "restates_canon", "evidence": "Der Pass geht zu. Ich komme nicht mehr hinauf."},
+    {"key": "institution:amtsarzt_chrachen", "value": "no one else in the valley may certify deaths besides Stettler, even though he is the accused", "relation_to_canon": "restates_canon", "evidence": "Es gibt in diesem Tal niemand anders, der beurkunden kann."},
+    {"key": "isolation:passwinter", "value": "pass fully snowed in, an avalanche came down above the Rinne, phone and telegraph dead, postal bus stranded; past closures lasted nine days, four weeks, or once until Candlemas", "relation_to_canon": "restates_canon", "evidence": "Letztes Jahr neun Tage. Neunundvierzig vier Wochen. Einmal ... bis Lichtmess."},
+    {"key": "institution:aussenbehoerde", "value": "Rieder's registered report to the district authority cannot leave the valley; it is logged and numbered but stays in the mailbag", "relation_to_canon": "restates_canon", "evidence": "Es geht nicht verloren. Es geht nur nicht weg."},
+    {"key": "institution:untersuchungsrichter_buero", "value": "Rieder's office sits on the first floor of the Gemeindehaus, above the post office, next to where the fire brigade dries its hoses", "relation_to_canon": "new", "evidence": "im ersten Stock des Gemeindehauses, über dem Postbüro"},
+    {"key": "law:strafprozessgesetz_art48_abs2", "value": "code of criminal procedure: if the superior authority is unreachable in time, the investigating magistrate must decide independently and on his own responsibility; his predecessor had pencilled 'Kommt nicht vor' beside the article", "relation_to_canon": "new", "evidence": "Kommt nicht vor."},
+    {"key": "institution:zivilstandsamt_chrachen", "value": "the civil registry office of Chrachen is a cabinet in the room next to the fire hoses, run by the Gemeindeschreiber", "relation_to_canon": "new", "evidence": "ein Schrank im Nebenzimmer, zwischen den Feuerwehrschläuchen"}
+  ],
+  "timeline": [
+    {"id": "ch01_kalt_absturz", "when": "ch1 night, gegen 22 Uhr", "event": "Kalt's car leaves the pass road at the sixth switchback after he brakes on ice to avoid an animal, and he dies of the crash.", "involves": ["kalt"], "after_event_id": "", "evidence": "Der Wagen verliess die Strasse zwischen der siebten und der achten Stange."},
+    {"id": "ch01_altfall_krankenblatt_entwendet", "when": "vor 20 Jahren, am Abend nach dem Vorfall", "event": "Kalt takes the only hospital record proving Stettler's error, quits his post as medical orderly the next morning, and returns to his father's village.", "involves": ["kalt", "stettler"], "after_event_id": "t1", "evidence": "Kalt hatte sie an sich genommen, am Abend nach der Sache ... am folgenden Morgen hatte er den Dienst quittiert"},
+    {"id": "ch01_fund_durch_wegknecht", "when": "ch1, gegen halb sechs Uhr morgens", "event": "The Wegknecht finds Kalt's wrecked car while relieving himself, and Kalt's body is brought to Stettler on a manure sled.", "involves": ["kalt", "stettler"], "after_event_id": "", "evidence": "Man brachte ihn um halb sechs Uhr morgens, auf einem Holzschlitten"},
+    {"id": "ch01_stettler_diagnose", "when": "ch1, früh morgens", "event": "Stettler examines the body and determines death before midnight from blunt chest trauma aggravated by hypothermia.", "involves": ["stettler", "kalt"], "after_event_id": "", "evidence": "Tod durch Einwirkung stumpfer Gewalt auf den Brustkorb, begünstigt durch Unterkühlung."},
+    {"id": "ch01_stettler_schreibt_selbstanzeige", "when": "ch1, kurz vor 7 Uhr", "event": "Stettler writes a confession about the old medical error onto the back and margin of Kalt's death certificate.", "involves": ["stettler"], "after_event_id": "", "evidence": "Um Viertel vor sieben war die Rückseite zu zwei Dritteln beschrieben."},
+    {"id": "ch01_rieder_entgegennahme", "when": "ch1, 7:52 Uhr", "event": "Rieder reads the confession, has Stettler sign a separate written handover, and formally logs receipt of the document.", "involves": ["rieder", "stettler"], "after_event_id": "", "evidence": "sieben Uhr zweiundfünfzig, und das Wort «Entgegengenommen»"},
+    {"id": "ch01_meldung_im_postsack", "when": "ch1, Vormittag", "event": "Rieder writes a report to the district authority about Kalt's death and Stettler's confession and mails it registered, but the closed pass leaves it stranded in the mailbag.", "involves": ["rieder"], "after_event_id": "", "evidence": "Es geht nicht verloren. Es geht nur nicht weg."}
+  ],
+  "contradictions": [],
+  "knowledge_shifts": [
+    {"knowledge_id": "k_beweis_verloren", "character_id": "stettler", "awareness": "knows", "instead": "", "evidence": "Er hatte gewusst, wer es war ... Nun sah er es. Das ist etwas anderes."},
+    {"knowledge_id": "k_altes_verbrechen", "character_id": "rieder", "awareness": "knows", "instead": "", "evidence": "«Sie sind der Beschuldigte.»"},
+    {"knowledge_id": "k_beweis_verloren", "character_id": "rieder", "awareness": "knows", "instead": "", "evidence": "«Und er war der einzige, der —» «Ja.»"}
+  ],
+  "ledger": [
+    {"id": "zitternde_hand", "kind": "motif_setup", "landed": true, "evidence": "Sie zitterte leicht. Nicht sehr. Ein Fremder hätte es nicht bemerkt — beim Schreiben der Wahrheit auf den Totenschein."},
+    {"id": "krankenblatt", "kind": "motif_setup", "landed": true, "evidence": "Ein Krankenblatt, vorgedruckt ... Kalt hatte sie an sich genommen, am Abend nach der Sache."},
+    {"id": "wird_selbstanzeige_verhandelt", "kind": "promise_made", "landed": true, "evidence": "Rieder nimmt die Selbstanzeige förmlich entgegen, quittiert sie und meldet sie der Bezirksbehörde — das Verfahren ist eröffnet."},
+    {"id": "krankenblatt_taucht_auf", "kind": "promise_made", "landed": true, "evidence": "Ob Kalt das Blatt noch besass, wusste Stettler nicht ... er hatte nie gefragt — und es war nicht unter den acht Gegenständen."}
+  ]
+}

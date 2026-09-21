@@ -1,0 +1,28 @@
+{
+  "decision": "revise",
+  "summary": "The scene turns Stettler's confession into an official, entgegengenommen document through sharp procedural images, but three times an image is immediately capped with its own explicit moral, so the irony is narrated instead of left to land on its own.",
+  "issues": [
+    {
+      "unit": "und niemand würde ihn lesen, weil er in Ordnung war",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the sentence beginning 'Es war ein richtiger Satz'; let the quoted protocol line 'Vollständigkeit vom Amtsarzt nicht feststellbar' stand alone."
+    },
+    {
+      "unit": "aber sie glichen einander, und darauf kam es an",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut 'und darauf kam es an'; end the sentence at 'Sie glichen einander.'"
+    },
+    {
+      "unit": "ein Beweis dafür, dass etwas den Besitzer gewechselt hatte",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the clause from 'und es war, wie alle Quittungen' to the end of the scene; end on 'steckte sie in die Brusttasche seines Mantels, den er noch immer über dem Nachthemd trug.'"
+    }
+  ],
+  "conflict": ""
+}

@@ -1,0 +1,58 @@
+{
+  "chapter": 2,
+  "title": "Formgründe",
+  "purpose": "Nach diesem Kapitel ist Stettlers Selbstanzeige keine Sache mehr, die irgendjemand aktiv betreibt: Rosa Kalt hat den Totenschein administrativ abgeschlossen, ohne von der Wahrheit dahinter zu wissen, das Dorf hat Stettler durch die Grippewelle unentbehrlich gemacht, und Rieder hat die Weiterleitung mit Verweis auf Formvorschriften vertagt, obwohl er handeln könnte. Die Schuld gleitet damit aus dem Verfahren heraus und in den Alltag zurück, ohne dass irgendjemand eine Entscheidung getroffen hätte, die das Verfahren so genannt haben könnte.",
+  "pov_character_id": "stettler",
+  "present_character_ids": ["stettler", "kalt_witwe", "rieder"],
+  "advances_beats": ["b4", "b5", "b6"],
+  "setups": [],
+  "payoffs": [],
+  "promises_made": ["rieders_weiterleitung", "rosas_unwissenheit"],
+  "promises_kept": [],
+  "entry_state": [
+    { "key": "kalt:status", "value": "Tot; sein Leichnam liegt in Stettlers Praxis, der Totenschein ist ausgestellt." },
+    { "key": "totenschein_kalt:status", "value": "Ausgestellt mit der Wahrheit über den alten Behandlungsfehler, von Stettler eigenhändig geschrieben und unterschrieben." },
+    { "key": "rieder:knowledge_altes_verbrechen", "value": "knows (since t3) - Rieder hat Stettlers schriftliches Geständnis formgerecht entgegengenommen." },
+    { "key": "k_beweis_verloren:status", "value": "Mit Kalts Tod existiert kein lebender Zeuge mehr, der Stettlers alte Vertuschung bestätigen könnte." },
+    { "key": "pass:status", "value": "Vollständig zugeschneit; kein Schriftstück und keine Weisung kann das Tal verlassen oder erreichen." },
+    { "key": "rieder:weiterleitung_status", "value": "Noch nicht an die übergeordnete Behörde weitergeleitet - der zugeschneite Pass verhindert vorerst jede Meldung." },
+    { "key": "stettler:zitternde_hand", "value": "Seit dem Niederschreiben der Wahrheit auf den Totenschein zittert Stettlers rechte, schreibende Hand leicht." },
+    { "key": "krankenblatt:status", "value": "Verbleib unbekannt; das Krankenblatt ist nicht aufgetaucht, seine Existenz nur Stettler noch gegenwärtig." }
+  ],
+  "exit_state": [
+    { "key": "kalt:status", "value": "Tot und rasch, unauffällig beerdigt; Rosa Kalt hat auf einen frühen Termin gedrängt, um Beerdigung und Erbschaft zu regeln." },
+    { "key": "totenschein_kalt:status", "value": "Amtlich abgeschlossen und an das Zivilstandsamt Chrachen weitergereicht; die Eintragung mit der Wahrheit über den alten Behandlungsfehler bleibt unverändert stehen, aber ohne weitere amtliche Folge." },
+    { "key": "rieder:knowledge_altes_verbrechen", "value": "knows (since t3) - unverändert; Rieder hat das Geständnis weiterhin nicht weitergeleitet." },
+    { "key": "k_beweis_verloren:status", "value": "Mit Kalts Tod existiert weiterhin kein lebender Zeuge mehr, der Stettlers alte Vertuschung bestätigen könnte." },
+    { "key": "pass:status", "value": "Weiterhin vollständig zugeschneit; keine Änderung gegenüber Kapitelbeginn." },
+    { "key": "rieder:weiterleitung_status", "value": "Noch immer nicht weitergeleitet; Rieder beruft sich gegenüber Stettler ausdrücklich auf Art. 48 Abs. 2 und ausstehende Formalitäten und verschiebt die Meldung aus eigenem Entschluss, nicht aus Zwang." },
+    { "key": "stettler:zitternde_hand", "value": "Das Zittern in der rechten Hand hat sich nicht gelegt; es zeigt sich nun auch bei alltäglichen Verrichtungen in der Praxis." },
+    { "key": "krankenblatt:status", "value": "Verbleib weiterhin unbekannt; das Krankenblatt ist nicht aufgetaucht, seine Existenz nur Stettler noch gegenwärtig." },
+    { "key": "kalt_witwe:status", "value": "Erleichtert; hält die Sache mit Beerdigung und Erbschaft für geregelt und bleibt ahnungslos über Stettlers alte Schuld." },
+    { "key": "dorf:abhaengigkeit_von_stettler", "value": "Die Grippewelle hat die Dorfbewohner sichtbar von Stettler als einzigem Arzt abhängig gemacht; sein Ansehen im Dorf ist gewachsen, während seine Selbstanzeige in den Hintergrund tritt." },
+    { "key": "stettler:knowledge_selbstanzeige_verzoegert", "value": "suspects (since ch2) - Stettler beginnt zu ahnen, dass Rieder die Weiterleitung absichtlich hinauszögert." }
+  ],
+  "scenes": [
+    {
+      "id": "s1",
+      "location": "Stettlers Praxis, Sprechzimmer",
+      "character_ids": ["stettler", "kalt_witwe"],
+      "intent": "Trägt Beat b4: Rosa Kalt drängt Stettler, den Totenschein ihres Mannes rasch und ohne Aufsehen abzuschliessen, um Beerdigung und Erbschaft zu regeln, und beschleunigt damit unwissentlich seine Entlastung. Macht das Versprechen [rosas_unwissenheit]: die Frage, ob sie je erfährt, wessen Schuld ihre Eile deckt.",
+      "turn": "Am Ende ist ein Beerdigungstermin fixiert und der Totenschein für das Zivilstandsamt administrativ abgeschlossen; Stettler lässt den Augenblick, in dem er ihr etwas von der Wahrheit hätte andeuten können, verstreichen, und für Rosa gilt die Sache damit als erledigt."
+    },
+    {
+      "id": "s2",
+      "location": "Stettlers Praxis, Warteraum",
+      "character_ids": ["stettler"],
+      "intent": "Trägt Beat b5: Während die Grippewelle (grippewelle) das Dorf zunehmend von Stettler als einzigem Arzt abhängig macht, zeigt die Szene, wie er sich von dieser stillschweigenden Entlastung tragen lässt, statt seine Selbstanzeige selbst einzufordern.",
+      "turn": "Am Ende hat Stettler einen Tag voller Krankenbesuche hinter sich und den Gang zu Rieder, den er sich morgens vorgenommen hatte, auf den nächsten Tag verschoben; seine Unentbehrlichkeit für das Dorf ist am Abend spürbar grösser als am Morgen."
+    },
+    {
+      "id": "s3",
+      "location": "institution_untersuchungsrichter_buero",
+      "character_ids": ["stettler", "rieder"],
+      "intent": "Trägt Beat b6 und den Wendepunkt tp2: Stettler sucht Rieder auf, um den Stand seiner Selbstanzeige zu erfahren; Rieder verzögert die Weiterleitung mit Verweis auf Art. 48 Abs. 2 und ausstehende Formalitäten, obwohl er wüsste, wie er handeln könnte. Macht das Versprechen [rieders_weiterleitung]: Rieder stellt in Aussicht, die Meldung weiterzuleiten, sobald die Form es zulässt.",
+      "turn": "Am Ende verlässt Stettler das Büro mit der amtlichen Zusicherung, die Meldung gehe 'zu gegebener Zeit' hinaus, und mit der beginnenden Ahnung, dass Rieder aus eigenem Entschluss zögert und nicht aus Zwang; die Selbstanzeige bleibt formell unverändert, ist aber praktisch vertagt."
+    }
+  ]
+}
