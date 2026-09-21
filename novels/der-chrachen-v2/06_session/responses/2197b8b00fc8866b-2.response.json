@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "Rosa Kalt closes out the death certificate with Stettler, administratively burying his self-accusation inside routine paperwork exactly as specced, but the prose names an unregistered villager and never delivers the required on-page shift of Stettler's suspicion about Rieder's delay.",
+  "issues": [
+    {
+      "unit": "die Kuh nicht verkaufen, die er dem Brunner versprochen hat",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "name_registry",
+      "fix_hint": "Brunner is not in the name registry and no such person exists in this novel. Replace with an unnamed role (e.g. 'einem Nachbarn') or cut the clause."
+    },
+    {
+      "unit": "ch2_s1",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "k_selbstanzeige_verzoegert",
+      "fix_hint": "The exit state for this unit requires Stettler's knowledge of k_selbstanzeige_verzoegert to shift on the page from unaware to suspects. Nothing in the scene touches Rieder, the confession's status, or any waiting/silence that could prompt this. Add a beat, even brief, where something in the scene (the pass still shut, the lack of any word from the Gemeindehaus, the ease with which the village lets him work) makes Stettler begin to suspect the forwarding is being held back."
+    }
+  ],
+  "conflict": ""
+}

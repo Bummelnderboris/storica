@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "The scene earns its place, tracking the flu-driven village capture of Stettler and his deferred walk to Rieder with strong canon fidelity, but it never establishes the exit-state fact that Rieder has explicitly invoked Art. 48 Abs. 2 to Stettler.",
+  "issues": [
+    {
+      "unit": "schrieb dieselben Worte auf die nächste Seite",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "rieder:weiterleitung_status",
+      "fix_hint": "Add an on-page moment where Rieder explicitly cites Art. 48 Abs. 2 and pending formalities to Stettler (a note, a messenger, a brief encounter) — the given exit state requires this justification to have already been communicated to Stettler by the close of the unit, but as written Stettler never reaches Rieder and no such communication reaches him from any other channel; only the lit-then-darkened window is shown."
+    },
+    {
+      "unit": "wie Rosa Kalt am Morgen die Krankheiten gezählt hatte",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "kalt_witwe",
+      "fix_hint": "Canon records Rosa Kalt in this chapter only as pressing Stettler to finish the certificate for burial and inheritance (t5); it says nothing about her counting village illnesses. Verify this detail against what s1 actually establishes for her, or cut the comparison."
+    }
+  ],
+  "conflict": ""
+}

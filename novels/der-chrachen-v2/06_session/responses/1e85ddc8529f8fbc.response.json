@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "A day of house calls piles up concrete, well-observed detail into real evidence of Stettler's growing indispensability and costs him the walk to Rieder, but at two points the prose stops trusting its own images and explains them.",
+  "issues": [
+    {
+      "unit": "So vertagt man nichts; man trägt es nur weiter",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the sentence 'So vertagt man nichts; man trägt es nur weiter, und wer genug trägt, merkt nicht mehr, dass er es nicht abgibt.' The crossed-out line and the entry rewritten on the next page already say this; end the beat on 'ohne dass sie deshalb gealtert wäre.'"
+    },
+    {
+      "unit": "als sei ein Arzt, der zittert, ein Arzt, der mitleidet",
+      "kind": "meaning",
+      "severity": "warning",
+      "canon_ref": "",
+      "fix_hint": "Cut 'erleichtert, als sei ein Arzt, der zittert, ein Arzt, der mitleidet.' Let the trembling hearing-tube and the child's laugh stand without the simile spelling out why the mother is relieved."
+    }
+  ],
+  "conflict": ""
+}

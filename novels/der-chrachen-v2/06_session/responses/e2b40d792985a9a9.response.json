@@ -1,0 +1,21 @@
+{
+  "decision": "revise",
+  "summary": "Rosa presses Stettler to close her husband's death certificate and fix a funeral date, and he lets the one moment he could have hinted at the truth pass in silence — a scene that is mostly alive on its own specific detail, but twice loses its nerve and has the narrator explain an irony the enacted silence was already carrying.",
+  "issues": [
+    {
+      "unit": "weil sie das Zittern bemerkte und es für Anteilnahme nahm",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the clause 'weil sie das Zittern bemerkte und es für Anteilnahme nahm.' End the sentence after 'länger'; the misreading is already established by her earlier line about the flu and needs no gloss."
+    },
+    {
+      "unit": "Es gab nur einen, es ihr zu erschweren.",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Cut the two sentences 'Es gab keinen Grund, ihr das zu verweigern. Es gab nur einen, es ihr zu erschweren.' The next paragraph already enacts the withheld sentence and her unasked question; this aphorism tells the reader the point before the scene makes it."
+    }
+  ],
+  "conflict": ""
+}

@@ -1,0 +1,56 @@
+{
+  "character_facts": [
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "career_totenscheine", "value": "hat etwa vierhundert solche Auszüge geschrieben", "relation_to_canon": "restates_canon", "evidence": "Er hatte etwa vierhundert solche Auszüge geschrieben."},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "handwriting_reputation", "value": "seine Schrift wurde einst in einem Bezirksrundschreiben als vorbildlich bezeichnet", "relation_to_canon": "restates_canon", "evidence": "die Schrift, die ein Bezirksrundschreiben einmal als vorbildlich bezeichnet hatte"},
+    {"character_id": "stettler", "surface_name": "der Doktor", "key": "relationship_with_kalt", "value": "behandelte Anton zweimal wegen eines Bruchs, einmal wegen eines Abszesses; Anton bezahlte jedes Mal", "relation_to_canon": "restates_canon", "evidence": "Anton hat immer bezahlt. Den Bruch zweimal, den Abszess einmal."},
+    {"character_id": "stettler", "surface_name": "Herr Doktor", "key": "physical_mark", "value": "das Zittern der rechten Hand hat sich verstärkt und zeigt sich jetzt bei Schrift, Stempel, Waage und Löffel", "relation_to_canon": "restates_canon", "evidence": "nur zitterte sie jetzt, wie ein Beamter zittert"},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "night_prepared_statement", "value": "hatte sich nachts einen Satz zurechtgelegt, der mit 'Ich verlange' beginnt, wendet ihn aber nicht an", "relation_to_canon": "new", "evidence": "einen genauen, der mit den Worten begann: Ich verlange"},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "signs_aktennotiz", "value": "unterschreibt Rieders Aktennotiz, die festhält, dass er keine Einwendungen erhoben habe", "relation_to_canon": "new", "evidence": "Stettler legte den Hut auf die Knie und unterschrieb"},
+    {"character_id": "stettler", "surface_name": "Stettler", "key": "wish_order_take_course", "value": "wünscht auf Rieders Angebot hin, dass die Ordnung ihren Gang gehe, statt eine härtere Massnahme zu verlangen", "relation_to_canon": "restates_canon", "evidence": "Ich wünsche, dass die Ordnung ihren Gang geht"},
+    {"character_id": "kalt_witwe", "surface_name": "Rosa Kalt", "key": "age", "value": "vierundfünfzig Jahre alt", "relation_to_canon": "restates_canon", "evidence": "Sie war vierundfünfzig Jahre alt"},
+    {"character_id": "kalt_witwe", "surface_name": "Rosa Kalt", "key": "motivation", "value": "will den Totenschein rasch, um den Erbschein zu erhalten und eine von Anton versprochene Kuh an einen Nachbarn zu verkaufen", "relation_to_canon": "restates_canon", "evidence": "ohne Erbschein kann ich die Kuh nicht verkaufen, die er einem Nachbarn versprochen hat"},
+    {"character_id": "kalt_witwe", "surface_name": "Rosa Kalt", "key": "relationship_with_kalt", "value": "Anton habe immer bezahlt, weil man beim Doktor nichts schuldig bleiben wolle; sie will es ebenso halten", "relation_to_canon": "restates_canon", "evidence": "Anton hat immer bezahlt... Ich will auch nichts schuldig bleiben."},
+    {"character_id": "kalt_witwe", "surface_name": "Rosa Kalt", "key": "kalt_never_spoke_of_past", "value": "Anton hat ihr nie von früher erzählt; er sagte, Vergangenes koste nichts mehr", "relation_to_canon": "new", "evidence": "Anton hat nie von früher erzählt. Er hat gesagt, was vorbei ist, kostet nichts mehr."},
+    {"character_id": "kalt_witwe", "surface_name": "Rosa Kalt", "key": "funeral_plans", "value": "Beerdigung ist auf Freitag, 10 Uhr, angesetzt, sobald der Boden aufgetaut ist", "relation_to_canon": "new", "evidence": "Der Pfarrer sagt, Freitag um zehn, wenn der Totengräber durchkommt."},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "prior_caseload", "value": "vier Aktendeckel auf dem Tisch: zwei Viehdiebstähle, eine Ehrverletzung unter Nachbarn, ein Gartenzaun auf falschem Grundstück", "relation_to_canon": "restates_canon", "evidence": "zwei Viehdiebstähle, eine Ehrverletzung unter Nachbarn und ein Gartenzaun"},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "cough", "value": "hustet inzwischen selbst, kurz, in die Faust", "relation_to_canon": "new", "evidence": "Rieder hustete, kurz, in die Faust"},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "considers_suspension", "value": "erwägt, Stettler vorsorglich in seinem Amt einzustellen, entscheidet sich aber nicht dazu", "relation_to_canon": "new", "evidence": "Ich könnte Sie vorsorglich in Ihrem Amt einstellen."},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "drafted_unsigned_verfuegung", "value": "hat bereits einen undatierten, unterschriftslosen Entwurf einer Verfügung gemäss Art. 48 Abs. 2 StPO mit Stettlers Namen verfasst", "relation_to_canon": "new", "evidence": "Ich habe einen Entwurf geschrieben."},
+    {"character_id": "rieder", "surface_name": "Rieder", "key": "promise_to_forward", "value": "verspricht, die Meldung eingeschrieben weiterzuleiten, sobald die Formalitäten geprüft sind", "relation_to_canon": "restates_canon", "evidence": "Darauf haben Sie mein Wort"}
+  ],
+  "aliases": [
+    {"character_id": "stettler", "alias": "Stettler", "evidence": "Stettler sass am Schreibtisch."},
+    {"character_id": "stettler", "alias": "Herr Doktor", "evidence": "Sie sind müde, Herr Doktor."},
+    {"character_id": "stettler", "alias": "der Doktor", "evidence": "der Doktor müsse etwas essen"},
+    {"character_id": "stettler", "alias": "der Beschuldigte", "evidence": "Der Beschuldigte erkundigte sich heute, 9 Uhr 10"},
+    {"character_id": "kalt_witwe", "alias": "Rosa Kalt", "evidence": "Rosa Kalt kam am Morgen des zweiten Tages"},
+    {"character_id": "rieder", "alias": "Rieder", "evidence": "Rieder sass im Mantel am Schreibtisch."},
+    {"character_id": "rieder", "alias": "P. Rieder, Untersuchungsrichter", "evidence": "P. Rieder, Untersuchungsrichter."},
+    {"character_id": "rieder", "alias": "der Herr Richter", "evidence": "erster Stock, der Herr Richter. Husten."}
+  ],
+  "world_facts": [
+    {"key": "registry_form_zivilstandsamt", "value": "der kantonale Auszug für das Zivilstandsamt ist grau und hat sieben Rubriken plus eine achte für Bemerkungen", "relation_to_canon": "new", "evidence": "ein Auszug für das Zivilstandsamt, grau, mit sieben Rubriken und einer achten"},
+    {"key": "institution_zivilstandsamt_chrachen", "value": "der Schrank des Zivilstandsamts steht in einem Raum neben den Feuerwehrschläuchen, der Gemeindeschreiber führt ihn", "relation_to_canon": "restates_canon", "evidence": "Die Tür zum Zivilstandsamt stand halb offen. Der Schrank dahinter war verschlossen"},
+    {"key": "institution_untersuchungsrichter_buero", "value": "Rieders Büro liegt über der Post, neben dem Raum mit den Feuerwehrschläuchen", "relation_to_canon": "restates_canon", "evidence": "Neben den Schläuchen, über der Post, sass auch Rieder."},
+    {"key": "law_strafprozessgesetz_art48_abs2", "value": "der Vorgänger hatte mit Bleistift 'Kommt nicht vor' neben Art. 48 Abs. 2 notiert", "relation_to_canon": "restates_canon", "evidence": "Kommt nicht vor."},
+    {"key": "grippewelle", "value": "halb Chrachen hat die Grippe, die Praxis wird zum ganztägigen Behandlungsort", "relation_to_canon": "restates_canon", "evidence": "Halb Chrachen hat die Grippe."},
+    {"key": "feuerwehr_schlaeuche_herbstuebung", "value": "die Feuerwehrschläuche hängen seit der Oktoberübung zum Trocknen und trocknen im Winter nie ganz", "relation_to_canon": "new", "evidence": "Man hatte sie im Oktober nach der letzten Übung aufgehängt... vollkommen nass"},
+    {"key": "rieder_vorgaenger_amtsdauer", "value": "Rieders Vorgänger war einunddreissig Jahre im Amt", "relation_to_canon": "new", "evidence": "Mein Vorgänger war einunddreissig Jahre im Amt."},
+    {"key": "postsack_registrierter_brief", "value": "der eingeschriebene Brief an die Bezirksbehörde liegt weiterhin im plombierten Postsack in der Post", "relation_to_canon": "restates_canon", "evidence": "In der Ecke beim Ofen lag der Postsack, plombiert, prall"}
+  ],
+  "timeline": [
+    {"id": "ch02_rosa_totenschein_auszug", "when": "ch2, Morgen des zweiten Tages", "event": "Rosa Kalt verlangt von Stettler den Auszug für den Totenschein; er stellt ihn aus und verweist in der achten Rubrik auf die Rückseite des Originals.", "involves": ["stettler", "kalt_witwe"], "after_event_id": "", "evidence": "Er schrieb in die achte Rubrik: Siehe Rückseite des Originals."},
+    {"id": "ch02_grippewelle_entlastet_stettler", "when": "ch2, zweiter Tag", "event": "Die Grippewelle macht Stettlers Praxis zum ganztägigen Anlaufpunkt; das Dorf versorgt ihn mit Gaben und übernimmt organisatorische Aufgaben für ihn.", "involves": ["stettler"], "after_event_id": "", "evidence": "Auf dem Aktenschrank lagen der Speck, die Eier im Hut, der Honig"},
+    {"id": "ch02_stettler_besuch_bei_rieder", "when": "ch2, dritter Tag, 9 Uhr", "event": "Stettler sucht Rieder auf und fragt nach dem Stand der Formalitäten; Rieder nennt vier offene Verfahrensfragen und verspricht die Weiterleitung, sobald sie geprüft sind.", "involves": ["stettler", "rieder"], "after_event_id": "", "evidence": "Sobald die Formalitäten geprüft sind, geht die Meldung hinaus"},
+    {"id": "ch02_rieder_entwurf_verfuegung_entdeckt", "when": "ch2, dritter Tag", "event": "Stettler entdeckt in Rieders Schublade neben dem Original einen unterschriftslosen Entwurf einer Verfügung mit seinem eigenen Namen.", "involves": ["stettler", "rieder"], "after_event_id": "", "evidence": "seinen Namen, vollständig, mit dem Titel"},
+    {"id": "ch02_rieder_aktennotiz_unterschrieben", "when": "ch2, dritter Tag", "event": "Rieder verfasst eine Aktennotiz über Stettlers Nachfrage, wonach dieser keine Einwendungen erhoben habe, und lässt Stettler sie unterschreiben.", "involves": ["stettler", "rieder"], "after_event_id": "", "evidence": "Der Beschuldigte erhob keine Einwendungen."}
+  ],
+  "contradictions": [],
+  "knowledge_shifts": [
+    {"knowledge_id": "k_selbstanzeige_verzoegert", "character_id": "stettler", "awareness": "suspects", "instead": "", "evidence": "Sie haben es schon geschrieben"}
+  ],
+  "ledger": [
+    {"id": "rieders_weiterleitung", "kind": "promise_made", "landed": true, "evidence": "Sobald die Formalitäten geprüft sind, geht die Meldung hinaus... Darauf haben Sie mein Wort"},
+    {"id": "rosas_unwissenheit", "kind": "promise_made", "landed": true, "evidence": "Er wartete darauf, dass sie fragen würde... Sie fragte nicht. ... Sie las es nicht."}
+  ]
+}

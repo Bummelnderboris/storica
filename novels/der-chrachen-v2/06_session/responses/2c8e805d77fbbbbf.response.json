@@ -1,0 +1,20 @@
+{
+  "resolutions": [
+    {
+      "index": 1,
+      "resolved": true,
+      "note": "Adds an on-page note from Rieder, delivered by a boy from the Gemeindehaus, that explicitly cites Art. 48 Abs. 2 and pending formalities and asks Stettler for patience."
+    },
+    {
+      "index": 2,
+      "resolved": true,
+      "note": "Stettler now explicitly wonders whether his confession lies unopened in a drawer because an article permits it, and whether the request for patience masks a decision already made."
+    },
+    {
+      "index": 3,
+      "resolved": true,
+      "note": "The lit-window observation is immediately followed by Stettler's own thought tying it to 'seinem Papier', making the suspicion form on the page."
+    }
+  ],
+  "introduced": []
+}

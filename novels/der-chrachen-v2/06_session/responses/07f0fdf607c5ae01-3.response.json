@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The scene delivers beat b5 precisely, letting the Grippewelle carry Stettler through a day that swallows his planned trip to Rieder, but it never clearly stages the required shift of stettler:knowledge_selbstanzeige_verzoegert from unaware to suspects.",
+  "issues": [
+    {
+      "unit": "Man hatte dort also ebenfalls bis in die Nacht gearbeitet",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "stettler:knowledge_selbstanzeige_verzoegert",
+      "fix_hint": "Give Stettler a thought, even a fragmentary one, that ties the lit window at Rieder's office to his own undelivered confession, so his 'suspects' (since ch2) reads as a question forming on the page rather than a neutral observation about a busy neighbour."
+    }
+  ],
+  "conflict": ""
+}

@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The scene delivers beat b4 and the promise rosas_unwissenheit with precise fidelity to canon (Rosa's motivation, the Auszug/original split, the passed disclosure moment, the entry/exit states), but it introduces a named person, 'Brunner', who does not exist in the complete name registry.",
+  "issues": [
+    {
+      "unit": "die er dem Brunner versprochen hat",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "name_registry",
+      "fix_hint": "Cut the name 'Brunner' — no such person is in the cast. Refer to the recipient of the cow without a proper name (e.g. 'einem Nachbarn' or 'einem im Dorf')."
+    }
+  ],
+  "conflict": ""
+}

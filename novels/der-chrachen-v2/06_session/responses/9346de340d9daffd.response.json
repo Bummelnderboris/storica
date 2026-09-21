@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "A tightly controlled bureaucratic two-hander that lands the b6 beat and the tp2 turn on solid concrete detail, undercut by one ungrounded sightline into the desk drawer.",
+  "issues": [
+    {
+      "unit": "P27: \"Stettler erkannte seine eigene Rückseite, die Schrift der Nacht\"",
+      "kind": "micro-sense",
+      "severity": "blocking",
+      "canon_ref": "",
+      "fix_hint": "Add a clause establishing how Stettler, seated across the desk, can see into the drawer Rieder opens on his own side well enough to identify handwriting inside it — e.g. Rieder tilts it toward him, sets it on the desk, or Stettler leans in — the way P22 explicitly grounds his sightline to the window."
+    }
+  ],
+  "conflict": ""
+}

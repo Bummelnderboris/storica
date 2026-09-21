@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The scene lands its assigned beat (b6/tp2, Stettler's visit and Rieder's Art.-48-stalling) and the promise ledger entry faithfully, but it leaves the totenschein's original physically undelivered and its ownership explicitly unresolved, instead of closing in the required exit state where it has already been forwarded to the Zivilstandsamt.",
+  "issues": [
+    {
+      "unit": "Wem das Original gehöre, dem Untersuchungsrichter, dem Zivilstandsamt",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "totenschein_kalt:status",
+      "fix_hint": "Cut the unresolved 'wem das Original gehöre' formality and the original sitting in Rieder's drawer; canon's exit state requires the totenschein already amtlich abgeschlossen and forwarded to the Zivilstandsamt by the close of this scene, not still in dispute and in Rieder's physical possession."
+    }
+  ],
+  "conflict": ""
+}

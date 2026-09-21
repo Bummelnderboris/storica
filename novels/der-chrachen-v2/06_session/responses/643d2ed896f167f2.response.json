@@ -1,0 +1,20 @@
+{
+  "resolutions": [
+    {
+      "index": 1,
+      "resolved": true,
+      "note": "Der Name 'Brunner' wurde entfernt und durch 'einem Nachbarn' ersetzt."
+    },
+    {
+      "index": 2,
+      "resolved": true,
+      "note": "Dieselbe Stelle wie Issue 1: 'Brunner' ist gestrichen, die Kuh geht nun an 'einem Nachbarn'."
+    },
+    {
+      "index": 3,
+      "resolved": true,
+      "note": "Eine neue Passage zeigt Stettler bei Rieders Büro, wo das Ausbleiben jeder Reaktion aus dem Gemeindehaus ihn erstmals fragen lässt, ob das Original 'auf den Pass wartete oder auf etwas anderes' — der Umschlag von unaware zu suspects findet auf der Seite statt."
+    }
+  ],
+  "introduced": []
+}

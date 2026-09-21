@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "The scene dramatizes the village's flu-driven dependence swallowing Stettler's morning resolve convincingly, but it closes without clearly staging the on-page shift from unaware to suspects that the knowledge table requires for Rieder's delay.",
+  "issues": [
+    {
+      "unit": "und woran, war nicht zu sehen",
+      "kind": "meaning",
+      "severity": "blocking",
+      "canon_ref": "k_selbstanzeige_verzoegert",
+      "fix_hint": "Replace the ambiguous lit-window image with a moment where Stettler explicitly registers a doubt that Rieder is sitting on the confession on purpose, so the unaware-to-suspects shift required by the knowledge table actually happens on the page rather than reading as generic nocturnal atmosphere."
+    }
+  ],
+  "conflict": ""
+}

@@ -1,0 +1,14 @@
+{
+  "decision": "revise",
+  "summary": "Rosa Kalt presses Stettler to finish the extract for the civil registry so the burial and inheritance can proceed, and Stettler lets the one moment where he could hint at the truth pass unused, correctly landing the chapter's administrative close and the rosas_unwissenheit promise — but the prose introduces a named person, 'Brunner', who is not in the complete name registry.",
+  "issues": [
+    {
+      "unit": "die Kuh nicht verkaufen, die er dem Brunner versprochen",
+      "kind": "coherence",
+      "severity": "blocking",
+      "canon_ref": "name_registry",
+      "fix_hint": "Remove the name 'Brunner' and refer to the buyer only by role (e.g. 'einem Nachbarn' or 'einem Käufer'), since no character named Brunner exists in the complete name registry."
+    }
+  ],
+  "conflict": ""
+}

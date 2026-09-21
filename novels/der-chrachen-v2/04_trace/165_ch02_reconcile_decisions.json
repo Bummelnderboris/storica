@@ -1,0 +1,212 @@
+{
+  "seq": 165,
+  "digest": "71174573994e2c7d",
+  "stage": "ch02_reconcile_decisions",
+  "model": "sonnet",
+  "note": "18 promoted, 11 flagged, 0 ledger updates",
+  "system": null,
+  "prompt": "",
+  "artifact": {
+    "promoted": [
+      {
+        "kind": "alias",
+        "ref": "alias:stettler",
+        "value": "der Beschuldigte",
+        "evidence": "Der Beschuldigte erkundigte sich heute, 9 Uhr 10"
+      },
+      {
+        "kind": "alias",
+        "ref": "alias:rieder",
+        "value": "P. Rieder, Untersuchungsrichter",
+        "evidence": "P. Rieder, Untersuchungsrichter."
+      },
+      {
+        "kind": "alias",
+        "ref": "alias:rieder",
+        "value": "der Herr Richter",
+        "evidence": "erster Stock, der Herr Richter. Husten."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "stettler.night_prepared_statement",
+        "value": "hatte sich nachts einen Satz zurechtgelegt, der mit 'Ich verlange' beginnt, wendet ihn aber nicht an",
+        "evidence": "einen genauen, der mit den Worten begann: Ich verlange"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "stettler.signs_aktennotiz",
+        "value": "unterschreibt Rieders Aktennotiz, die festhält, dass er keine Einwendungen erhoben habe",
+        "evidence": "Stettler legte den Hut auf die Knie und unterschrieb"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "kalt_witwe.kalt_never_spoke_of_past",
+        "value": "Anton hat ihr nie von früher erzählt; er sagte, Vergangenes koste nichts mehr",
+        "evidence": "Anton hat nie von früher erzählt. Er hat gesagt, was vorbei ist, kostet nichts mehr."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "kalt_witwe.funeral_plans",
+        "value": "Beerdigung ist auf Freitag, 10 Uhr, angesetzt, sobald der Boden aufgetaut ist",
+        "evidence": "Der Pfarrer sagt, Freitag um zehn, wenn der Totengräber durchkommt."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.cough",
+        "value": "hustet inzwischen selbst, kurz, in die Faust",
+        "evidence": "Rieder hustete, kurz, in die Faust"
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.considers_suspension",
+        "value": "erwägt, Stettler vorsorglich in seinem Amt einzustellen, entscheidet sich aber nicht dazu",
+        "evidence": "Ich könnte Sie vorsorglich in Ihrem Amt einstellen."
+      },
+      {
+        "kind": "character_fact",
+        "ref": "rieder.drafted_unsigned_verfuegung",
+        "value": "hat bereits einen undatierten, unterschriftslosen Entwurf einer Verfügung gemäss Art. 48 Abs. 2 StPO mit Stettlers Namen verfasst",
+        "evidence": "Ich habe einen Entwurf geschrieben."
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:registry_form_zivilstandsamt",
+        "value": "der kantonale Auszug für das Zivilstandsamt ist grau und hat sieben Rubriken plus eine achte für Bemerkungen",
+        "evidence": "ein Auszug für das Zivilstandsamt, grau, mit sieben Rubriken und einer achten"
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:feuerwehr_schlaeuche_herbstuebung",
+        "value": "die Feuerwehrschläuche hängen seit der Oktoberübung zum Trocknen und trocknen im Winter nie ganz",
+        "evidence": "Man hatte sie im Oktober nach der letzten Übung aufgehängt... vollkommen nass"
+      },
+      {
+        "kind": "world_fact",
+        "ref": "world:rieder_vorgaenger_amtsdauer",
+        "value": "Rieders Vorgänger war einunddreissig Jahre im Amt",
+        "evidence": "Mein Vorgänger war einunddreissig Jahre im Amt."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch02_rosa_totenschein_auszug",
+        "value": "Rosa Kalt verlangt von Stettler den Auszug für den Totenschein; er stellt ihn aus und verweist in der achten Rubrik auf die Rückseite des Originals.",
+        "evidence": "Er schrieb in die achte Rubrik: Siehe Rückseite des Originals."
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch02_grippewelle_entlastet_stettler",
+        "value": "Die Grippewelle macht Stettlers Praxis zum ganztägigen Anlaufpunkt; das Dorf versorgt ihn mit Gaben und übernimmt organisatorische Aufgaben für ihn.",
+        "evidence": "Auf dem Aktenschrank lagen der Speck, die Eier im Hut, der Honig"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch02_stettler_besuch_bei_rieder",
+        "value": "Stettler sucht Rieder auf und fragt nach dem Stand der Formalitäten; Rieder nennt vier offene Verfahrensfragen und verspricht die Weiterleitung, sobald sie geprüft sind.",
+        "evidence": "Sobald die Formalitäten geprüft sind, geht die Meldung hinaus"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch02_rieder_entwurf_verfuegung_entdeckt",
+        "value": "Stettler entdeckt in Rieders Schublade neben dem Original einen unterschriftslosen Entwurf einer Verfügung mit seinem eigenen Namen.",
+        "evidence": "seinen Namen, vollständig, mit dem Titel"
+      },
+      {
+        "kind": "timeline",
+        "ref": "ch02_rieder_aktennotiz_unterschrieben",
+        "value": "Rieder verfasst eine Aktennotiz über Stettlers Nachfrage, wonach dieser keine Einwendungen erhoben habe, und lässt Stettler sie unterschreiben.",
+        "evidence": "Der Beschuldigte erhob keine Einwendungen."
+      }
+    ],
+    "flagged": [
+      {
+        "kind": "restated",
+        "ref": "stettler.career_totenscheine",
+        "reason": "the draft restates 'career_totenscheine' for 'stettler' in other words — canon's wording stands",
+        "canon_says": "has issued about four hundred death certificates in his career",
+        "prose_says": "hat etwa vierhundert solche Auszüge geschrieben",
+        "evidence": "Er hatte etwa vierhundert solche Auszüge geschrieben."
+      },
+      {
+        "kind": "restated",
+        "ref": "stettler.handwriting_reputation",
+        "reason": "the draft restates 'handwriting_reputation' for 'stettler' in other words — canon's wording stands",
+        "canon_says": "his even handwriting was once praised as exemplary in a district circular",
+        "prose_says": "seine Schrift wurde einst in einem Bezirksrundschreiben als vorbildlich bezeichnet",
+        "evidence": "die Schrift, die ein Bezirksrundschreiben einmal als vorbildlich bezeichnet hatte"
+      },
+      {
+        "kind": "restated",
+        "ref": "stettler.relationship_with_kalt",
+        "reason": "the draft restates 'relationship_with_kalt' for 'stettler' in other words — canon's wording stands",
+        "canon_says": "treated Kalt medically over the years (set a hernia twice, lanced an abscess once) and billed him each time; Kalt paid",
+        "prose_says": "behandelte Anton zweimal wegen eines Bruchs, einmal wegen eines Abszesses; Anton bezahlte jedes Mal",
+        "evidence": "Anton hat immer bezahlt. Den Bruch zweimal, den Abszess einmal."
+      },
+      {
+        "kind": "restated",
+        "ref": "stettler.physical_mark",
+        "reason": "the draft restates 'physical_mark' for 'stettler' in other words — canon's wording stands",
+        "canon_says": "Hat seit der Unfallnacht ein leichtes Zittern in der rechten, schreibenden Hand.",
+        "prose_says": "das Zittern der rechten Hand hat sich verstärkt und zeigt sich jetzt bei Schrift, Stempel, Waage und Löffel",
+        "evidence": "nur zitterte sie jetzt, wie ein Beamter zittert"
+      },
+      {
+        "kind": "restated",
+        "ref": "kalt_witwe.age",
+        "reason": "the draft restates 'age' for 'kalt_witwe' in other words — canon's wording stands",
+        "canon_says": "54 Jahre alt.",
+        "prose_says": "vierundfünfzig Jahre alt",
+        "evidence": "Sie war vierundfünfzig Jahre alt"
+      },
+      {
+        "kind": "restated",
+        "ref": "kalt_witwe.motivation",
+        "reason": "the draft restates 'motivation' for 'kalt_witwe' in other words — canon's wording stands",
+        "canon_says": "Drängt auf eine rasche, unauffällige Ausstellung des Totenscheins, um Beerdigung und Erbschaft zu regeln.",
+        "prose_says": "will den Totenschein rasch, um den Erbschein zu erhalten und eine von Anton versprochene Kuh an einen Nachbarn zu verkaufen",
+        "evidence": "ohne Erbschein kann ich die Kuh nicht verkaufen, die er einem Nachbarn versprochen hat"
+      },
+      {
+        "kind": "restated",
+        "ref": "rieder.prior_caseload",
+        "reason": "the draft restates 'prior_caseload' for 'rieder' in other words — canon's wording stands",
+        "canon_says": "in eleven weeks has investigated two cattle thefts, one defamation between neighbors, and a boundary fence on the wrong property",
+        "prose_says": "vier Aktendeckel auf dem Tisch: zwei Viehdiebstähle, eine Ehrverletzung unter Nachbarn, ein Gartenzaun auf falschem Grundstück",
+        "evidence": "zwei Viehdiebstähle, eine Ehrverletzung unter Nachbarn und ein Gartenzaun"
+      },
+      {
+        "kind": "restated",
+        "ref": "world:institution_zivilstandsamt_chrachen",
+        "reason": "the draft restates 'institution_zivilstandsamt_chrachen' in other words — canon's wording stands",
+        "canon_says": "the civil registry office of Chrachen is a cabinet in the room next to the fire hoses, run by the Gemeindeschreiber",
+        "prose_says": "der Schrank des Zivilstandsamts steht in einem Raum neben den Feuerwehrschläuchen, der Gemeindeschreiber führt ihn",
+        "evidence": "Die Tür zum Zivilstandsamt stand halb offen. Der Schrank dahinter war verschlossen"
+      },
+      {
+        "kind": "restated",
+        "ref": "world:institution_untersuchungsrichter_buero",
+        "reason": "the draft restates 'institution_untersuchungsrichter_buero' in other words — canon's wording stands",
+        "canon_says": "Rieder's office sits on the first floor of the Gemeindehaus, above the post office, next to where the fire brigade dries its hoses",
+        "prose_says": "Rieders Büro liegt über der Post, neben dem Raum mit den Feuerwehrschläuchen",
+        "evidence": "Neben den Schläuchen, über der Post, sass auch Rieder."
+      },
+      {
+        "kind": "restated",
+        "ref": "world:law_strafprozessgesetz_art48_abs2",
+        "reason": "the draft restates 'law_strafprozessgesetz_art48_abs2' in other words — canon's wording stands",
+        "canon_says": "code of criminal procedure: if the superior authority is unreachable in time, the investigating magistrate must decide independently and on his own responsibility; his predecessor had pencilled 'Kommt nicht vor' beside the article",
+        "prose_says": "der Vorgänger hatte mit Bleistift 'Kommt nicht vor' neben Art. 48 Abs. 2 notiert",
+        "evidence": "Kommt nicht vor."
+      },
+      {
+        "kind": "restated",
+        "ref": "world:grippewelle",
+        "reason": "the draft restates 'grippewelle' in other words — canon's wording stands",
+        "canon_says": "Während der Wochen der Einschneiung bricht im Dorf eine Grippewelle aus, die die Bewohner zunehmend von der ärztlichen Versorgung durch Stettler abhängig macht und ihn schrittweise entlastet.",
+        "prose_says": "halb Chrachen hat die Grippe, die Praxis wird zum ganztägigen Behandlungsort",
+        "evidence": "Halb Chrachen hat die Grippe."
+      }
+    ],
+    "ledger_updates": []
+  }
+}
