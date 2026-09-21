@@ -135,13 +135,39 @@ async def write_chapter(
             prose=text, canon=canon, spec=spec, author=author, scene=scene
         )
 
-    def evaluator(unit: str, scene: Optional[SceneSpec]) -> Callable[[str], Awaitable[List[Issue]]]:
-        async def evaluate(text: str) -> List[Issue]:
-            issues = _deterministic_issues(text, unit, min_scene_chars)
+    def evaluator(unit: str, scene: Optional[SceneSpec]) -> "_UnitGate":
+        return _UnitGate(unit, scene)
+
+    class _UnitGate:
+        """
+        The full gate for one unit, remembering which readers have read it.
+
+        Canon-consistency short-circuits: when it blocks, the other readers are not spent on a
+        draft about to be repaired — they read the repaired text instead. With repairs verified
+        against pinned issues rather than re-read in full, "instead" has to be kept explicitly, or a
+        scene that canon-consistency blocked once is accepted without micro-sense, voice or vitality
+        ever reading it. So the gate tracks who has not read the unit yet (`complete`), a later call
+        runs only them, and a genuinely new text (a rewrite) resets it (`reset`).
+        """
+
+        def __init__(self, unit: str, scene: Optional[SceneSpec]):
+            self.unit = unit
+            self.scene = scene
+            self.unread: List[ProseChecker] = list(checkers)
+
+        @property
+        def complete(self) -> bool:
+            return not self.unread
+
+        def reset(self) -> None:
+            self.unread = list(checkers)
+
+        async def __call__(self, text: str) -> List[Issue]:
+            issues = _deterministic_issues(text, self.unit, min_scene_chars)
             if issues:
                 return issues  # a stub is not worth a checker call
-            first = [c for c in checkers if c.name == CANON_CONSISTENCY]
-            rest = [c for c in checkers if c.name != CANON_CONSISTENCY]
+            first = [c for c in self.unread if c.name == CANON_CONSISTENCY]
+            rest = [c for c in self.unread if c.name != CANON_CONSISTENCY]
             # Canon-consistency first, alone: a contradiction makes the other judgements moot (no
             # point paying to polish the texture of a paragraph that says the wrong man signed the
             # certificate), and the rest run on the repaired text. The others are independent
@@ -150,14 +176,14 @@ async def write_chapter(
             for batch in (first, rest):
                 if not batch:
                     continue
-                for checker, verdict in await gather_draws(judge(c, text, scene) for c in batch):
+                for checker, verdict in await gather_draws(judge(c, text, self.scene) for c in batch):
                     if verdict.decision == Decision.ESCALATE:
-                        raise Escalation(unit, verdict.conflict, verdict)
+                        raise Escalation(self.unit, verdict.conflict, verdict)
                     issues += verdict.to_issues(checker.name)
+                self.unread = [c for c in self.unread if c not in batch]
                 if blocking(issues):
                     break
             return issues
-        return evaluate
 
     def verification(unit: str, canon_block: str):
         if verifier is None:

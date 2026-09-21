@@ -187,3 +187,44 @@ def test_a_repair_that_rewrites_the_scene_is_read_in_full_again(author):
 
     assert result.is_valid
     assert reader.units == ["s1", "s1", None]    # the rewrite was genuinely new text, so re-read
+
+
+def test_readers_skipped_by_the_short_circuit_read_the_repaired_text(author):
+    """
+    Found live in P6 (ch2 s1): canon-consistency blocked, the short-circuit skipped the other
+    readers "to read the repaired text instead", the verifier cleared the pins — and nothing ever
+    made the others read. The scene would have passed unread by micro-sense, voice and vitality.
+    """
+    canon_reader = FakeProseChecker(
+        _verdict(Decision.REVISE, issues=[_issue_on("the wrong office")]), name="canon_consistency")
+    micro = FakeProseChecker(name="micro_sense")
+    draft = "Absatz eins.\n\nDer Notar unterschrieb.\n\n" + _prose("drei")
+    repaired = "Absatz eins.\n\nDer Amtsarzt unterschrieb.\n\n" + _prose("drei")
+    llm = FakeStructuredLLM(texts=[draft, repaired], responses=[_check(True)])
+    scoped = [ScopedProseChecker(canon_reader, Scope.SCENE), ScopedProseChecker(micro, Scope.SCENE)]
+
+    result = _write(llm, author, spec=_spec(scenes=[S1]), checkers=scoped,
+                    verifier=RepairVerifier(llm))
+
+    assert result.is_valid and result.repairs == 1
+    assert canon_reader.units == ["s1"]              # read once; the fix was verified, not re-read
+    assert micro.units == ["s1"]                     # ... and micro-sense did read the scene
+    assert micro.prose == [repaired]                 # — the repaired text, as the short-circuit promises
+
+
+def test_what_the_skipped_readers_find_is_pinned_and_repaired_too(author):
+    canon_reader = FakeProseChecker(
+        _verdict(Decision.REVISE, issues=[_issue_on("the wrong office")]), name="canon_consistency")
+    micro = FakeProseChecker(
+        _verdict(Decision.REVISE, issues=[_issue_on("Die Spannung wuchs")]), name="micro_sense")
+    t1 = "Eins.\n\nDer Notar unterschrieb.\n\nDie Spannung wuchs.\n\n" + _prose("vier")
+    t2 = "Eins.\n\nDer Amtsarzt unterschrieb.\n\nDie Spannung wuchs.\n\n" + _prose("vier")
+    t3 = "Eins.\n\nDer Amtsarzt unterschrieb.\n\nEr legte die Feder hin.\n\n" + _prose("vier")
+    llm = FakeStructuredLLM(texts=[t1, t2, t3], responses=[_check(True), _check(True)])
+    scoped = [ScopedProseChecker(canon_reader, Scope.SCENE), ScopedProseChecker(micro, Scope.SCENE)]
+
+    result = _write(llm, author, spec=_spec(scenes=[S1]), checkers=scoped,
+                    verifier=RepairVerifier(llm), max_repairs=3)
+
+    assert result.is_valid and result.repairs == 2
+    assert micro.prose == [t2]                       # read once, after the first repair

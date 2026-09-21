@@ -96,10 +96,28 @@ async def _repair_loop(
         still_open = await verify(text, repaired, pinned, repairs) if verify is not None else None
         text = repaired
         if still_open is None:
+            reset = getattr(evaluate, "reset", None)
+            if reset is not None:
+                reset()          # a rewrite is new text: every reader reads it again
             issues = await evaluate(text)
             warnings = [i for i in issues if i.severity != Severity.BLOCKING]
             pinned = blocking(issues)
         else:
             pinned = still_open
+        pinned, warnings = await _read_by_the_rest(evaluate, text, pinned, warnings)
 
     return text, warnings + pinned, repairs
+
+
+async def _read_by_the_rest(evaluate, text: str, pinned: List[Issue], warnings: List[Issue]):
+    """
+    Once the pins are clear, the readers the first read short-circuited read the repaired text.
+
+    Without this, a unit canon-consistency blocked once would pass without the other readers ever
+    reading it: the verifier only checks the pins. Their findings are a fresh first read, so they
+    are pinned and verified like any other.
+    """
+    if pinned or getattr(evaluate, "complete", True):
+        return pinned, warnings
+    issues = await evaluate(text)
+    return blocking(issues), warnings + [i for i in issues if i.severity != Severity.BLOCKING]

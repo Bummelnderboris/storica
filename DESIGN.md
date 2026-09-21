@@ -405,7 +405,11 @@ repair demonstrably did, so a budget converges; and a round costs two calls (rep
 instead of five to seven.
 
 The fallback is honest: if a repair rewrote most of the unit instead of editing spans, there is no
-small diff to verify, and the new text is read by the full gate again. Warnings from the one full
+small diff to verify, and the new text is read by the full gate again. And the short-circuit keeps its
+promise: readers canon-consistency's block skipped read the repaired text once the pins clear, and
+what they find is pinned and verified in turn. (Missing in the first cut of this loop, and caught
+live in P6's chapter 2, scene 1: the scene would have passed unread by micro-sense, voice and
+vitality.) Warnings from the one full
 read are carried to the result unchanged and never drive a repair.
 
 This is v1's critic/guardian, re-conceived: **many small, canon-armed, fresh readers with teeth**,
