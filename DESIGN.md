@@ -462,6 +462,26 @@ claim that no escalation is a pause.
 - **Full trace**: every prompt, artifact, checker verdict, and ruling is on disk (`04_trace/`,
   `05_reports/`), so the surprise is *auditable after the fact* even though no human watched it happen.
 
+### 6.6 Acting on the final audit
+
+The final auditor is the only reader that sees the whole book, so it is the only one that can find a
+contradiction *between* chapters — each clean on its own. Its `revise` used to be reported and
+nothing more; P6's first complete book ended there, with eight such findings. Now each blocking
+finding is **routed to one chapter** (`audit_repair.py`) and repaired under the ordinary contract,
+checked by the repair verifier against the finding and a diff; then a fresh audit reads the book
+again (`--audit-repairs`, default 1 round).
+
+Exactly one side of a contradiction moves: the chapter the fix hint names, when it names one;
+otherwise the **later** chapter, because the earlier one was reconciled into canon before the later
+one was written against it. A repair that rewrites a chapter instead of editing it is rejected — the
+chapter already passed its full gate, and a rewrite would put unread text into the book at the last
+step. Rounds are recorded in `05_reports/state.json`, so a replay-driven run that pauses mid-round
+replays the first audit against the book it originally read.
+
+Limitation: the repaired chapters are not re-reconciled. The edits are corrections toward what canon
+already holds, so reconcile would have nothing to promote; if that assumption fails, the second
+audit is where it shows.
+
 ---
 
 ## 7. How macro intent is carried into micro (the seam)

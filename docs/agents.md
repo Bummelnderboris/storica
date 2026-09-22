@@ -37,6 +37,7 @@ a slice.
 | **intent** | judge | the macro arc (3), each chapter spec (4), each **assembled chapter** (5) — never a scene | the unit + the assignment it was given + canon slice | escalate on plans; **advise** on prose | sonnet |
 | **Selector** | judge | per scene, when `--prose-candidates > 1` | the *k* drafts and nothing else — no canon, no rubric of correctness | picks one; returns no verdict and cannot block | sonnet |
 | **Final auditor** | judge | once, after assembly (`--no-audit` skips it) | the whole novel, canon, the arc, and `audit_ledger`'s findings | pass / revise / escalate on the book | opus |
+| **Audit repair** | maker (the prose agent) | the final audit returns `revise` with blocking findings (`--audit-repairs` rounds) | one chapter's text, the findings routed to it, the chapter's canon slice | edits only what the findings name; a rewrite is rejected; verified by the repair verifier; then a fresh audit | opus |
 | **Adjudicator** | arbiter | any escalation that reaches it, from prose or from a planning stage | the conflict, the **immutable ground truth** (brief + stage-2 canon), the decision log | exactly one binding ruling, appended to `decisions.jsonl` | opus |
 
 ## Before any model call: the deterministic gates

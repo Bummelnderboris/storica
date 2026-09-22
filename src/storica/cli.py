@@ -118,6 +118,7 @@ def cmd_run(args: argparse.Namespace) -> int:
             n_candidates=args.prose_candidates,
             samples=args.checker_samples,
             retry_quarantined=args.retry_quarantined,
+            audit_repairs=args.audit_repairs,
         ))
     except ResponseNeeded as pause:
         # Not a failure: the replay driver has run out of recorded answers.
@@ -241,6 +242,11 @@ def build_parser() -> argparse.ArgumentParser:
              "--max-repairs). The original quarantine record is kept; a release is appended.",
     )
     run.add_argument("--no-audit", action="store_true", help="skip the whole-book final audit")
+    run.add_argument(
+        "--audit-repairs", type=int, default=1, dest="audit_repairs",
+        help="rounds of acting on a 'revise' from the final audit: its blocking findings are routed "
+             "to chapters, repaired and verified, and the book is audited again. 0 = report only.",
+    )
     run.add_argument("--no-checkers", action="store_true", help="skip LLM checkers (structure only)")
     run.set_defaults(func=cmd_run)
 

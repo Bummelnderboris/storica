@@ -21,11 +21,12 @@ from typing import Any, Dict, List, Optional, Sequence, Union
 
 from .adjudicator import AdjudicationFailed
 from .assembly import assemble_novel, save_novel
+from .audit_repair import repair_from_audit
 from .canon import chapter_unit, load_canon
 from .checkers import Decision, FinalAuditor, ProseChecker
-from .drafts import drafted_chapters
+from .drafts import drafted_chapters, load_chapter_draft, save_chapter_draft
 from .llm import StructuredLLM
-from .plan import load_macro_arc, macro_arc_path, specced_chapters
+from .plan import load_chapter_spec_if_present, load_macro_arc, macro_arc_path, specced_chapters
 from .pipeline import (
     CANON_DIR,
     DRAFTS_DIR,
@@ -53,6 +54,10 @@ class RunState:
     """The one bit of progress the filesystem cannot tell us: which chapters were reconciled."""
 
     reconciled: List[int] = field(default_factory=list)
+    #: Rounds of audit repair already applied to the drafts. Recorded because it is not visible from
+    #: the files: under the replay driver a run stops and restarts many times, and the first audit
+    #: must replay against the book it originally read, not against drafts a later round repaired.
+    audit_rounds: int = 0
 
     @classmethod
     def load(cls, reports_dir: Path) -> "RunState":
@@ -64,7 +69,10 @@ class RunState:
     def save(self, reports_dir: Path) -> None:
         reports_dir.mkdir(parents=True, exist_ok=True)
         (reports_dir / STATE_FILE).write_text(
-            json.dumps({"reconciled": sorted(self.reconciled)}, indent=2), encoding="utf-8"
+            json.dumps(
+                {"reconciled": sorted(self.reconciled), "audit_rounds": self.audit_rounds}, indent=2
+            ),
+            encoding="utf-8",
         )
 
 
@@ -106,6 +114,7 @@ async def run_novel(
     n_candidates: int = 1,
     samples: int = 3,
     retry_quarantined: bool = False,
+    audit_repairs: int = 1,
 ) -> RunResult:
     """
     Run the whole pipeline for one novel, skipping any stage whose artifact already exists.
@@ -117,6 +126,10 @@ async def run_novel(
     A quarantined chapter stays quarantined on later runs — otherwise every resume would burn the
     repair budget again on the same unit. `retry_quarantined` releases them first, which is how a
     person re-tries a chapter with a larger `max_repairs`.
+
+    `audit_repairs` bounds how many times a `revise` from the final auditor is acted on: its blocking
+    findings are routed to chapters, repaired and verified (`audit_repair.py`), and the book is read
+    by a fresh audit again. 0 reports the audit and stops, as before.
 
     Stages 1–3 have no unit to quarantine: if canon or the arc cannot pass its gate, `GateFailed`
     propagates and the run stops with the issues attached. From stage 4 on, every failure is
@@ -200,12 +213,41 @@ async def run_novel(
         quarantined=quarantine.units(),
     )
 
-    # The last gate: one fresh reader on the whole book (§6.5).
+    # The last gate: one fresh reader on the whole book (§6.5) — and, when it finds contradictions
+    # only a whole-book reader can see, a bounded repair of the chapters they sit in (§6.6).
     if audit and novel_path is not None:
         tracer = Tracer(novel_dir / TRACE_DIR if trace else None)
-        verdict = await FinalAuditor(llm, tracer=tracer).audit(
-            novel_text=assembled.text, canon=canon, arc=arc, quarantined=quarantine.units()
-        )
+        while True:
+            verdict = await FinalAuditor(llm, tracer=tracer).audit(
+                novel_text=assembled.text, canon=canon, arc=arc, quarantined=quarantine.units()
+            )
+            if (
+                verdict.decision != Decision.REVISE
+                or not verdict.blocking_issues()
+                or state.audit_rounds >= audit_repairs
+            ):
+                break
+            chapters = assembled.chapters
+            repaired = await repair_from_audit(
+                verdict=verdict,
+                drafts={c: load_chapter_draft(novel_dir / DRAFTS_DIR, c) for c in chapters},
+                specs={c: load_chapter_spec_if_present(novel_dir / PLAN_DIR, c) for c in chapters},
+                canon=canon, llm=llm, tracer=tracer, max_repairs=max_repairs,
+            )
+            # Saved together, after every chapter's repair is answered: a run that pauses mid-round
+            # leaves the drafts exactly as the audit read them, so the audit replays from cache.
+            for chapter, text in repaired.texts.items():
+                save_chapter_draft(text, novel_dir / DRAFTS_DIR, chapter)
+            state.audit_rounds += 1
+            state.save(reports_dir)
+            if not repaired.texts:
+                break  # nothing changed: a second audit of the same book would say the same thing
+            assembled = assemble_novel(
+                canon=canon, arc=arc, drafts_dir=novel_dir / DRAFTS_DIR, quarantine=quarantine
+            )
+            novel_path = save_novel(assembled.text, novel_dir)
+            result.novel_path = novel_path
+
         result.audit_summary = verdict.summary
         result.audit_decision = verdict.decision.value
         result.audit_issues = [str(i) for i in verdict.to_issues("final_auditor")]
@@ -232,6 +274,7 @@ async def run_novel(
         "audit_summary": result.audit_summary,
         "audit_issues": result.audit_issues,
         "audit_ruling": result.audit_ruling,
+        "audit_repair_rounds": state.audit_rounds,
         "canon_version": canon.version,
         "is_done": result.is_done,
         "usage": result.usage,

@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 356 tests passing. Never yet run end-to-end against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 366 tests passing. Never yet run end-to-end against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -56,7 +56,8 @@ The three commands are all there are:
 | `status <dir>` | Canon version, chapters specced/drafted, anything quarantined |
 
 Useful flags: `--no-checkers` (structure only, no LLM judgement — fast and cheap), `--no-audit`
-(skip the whole-book final read), `--max-repairs N` (default 3), `--retry-quarantined` (release
+(skip the whole-book final read), `--audit-repairs N` (rounds of acting on a `revise` from the final
+audit, default 1), `--max-repairs N` (default 3), `--retry-quarantined` (release
 every quarantined chapter and attempt it again — without it, a quarantined chapter is skipped on
 every later run).
 
