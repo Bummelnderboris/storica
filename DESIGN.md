@@ -550,7 +550,9 @@ rework of the agent layer + the state substrate, which is exactly where v1 inten
   repairs on a micro-sense issue — an unglossed date. The trace showed the cause was the gate, not
   the prose (C7): each full re-read re-rolled the question, and the reader held the writer to a
   stricter invention rule than the writer had been given. Fixed by §5.2 and §6.2; chapter 1 is
-  released and re-attempted under the new gate.
+  released and re-attempted under the new gate. **Finished 2026-09-22**: three chapters, nothing
+  quarantined, final audit `pass` after three bounded audit-repair rounds (8 → 3 → 3 → 0 blocking
+  findings). P6's remaining job is the comparison against the v1 capture, which is a human's.
 
 Each phase is independently testable and leaves the system runnable.
 

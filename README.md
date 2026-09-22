@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 369 tests passing. Never yet run end-to-end against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 369 tests passing. One finished book (P6, audit `pass`); never yet run against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -392,25 +392,31 @@ Run it with `/write-novel novels/der-chrachen-v2`. A scene at defaults is about 
 fan-outs (three candidates, three canon-consistency draws, three scene readers) are answered in
 parallel, so it is about five stops; a repair round adds two calls.
 
-### How far the run has got, and what it has already shown
+### The run, and what it showed
 
-Canon v2 is established and validated, the macro arc committed, chapter 1 specced (four scenes) and
-past its Intent check. The **first attempt at chapter 1 was quarantined** on scene 3 — and reading
-the trace showed that the gate, not the prose, was at fault (`calibration/FINDINGS.md` C7):
+**P6 finished on 2026-09-22: three chapters, ~14k words, nothing quarantined, final audit `pass`.**
+That is the first book this pipeline has completed, and the first time every gate it owns has been
+satisfied at once. What the run proved, in order:
 
-- **Selection works and is cheap.** Three drafts of scene 1 at 937 / 871 / 739 words; the selector
-  declined the longest. One call, and the spread was real.
-- **The repair loop did not converge, by construction.** Every repair was followed by a full fresh
-  re-read of the scene, and every fresh read asked a different question — the date *"Am elften März"*
-  was a warning in read 1 (so repair never saw it), unmentioned in read 2, blocking in read 3.
-- **The reader was stricter than the writer's instructions.** The writer was told to invent texture;
-  micro-sense called any unglossed specific a hallucination.
+- **The first attempt's failure was the gate, not the prose.** Chapter 1 had been quarantined in
+  August on scene 3. Under the converging gate all four of its scenes passed their full read with no
+  repair at all (`calibration/FINDINGS.md` C7).
+- **Selection works and is cheap**, as it did in the first attempt: three drafts per scene, one
+  judgement to choose.
+- **Repairs converge.** Every scene-level repair in the book was verified resolved within its budget,
+  and no verified repair introduced a new problem. Two gaps in the new loop were found *by the run*
+  and fixed: readers the canon short-circuit skipped never read the repaired scene, and the final
+  audit had no repair path at all.
+- **The whole-book reader earns its place.** The first audit returned `revise` with 8 blocking
+  cross-chapter contradictions — the failure class that no scene-level reader can see. Three bounded
+  repair rounds took it 8 → 3 → 3 → 0. The second audit escalated a genuine canon conflict, which
+  the adjudicator settled with a binding ruling; the third round used the routing fallback, and the
+  book passed.
 
-The rework of 2026-09-21 fixed both (pinned issues verified per repair; one invention policy shared
-by writer and reader), gave the writer the author's full craft and the whole chapter so far, closed
-the three reconcile gaps (paraphrase, story order, knowledge that moves), and calibrated micro-sense
-and voice (C8). Chapter 1 was released and is re-attempted from the same spec under the new gate;
-everything before it replays from cache.
+The honest caveats: one book, one author, three chapters, and every reader in the loop is a Claude
+model — a human reading it is still the only real test. The comparison against v1 in
+[`docs/proving-the-concept.md`](docs/proving-the-concept.md) is the next thing to do, and it is a
+reader's job, not the pipeline's.
 
 ### What the calibration found first
 

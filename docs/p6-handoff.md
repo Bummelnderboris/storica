@@ -2,37 +2,16 @@
 
 Paste the block below into a **new** Claude Code session in this repo.
 
-## The run is already part-done — it resumes, it does not restart
+## The run is finished
 
-**Canon v2 is established and validated** (4 characters, 5 relationships, 7 timeline events,
-3 knowledge items), the **macro arc is committed** (3 acts, 3 turning points, 8 beats, 2 motifs,
-4 promises) and **chapter 1 is specced** (four scenes, passed its Intent check). All of that is on
-disk and is not asked again.
+P6 completed on 2026-09-22: three chapters, ~14k words in `novel.md`, nothing quarantined, no
+chapter-level rulings, and a final audit of `pass` after three audit-repair rounds. `storica run`
+on this novel now replays the whole thing and exits 0; there is nothing left to answer.
 
-Chapter 1's first attempt was **quarantined on 2026-08-11**, and the trace showed the cause was the
-gate rather than the prose (`calibration/FINDINGS.md` C7): the repair loop re-read the scene in full
-after every repair and got a different question each time, and micro-sense held the writer to a
-stricter invention rule than the writer had been given. The rework of 2026-09-21 fixed both
-(DESIGN §5.2, §6.2) and released the chapter. Because the writer's and the readers' prompts changed,
-the cached answers for chapter 1's prose no longer match any request: chapter 1 is written afresh,
-from the same spec, under the new gate. Everything cached before it still replays.
+What remains is not a run but a reading: compare the book against the v1 capture with the scorecard
+in [`proving-the-concept.md`](proving-the-concept.md), and read `05_reports/` before `novel.md`.
 
-Every answered call is cached in `06_session/`, so `storica run` replays the lot and stops at the
-first unanswered call. Do not delete that directory. Request files that are not listed under
-`[pending]` in the run's output are left over from earlier runs and will not be asked again.
-
-## Pace
-
-One subagent round-trip took 1–25 minutes in the first attempt. What has changed since:
-
-- **Fan-outs are answered in parallel.** The run prints every call it is waiting on (`[pending]`);
-  the three prose candidates, the three canon-consistency draws and the three scene readers each
-  arrive together. A scene at defaults is ~10 calls but ~5 stops.
-- **A repair round is two calls** (repair + verification), not five to seven, and it converges.
-
-Defaults (`--prose-candidates 3 --checker-samples 3 --max-repairs 3`) are the recommended config
-now. `--prose-candidates 1 --checker-samples 1` remains the cheap option; if you use it, use it on
-**every** run, or cached scenes will flip between the two behaviours.
+This document is kept for the next novel, and for what it says about pace and hygiene below.
 
 ## Why a fresh session
 
