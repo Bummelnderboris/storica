@@ -179,3 +179,27 @@ def test_an_escalated_audit_is_ruled_on_and_the_ruling_is_repaired_too(planned):
     assert result.audit_decision == "pass"
     assert "um zehn" in (planned / "03_drafts" / "ch01.md").read_text()
     assert result.audit_ruling == "" or "ten" in result.audit_ruling
+
+
+def test_a_finding_the_later_chapter_cannot_fix_falls_back_to_the_other_side():
+    """
+    Found live in P6: three findings routed to the later chapter came back unchanged twice. A
+    repairer that changes nothing is saying the drift is not in this chapter — so try the other one.
+    """
+    ch1_fixed = BEFORE.replace("um neun", "um zehn")
+    llm = FakeStructuredLLM(
+        texts=[BEFORE, ch1_fixed],            # ch2 unchanged, then ch1 edited
+        responses=[_resolved()],
+    )
+    result = _run_repair(llm, {1: BEFORE, 2: BEFORE}, [_finding("ch01 vs ch02")])
+
+    assert result.texts == {1: ch1_fixed}
+    assert result.unresolved == []
+    assert [c.schema for c in llm.calls] == ["<text>", "<text>", "RepairCheck"]
+
+
+def test_an_unchanged_repair_stops_spending_the_budget():
+    llm = FakeStructuredLLM(texts=[BEFORE])
+    result = _run_repair(llm, {1: BEFORE}, [_finding("ch01")], max_repairs=3)
+    assert len(llm.calls) == 1                 # not three identical refusals
+    assert len(result.unresolved) == 1

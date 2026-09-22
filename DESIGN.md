@@ -475,9 +475,12 @@ round, and an `amend_canon` ruling stops the loop for a human. (In P6, round 1 t
 blocking findings to 3 plus one escalation, whose ruling was at first recorded and acted on by
 nothing — the reason this branch exists.)
 
-Exactly one side of a contradiction moves: the chapter the fix hint names, when it names one;
-otherwise the **later** chapter, because the earlier one was reconciled into canon before the later
-one was written against it. A repair that rewrites a chapter instead of editing it is rejected — the
+Exactly one side of a contradiction moves at a time: the chapter the fix hint names, when it names
+one; otherwise the **later** chapter, because the earlier one was reconciled into canon before the
+later one was written against it. When that chapter's repairer changes nothing — bound not to
+invent, it found nothing there it could honestly change — the finding falls back once to the other
+chapter it names. (P6: three findings routed to the later chapter came back unchanged twice; the
+drift was on the other side.) A repair that rewrites a chapter instead of editing it is rejected — the
 chapter already passed its full gate, and a rewrite would put unread text into the book at the last
 step. Rounds are recorded in `05_reports/state.json`, so a replay-driven run that pauses mid-round
 replays the first audit against the book it originally read.

@@ -52,15 +52,34 @@ def _chapters_in(text: str) -> List[int]:
     return [int(n) for n in _CHAPTER.findall(text or "")]
 
 
-def route(issue: CheckerIssue, known: Sequence[int]) -> Optional[int]:
-    """The one chapter a blocking audit finding is repaired in, or None if it names none we have."""
+def candidates(issue: CheckerIssue, known: Sequence[int]) -> List[int]:
+    """
+    The chapters a finding may be repaired in, in the order to try them.
+
+    First choice as `route` describes; then the other chapters the finding names, latest first.
+    The fallback exists because P6 showed the first choice can be wrong: three findings routed to
+    the later chapter came back unchanged twice — the repairer, bound not to invent, found nothing in
+    that chapter it could honestly change — because the drift was on the other side.
+    """
     named = [n for n in dict.fromkeys(_chapters_in(issue.unit)) if n in known]
     hinted = [n for n in dict.fromkeys(_chapters_in(issue.fix_hint)) if n in known]
+    first: Optional[int]
     if len(hinted) == 1:
-        return hinted[0]
-    if named:
-        return max(named)
-    return hinted[0] if hinted else None
+        first = hinted[0]
+    elif named:
+        first = max(named)
+    else:
+        first = hinted[0] if hinted else None
+    if first is None:
+        return []
+    rest = sorted((n for n in dict.fromkeys(named + hinted) if n != first), reverse=True)
+    return [first, *rest]
+
+
+def route(issue: CheckerIssue, known: Sequence[int]) -> Optional[int]:
+    """The one chapter a blocking audit finding is repaired in first, or None if it names none."""
+    order = candidates(issue, known)
+    return order[0] if order else None
 
 
 @dataclass
@@ -92,49 +111,70 @@ async def repair_from_audit(
     verifier = RepairVerifier(llm, tracer=tracer)
     result = AuditRepairResult()
 
-    by_chapter: Dict[int, List[Issue]] = {}
+    # Each finding carries its fallback chapters; a pass repairs every chapter that has findings,
+    # and what a chapter could not resolve moves to that finding's next candidate for one more pass.
+    queue: Dict[int, List[tuple[Issue, List[int]]]] = {}
     for finding in verdict.blocking_issues():
-        chapter = route(finding, list(drafts))
-        if chapter is None:
+        order = candidates(finding, list(drafts))
+        if not order:
             result.unrouted.append(f"{finding.unit}: {finding.fix_hint}")
             continue
-        by_chapter.setdefault(chapter, []).append(Issue(
+        issue = Issue(
             f"final_auditor.{finding.kind}", Severity.BLOCKING,
             f"{finding.unit}: {finding.fix_hint}", finding.canon_ref or finding.unit,
-        ))
+        )
+        queue.setdefault(order[0], []).append((issue, order[1:]))
 
     language = _language(canon)
-    for chapter in sorted(by_chapter):
-        unit = f"ch{chapter:02d}"
-        text = drafts[chapter]
-        canon_block = _chapter_slice(specs[chapter], canon)
-        pinned = by_chapter[chapter]
+    texts = dict(drafts)
+    for _pass in range(2):
+        next_queue: Dict[int, List[tuple[Issue, List[int]]]] = {}
+        for chapter in sorted(queue):
+            entries = queue[chapter]
+            unit = f"ch{chapter:02d}"
+            text = texts[chapter]
+            canon_block = _chapter_slice(specs[chapter], canon)
+            pinned = [issue for issue, _ in entries]
 
-        for round_ in range(1, max_repairs + 1):
-            if not pinned:
-                break
-            prompt = _repair_prompt(
-                unit=f"chapter {chapter}", current=text, issues=pinned,
-                canon_block=canon_block, language=language, regenerate_prompt="",
-            )
-            repaired = await llm.generate(
-                prompt=prompt, system=PROSE_SYSTEM, model=model, max_tokens=max_tokens, draw=round_,
-            )
-            tracer.record(
-                f"{unit}_prose_audit_repair_{round_}", prompt=prompt, system=PROSE_SYSTEM,
-                model=model, artifact=repaired, note=f"{len(pinned)} audit finding(s)",
-            )
-            if _deterministic_issues(repaired, unit, MIN_SCENE_CHARS) or changed_passages(text, repaired) is None:
-                continue  # a stub or a rewrite: keep the chapter that passed its gate, try again
-            still_open = await verifier.verify(
-                unit=f"{unit}_audit", before=text, after=repaired, pinned=pinned,
-                canon_block=canon_block, draw=round_,
-            )
-            text = repaired
-            pinned = still_open or []
+            for round_ in range(1, max_repairs + 1):
+                if not pinned:
+                    break
+                prompt = _repair_prompt(
+                    unit=f"chapter {chapter}", current=text, issues=pinned,
+                    canon_block=canon_block, language=language, regenerate_prompt="",
+                )
+                repaired = await llm.generate(
+                    prompt=prompt, system=PROSE_SYSTEM, model=model, max_tokens=max_tokens,
+                    draw=round_,
+                )
+                tracer.record(
+                    f"{unit}_prose_audit_repair_{round_}", prompt=prompt, system=PROSE_SYSTEM,
+                    model=model, artifact=repaired, note=f"{len(pinned)} audit finding(s)",
+                )
+                passages = changed_passages(text, repaired)
+                if _deterministic_issues(repaired, unit, MIN_SCENE_CHARS) or passages is None:
+                    continue  # a stub or a rewrite: keep the chapter that passed its gate
+                if not passages:
+                    break     # the repairer changed nothing: this chapter cannot honestly fix these
+                still_open = await verifier.verify(
+                    unit=f"{unit}_audit", before=text, after=repaired, pinned=pinned,
+                    canon_block=canon_block, draw=round_,
+                )
+                text = repaired
+                pinned = still_open or []
 
-        if text != drafts[chapter]:
-            result.texts[chapter] = text
-        result.unresolved += [str(i) for i in pinned]
+            texts[chapter] = text
+            for issue, rest in entries:
+                if issue not in pinned:
+                    continue
+                if rest and _pass == 0:
+                    next_queue.setdefault(rest[0], []).append((issue, rest[1:]))
+                else:
+                    result.unresolved.append(str(issue))
+            result.unresolved += [str(i) for i in pinned if i not in [e for e, _ in entries]]
+        queue = next_queue
+        if not queue:
+            break
 
+    result.texts = {c: t for c, t in texts.items() if t != drafts[c]}
     return result

@@ -1,0 +1,25 @@
+{
+  "resolutions": [
+    {
+      "index": 1,
+      "resolved": true,
+      "note": "Die Zwölf-Tage-Angabe wurde durch 'seit der Unfallnacht' ersetzt, wodurch der Widerspruch zu Rieders 'seit dem ersten Tag' zwei Absätze zuvor entfällt."
+    },
+    {
+      "index": 2,
+      "resolved": false,
+      "note": "Die betroffene ch01-Passage über Rieders Meldungstext gehört nicht zu den geänderten Stellen und ist unverändert geblieben."
+    },
+    {
+      "index": 3,
+      "resolved": false,
+      "note": "Die ch02-Aufzählung der vier Fragen gehört nicht zu den geänderten Stellen und ist unverändert geblieben."
+    },
+    {
+      "index": 4,
+      "resolved": true,
+      "note": "Genau der angeordnete Ersatz wurde vorgenommen: 'zwölf Tage' wurde durch 'seit der Unfallnacht' ersetzt, ohne die Zahl auf die Prüfdauer umzudeuten, und Rieders Satz blieb unangetastet."
+    }
+  ],
+  "introduced": []
+}

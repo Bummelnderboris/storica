@@ -1,0 +1,40 @@
+{
+  "resolutions": [
+    {
+      "index": 1,
+      "resolved": false,
+      "note": "The ch01 passage with the Lupe/'folgt wörtlich' abschrift and the 'Selbstanzeige Dr. K. Stettler' Betreff is not among the five changed passages, so it remains as pinned."
+    },
+    {
+      "index": 2,
+      "resolved": false,
+      "note": "The ch02 enumeration of Rieder's four questions is not among the changed passages, so it still diverges from the four questions read out in ch03."
+    },
+    {
+      "index": 3,
+      "resolved": true,
+      "note": "Change 5 replaces 'nach dem Gang zum Gemeindehaus' with 'nachdem der Untersuchungsrichter gegangen war', matching the specified fix exactly."
+    },
+    {
+      "index": 4,
+      "resolved": true,
+      "note": "Both 'zwei Minuten' instances (Changes 1 and 4) were changed to 'eine knappe halbe Stunde', and the 'eine Stunde und zehn Minuten' contrast was left intact."
+    },
+    {
+      "index": 5,
+      "resolved": true,
+      "note": "Change 2 replaces Rieder's line with the exact specified text, removing the two-Schlitten contradiction and tying the mailing to the single 11 o'clock sled."
+    },
+    {
+      "index": 6,
+      "resolved": false,
+      "note": "The ch02 passage placing the postal sack in the corner by the stove is not among the changed passages, so it still contradicts the twelve-day stove wait stated in ch03."
+    },
+    {
+      "index": 7,
+      "resolved": true,
+      "note": "Change 3 inserts the specified sentence about the unthawed ground and the Föhn-delayed burial directly before 'Am Freitag um zehn wurde Anton Kalt begraben', accounting for the schedule shift."
+    }
+  ],
+  "introduced": []
+}
