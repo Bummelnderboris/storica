@@ -22,8 +22,9 @@ from typing import Any, Dict, List, Optional, Sequence, Union
 from .adjudicator import AdjudicationFailed
 from .assembly import assemble_novel, save_novel
 from .audit_repair import repair_from_audit
-from .canon import chapter_unit, load_canon
+from .canon import Severity, chapter_unit, load_canon
 from .checkers import Decision, FinalAuditor, ProseChecker
+from .checkers.base import CheckerIssue
 from .drafts import drafted_chapters, load_chapter_draft, save_chapter_draft
 from .llm import StructuredLLM
 from .plan import load_chapter_spec_if_present, load_macro_arc, macro_arc_path, specced_chapters
@@ -40,7 +41,7 @@ from .pipeline import (
     reconcile_chapter_into_canon,
     spec_chapter,
 )
-from .reports import QuarantineLog, write_run_report
+from .reports import DecisionRecord, QuarantineLog, RulingKind, write_run_report
 from .stages import GateFailed
 from .trace import Tracer
 
@@ -114,7 +115,7 @@ async def run_novel(
     n_candidates: int = 1,
     samples: int = 3,
     retry_quarantined: bool = False,
-    audit_repairs: int = 1,
+    audit_repairs: int = 2,
 ) -> RunResult:
     """
     Run the whole pipeline for one novel, skipping any stage whose artifact already exists.
@@ -127,9 +128,10 @@ async def run_novel(
     repair budget again on the same unit. `retry_quarantined` releases them first, which is how a
     person re-tries a chapter with a larger `max_repairs`.
 
-    `audit_repairs` bounds how many times a `revise` from the final auditor is acted on: its blocking
-    findings are routed to chapters, repaired and verified (`audit_repair.py`), and the book is read
-    by a fresh audit again. 0 reports the audit and stops, as before.
+    `audit_repairs` bounds how many times the final audit is acted on: its blocking findings — and,
+    when it escalates, a `correct_the_unit` ruling on the conflict — are routed to chapters, repaired
+    and verified (`audit_repair.py`), and the book is read by a fresh audit again. 0 reports and
+    stops.
 
     Stages 1–3 have no unit to quarantine: if canon or the arc cannot pass its gate, `GateFailed`
     propagates and the run stops with the issues attached. From stage 4 on, every failure is
@@ -217,19 +219,43 @@ async def run_novel(
     # only a whole-book reader can see, a bounded repair of the chapters they sit in (§6.6).
     if audit and novel_path is not None:
         tracer = Tracer(novel_dir / TRACE_DIR if trace else None)
+        ruled: List[DecisionRecord] = []
         while True:
             verdict = await FinalAuditor(llm, tracer=tracer).audit(
                 novel_text=assembled.text, canon=canon, arc=arc, quarantined=quarantine.units()
             )
+
+            # The auditor is the last agent that can find canon incoherent. That conflict gets a
+            # binding ruling like any other — and a ruling that corrects the book is then acted on,
+            # as one more finding for the repair round below, not reported and forgotten.
+            findings = list(verdict.blocking_issues())
+            if verdict.decision == Decision.ESCALATE and verdict.conflict.strip():
+                try:
+                    record = await adjudicator_for(novel_dir, llm, tracer).rule(
+                        unit="novel", conflict=verdict.conflict, context="raised by the final audit"
+                    )
+                    ruled.append(record)
+                    if record.ruling.kind == RulingKind.CORRECT_UNIT:
+                        findings.append(CheckerIssue(
+                            unit=f"{record.ruling.binding_summary} ({verdict.conflict})",
+                            kind="ruling", severity=Severity.BLOCKING, canon_ref="",
+                            fix_hint=record.ruling.instruction,
+                        ))
+                    else:
+                        findings = []   # canon must change first: a human applies the amendment
+                except AdjudicationFailed as failure:
+                    result.audit_ruling = f"adjudication failed: {failure.reason}"
+                    findings = []
+
             if (
-                verdict.decision != Decision.REVISE
-                or not verdict.blocking_issues()
+                verdict.decision == Decision.PASS
+                or not findings
                 or state.audit_rounds >= audit_repairs
             ):
                 break
             chapters = assembled.chapters
             repaired = await repair_from_audit(
-                verdict=verdict,
+                verdict=verdict.model_copy(update={"issues": findings}),
                 drafts={c: load_chapter_draft(novel_dir / DRAFTS_DIR, c) for c in chapters},
                 specs={c: load_chapter_spec_if_present(novel_dir / PLAN_DIR, c) for c in chapters},
                 canon=canon, llm=llm, tracer=tracer, max_repairs=max_repairs,
@@ -251,17 +277,8 @@ async def run_novel(
         result.audit_summary = verdict.summary
         result.audit_decision = verdict.decision.value
         result.audit_issues = [str(i) for i in verdict.to_issues("final_auditor")]
-
-        # The auditor is the last agent that can find canon incoherent. If it does, that conflict
-        # gets a binding ruling like any other rather than being reported and forgotten.
-        if verdict.decision == Decision.ESCALATE and verdict.conflict.strip():
-            try:
-                record = await adjudicator_for(novel_dir, llm, tracer).rule(
-                    unit="novel", conflict=verdict.conflict, context="raised by the final audit"
-                )
-                result.audit_ruling = record.ruling.binding_summary
-            except AdjudicationFailed as failure:
-                result.audit_ruling = f"adjudication failed: {failure.reason}"
+        if ruled and not result.audit_ruling:
+            result.audit_ruling = ruled[-1].ruling.binding_summary
 
     result.usage = llm.usage.as_dict()
 

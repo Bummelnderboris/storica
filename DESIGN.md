@@ -469,7 +469,11 @@ contradiction *between* chapters — each clean on its own. Its `revise` used to
 nothing more; P6's first complete book ended there, with eight such findings. Now each blocking
 finding is **routed to one chapter** (`audit_repair.py`) and repaired under the ordinary contract,
 checked by the repair verifier against the finding and a diff; then a fresh audit reads the book
-again (`--audit-repairs`, default 1 round).
+again (`--audit-repairs`, default 2 rounds). When the audit *escalates* a canon-side conflict,
+the adjudicator rules first; a `correct_the_unit` ruling becomes one more finding for the same repair
+round, and an `amend_canon` ruling stops the loop for a human. (In P6, round 1 took the book from 8
+blocking findings to 3 plus one escalation, whose ruling was at first recorded and acted on by
+nothing — the reason this branch exists.)
 
 Exactly one side of a contradiction moves: the chapter the fix hint names, when it names one;
 otherwise the **later** chapter, because the earlier one was reconciled into canon before the later

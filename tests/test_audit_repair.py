@@ -152,3 +152,30 @@ def test_audit_repairs_zero_reports_and_stops(planned):
 
     assert result.audit_decision == "revise" and not result.is_done
     assert "um neun" in (planned / "03_drafts" / "ch01.md").read_text()
+
+
+def test_an_escalated_audit_is_ruled_on_and_the_ruling_is_repaired_too(planned):
+    """
+    Found live in P6: the second audit escalated a canon-side conflict, the adjudicator ruled
+    `correct_the_unit`, and the ruling was recorded and then acted on by nothing.
+    """
+    from storica.reports import Ruling, RulingKind
+
+    fixed = SCENE.replace("um neun", "um zehn")
+    ruling = Ruling(kind=RulingKind.CORRECT_UNIT, reasoning="ground truth fixes the hour",
+                    instruction="In ch01, the dog barks at ten.", canon_amendment="",
+                    ground_truth_violation="", specialist_task="",
+                    binding_summary="the hour is ten")
+    escalation = Verdict(decision=Decision.ESCALATE, summary="canon disagrees with itself",
+                         issues=[], conflict="canon gives two hours for the barking")
+    llm = FakeStructuredLLM(
+        texts=[SCENE, "# Das Protokoll\n\n" + fixed],
+        responses=[_extraction(), escalation, ruling, _resolved(), _audit(Decision.PASS)],
+    )
+
+    result = asyncio.run(run_novel(novel_dir=planned, authors_root=AUTHORS_ROOT, llm=llm,
+                                   checkers=[]))
+
+    assert result.audit_decision == "pass"
+    assert "um zehn" in (planned / "03_drafts" / "ch01.md").read_text()
+    assert result.audit_ruling == "" or "ten" in result.audit_ruling

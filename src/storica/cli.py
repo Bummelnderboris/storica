@@ -243,7 +243,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     run.add_argument("--no-audit", action="store_true", help="skip the whole-book final audit")
     run.add_argument(
-        "--audit-repairs", type=int, default=1, dest="audit_repairs",
+        "--audit-repairs", type=int, default=2, dest="audit_repairs",
         help="rounds of acting on a 'revise' from the final audit: its blocking findings are routed "
              "to chapters, repaired and verified, and the book is audited again. 0 = report only.",
     )
