@@ -35,12 +35,11 @@ def _new(tmp_path: Path, **over) -> int:
 # new
 # --------------------------------------------------------------------------------------------
 
-def test_new_creates_the_skeleton_and_the_brief(tmp_path):
+def test_new_creates_only_the_brief(tmp_path):
     assert _new(tmp_path, spark="A judge re-tries his own case.", language="de", chapters=6) == 0
 
     book = tmp_path / "book"
-    for sub in ("00_input", "01_canon", "02_plan/chapters", "03_drafts", "04_trace", "05_reports"):
-        assert (book / sub).is_dir(), f"missing {sub}"
+    assert [p.name for p in book.iterdir()] == ["00_input"]
 
     brief = (book / "00_input" / "brief.yaml").read_text(encoding="utf-8")
     assert "author_id: duerrenmatt" in brief
@@ -238,6 +237,7 @@ def test_status_is_read_only_even_for_a_path_with_no_novel(tmp_path, capsys):
 def test_status_survives_a_malformed_run_report(tmp_path, capsys):
     assert _new(tmp_path) == 0
     reports = tmp_path / "book" / "05_reports"
+    reports.mkdir()
     (reports / "run_report.json").write_text("{not json", encoding="utf-8")
     assert main(["status", str(tmp_path / "book")]) == 0
     assert "unreadable" in capsys.readouterr().out

@@ -80,14 +80,19 @@ def _driver(name: str, novel_dir: Path, session_dir: str = "06_session") -> Stru
 
 
 def cmd_new(args: argparse.Namespace) -> int:
-    """Create the folder skeleton and the brief. This is the only human-authored artifact."""
+    """
+    Create the novel folder with its brief, the only human-authored artifact.
+
+    Only `00_input/` is made. Every stage creates its own folder when it first writes, so empty
+    `01_canon/`, `04_trace/` and the rest would only be noise, and a writers'-room novel never
+    uses them at all.
+    """
     novel_dir = Path(args.novel_dir)
-    for sub in ("00_input", "01_canon", "02_plan/chapters", "03_drafts", "04_trace", "05_reports"):
-        (novel_dir / sub).mkdir(parents=True, exist_ok=True)
 
     brief = Brief(
         author_id=args.author,
         spark=args.spark,
+        thoughts=args.thoughts,
         language=args.language,
         chapter_count=args.chapters,
     )
@@ -288,6 +293,7 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("novel_dir")
     new.add_argument("--author", required=True, help="author id under authors/")
     new.add_argument("--spark", default="", help="the seed thought")
+    new.add_argument("--thoughts", default="", help="anything else the creator said about the book, verbatim")
     new.add_argument("--language", default="en")
     new.add_argument("--chapters", type=int, default=None)
     new.set_defaults(func=cmd_new)

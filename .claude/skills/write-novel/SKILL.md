@@ -1,6 +1,6 @@
 ---
 name: write-novel
-description: Drive a Storica novel to completion on a Claude subscription instead of the API, by answering the replay driver's requests with fresh subagents. Use when asked to run, continue, or resume a novel in novels/<slug>/, or to do a P6-style validation run.
+description: Drive an autonomous Storica run (`storica run`, the P6-style benchmark pipeline) to completion on a Claude subscription by answering the replay driver's requests with fresh subagents. Use only when asked to run, continue or resume an autonomous run such as novels/der-chrachen-v2. For writing or developing a book with the user, use the develop skill instead.
 ---
 
 # Drive a Storica novel with the replay driver

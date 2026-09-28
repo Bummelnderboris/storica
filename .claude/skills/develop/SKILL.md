@@ -1,6 +1,6 @@
 ---
 name: develop
-description: Develop a Storica novel together with the user in Storica's writers' room, step by step (pitch first), with each draft and review written by a fresh subagent and the user steering in conversation. Use when the user wants to develop, discuss, shape or continue a novel's pitch or planning interactively, or runs /develop.
+description: Storica's writers' room, where the user develops a book in conversation, step by step (pitch first), with each draft and review written by a fresh subagent. Use when the user wants to write, start or develop a new book or story with Storica, continue developing one in novels/<slug>/, or runs /develop. Assumes the user knows nothing about Storica or about writing.
 ---
 
 # The writers' room
@@ -10,7 +10,11 @@ You host the writers' room. The **creator** is the user: they decide what the bo
 asks the creator questions. **You** run the steps, show the creator what the agents produced, and
 pass their answers back. You don't write the story.
 
-Usage: `/develop novels/<slug>` (defaults to `novels/der-chrachen-v3`).
+Assume the creator knows nothing: not how Storica works, not the vocabulary of writing, not the
+authors in the library. They know what kind of book they would enjoy. Everything you show them has to
+make sense to that person.
+
+Usage: `/develop` for a new book, or `/develop novels/<slug>` to continue one.
 
 ## Rules
 
@@ -27,15 +31,36 @@ Usage: `/develop novels/<slug>` (defaults to `novels/der-chrachen-v3`).
 
 ## The loop
 
-**1. Where are we?**
+**0. A new book.** When no novel is given, start here. Say in two or three sentences what will
+happen: you'll talk about the book together, and a small team of writing agents drafts each stage
+while the creator decides. Then ask, one message, in plain words:
+
+- What should the book be about? A situation, a person, a feeling, or "no idea yet" are all fine.
+- Is there anything it must have or must not have?
+- In which language should it be written?
+- Whose way of telling should shape it? Offer what `authors/` holds, each described in one plain
+  sentence of what their books feel like to read (take it from the author's `impression.md`),
+  e.g. Dürrenmatt: dark, ironic stories where chance wrecks careful plans; Hemingway: plain, tense
+  stories about people under pressure, where the important things go unsaid.
+- A working title, or should the book get one later?
+
+Then create the book from their answers. Their words go in verbatim; don't improve them:
+
+```bash
+.venv/bin/storica new novels/<slug> --author <id> --language <code> --chapters 3 \
+  --spark "<what it should be about, their words>" --thoughts "<must / must not, anything else they said>"
+```
+
+Pick `<slug>` from the working title (lowercase, hyphens), or from the idea if there is none. Three
+chapters is the default for a first book; say so, and change it if they want. Then continue with 2.
+
+**1. Continuing a book: where are we?**
 
 ```bash
 .venv/bin/storica develop <novel_dir>
 ```
 
 It lists the steps with their version and status. Work on the first step that is not `approved`.
-If there is no brief yet, stop and help the creator write `00_input/brief.yaml` (see an existing
-novel for the format). The brief is the creator's text; don't invent it.
 
 **2. Run a round of the step:**
 
@@ -51,19 +76,25 @@ novel for the format). The brief is the creator's text; don't invent it.
 | `2` | Calls need answers | Dispatch every `[pending]` line (below), then run the same command **without** `--note` |
 | `3` | An answer does not fit its schema | Delete the named response file and re-dispatch that call with the error appended to the prompt |
 
-A round is two calls, the writer and then the editor, so expect two pauses.
+A round is two calls, the writer and then the editor, so expect two pauses. Each takes a minute or
+two; tell the creator once that the team is writing, and don't narrate every call.
 
-**3. Present the document.** Read `<novel_dir>/<NN_step>.md` and give the creator, in their
-language, briefly:
+**3. Present the document.** Read `<novel_dir>/<NN_step>.md`. Show the creator, in their
+language, as someone who has never seen a pitch would want it. Keep it short enough to read in a
+minute:
 
-- the editor's summary;
-- for options: each option's title, logline and "question of the book", two or three lines each,
-  quoting the key German phrases. For a single pitch: what changed since the last version;
-- the editor's recommendation;
-- the editor's questions, verbatim (with a translation if the creator writes another language).
+- **For options:** one short paragraph per option: what the book is about and what reading it would
+  be like, in plain words. Then, in one sentence each, what the editor thinks is strongest and
+  weakest about it.
+- **For a single pitch:** what changed since the last version, in two or three sentences.
+- **The editor's recommendation,** in one sentence.
+- **The editor's questions,** in the creator's language, keeping every possibility they offer.
 
-Then ask what they want: choose or combine options, change something, answer the questions, or
-approve. Tell them once that they can also edit the file directly and just say "continue".
+Leave out the craft vocabulary the document uses ("Logline", "Wendung", "Risiko"), and translate it
+into what it means for the reader. Then ask one simple thing: which way they'd like to go, or what
+they'd change. They can answer in a few words, choose a letter, or say "you decide", which you pass
+on as their note like anything else. Tell them once that the full document is at
+`<novel_dir>/<NN_step>.md` if they want to read or edit it themselves.
 
 Stay faithful to the document. Don't smooth over weak spots the editor named, and don't add
 qualities it doesn't have.
@@ -71,7 +102,9 @@ qualities it doesn't have.
 **4. Act on the answer.**
 
 - Approval ("passt", "approve", "weiter", "go on"): `storica develop <novel_dir> <step> --approve`,
-  then go to the next step, or tell the creator that this was the last step available so far.
+  then go to the next step. The pitch is the only step built so far: after approving it, tell the
+  creator plainly that the next steps (characters, storyline, chapters) aren't built yet, and that
+  their pitch is saved for when they are.
 - Anything else: step 2 with `--note "<their words, verbatim>"`.
 - They edited the file themselves: step 2 without `--note`.
 

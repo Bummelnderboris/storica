@@ -4,6 +4,11 @@
 # Same brief as P6 (../../der-chrachen-v2/00_input/brief.yaml), unchanged, so the new process can be
 # compared against P6 and v1 on the same story. From here on the creator steers with notes in the
 # step documents (01_pitch.md, ...); this file stays as the starting point.
+#
+# First round (2026-09-28): the editor asked questions the creator could not place ("inner
+# decision", "Option A/B/C"), because the room assumed a creator who knows the story and the craft.
+# That led to the rule that the room assumes the user knows nothing (agents/story_editor.md,
+# .claude/skills/develop). 01_pitch.md v1 is kept as it came out, before that change.
 
 author_id: duerrenmatt
 

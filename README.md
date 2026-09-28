@@ -36,6 +36,9 @@ one readable document at a time, instead of an autonomous run. Done so far:
   reviews them and asks you questions, and your answers steer the next revision. The rest of the
   room (characters, storyline, scene cards, chapters) comes next.
 
+What using it should feel like, from the first conversation to the finished book, is drafted in
+[`docs/user-workflow.md`](docs/user-workflow.md).
+
 `storica run` below is the autonomous pipeline that wrote P6; it stays as the benchmark.
 
 ---

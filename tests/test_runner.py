@@ -247,14 +247,13 @@ def test_a_replay_driven_run_pauses_and_resumes(planned):
 # CLI
 # --------------------------------------------------------------------------------------------
 
-def test_cli_new_creates_the_skeleton_and_brief(tmp_path, capsys):
+def test_cli_new_creates_the_brief_and_nothing_else(tmp_path, capsys):
     target = tmp_path / "novels" / "test-novel"
     assert main(["new", str(target), "--author", "duerrenmatt", "--spark", "a certificate",
                  "--language", "de", "--chapters", "3"]) == 0
 
     assert (target / "00_input" / "brief.yaml").exists()
-    for sub in ("01_canon", "02_plan/chapters", "03_drafts", "04_trace", "05_reports"):
-        assert (target / sub).is_dir()
+    assert [p.name for p in target.iterdir()] == ["00_input"]
     assert "edit the brief" in capsys.readouterr().out
 
 

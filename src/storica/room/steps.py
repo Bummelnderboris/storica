@@ -79,7 +79,7 @@ class EditorReview(BaseModel):
     summary: str = Field(description="Three to five plain sentences for the creator.")
     assessments: List[Assessment]
     recommendation: str = Field(description="What to do next, in one or two sentences.")
-    questions: List[str] = Field(description="At most three real choices for the creator.")
+    questions: List[str] = Field(description="At most two real choices for the creator, in everyday words.")
 
 
 def render_review(review: EditorReview, language: str) -> str:
