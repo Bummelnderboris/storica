@@ -30,5 +30,5 @@ See `/DESIGN.md` for the pipeline that fills these. `_template/` is an empty ske
 - `der-chrachen/` — the **v1-format** capture from the 1:1 simulation run (Dürrenmatt). It predates
   this layout, so its internal structure is the old phase-numbered capture, kept as reference +
   evidence for the findings. See `der-chrachen/REFERENCE.md`.
-- `der-chrachen-v2/` — the same story under the v2 pipeline: the P6 run, in progress under the
-  replay driver. Its `06_session/` is the run itself; see `/docs/p6-handoff.md`.
+- `der-chrachen-v2/` — the same story under the v2 pipeline: the P6 run, finished 2026-09-22 under the
+  replay driver. Its `06_session/` is the run itself; see `/docs/archive/p6-handoff.md`.

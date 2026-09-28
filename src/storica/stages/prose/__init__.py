@@ -29,7 +29,7 @@ per unit, and a raise rather than a broken unit passed downstream.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Awaitable, Callable, List, Optional, Sequence
+from typing import List, Optional, Sequence
 
 from ...authors import AuthorModel
 from ...canon import Issue, StoryModel, blocking, chapter_unit

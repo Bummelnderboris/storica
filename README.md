@@ -21,8 +21,9 @@ The repository holds two generations of Storica. **Only one of them is live.**
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
 structural flaw that could not be tuned away ([the story](#how-we-got-here)).
 
-**The honest gap:** every stage, checker and repair loop is implemented and unit-tested, but no book
-has yet been produced by v2 from brief to `novel.md`. That run is the next thing to do.
+**The honest gap:** v2 has produced one book from brief to `novel.md` (P6, below), and every gate
+it owns passed — but a human reading of that book (2026-09-28) found it unsatisfying, and a rework
+is planned. The live API path has still never run.
 
 ---
 
@@ -281,7 +282,6 @@ storica/
 ├── calibration/           its results and FINDINGS.md
 ├── .claude/skills/write-novel/   the /write-novel skill: drive a run on a subscription
 ├── docs/agents.md         every agent: family, what fires it, what it reads, what it may do
-├── docs/p6-handoff.md     the prompt for a fresh session to continue P6
 ├── docs/proving-the-concept.md   what the replay method does and does not prove
 ├── docs/archive/          point-in-time v1 documents, not maintained
 └── legacy/                the archived v1 web app — see legacy/README.md
@@ -325,7 +325,8 @@ The author is a **generative driver, not a paint job**: their question-lines fee
 ## Development
 
 ```bash
-.venv/bin/python -m pytest -q      # 327 tests, a few seconds, no API key, no network
+.venv/bin/python -m pytest -q      # 369 tests, a few seconds, no API key, no network
+.venv/bin/ruff check .             # lint; rules pinned in pyproject.toml, legacy/ excluded
 ```
 
 Model aliases (`opus`, `sonnet`, `haiku`) resolve to current model IDs in exactly one place —
@@ -370,10 +371,10 @@ what stage 2 is supposed to produce.
 
 ---
 
-## What's next — P6
+## P6 — the first end-to-end run
 
-`DESIGN.md` §9 lays out the build plan P0–P6. P0–P5 are implemented and tested. **P6 is the open
-one:** run *Der Chrachen* end-to-end under v2 and compare it against the v1 capture — same spark,
+`DESIGN.md` §9 lays out the build plan P0–P6. P0–P5 are implemented and tested. **P6 was the
+proof run:** run *Der Chrachen* end-to-end under v2 and compare it against the v1 capture — same spark,
 same world, same author, same three chapters, so the comparison is direct.
 
 It is set up and ready to run:

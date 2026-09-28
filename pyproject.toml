@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7.4.4", "pytest-asyncio>=0.23.3"]
+dev = ["pytest>=7.4.4", "pytest-asyncio>=0.23.3", "ruff>=0.4"]
 
 [project.scripts]
 storica = "storica.cli:main"
@@ -24,3 +24,14 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff]
+extend-exclude = ["legacy"]
+
+[tool.ruff.lint]
+# The classic default set: real errors only. Newer ruff defaults add style rules this code predates.
+select = ["E4", "E7", "E9", "F"]
+
+[tool.ruff.lint.per-file-ignores]
+# Fixtures imported from another test module are redefined as parameters; that is how pytest works.
+"tests/*" = ["F811"]

@@ -115,7 +115,7 @@ Replay has done its job when:
 3. the prompts have stopped needing edits between runs.
 
 A quarantine along the way does not contradict condition 1; it is the gate doing its job, and a run
-that reveals blocking is a successful *run* — the [handoff](p6-handoff.md) says so and means it.
+that reveals blocking is a successful *run* — the [handoff](archive/p6-handoff.md) says so and means it.
 What it is not is a finished *book*. So after a quarantine, read `05_reports/quarantine.jsonl` and
 the repair rounds in `04_trace/` first: if the issue is real and precisely located (P6's was — an
 ungrounded date), release the chapter with `--retry-quarantined --max-repairs 4` and see whether the

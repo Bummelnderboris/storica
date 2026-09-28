@@ -9,7 +9,7 @@ chapter-level rulings, and a final audit of `pass` after three audit-repair roun
 on this novel now replays the whole thing and exits 0; there is nothing left to answer.
 
 What remains is not a run but a reading: compare the book against the v1 capture with the scorecard
-in [`proving-the-concept.md`](proving-the-concept.md), and read `05_reports/` before `novel.md`.
+in [`proving-the-concept.md`](../proving-the-concept.md), and read `05_reports/` before `novel.md`.
 
 This document is kept for the next novel, and for what it says about pace and hygiene below.
 
@@ -67,7 +67,7 @@ Context you need, in order: /README.md, /DESIGN.md, /calibration/FINDINGS.md.
 
 The book is the deliverable, but the run also answers questions the calibration could not. When it
 is done, compare against the v1 capture using the scorecard in
-[`proving-the-concept.md`](proving-the-concept.md) — same story, same author, same spark, so the
+[`proving-the-concept.md`](../proving-the-concept.md) — same story, same author, same spark, so the
 comparison is direct.
 
 The honest bar: v2 has to beat v1 on **coherence, meaning and micro-truth**, not on sentences. v1's
@@ -80,7 +80,7 @@ Two failure signatures to look for, in this order:
 
 1. **Nothing ever blocked.** The gate is not working, however good the book turns out.
 2. **Almost everything blocked, especially on micro-sense or voice.** This is
-   [C6/C7](../calibration/FINDINGS.md) recurring. Chapter 1's first attempt was exactly this, and
+   [C6/C7](../../calibration/FINDINGS.md) recurring. Chapter 1's first attempt was exactly this, and
    the rework addressed its two causes; micro-sense and voice have now had a floor test (C8), but on
    one chapter of one author. If the repair count per chapter is high and the repairs are not
    obviously improving anything, suspect the gate before suspecting the prose — and read the
