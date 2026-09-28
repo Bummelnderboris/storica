@@ -13,21 +13,10 @@ from typing import List
 from ...canon import StoryModel, canon_slice
 from ...plan import ChapterSpec
 from .schema import LedgerKind
+from ...agents import system as agent_system
 
-SYSTEM = """You are the Reconcile agent of an autonomous novel pipeline.
-
-You read a finished chapter draft against the canon it was written from, and you report what the
-prose actually contains. You do not edit canon, you do not rewrite prose, and you do not decide who
-is right when they disagree.
-
-THE PROSE IS NOT TRUTH. CANON IS TRUTH. A draft that calls the priest a creditor does not make him
-one — that is a contradiction for you to REPORT, never a correction for you to apply and never two
-facts for you to merge into a convenient third one ("he is a priest AND a creditor"). Inventing that
-bridging fact is the single failure this pipeline exists to prevent.
-
-You report five things: facts the prose adds that canon does not have, names the prose used for
-canon characters, facts the prose contradicts, shifts in who knows what, and whether each setup,
-payoff and promise this chapter was assigned actually landed in the text."""
+# The instructions live in agents/reconcile.md.
+SYSTEM = agent_system("reconcile")
 
 
 def reconcile_assignment_block(chapter: int, canon: StoryModel, spec: ChapterSpec) -> str:

@@ -23,6 +23,8 @@ from typing import Any, Dict, List, Optional, Type, TypeVar
 
 from pydantic import BaseModel
 
+from .agents import all_agents
+
 T = TypeVar("T", bound=BaseModel)
 
 # Stage → model aliases from DESIGN §5. Aliases are resolved late so the pipeline talks about
@@ -48,26 +50,10 @@ def resolve_model(model: str) -> str:
 # calls. Selection is Sonnet because choosing between drafts is cheaper than writing one.
 #
 # Every stage still takes a `model=` argument, so this is the default, not a constraint.
-STAGE_MODELS: Dict[str, str] = {
-    # invention
-    "conception": "opus",
-    "prose": "opus",
-    "adjudicator": "opus",
-    "final_auditor": "opus",
-    # structured transformation
-    "world_cast": "sonnet",
-    "macro_arc": "sonnet",
-    "chapter_spec": "sonnet",
-    "reconcile": "sonnet",
-    "selection": "sonnet",
-    # judgement against a slice
-    "canon_consistency": "sonnet",
-    "intent": "sonnet",
-    "micro_sense": "sonnet",
-    "voice": "sonnet",
-    "vitality": "sonnet",
-    "repair_verifier": "sonnet",
-}
+# Each agent's default model is the `model:` line of its file in agents/ — tuned there, next to its
+# instructions. Opus for invention and for the calls that must not be wrong, sonnet for structured
+# transformation and judgement against a slice.
+STAGE_MODELS: Dict[str, str] = {a.id: a.model for a in all_agents()}
 
 
 def stage_model(stage: str) -> str:

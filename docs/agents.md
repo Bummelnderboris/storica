@@ -16,7 +16,8 @@ behind the stages is [`DESIGN.md`](../DESIGN.md) §5, and behind the verificatio
 
 ## The roster
 
-Model tiers are `STAGE_MODELS` in [`src/storica/llm.py`](../src/storica/llm.py): opus for invention
+Each agent's instructions and model live in its own file in [`agents/`](../agents/README.md);
+`storica map` draws them, with every call a run made. Model tiers: opus for invention
 and for the calls that must not be wrong, sonnet for structured transformation and judgement against
 a slice.
 

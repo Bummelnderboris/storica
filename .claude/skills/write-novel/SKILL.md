@@ -27,6 +27,8 @@ So:
 - **Never** read a request file's prompt, or any canon/plan/draft file, into your own context. Your
   opinions about the story must not exist. The only thing you may read from a request file is its
   `- model:` line (see dispatch below).
+  The same holds for `05_reports/agent_map.html` and `storica map`: the map embeds every prompt of
+  the run. It is for the human, after the run.
 - **One subagent answers exactly one call**, then is discarded. Never reuse a subagent for a second
   call, and never batch several calls into one subagent.
 

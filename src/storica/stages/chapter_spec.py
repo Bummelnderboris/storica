@@ -26,16 +26,10 @@ from ..llm import StructuredLLM, stage_model
 from ..plan import ChapterSpec, MacroArc, validate_chapter_spec, validate_continuity
 from ..trace import Tracer
 from .gate import GateFailed, format_issues, run_gated
+from ..agents import system as agent_system
 
-SYSTEM = """You are the Chapter-spec agent of an autonomous novel pipeline.
-
-You elaborate ONE chapter from validated canon and the macro arc, just before it is written. You do
-not write prose. You produce a specification: purpose, POV, cast, the beats this chapter must
-deliver, the motifs and promises it must plant or pay off, the canonical state at its open and
-close, and its scenes.
-
-Everything is referenced by canon ID. You carry exactly the assignment the arc gave this chapter —
-no more (do not steal a later chapter's beat) and no less (do not drop one you were given)."""
+# The instructions live in agents/chapter_spec.md.
+SYSTEM = agent_system("chapter_spec")
 
 
 class ChapterSpecGateFailed(GateFailed):

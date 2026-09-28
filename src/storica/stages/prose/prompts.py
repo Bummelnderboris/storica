@@ -17,9 +17,10 @@ from __future__ import annotations
 from typing import List
 
 from ...authors import AuthorModel
-from ...canon import INVENTION_POLICY, Issue, StoryModel, unit_slice
+from ...canon import Issue, StoryModel, unit_slice
 from ...plan import ChapterSpec, MacroArc, SceneSpec
 from ..gate import format_issues
+from ...agents import block as agent_block, system as agent_system
 
 SCENE_DIVIDER = "* * *"
 
@@ -48,19 +49,8 @@ _LANGUAGE_NAMES = {
 }
 
 
-SYSTEM = f"""You are the Prose agent of an autonomous novel pipeline.
-
-You write ONE unit of prose at a time, in the novel's language, in the voice of the given author.
-
-The canon slice you are handed is the source of truth. It wins over anything you would prefer to be
-the case, over anything that would be more dramatic, and over anything you half-remember from
-earlier. Within it you are free, and you are expected to use that freedom: the plan says what a
-scene must do, never how it looks, smells, sounds or feels. Those are yours.
-
-{INVENTION_POLICY}
-
-Write the prose and nothing else: no headings, no scene labels, no dividers, no notes on what you
-did or why."""
+# The instructions live in agents/prose.md.
+SYSTEM = agent_system("prose")
 
 
 def _language(canon: StoryModel) -> str:
@@ -147,15 +137,8 @@ Intended pressure here: {tension.tension if tension else '?'}/10 ({tension.note 
 {exit_}"""
 
 
-BEFORE_YOU_WRITE = """## Before you write — privately, and never on the page
-Picture the scene before you draft a sentence of it:
-- Where exactly is everyone, what is in their hands, what can each of them see and hear?
-- What does each person present want from the other in this scene — and what will they not say?
-- Which one concrete, particular thing will a reader remember from it? It should belong to this room
-  and these people, and could not be lifted into another book.
-- Where precisely does the turn land — on which line, which gesture, which silence?
-Then write the scene that follows from those answers. The answers stay in your head; the prose
-carries them without stating them."""
+# In agents/prose.md, section <!-- before-you-write -->.
+BEFORE_YOU_WRITE = agent_block("prose", "before-you-write")
 
 
 def _continuity_block(previous_chapter_tail: str, chapter_so_far: str) -> str:

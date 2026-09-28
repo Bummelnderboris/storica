@@ -45,12 +45,10 @@ from ..canon import (
 from ..llm import StructuredLLM, stage_model
 from ..trace import Tracer
 from .gate import GateFailed, format_issues, run_gated
+from ..agents import system as agent_system
 
-SYSTEM = """You are the World & Cast agent of an autonomous novel pipeline.
-
-You emit CANON: the structured, machine-checked source of truth for a novel. You do not write
-prose. Everything you emit will be referenced by stable id for the rest of the run, and every
-reference is validated — a dangling id or a name that maps to two characters is a hard failure."""
+# The instructions live in agents/world_cast.md.
+SYSTEM = agent_system("world_cast")
 
 
 # --------------------------------------------------------------------------------------------

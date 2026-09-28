@@ -205,6 +205,19 @@ def cmd_status(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_map(args) -> int:
+    from .agent_map import write_map
+
+    novel_dir = Path(args.novel_dir) if args.novel_dir else None
+    if novel_dir is not None and not (novel_dir / "04_trace").is_dir():
+        print(f"no run to map: {novel_dir / '04_trace'} does not exist", file=sys.stderr)
+        return 1
+    default = novel_dir / "05_reports" / "agent_map.html" if novel_dir else Path("agent_map.html")
+    out = write_map(Path(args.out) if args.out else default, novel_dir)
+    print(f"agent map: {out}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="storica", description="Canon-centric novel pipeline")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -253,6 +266,13 @@ def build_parser() -> argparse.ArgumentParser:
     status = sub.add_parser("status", help="show how far a run has got")
     status.add_argument("novel_dir")
     status.set_defaults(func=cmd_status)
+
+    amap = sub.add_parser(
+        "map", help="draw the agents and their instructions as an HTML page; with a novel, add every call it made",
+    )
+    amap.add_argument("novel_dir", nargs="?", default=None)
+    amap.add_argument("--out", default=None, help="where to write the page (default: <novel>/05_reports/agent_map.html, or ./agent_map.html)")
+    amap.set_defaults(func=cmd_map)
 
     return parser
 

@@ -24,12 +24,10 @@ from ..brief import Brief
 from ..canon import Premise
 from ..llm import StructuredLLM, stage_model
 from ..trace import Tracer
+from ..agents import system as agent_system
 
-SYSTEM = """You are the Conception agent of an autonomous novel pipeline.
-
-You do not write prose. You decide WHAT STORY gets told, in the voice of a specific author's
-obsessions, and you emit it as structured data. The creator's brief is immutable ground truth:
-you may interpret it, never contradict it."""
+# The instructions live in agents/conception.md.
+SYSTEM = agent_system("conception")
 
 
 class PremiseCandidate(BaseModel):

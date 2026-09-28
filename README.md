@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 369 tests passing. One finished book (P6, audit `pass`); never yet run against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 376 tests passing. One finished book (P6, audit `pass`); never yet run against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -242,13 +242,15 @@ storica/
 ├── pyproject.toml         deps and the `storica` console script
 │
 ├── src/storica/           ← THE PIPELINE
-│   ├── cli.py             new / run / status
+│   ├── cli.py             new / run / status / map
 │   ├── runner.py          the run loop; resumable by construction
 │   ├── pipeline.py        I/O only: load from disk, run the stage, write back
 │   ├── chapter.py         one chapter's attempt loop: escalate → adjudicate → retry → quarantine
 │   ├── drafts.py          reading and writing 03_drafts/
 │   ├── brief.py           the front-door brief — immutable ground truth
 │   ├── authors.py         loads the author library
+│   ├── agents.py          loads agents/*.md: each agent's instructions and model
+│   ├── agent_map.py       `storica map`: the agents and a run's calls as one HTML page
 │   ├── canon/             story_model.json: model, validation, ids, slicing, versioned store
 │   ├── plan/              macro arc + chapter specs: schema, validation, store
 │   ├── stages/            conception, world_cast, macro_arc, chapter_spec, prose/, reconcile/
@@ -265,7 +267,9 @@ storica/
 │   ├── trace.py           every filled prompt and artifact, to 04_trace/
 │   ├── llm.py             the only place the Anthropic SDK is touched; model aliases
 │   └── drivers/replay.py  run the real prompts with no API key
-├── tests/                 327 tests
+├── tests/                 376 tests
+│
+├── agents/                ← WHAT EACH AGENT IS TOLD: one file per agent — see agents/README.md
 │
 ├── authors/               author library, shared across novels — see authors/README.md
 │   ├── duerrenmatt/
@@ -274,7 +278,7 @@ storica/
 ├── novels/                one folder per novel — see novels/README.md
 │   ├── _template/             empty skeleton to copy
 │   ├── der-chrachen/          the v1 capture kept as reference evidence
-│   └── der-chrachen-v2/       the P6 run: same story under v2, in progress
+│   └── der-chrachen-v2/       the P6 run: same story under v2, finished 2026-09-22
 │
 ├── tools/                 calibrate_checkers.py — known-answer test for the checker layer
 │                       smoke_test_api.py    — proves the live adapter works, for ~$0.001
@@ -325,8 +329,9 @@ The author is a **generative driver, not a paint job**: their question-lines fee
 ## Development
 
 ```bash
-.venv/bin/python -m pytest -q      # 369 tests, a few seconds, no API key, no network
+.venv/bin/python -m pytest -q      # 376 tests, a few seconds, no API key, no network
 .venv/bin/ruff check .             # lint; rules pinned in pyproject.toml, legacy/ excluded
+.venv/bin/storica map novels/der-chrachen-v2   # every agent, its instructions, and each call it made
 ```
 
 Model aliases (`opus`, `sonnet`, `haiku`) resolve to current model IDs in exactly one place —

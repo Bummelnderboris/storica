@@ -36,15 +36,10 @@ from ..llm import StructuredLLM, stage_model
 from ..plan import MacroArc, MacroArcDraft, validate_macro_arc_draft
 from ..trace import Tracer
 from .gate import GateFailed, format_issues, run_gated
+from ..agents import system as agent_system
 
-SYSTEM = """You are the Macro-arc agent of an autonomous novel pipeline.
-
-You plan the whole book's movement — acts, turning points, per-character beats, the motif and
-promise schedule, the tension curve. You do not write prose and you do not restate canon: every
-character, motif and promise is referenced by ID.
-
-Your plan is checked mechanically and then read by an Intent checker that asks whether each unit
-earns its place. A chapter that carries no beat, no turn and no ledger event will be rejected."""
+# The instructions live in agents/macro_arc.md.
+SYSTEM = agent_system("macro_arc")
 
 
 class MacroArcGateFailed(GateFailed):
