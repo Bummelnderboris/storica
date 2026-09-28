@@ -12,6 +12,8 @@ Usage:
     storica new    novels/der-chrachen --author duerrenmatt
     storica run    novels/der-chrachen --driver replay
     storica status novels/der-chrachen
+    storica develop novels/der-chrachen-v3 pitch --note "B, aber der Arzt ist jünger"
+    storica map    novels/der-chrachen-v2
 """
 
 from __future__ import annotations
@@ -63,9 +65,9 @@ def _load_dotenv() -> None:
             os.environ.setdefault(key.strip(), value)
 
 
-def _driver(name: str, novel_dir: Path) -> StructuredLLM:
+def _driver(name: str, novel_dir: Path, session_dir: str = "06_session") -> StructuredLLM:
     if name == "replay":
-        return ReplayLLM(novel_dir / "06_session")
+        return ReplayLLM(novel_dir / session_dir)
     if name == "anthropic":
         _load_dotenv()
         if not os.environ.get("ANTHROPIC_API_KEY"):
@@ -100,6 +102,22 @@ def cmd_new(args: argparse.Namespace) -> int:
     return 0
 
 
+def _report_pause(pause: ResponseNeeded, llm: StructuredLLM) -> int:
+    """
+    A replay driver ran out of recorded answers. List every call this run is waiting on, one per
+    line, so a driver can answer them in parallel. Model and paths only — never the prompt (see the
+    write-novel skill).
+    """
+    print(f"\n[paused] {pause}\n")
+    raised = getattr(llm, "raised", [])
+    if raised:
+        print(f"[pending] {len(raised)} call(s) awaiting an answer in this run:")
+        for r in raised:
+            print(f"  - model={r.model} read={r.request_path} write={r.response_path}")
+        print()
+    return 2
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     novel_dir = Path(args.novel_dir)
     llm = _driver(args.driver, novel_dir)
@@ -122,16 +140,7 @@ def cmd_run(args: argparse.Namespace) -> int:
         ))
     except ResponseNeeded as pause:
         # Not a failure: the replay driver has run out of recorded answers.
-        print(f"\n[paused] {pause}\n")
-        raised = getattr(llm, "raised", [])
-        if raised:
-            # Every call this run is waiting on, one per line, so a driver can answer them in
-            # parallel. Model and paths only — never the prompt (see the write-novel skill).
-            print(f"[pending] {len(raised)} call(s) awaiting an answer in this run:")
-            for r in raised:
-                print(f"  - model={r.model} read={r.request_path} write={r.response_path}")
-            print()
-        return 2
+        return _report_pause(pause, llm)
     except MalformedResponse as bad:
         # A recorded answer does not fit its schema. Also not a crash — the answer needs
         # rewriting. Distinct exit code so a driving loop can tell "write a new answer" (2)
@@ -205,12 +214,65 @@ def cmd_status(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_develop(args: argparse.Namespace) -> int:
+    """The writers' room: one step, one round. See `room/steps.py` and the /develop skill."""
+    from . import room
+    from .authors import load_author
+    from .brief import load_brief
+    from .room.steps import SESSION_DIR
+
+    novel_dir = Path(args.novel_dir)
+    try:
+        brief = load_brief(novel_dir / "00_input")
+    except FileNotFoundError:
+        print(f"no brief at {novel_dir / '00_input' / 'brief.yaml'} — create one with `storica new`", file=sys.stderr)
+        return 1
+
+    if not args.step:
+        print(f"{novel_dir}")
+        for line in room.overview(novel_dir, brief.language):
+            print(f"  {line}")
+        print("  (characters, storyline, scene cards and chapters come in later rework phases)")
+        return 0
+
+    try:
+        room.step(args.step)
+        if args.note:
+            room.add_note(novel_dir, args.step, brief.language, args.note)
+            print(f"note added to {room.step(args.step).filename}")
+        if args.approve:
+            doc = room.approve(novel_dir, args.step, brief.language)
+            print(f"approved: {room.step(args.step).filename} v{doc.version}")
+            return 0
+    except (KeyError, ValueError) as bad:
+        print(f"[refused] {bad.args[0]}", file=sys.stderr)
+        return 1
+
+    llm = _driver(args.driver, novel_dir, SESSION_DIR)
+    try:
+        outcome = asyncio.run(room.advance(
+            novel_dir=novel_dir, step_id=args.step, brief=brief,
+            author=load_author(brief.author_id, args.authors), llm=llm,
+        ))
+    except ResponseNeeded as pause:
+        return _report_pause(pause, llm)
+    except MalformedResponse as bad:
+        print(f"\n[malformed] {bad}\n")
+        return 3
+    except LLMRefusal as refusal:
+        print(f"\n[refused] the model declined a call: {refusal}\n")
+        return 1
+    print(outcome.message)
+    print(f"document: {outcome.path}")
+    return 0
+
+
 def cmd_map(args) -> int:
-    from .agent_map import write_map
+    from .agent_map import has_trace, write_map
 
     novel_dir = Path(args.novel_dir) if args.novel_dir else None
-    if novel_dir is not None and not (novel_dir / "04_trace").is_dir():
-        print(f"no run to map: {novel_dir / '04_trace'} does not exist", file=sys.stderr)
+    if novel_dir is not None and not has_trace(novel_dir):
+        print(f"no run to map: {novel_dir} has no 04_trace/ or _trace/", file=sys.stderr)
         return 1
     default = novel_dir / "05_reports" / "agent_map.html" if novel_dir else Path("agent_map.html")
     out = write_map(Path(args.out) if args.out else default, novel_dir)
@@ -266,6 +328,17 @@ def build_parser() -> argparse.ArgumentParser:
     status = sub.add_parser("status", help="show how far a run has got")
     status.add_argument("novel_dir")
     status.set_defaults(func=cmd_status)
+
+    dev = sub.add_parser(
+        "develop", help="the writers' room: develop the novel with the creator, one step at a time",
+    )
+    dev.add_argument("novel_dir")
+    dev.add_argument("step", nargs="?", default=None, help="the step to advance (e.g. pitch); omit for an overview")
+    dev.add_argument("--note", default=None, help="the creator's words, added verbatim to the step's notes before the round")
+    dev.add_argument("--approve", action="store_true", help="approve the step's current document")
+    dev.add_argument("--driver", default="replay", choices=["replay", "anthropic"])
+    dev.add_argument("--authors", default=str(DEFAULT_AUTHORS))
+    dev.set_defaults(func=cmd_develop)
 
     amap = sub.add_parser(
         "map", help="draw the agents and their instructions as an HTML page; with a novel, add every call it made",

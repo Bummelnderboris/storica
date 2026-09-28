@@ -1,0 +1,39 @@
+# Der Chrachen, third attempt: developed in the writers' room (storica develop), not run
+# autonomously.
+#
+# Same brief as P6 (../../der-chrachen-v2/00_input/brief.yaml), unchanged, so the new process can be
+# compared against P6 and v1 on the same story. From here on the creator steers with notes in the
+# step documents (01_pitch.md, ...); this file stays as the starting point.
+
+author_id: duerrenmatt
+
+spark: >-
+  In einem abgelegenen Schweizer Bergdorf stirbt bei einem Autounfall in einer Winternacht der
+  einzige Mann, der beweisen könnte, dass der Amtsarzt des Dorfes vor zwanzig Jahren einen
+  tödlichen Behandlungsfehler vertuscht hat. Nun liegt der Tote auf dem Tisch eben dieses Arztes,
+  der als einziger Mediziner am Ort den Totenschein ausstellen muss.
+
+thoughts: |
+  Gattung: Kriminalroman / Tragikomödie (philosophisch). Nebenformen: Justizdrama, Dorfgroteske.
+
+  Welt: Abgelegenes Schweizer Alpendorf, durch einen Passwinter von der Welt abgeschnitten.
+  Zeit: die 1950er Jahre. Atmosphäre: eng, verschneit, von Schweigen und stillschweigenden
+  Übereinkünften regiert.
+
+  Konflikt: Die Wahrheit auf dem Totenschein wäre die Selbstanzeige des Arztes; das Schweigen
+  überlässt es dem Zufall, die alte Schuld endgültig zu begraben. Zwischen beidem muss ein Mann
+  entscheiden, der zeitlebens an die Ordnung geglaubt hat.
+
+  Figurenkeime: Der Amtsarzt — müde, ordnungsgläubig, seit zwanzig Jahren Verwalter seiner
+  eigenen Schuld. Der Tote fungiert als Antagonist: der Zufall in Person. Dazu eine junge
+  Amtsperson (Landjäger oder Untersuchungsrichter) und die Witwe des Toten.
+
+  Ton: nüchtern, grotesk, ironisch; das Schreckliche sachlich protokolliert.
+
+question_lines: []
+nudges: []
+forbidden: []
+
+language: de
+chapter_count: 3
+title_hint: ''

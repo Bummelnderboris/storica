@@ -5,12 +5,12 @@ one was actually handed.
 Output quality is decided by how the agents are organised and instructed, and until now that
 organisation was only visible by reading the code. This renders it as one self-contained HTML page:
 
-- the workflow, as phases (plan → per scene → per chapter → the book, plus the adjudicator, which can
-  be reached from anywhere), with each agent's model and family;
+- the workflow, as phases (the writers' room → plan → per scene → per chapter → the book, plus the
+  adjudicator, which can be reached from anywhere), with each agent's model and family;
 - per agent, its wiring from the frontmatter of `agents/<id>.md` and the full instructions: the
   system prompt and every named section the code places inside the prompt;
-- given a novel, every call from its `04_trace/`: the exact prompt the agent received and what it
-  returned.
+- given a novel, every call from its trace (`04_trace/` for the pipeline, `_trace/` for the room):
+  the exact prompt the agent received and what it returned.
 
 A trace record is attributed to an agent by its system prompt first — an exact match means the call
 ran under the instructions the file holds today — and otherwise by the stage-name patterns in the
@@ -30,6 +30,7 @@ from typing import Dict, List, Optional
 from .agents import Agent, all_agents
 
 PHASES = [
+    ("room", "Writers' room", "developed with the creator (storica develop)"),
     ("plan", "Plan", "once per novel, and one chapter ahead"),
     ("scene", "Per scene", "draft, select, gate, repair"),
     ("chapter", "Per chapter", "after the scenes pass"),
@@ -55,9 +56,18 @@ def _attribute(records: List[dict], agents: List[Agent]) -> Dict[str, List[dict]
     return out
 
 
+#: The autonomous pipeline traces to 04_trace/, the writers' room to _trace/.
+TRACE_DIRS = ("04_trace", "_trace")
+
+
+def has_trace(novel_dir: Path) -> bool:
+    return any((novel_dir / d).is_dir() for d in TRACE_DIRS)
+
+
 def _load_trace(novel_dir: Path) -> List[dict]:
     records = []
-    for path in sorted((novel_dir / "04_trace").glob("*.json")):
+    paths = [p for d in TRACE_DIRS for p in sorted((novel_dir / d).glob("*.json"))]
+    for path in paths:
         try:
             records.append(json.loads(path.read_text(encoding="utf-8")))
         except (json.JSONDecodeError, OSError):
@@ -143,7 +153,7 @@ header{padding:20px 20px 8px;display:flex;flex-wrap:wrap;gap:8px 24px;align-item
 h1{font-size:20px;margin:0}
 h2{font-size:16px;margin:0}
 .muted{color:var(--muted)}
-.flow{display:grid;grid-template-columns:repeat(5,minmax(170px,1fr));gap:12px;padding:12px 20px 20px;overflow-x:auto}
+.flow{display:grid;grid-template-columns:repeat(6,minmax(160px,1fr));gap:12px;padding:12px 20px 20px;overflow-x:auto}
 .phase{display:flex;flex-direction:column;gap:8px;min-width:0}
 .phase h3{margin:0;font-size:12px;text-transform:uppercase;letter-spacing:.07em}
 .phase small{color:var(--muted);font-size:12px;margin-top:-6px}
@@ -211,7 +221,7 @@ if (D.novel) {
 }
 
 $("#flow").innerHTML = D.phases.map((p, i) => `
-  <div class="phase ${i < 3 ? "arrow" : ""}">
+  <div class="phase ${i < 4 ? "arrow" : ""}">
     <h3>${esc(p.title)}</h3><small>${esc(p.sub)}</small>
     ${D.agents.filter(a => a.phase === p.id).map(a => `
       <button class="card fam-${esc(a.family)}" data-id="${esc(a.id)}" aria-pressed="false">

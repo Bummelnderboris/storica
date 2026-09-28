@@ -27,7 +27,7 @@ def test_every_shipped_agent_loads_with_instructions_and_a_model():
     for a in agents:
         assert a.system.startswith("You are"), a.id
         assert a.model in ("opus", "sonnet", "haiku"), a.id
-        assert a.meta.get("phase") in ("plan", "scene", "chapter", "book", "any"), a.id
+        assert a.meta.get("phase") in ("room", "plan", "scene", "chapter", "book", "any"), a.id
 
 
 def test_the_code_passes_the_file_contents_as_the_system_prompt():

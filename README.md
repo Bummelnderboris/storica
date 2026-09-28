@@ -15,7 +15,7 @@ The repository holds two generations of Storica. **Only one of them is live.**
 
 | | What it is | Where | State |
 |---|---|---|---|
-| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 376 tests passing. One finished book (P6, audit `pass`); never yet run against the real API |
+| **v2** | A canon-centric pipeline, run from the CLI | `src/storica/` | **Current.** 383 tests passing. One finished book (P6, audit `pass`); never yet run against the real API |
 | **v1** | A FastAPI + React web app with an 8-phase agent pipeline | `legacy/` | **Archived.** Superseded by v2 — see [`legacy/README.md`](legacy/README.md) for why |
 
 If you are looking for "the pipeline", it is v2. The web app in `legacy/` ran, but its design had a
@@ -24,6 +24,19 @@ structural flaw that could not be tuned away ([the story](#how-we-got-here)).
 **The honest gap:** v2 has produced one book from brief to `novel.md` (P6, below), and every gate
 it owns passed — but a human reading of that book (2026-09-28) found it unsatisfying, and a rework
 is planned. The live API path has still never run.
+
+**The rework, in progress** ([plan](https://claude.ai/artifact/DNgdwxuzBufrhov9Ci7p5H)): Storica is
+becoming a *writers' room* in which the story is developed together with the creator, one step and
+one readable document at a time, instead of an autonomous run. Done so far:
+
+- every agent's instructions and model live in [`agents/`](agents/README.md), and `storica map`
+  draws the agents and every call a run made;
+- the first room step, the **pitch**: `storica develop novels/<slug> pitch`, driven in a session by
+  the [`/develop`](.claude/skills/develop/SKILL.md) skill. A writer proposes options, a story editor
+  reviews them and asks you questions, and your answers steer the next revision. The rest of the
+  room (characters, storyline, scene cards, chapters) comes next.
+
+`storica run` below is the autonomous pipeline that wrote P6; it stays as the benchmark.
 
 ---
 
@@ -242,7 +255,8 @@ storica/
 ├── pyproject.toml         deps and the `storica` console script
 │
 ├── src/storica/           ← THE PIPELINE
-│   ├── cli.py             new / run / status / map
+│   ├── cli.py             new / run / status / develop / map
+│   ├── room/              the writers' room: step documents, the pitch step (storica develop)
 │   ├── runner.py          the run loop; resumable by construction
 │   ├── pipeline.py        I/O only: load from disk, run the stage, write back
 │   ├── chapter.py         one chapter's attempt loop: escalate → adjudicate → retry → quarantine
@@ -267,7 +281,7 @@ storica/
 │   ├── trace.py           every filled prompt and artifact, to 04_trace/
 │   ├── llm.py             the only place the Anthropic SDK is touched; model aliases
 │   └── drivers/replay.py  run the real prompts with no API key
-├── tests/                 376 tests
+├── tests/                 383 tests
 │
 ├── agents/                ← WHAT EACH AGENT IS TOLD: one file per agent — see agents/README.md
 │
@@ -278,13 +292,15 @@ storica/
 ├── novels/                one folder per novel — see novels/README.md
 │   ├── _template/             empty skeleton to copy
 │   ├── der-chrachen/          the v1 capture kept as reference evidence
-│   └── der-chrachen-v2/       the P6 run: same story under v2, finished 2026-09-22
+│   ├── der-chrachen-v2/       the P6 run: same story under v2, finished 2026-09-22
+│   └── der-chrachen-v3/       the same brief, developed in the writers' room
 │
 ├── tools/                 calibrate_checkers.py — known-answer test for the checker layer
 │                       smoke_test_api.py    — proves the live adapter works, for ~$0.001
 │                       next_call.sh         — prints the next pending replay call (run from repo root)
 ├── calibration/           its results and FINDINGS.md
 ├── .claude/skills/write-novel/   the /write-novel skill: drive a run on a subscription
+├── .claude/skills/develop/       the /develop skill: the writers' room, in a session with you
 ├── docs/agents.md         every agent: family, what fires it, what it reads, what it may do
 ├── docs/proving-the-concept.md   what the replay method does and does not prove
 ├── docs/archive/          point-in-time v1 documents, not maintained
@@ -329,7 +345,7 @@ The author is a **generative driver, not a paint job**: their question-lines fee
 ## Development
 
 ```bash
-.venv/bin/python -m pytest -q      # 376 tests, a few seconds, no API key, no network
+.venv/bin/python -m pytest -q      # 383 tests, a few seconds, no API key, no network
 .venv/bin/ruff check .             # lint; rules pinned in pyproject.toml, legacy/ excluded
 .venv/bin/storica map novels/der-chrachen-v2   # every agent, its instructions, and each call it made
 ```

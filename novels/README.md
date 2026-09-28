@@ -32,3 +32,6 @@ See `/DESIGN.md` for the pipeline that fills these. `_template/` is an empty ske
   evidence for the findings. See `der-chrachen/REFERENCE.md`.
 - `der-chrachen-v2/` — the same story under the v2 pipeline: the P6 run, finished 2026-09-22 under the
   replay driver. Its `06_session/` is the run itself; see `/docs/archive/p6-handoff.md`.
+- `der-chrachen-v3/` — the same brief again, developed in the **writers' room** (`storica develop`,
+  the `/develop` skill) with the creator steering. Its layout is the room's: step documents at the
+  top (`01_pitch.md`, ...), earlier versions in `_history/`, calls in `_trace/` and `_session/`.
